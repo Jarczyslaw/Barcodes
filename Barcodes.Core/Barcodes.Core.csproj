@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.BarCode, Version=18.11.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aspose.BarCode.18.11.0\lib\net45\Aspose.BarCode.dll</HintPath>
+    </Reference>
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net46\CommonServiceLocator.dll</HintPath>
     </Reference>
@@ -72,6 +75,9 @@
     <Compile Include="RegionNames.cs" />
     <Compile Include="Services\AppSettings.cs" />
     <Compile Include="Services\IAppSettings.cs" />
+    <Compile Include="ViewModels\BarcodeTypeViewModel.cs" />
+    <Compile Include="ViewModels\BarcodeViewModel.cs" />
+    <Compile Include="ViewModels\SelectedActionViewModel.cs" />
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
@@ -87,6 +93,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Barcodes.Core.UI\Barcodes.Core.UI.csproj">
+      <Project>{930F2B1E-8FEA-48BC-86CB-D8BCDAB039F5}</Project>
+      <Name>Barcodes.Core.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Barcodes.Services.Dialogs\Barcodes.Services.Dialogs.csproj">
+      <Project>{7519097D-59FF-4717-A043-C083A7AA9A5D}</Project>
+      <Name>Barcodes.Services.Dialogs</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Barcodes.Services.Generator\Barcodes.Services.Generator.csproj">
       <Project>{D4D91166-8BF2-4E82-825A-BD1F46B05B48}</Project>
       <Name>Barcodes.Services.Generator</Name>

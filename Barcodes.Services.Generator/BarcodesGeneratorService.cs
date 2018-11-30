@@ -11,12 +11,12 @@ namespace Barcodes.Services.Generator
 {
     public class BarcodesGeneratorService : IBarcodesGeneratorService
     {
-        public BitmapSource CreateRandomBarcode(int width, int height)
+        public BitmapSource CreateRandomBarcode(int size)
         {
             var data = new BarcodeData
             {
-                Width = width,
-                Height = height,
+                Width = size,
+                Height = size,
                 Data = RandomTexts.Get(),
                 ShowData = false,
                 Type = EncodeTypes.QR
@@ -32,7 +32,11 @@ namespace Barcodes.Services.Generator
                 generator.BarCodeWidth.Pixels = barcodeData.Width;
                 generator.BarCodeHeight.Pixels = barcodeData.Height;
                 if (!barcodeData.ShowData)
+                {
                     generator.D2.DisplayText = string.Empty;
+                    generator.CaptionAbove.Visible =
+                        generator.CaptionBelow.Visible = false;
+                }
                 return generator.GenerateBarCodeImage().ToBitmapSource();
             }
         }

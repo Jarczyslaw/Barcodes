@@ -9,7 +9,7 @@ namespace Barcodes.Services.Generator
 {
     public interface IBarcodesGeneratorService
     {
-        BitmapSource CreateRandomBarcode(int width, int height);
+        BitmapSource CreateRandomBarcode(int size);
         BitmapSource CreateBarcode(BarcodeData barcodeData);
     }
 }

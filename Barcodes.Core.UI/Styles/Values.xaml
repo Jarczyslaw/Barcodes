@@ -2,5 +2,5 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
   <sys:Double x:Key="ShellWidth">800</sys:Double>
-  <sys:Double x:Key="ShellHeight">600</sys:Double>
+  <sys:Double x:Key="ShellHeight">800</sys:Double>
 </ResourceDictionary>

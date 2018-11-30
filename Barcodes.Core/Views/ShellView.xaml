@@ -6,26 +6,101 @@
              xmlns:local="clr-namespace:Barcodes.Core"
              xmlns:prism="http://prismlibrary.com/"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
+             d:DesignHeight="800" d:DesignWidth="800"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel LastChildFill="True">
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
-                <TextBlock Text="status" />
+                <TextBlock Text="{Binding BarcodesCount, StringFormat='Barcodes count: {0}'}" />
+            </StatusBarItem>
+            <Separator Visibility="{Binding StatusMessage, Converter={StaticResource StringToVisibilityConverter}}"/>
+            <StatusBarItem>
+                <TextBlock Text="{Binding StatusMessage}" />
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
                 <Button Content="?" />
             </StatusBarItem>
         </StatusBar>
         <StackPanel>
-            <Image Width="400"
-                   Height="400"
+            <Image Width="200"
+                   Height="200"
                    Source="{Binding RandomBarcode}" />
-            <TextBox Grid.Column="1" 
-                         Width="150" />
-            <ComboBox Grid.Row="1" 
-                          Grid.Column="1" 
-                          Width="150" />
+            <Label Content="Title" />
+            <TextBox Width="150"
+                     Text="{Binding Title}" />
+            <Label Content="Data" />
+            <TextBox Width="150"
+                     Text="{Binding Data}" />
+            <ComboBox Width="150"
+                      ItemsSource="{Binding BarcodeTypes}"
+                      SelectedItem="{Binding SelectedBarcodeType}"
+                      DisplayMemberPath="TypeTitle" />
+            <Button Content="Generate"
+                    Command="{Binding GenerateCommand}" />
+            <Label Content="Selected action:" />
+            <ComboBox Width="150"
+                      ItemsSource="{Binding SelectedActions}"
+                      SelectedItem="{Binding CurrentSelectedAction}"
+                      DisplayMemberPath="Title" />
+            <Button Content="Execute"
+                    Command="{Binding ExecuteSelectedActionCommand}" />
+            <ListView Height="300"
+                      SelectionMode="Single"
+                      ItemsSource="{Binding Barcodes}"
+                      SelectedItem="{Binding SelectedBarcode}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                                   ItemWidth="{Binding (ListView.View).ItemWidth, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                   MinWidth="{Binding ItemWidth, RelativeSource={RelativeSource Self}}"
+                                   ItemHeight="{Binding (ListView.View).ItemHeight, RelativeSource={RelativeSource AncestorType=ListView}}" />      
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="1"
+                                BorderBrush="{StaticResource DarkGreyBrush}"
+                                Background="{StaticResource LightGreyBrush}"
+                                Padding="5">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.ColumnSpan="2"
+                                       FontWeight="Bold"
+                                       Content="{Binding Title}"
+                                       HorizontalContentAlignment="Center" />
+                                <Label Grid.Row="1"
+                                        Content="Type:" />
+                                <TextBox Grid.Row="1"
+                                     Grid.Column="1"
+                                     IsReadOnly="True"
+                                     Text="{Binding TypeTitle}" />
+                                <Label Grid.Row="2"
+                                        Content="Data:" />
+                                <TextBox Grid.Row="2"
+                                        Grid.Column="1"
+                                        IsReadOnly="true"
+                                        Text="{Binding Data}" />
+                                <Image Grid.Row="3"
+                                        Grid.ColumnSpan="2"
+                                        Margin="40 5"
+                                        Source="{Binding Barcode}"
+                                        Width="250" 
+                                        Height="250" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
     </DockPanel>
 </UserControl>
