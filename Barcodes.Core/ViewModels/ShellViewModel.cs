@@ -77,7 +77,7 @@ namespace Barcodes.Core.ViewModels
 
             GenerateRandomBarcodeCommand = new DelegateCommand(GenerateRandomBarcode);
             GenerateBarcodeCommand = new DelegateCommand(GenerateBarcode);
-            ExecuteSelectedActionCommand = new DelegateCommand(() => CurrentSelectedAction.Action());
+            ExecuteSelectedActionCommand = new DelegateCommand(() => CurrentSelectedAction?.Action());
             OpenInNewWindowCommand = new DelegateCommand(OpenInNewWindow);
 
             InitializeBarcodeTypes();
