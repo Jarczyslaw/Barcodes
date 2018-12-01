@@ -58,7 +58,7 @@ namespace Barcodes.Core.ViewModels
             {
                 if (SelectedBarcodeType == null)
                     return false;
-                return SelectedBarcodeType.ExtraInput;
+                return SelectedBarcodeType.ExtraInput != null;
             }
         }
 
@@ -112,7 +112,7 @@ namespace Barcodes.Core.ViewModels
 
         private void ExtraInput()
         {
-            var result = barcodeWindowsService.OpenNmvsInputWindow();
+            var result = SelectedBarcodeType.ExtraInput();
             if (string.IsNullOrEmpty(result))
                 return;
             Data = result;
@@ -247,7 +247,7 @@ namespace Barcodes.Core.ViewModels
                 {
                     TypeTitle = "DataMatrix",
                     Type = EncodeTypes.DataMatrix,
-                    ExtraInput = true
+                    ExtraInput = barcodeWindowsService.OpenNmvsInputWindow
                 },
                 new BarcodeTypeViewModel
                 {
