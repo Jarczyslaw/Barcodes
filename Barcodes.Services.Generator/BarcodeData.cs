@@ -10,8 +10,7 @@ namespace Barcodes.Services.Generator
     public class BarcodeData
     {
         public SymbologyEncodeType Type { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int? MinWidth { get; set; }
         public string Data { get; set; }
         public bool ShowData { get; set; }
     }

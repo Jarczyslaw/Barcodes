@@ -31,19 +31,23 @@
             <TextBox Grid.Row="1"
                     Grid.Column="1"
                     IsReadOnly="True"
+                    Width="300"
+                    HorizontalAlignment="Left"
                     Text="{Binding TypeTitle}" />
             <Label Grid.Row="2"
                     Content="Data:" />
             <TextBox Grid.Row="2"
                     Grid.Column="1"
                     IsReadOnly="true"
+                    Width="300"
+                    HorizontalAlignment="Left"
                     Text="{Binding Data}" />
             <Image Grid.Row="3"
                     Grid.ColumnSpan="2"
                     Margin="40 5"
                     Source="{Binding Barcode}"
-                    Width="250" 
-                    Height="250" />
+                    Width="{Binding BarcodeWidth}"
+                   Height="{Binding BarcodeHeight}" />
         </Grid>
     </Border>
 </UserControl>

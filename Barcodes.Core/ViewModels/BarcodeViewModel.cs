@@ -36,6 +36,16 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref data, value);
         }
 
+        public int BarcodeWidth
+        {
+            get => Barcode.PixelWidth;
+        }
+
+        public int BarcodeHeight
+        {
+            get => Barcode.PixelHeight;
+        }
+
         private BitmapSource barcode;
         public BitmapSource Barcode
         {

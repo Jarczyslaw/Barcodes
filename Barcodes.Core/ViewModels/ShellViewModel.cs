@@ -153,8 +153,7 @@ namespace Barcodes.Core.ViewModels
 
             var barcodeData = new BarcodeData
             {
-                Width = 500,
-                Height = 500,
+                MinWidth = 300,
                 Data = Data,
                 ShowData = false,
                 Type = SelectedBarcodeType.Type
@@ -162,9 +161,10 @@ namespace Barcodes.Core.ViewModels
 
             try
             {
+                var barcode = barcodesGenerator.CreateBarcode(barcodeData);
                 Barcodes.Add(new BarcodeViewModel
                 {
-                    Barcode = barcodesGenerator.CreateBarcode(barcodeData),
+                    Barcode = barcode,
                     Data = barcodeData.Data,
                     Title = Title,
                     TypeTitle = SelectedBarcodeType.TypeTitle
@@ -217,6 +217,11 @@ namespace Barcodes.Core.ViewModels
                 {
                     TypeTitle = "DataMatrix",
                     Type = EncodeTypes.DataMatrix
+                },
+                new BarcodeTypeViewModel
+                {
+                    TypeTitle = "QR",
+                    Type = EncodeTypes.QR
                 },
             };
             SelectedBarcodeType = BarcodeTypes.First();

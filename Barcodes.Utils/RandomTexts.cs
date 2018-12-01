@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Barcodes.Utils
@@ -30,7 +29,6 @@ namespace Barcodes.Utils
         public static string Get()
         {
             var index = textsIndexes[random.Next(textsIndexes.Count)];
-            Debug.WriteLine(index);
             textsIndexes.Remove(index);
             if (!textsIndexes.Any())
                 RefreshIndexesList(index);
