@@ -59,6 +59,7 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand GenerateRandomBarcodeCommand { get; private set; }
         public DelegateCommand GenerateBarcodeCommand { get; private set; }
         public DelegateCommand ExecuteSelectedActionCommand { get; private set; }
+        public DelegateCommand OpenInNewWindowCommand { get; private set; }
 
         public ObservableCollection<BarcodeTypeViewModel> BarcodeTypes { get; private set; }
         public ObservableCollection<BarcodeViewModel> Barcodes { get; private set; } = new ObservableCollection<BarcodeViewModel>();
@@ -77,6 +78,7 @@ namespace Barcodes.Core.ViewModels
             GenerateRandomBarcodeCommand = new DelegateCommand(GenerateRandomBarcode);
             GenerateBarcodeCommand = new DelegateCommand(GenerateBarcode);
             ExecuteSelectedActionCommand = new DelegateCommand(() => CurrentSelectedAction.Action());
+            OpenInNewWindowCommand = new DelegateCommand(OpenInNewWindow);
 
             InitializeBarcodeTypes();
             InitializeSelectedActions();
