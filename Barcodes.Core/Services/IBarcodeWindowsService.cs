@@ -9,5 +9,6 @@ namespace Barcodes.Core.Services
     public interface IBarcodeWindowsService
     {
         void OpenBarcodeWindow(object barcodeViewModel);
+        string OpenNmvsInputWindow();
     }
 }

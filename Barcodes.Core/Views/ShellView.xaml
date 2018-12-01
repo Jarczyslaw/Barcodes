@@ -33,6 +33,8 @@
             <Label Content="Data" />
             <TextBox Width="150"
                      Text="{Binding Data}" />
+            <Button Content="..." 
+                    Command="{Binding ExtraInputCommand}" />
             <ComboBox Width="150"
                       ItemsSource="{Binding BarcodeTypes}"
                       SelectedItem="{Binding SelectedBarcodeType}"

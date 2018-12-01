@@ -52,14 +52,35 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref statusMessage, value);
         }
 
+        public bool ExtraInputEnabled
+        {
+            get
+            {
+                if (SelectedBarcodeType == null)
+                    return false;
+                return SelectedBarcodeType.ExtraInput;
+            }
+        }
+
+        private BarcodeTypeViewModel selectedBarcodeType;
+        public BarcodeTypeViewModel SelectedBarcodeType
+        {
+            get => selectedBarcodeType;
+            set
+            {
+                SetProperty(ref selectedBarcodeType, value);
+                ExtraInputCommand.RaiseCanExecuteChanged();
+            }
+        }
+
         public BarcodeViewModel SelectedBarcode { get; set; }
-        public BarcodeTypeViewModel SelectedBarcodeType { get; set; }
         public SelectedActionViewModel CurrentSelectedAction { get; set; }
 
         public DelegateCommand GenerateRandomBarcodeCommand { get; private set; }
         public DelegateCommand GenerateBarcodeCommand { get; private set; }
         public DelegateCommand ExecuteSelectedActionCommand { get; private set; }
         public DelegateCommand OpenInNewWindowCommand { get; private set; }
+        public DelegateCommand ExtraInputCommand { get; private set; }
 
         public ObservableCollection<BarcodeTypeViewModel> BarcodeTypes { get; private set; }
         public ObservableCollection<BarcodeViewModel> Barcodes { get; private set; } = new ObservableCollection<BarcodeViewModel>();
@@ -79,6 +100,7 @@ namespace Barcodes.Core.ViewModels
             GenerateBarcodeCommand = new DelegateCommand(GenerateBarcode);
             ExecuteSelectedActionCommand = new DelegateCommand(() => CurrentSelectedAction?.Action());
             OpenInNewWindowCommand = new DelegateCommand(OpenInNewWindow);
+            ExtraInputCommand = new DelegateCommand(ExtraInput, () => ExtraInputEnabled);
 
             InitializeBarcodeTypes();
             InitializeSelectedActions();
@@ -86,6 +108,14 @@ namespace Barcodes.Core.ViewModels
 
             Data = "Test data";
             Title = "Test title";
+        }
+
+        private void ExtraInput()
+        {
+            var result = barcodeWindowsService.OpenNmvsInputWindow();
+            if (string.IsNullOrEmpty(result))
+                return;
+            Data = result;
         }
 
         private void GenerateRandomBarcode()
@@ -216,7 +246,8 @@ namespace Barcodes.Core.ViewModels
                 new BarcodeTypeViewModel
                 {
                     TypeTitle = "DataMatrix",
-                    Type = EncodeTypes.DataMatrix
+                    Type = EncodeTypes.DataMatrix,
+                    ExtraInput = true
                 },
                 new BarcodeTypeViewModel
                 {

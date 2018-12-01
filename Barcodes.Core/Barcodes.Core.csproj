@@ -77,8 +77,12 @@
     <Compile Include="Services\IBarcodeWindowsService.cs" />
     <Compile Include="ViewModels\BarcodeTypeViewModel.cs" />
     <Compile Include="ViewModels\BarcodeViewModel.cs" />
+    <Compile Include="ViewModels\NmvsInputViewModel.cs" />
     <Compile Include="ViewModels\SelectedActionViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\NmvsInputWindow.xaml.cs">
+      <DependentUpon>NmvsInputWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BarcodeWindow.xaml.cs">
       <DependentUpon>BarcodeWindow.xaml</DependentUpon>
     </Compile>
@@ -115,6 +119,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\NmvsInputWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\BarcodeWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

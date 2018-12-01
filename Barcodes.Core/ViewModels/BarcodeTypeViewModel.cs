@@ -12,5 +12,6 @@ namespace Barcodes.Core.ViewModels
     {
         public string TypeTitle { get; set; }
         public SymbologyEncodeType Type { get; set; }
+        public bool ExtraInput { get; set; }
     }
 }
