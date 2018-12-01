@@ -1,7 +1,9 @@
 ﻿using Aspose.BarCode.Generation;
+using Barcodes.Core.Services;
 using Barcodes.Services.Dialogs;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Windows;
+using Barcodes.Utils;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
@@ -54,7 +56,8 @@ namespace Barcodes.Core.ViewModels
         public BarcodeTypeViewModel SelectedBarcodeType { get; set; }
         public SelectedActionViewModel CurrentSelectedAction { get; set; }
 
-        public DelegateCommand GenerateCommand { get; private set; }
+        public DelegateCommand GenerateRandomBarcodeCommand { get; private set; }
+        public DelegateCommand GenerateBarcodeCommand { get; private set; }
         public DelegateCommand ExecuteSelectedActionCommand { get; private set; }
 
         public ObservableCollection<BarcodeTypeViewModel> BarcodeTypes { get; private set; }
@@ -63,23 +66,30 @@ namespace Barcodes.Core.ViewModels
 
         private readonly IBarcodesGeneratorService barcodesGenerator;
         private readonly IDialogsService dialogsService;
-        private readonly IWindowsService windowsService;
+        private readonly IBarcodeWindowsService barcodeWindowsService;
 
-        public ShellViewModel(IBarcodesGeneratorService barcodesGenerator, IDialogsService dialogsService, IWindowsService windowsService)
+        public ShellViewModel(IBarcodesGeneratorService barcodesGenerator, IDialogsService dialogsService, IBarcodeWindowsService barcodeWindowsService)
         {
             this.barcodesGenerator = barcodesGenerator;
             this.dialogsService = dialogsService;
-            this.windowsService = windowsService;
+            this.barcodeWindowsService = barcodeWindowsService;
 
-            GenerateCommand = new DelegateCommand(Generate);
+            GenerateRandomBarcodeCommand = new DelegateCommand(GenerateRandomBarcode);
+            GenerateBarcodeCommand = new DelegateCommand(GenerateBarcode);
             ExecuteSelectedActionCommand = new DelegateCommand(() => CurrentSelectedAction.Action());
 
-            RandomBarcode = barcodesGenerator.CreateRandomBarcode(400);
             InitializeBarcodeTypes();
             InitializeSelectedActions();
+            GenerateRandomBarcode();
 
             Data = "Test data";
             Title = "Test title";
+        }
+
+        private void GenerateRandomBarcode()
+        {
+            var randomText = RandomTexts.Get();
+            RandomBarcode = barcodesGenerator.CreateShellBarcode(400, randomText);
         }
 
         private void InitializeSelectedActions()
@@ -109,6 +119,8 @@ namespace Barcodes.Core.ViewModels
         {
             if (SelectedBarcode == null)
                 return;
+
+            barcodeWindowsService.OpenBarcodeWindow(SelectedBarcode);
         }
 
         private void DeleteSelected()
@@ -132,7 +144,7 @@ namespace Barcodes.Core.ViewModels
             StatusMessage = $"Barcode \"{SelectedBarcode.Title}\" copied to clipboard";
         }
 
-        private void Generate()
+        private void GenerateBarcode()
         {
             if (!GenerateValidation())
                 return;

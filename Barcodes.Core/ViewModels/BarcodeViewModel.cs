@@ -10,6 +10,11 @@ namespace Barcodes.Core.ViewModels
 {
     public class BarcodeViewModel : BindableBase
     {
+        public string HeaderTitle
+        {
+            get { return $"Barcodes - {Title}"; }
+        }
+
         private string title;
         public string Title
         {

@@ -3,13 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:Barcodes.Core.UI.Controls;assembly=Barcodes.Core.UI"    
         mc:Ignorable="d"
-        Title="Barcodes" 
-        Height="{StaticResource ShellHeight}" 
-        Width="{StaticResource ShellWidth}"
-        MinHeight="{StaticResource ShellHeight}" 
-        MinWidth="{StaticResource ShellWidth}">
+        Title="{Binding HeaderTitle}" 
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight">
     <Grid>
-       
+        <controls:BarcodeView />
     </Grid>
 </Window>

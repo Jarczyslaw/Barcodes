@@ -11,13 +11,13 @@ namespace Barcodes.Services.Generator
 {
     public class BarcodesGeneratorService : IBarcodesGeneratorService
     {
-        public BitmapSource CreateRandomBarcode(int size)
+        public BitmapSource CreateShellBarcode(int size, string textData)
         {
             var data = new BarcodeData
             {
                 Width = size,
                 Height = size,
-                Data = RandomTexts.Get(),
+                Data = textData,
                 ShowData = false,
                 Type = EncodeTypes.QR
             };

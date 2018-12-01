@@ -57,11 +57,7 @@ namespace Barcodes.Startup
             RegisterGlobalExceptionHandler();
         }
 
-        protected override void RegisterTypes(IContainerRegistry containerRegistry)
-        {
-            containerRegistry.RegisterSingleton<IBarcodesGeneratorService, BarcodesGeneratorService>();
-            containerRegistry.RegisterSingleton<IWindowsService, WindowsService>();
-        }
+        protected override void RegisterTypes(IContainerRegistry containerRegistry) { }
 
         private void RegisterGlobalExceptionHandler()
         {

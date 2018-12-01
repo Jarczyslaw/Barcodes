@@ -93,6 +93,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Barcodes.Core.UI\Barcodes.Core.UI.csproj">
+      <Project>{930f2b1e-8fea-48bc-86cb-d8bcdab039f5}</Project>
+      <Name>Barcodes.Core.UI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Barcodes.Services.Dialogs\Barcodes.Services.Dialogs.csproj">
       <Project>{7519097D-59FF-4717-A043-C083A7AA9A5D}</Project>
       <Name>Barcodes.Services.Dialogs</Name>
@@ -104,6 +108,10 @@
     <ProjectReference Include="..\Barcodes.Services.Windows\Barcodes.Services.Windows.csproj">
       <Project>{44ce1158-08ab-452e-abcd-c6e305e1a01a}</Project>
       <Name>Barcodes.Services.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Barcodes.Utils\Barcodes.Utils.csproj">
+      <Project>{355F10FD-FE43-432A-A826-23CE5280170E}</Project>
+      <Name>Barcodes.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

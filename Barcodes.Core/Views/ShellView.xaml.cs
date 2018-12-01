@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Barcodes.Core.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,20 @@ namespace Barcodes.Core.Views
         public ShellView()
         {
             InitializeComponent();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            KeyDown += ShellView_KeyDown;      
+        }
+
+        private void ShellView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!(DataContext is ShellViewModel viewModel))
+                return;
+
+            if (e.Key == Key.F5)
+                viewModel.GenerateRandomBarcodeCommand.Execute();
         }
     }
 }
