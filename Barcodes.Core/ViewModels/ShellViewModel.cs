@@ -1,6 +1,7 @@
 ﻿using Aspose.BarCode.Generation;
 using Barcodes.Services.Dialogs;
 using Barcodes.Services.Generator;
+using Barcodes.Services.Windows;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
@@ -62,11 +63,13 @@ namespace Barcodes.Core.ViewModels
 
         private readonly IBarcodesGeneratorService barcodesGenerator;
         private readonly IDialogsService dialogsService;
+        private readonly IWindowsService windowsService;
 
-        public ShellViewModel(IBarcodesGeneratorService barcodesGenerator, IDialogsService dialogsService)
+        public ShellViewModel(IBarcodesGeneratorService barcodesGenerator, IDialogsService dialogsService, IWindowsService windowsService)
         {
             this.barcodesGenerator = barcodesGenerator;
             this.dialogsService = dialogsService;
+            this.windowsService = windowsService;
 
             GenerateCommand = new DelegateCommand(Generate);
             ExecuteSelectedActionCommand = new DelegateCommand(() => CurrentSelectedAction.Action());
@@ -85,6 +88,11 @@ namespace Barcodes.Core.ViewModels
             {
                 new SelectedActionViewModel
                 {
+                    Title = "Open in new window",
+                    Action = OpenInNewWindow
+                },
+                new SelectedActionViewModel
+                {
                     Title = "Copy to clipboard",
                     Action = CopySelectedToClipboard
                 },
@@ -97,12 +105,18 @@ namespace Barcodes.Core.ViewModels
             CurrentSelectedAction = SelectedActions.First();
         }
 
+        private void OpenInNewWindow()
+        {
+            if (SelectedBarcode == null)
+                return;
+        }
+
         private void DeleteSelected()
         {
             if (SelectedBarcode == null)
                 return;
 
-            if (!dialogsService.ShowYesNoQuestion("Do you really want to delete select barcode?"))
+            if (!dialogsService.ShowYesNoQuestion("Do you really want to delete selected barcode?"))
                 return;
 
             Barcodes.Remove(SelectedBarcode);

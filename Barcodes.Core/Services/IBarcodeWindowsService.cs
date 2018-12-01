@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Barcodes.Core.Services
 {
-    public interface IAppSettings
+    public interface IBarcodeWindowsService
     {
+        void OpenBarcodeWindow(object barcodeViewModel);
     }
 }

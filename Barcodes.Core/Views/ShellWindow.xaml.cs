@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Barcodes.Startup
+namespace Barcodes.Core.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class Shell : Window
+    public partial class ShellWindow : Window
     {
-        public Shell()
+        public ShellWindow()
         {
             InitializeComponent();
         }

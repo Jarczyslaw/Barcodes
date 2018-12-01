@@ -12,6 +12,8 @@ using Barcodes.Core;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
 using Barcodes.Services.Dialogs;
+using Barcodes.Services.Windows;
+using Barcodes.Core.Views;
 
 namespace Barcodes.Startup
 {
@@ -25,7 +27,7 @@ namespace Barcodes.Startup
 
         protected override Window CreateShell()
         {
-            return Container.Resolve<Shell>();
+            return Container.Resolve<ShellWindow>();
         }
 
         protected override IContainerExtension CreateContainerExtension()
@@ -50,14 +52,15 @@ namespace Barcodes.Startup
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
         {
             base.RegisterRequiredTypes(containerRegistry);
+            containerRegistry.RegisterSingleton<IAppSettingsService, AppSettingsService>();
             containerRegistry.RegisterSingleton<IDialogsService, DialogsService>();
             RegisterGlobalExceptionHandler();
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<IAppSettingsService, AppSettingsService>();
             containerRegistry.RegisterSingleton<IBarcodesGeneratorService, BarcodesGeneratorService>();
+            containerRegistry.RegisterSingleton<IWindowsService, WindowsService>();
         }
 
         private void RegisterGlobalExceptionHandler()

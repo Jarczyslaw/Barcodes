@@ -86,19 +86,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Shell.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GlobalExceptionHandler.cs" />
-    <Compile Include="Shell.xaml.cs">
-      <DependentUpon>Shell.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -154,6 +146,10 @@
     <ProjectReference Include="..\Barcodes.Services.Storage\Barcodes.Services.Storage.csproj">
       <Project>{804a49a8-76bb-4ee0-83b2-6e2ec77af5d0}</Project>
       <Name>Barcodes.Services.Storage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Barcodes.Services.Windows\Barcodes.Services.Windows.csproj">
+      <Project>{44ce1158-08ab-452e-abcd-c6e305e1a01a}</Project>
+      <Name>Barcodes.Services.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\Barcodes.Utils\Barcodes.Utils.csproj">
       <Project>{355f10fd-fe43-432a-a826-23ce5280170e}</Project>
