@@ -131,6 +131,10 @@
       <Project>{2d1f00e3-840a-4394-bea7-e67d6c081283}</Project>
       <Name>Barcodes.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Barcodes.Service.AppSettings\Barcodes.Service.AppSettings.csproj">
+      <Project>{eeb99d9e-5b41-4cd2-8426-c875bc8d2b08}</Project>
+      <Name>Barcodes.Service.AppSettings</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Barcodes.Services.Dialogs\Barcodes.Services.Dialogs.csproj">
       <Project>{7519097d-59ff-4717-a043-c083a7aa9a5d}</Project>
       <Name>Barcodes.Services.Dialogs</Name>

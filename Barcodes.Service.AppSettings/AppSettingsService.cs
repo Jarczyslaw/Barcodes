@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Barcodes.Services.Storage
+namespace Barcodes.Services.AppSettings
 {
     public class AppSettingsService : IAppSettingsService
     {

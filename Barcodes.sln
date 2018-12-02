@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barcodes.Services.Dialogs",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barcodes.Services.Windows", "Barcodes.Services.Windows\Barcodes.Services.Windows.csproj", "{44CE1158-08AB-452E-ABCD-C6E305E1A01A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barcodes.Service.AppSettings", "Barcodes.Service.AppSettings\Barcodes.Service.AppSettings.csproj", "{EEB99D9E-5B41-4CD2-8426-C875BC8D2B08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{44CE1158-08AB-452E-ABCD-C6E305E1A01A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44CE1158-08AB-452E-ABCD-C6E305E1A01A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44CE1158-08AB-452E-ABCD-C6E305E1A01A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEB99D9E-5B41-4CD2-8426-C875BC8D2B08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEB99D9E-5B41-4CD2-8426-C875BC8D2B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEB99D9E-5B41-4CD2-8426-C875BC8D2B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEB99D9E-5B41-4CD2-8426-C875BC8D2B08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{0D0218CB-1FDB-4845-8C24-05D3F4036F7F} = {F44A50EE-6483-4D99-A26D-7D0D0E55111C}
 		{7519097D-59FF-4717-A043-C083A7AA9A5D} = {F44A50EE-6483-4D99-A26D-7D0D0E55111C}
 		{44CE1158-08AB-452E-ABCD-C6E305E1A01A} = {F44A50EE-6483-4D99-A26D-7D0D0E55111C}
+		{EEB99D9E-5B41-4CD2-8426-C875BC8D2B08} = {F44A50EE-6483-4D99-A26D-7D0D0E55111C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {99121C5A-D842-482B-8C80-89D0743B95A2}

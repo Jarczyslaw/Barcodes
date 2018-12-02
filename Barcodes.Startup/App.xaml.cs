@@ -14,6 +14,7 @@ using Barcodes.Services.Storage;
 using Barcodes.Services.Dialogs;
 using Barcodes.Services.Windows;
 using Barcodes.Core.Views;
+using Barcodes.Services.AppSettings;
 
 namespace Barcodes.Startup
 {

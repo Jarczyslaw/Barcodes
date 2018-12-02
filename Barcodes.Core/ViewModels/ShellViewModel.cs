@@ -1,5 +1,6 @@
 ﻿using Barcodes.Core.Events;
 using Barcodes.Core.Services;
+using Barcodes.Services.AppSettings;
 using Barcodes.Services.Dialogs;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
