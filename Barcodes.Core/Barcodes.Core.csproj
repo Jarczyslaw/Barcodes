@@ -74,13 +74,16 @@
     <Compile Include="Events\CloseEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegionNames.cs" />
-    <Compile Include="Services\BarcodeWindowsService.cs" />
-    <Compile Include="Services\IBarcodeWindowsService.cs" />
+    <Compile Include="Services\AppWindowsService.cs" />
+    <Compile Include="Services\IAppWindowsService.cs" />
     <Compile Include="ViewModels\BarcodesViewModel.cs" />
     <Compile Include="ViewModels\BarcodeTypeViewModel.cs" />
     <Compile Include="ViewModels\BarcodeResultViewModel.cs" />
     <Compile Include="ViewModels\NmvsInputViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\HelpWindow.xaml.cs">
+      <DependentUpon>HelpWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\NmvsInputWindow.xaml.cs">
       <DependentUpon>NmvsInputWindow.xaml</DependentUpon>
     </Compile>
@@ -128,6 +131,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\HelpWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\NmvsInputWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

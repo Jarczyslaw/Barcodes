@@ -26,7 +26,7 @@ namespace Barcodes.Core
         {
             containerRegistry.RegisterSingleton<IBarcodesGeneratorService, BarcodesGeneratorService>();
             containerRegistry.RegisterSingleton<IWindowsService, WindowsService>();
-            containerRegistry.RegisterSingleton<IBarcodeWindowsService, BarcodeWindowsService>();
+            containerRegistry.RegisterSingleton<IAppWindowsService, AppWindowsService>();
             containerRegistry.RegisterSingleton<IBarcodeStorageService, BarcodeStorageService>();
         }
     }

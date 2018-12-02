@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Barcodes.Core.Services
 {
-    public interface IBarcodeWindowsService
+    public interface IAppWindowsService
     {
         void OpenBarcodeWindow(object barcodeViewModel);
         string OpenNmvsInputWindow();
+        void ShowHelpWindow();
     }
 }

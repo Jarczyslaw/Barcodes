@@ -9,55 +9,48 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
         SizeToContent="WidthAndHeight">
-    <Border Margin="5">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="200" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <Label Content="Product code:" />
-            <TextBox Grid.Column="1"
-                 Text="{Binding ProductCode}" />
-
-            <Label Grid.Row="1" 
-               Content="Batch ID:" />
-            <TextBox Grid.Row="1"  
-                 Grid.Column="1"
-                 Text="{Binding BatchId}" />
-
-            <Label Grid.Row="2" 
-               Content="Batch exp. date:" />
-            <TextBox Grid.Row="2"  
-                 Grid.Column="1"
-                 Text="{Binding BatchExpDate}" />
-
-            <Label Grid.Row="3" 
-               Content="Serial no.:" />
-            <TextBox Grid.Row="3"  
-                 Grid.Column="1"
-                 Text="{Binding SerialNo}" />
-
-            <Grid Grid.Row="4"
-              Grid.ColumnSpan="2">
+    <StackPanel Margin="5">
+        <GroupBox Header="NMVS data">
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="200" />
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-                <Button Content="Accept"
-                    Command="{Binding AcceptCommand}" />
-                <Button Grid.Column="1" 
-                    Content="Close"
-                    Command="{Binding CloseCommand}" />
+                <Label Content="Product code:" />
+                <TextBox Grid.Column="1"
+                        Text="{Binding ProductCode}" />
+
+                <Label Grid.Row="1" 
+                        Content="Batch ID:" />
+                <TextBox Grid.Row="1"  
+                        Grid.Column="1"
+                        Text="{Binding BatchId}" />
+
+                <Label Grid.Row="2" 
+                        Content="Batch exp. date:" />
+                <TextBox Grid.Row="2"  
+                        Grid.Column="1"
+                        Text="{Binding BatchExpDate}" />
+
+                <Label Grid.Row="3" 
+                        Content="Serial no.:" />
+                <TextBox Grid.Row="3"  
+                        Grid.Column="1"
+                        Text="{Binding SerialNo}" />
             </Grid>
-        </Grid>
-    </Border>
+        </GroupBox>
+        <UniformGrid Columns="2">
+            <Button Content="Accept"
+                    Command="{Binding AcceptCommand}" />
+            <Button Content="Close"
+                        Command="{Binding CloseCommand}" />
+        </UniformGrid>
+    </StackPanel>
 </Window>

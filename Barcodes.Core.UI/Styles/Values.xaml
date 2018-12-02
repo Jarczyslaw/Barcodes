@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
-  <sys:Double x:Key="ShellWidth">870</sys:Double>
-  <sys:Double x:Key="ShellHeight">800</sys:Double>
+    <sys:Double x:Key="ShellWidth">870</sys:Double>
+    <sys:Double x:Key="ShellHeight">800</sys:Double>
+    <Thickness x:Key="DefaultMargin" Left="3" Top="3" Right="3" Bottom="3" />
 </ResourceDictionary>

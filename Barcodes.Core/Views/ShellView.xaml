@@ -46,8 +46,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <GroupBox Header="Barcode generation"
-                      Padding="5">
+            <GroupBox Header="Barcode generation">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50" />
@@ -99,8 +98,7 @@
             </GroupBox>
 
             <GroupBox Grid.Column="1"
-                      Header="Random barcode"
-                      Padding="5">
+                      Header="Random barcode">
                 <Image Width="200"
                         Height="200"
                         Margin="0 10 0 0"
@@ -109,6 +107,7 @@
 
             <GroupBox Grid.Row="1"
                       Grid.ColumnSpan="2"
+                      Padding="0"
                       Header="Barcodes">
                 <ListView SelectionMode="Single"
                       ItemsSource="{Binding Barcodes.Barcodes}"

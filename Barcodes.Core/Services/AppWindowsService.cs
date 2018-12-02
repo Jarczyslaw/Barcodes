@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Barcodes.Core.Services
 {
-    public class BarcodeWindowsService : WindowsService, IBarcodeWindowsService
+    public class AppWindowsService : WindowsService, IAppWindowsService
     {
         private readonly IContainerExtension containerExtension;
 
-        public BarcodeWindowsService(IContainerExtension containerExtension)
+        public AppWindowsService(IContainerExtension containerExtension)
         {
             this.containerExtension = containerExtension;
         }
@@ -30,6 +30,11 @@ namespace Barcodes.Core.Services
             var viewModel = containerExtension.Resolve<NmvsInputViewModel>();
             new NmvsInputWindow(viewModel).ShowDialog();
             return viewModel.ResultData;
+        }
+
+        public void ShowHelpWindow()
+        {
+            ShowModal<HelpWindow>(null);
         }
     }
 }

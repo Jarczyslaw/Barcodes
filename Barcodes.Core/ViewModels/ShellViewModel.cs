@@ -45,12 +45,12 @@ namespace Barcodes.Core.ViewModels
 
         private readonly IBarcodesGeneratorService barcodesGenerator;
         private readonly IDialogsService dialogsService;
-        private readonly IBarcodeWindowsService barcodeWindowsService;
+        private readonly IAppWindowsService barcodeWindowsService;
         private readonly IAppSettingsService appSettingsService;
         private readonly IBarcodeStorageService barcodeStorageService;
 
         public ShellViewModel(IBarcodesGeneratorService barcodesGenerator, IDialogsService dialogsService, 
-            IBarcodeWindowsService barcodeWindowsService, IEventAggregator eventAggregator, 
+            IAppWindowsService barcodeWindowsService, IEventAggregator eventAggregator, 
             IAppSettingsService appSettingsService, IBarcodeStorageService barcodeStorageService)
         {
             this.barcodesGenerator = barcodesGenerator;
@@ -119,7 +119,7 @@ namespace Barcodes.Core.ViewModels
 
         private void ShowHelp()
         {
-            throw new NotImplementedException();
+            barcodeWindowsService.ShowHelpWindow();
         }
 
         private void ExportToPdf()

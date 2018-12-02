@@ -66,9 +66,9 @@ namespace Barcodes.Core.ViewModels
 
         private readonly IBarcodesGeneratorService barcodesGenerator;
         private readonly IDialogsService dialogsService;
-        private readonly IBarcodeWindowsService barcodeWindowsService;
+        private readonly IAppWindowsService barcodeWindowsService;
 
-        public BarcodesViewModel(IBarcodesGeneratorService barcodesGenerator, IDialogsService dialogsService, IBarcodeWindowsService barcodeWindowsService)
+        public BarcodesViewModel(IBarcodesGeneratorService barcodesGenerator, IDialogsService dialogsService, IAppWindowsService barcodeWindowsService)
         {
             this.barcodesGenerator = barcodesGenerator;
             this.dialogsService = dialogsService;
