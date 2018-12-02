@@ -24,10 +24,10 @@
         
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
-                <TextBlock Text="{Binding BarcodesCount, StringFormat='Barcodes count: {0}'}" />
+                <TextBlock Text="{Binding Barcodes.BarcodesCount, StringFormat='Barcodes count: {0}'}" />
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
-                <TextBlock Text="{Binding StatusMessage}" />
+                <TextBlock Text="{Binding Barcodes.StatusMessage}" />
             </StatusBarItem>
         </StatusBar>
         <Grid>
@@ -57,7 +57,7 @@
 
                     <Label Content="Title:" />
                     <TextBox Grid.Column="1" 
-                            Text="{Binding Title}" />
+                            Text="{Binding Barcodes.Title}" />
 
                     <Label Grid.Row="1" 
                            Content="Data:" />
@@ -67,7 +67,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBox Text="{Binding Data}" />
+                        <TextBox Text="{Binding Barcodes.Data}" />
                         <Button Grid.Column="1"
                                 Content="Enter data" 
                                 Width="65"
@@ -80,7 +80,7 @@
                                 Grid.Column="1" 
                                 Width="150"
                                 HorizontalAlignment="Left"
-                                ItemsSource="{Binding BarcodeTypes}"
+                                ItemsSource="{Binding Barcodes.BarcodeTypes}"
                                 SelectedItem="{Binding SelectedBarcodeType}"
                                 DisplayMemberPath="TypeTitle" />
 
@@ -105,8 +105,8 @@
                       Grid.ColumnSpan="2"
                       Header="Barcodes">
                 <ListView SelectionMode="Single"
-                      ItemsSource="{Binding Barcodes}"
-                      SelectedItem="{Binding SelectedBarcode}"
+                      ItemsSource="{Binding Barcodes.Barcodes}"
+                      SelectedItem="{Binding Barcodes.SelectedBarcode}"
                       Background="Transparent" 
                       BorderThickness="0">
                     <i:Interaction.Triggers>

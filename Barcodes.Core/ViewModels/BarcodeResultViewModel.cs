@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace Barcodes.Core.ViewModels
 {
-    public class BarcodeViewModel : BindableBase
+    public class BarcodeResultViewModel : BindableBase
     {
         public string HeaderTitle
         {

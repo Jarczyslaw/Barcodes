@@ -1,13 +1,9 @@
-﻿using Aspose.BarCode.Generation;
-using Barcodes.Core.Services;
+﻿using Barcodes.Core.Services;
 using Barcodes.Services.Dialogs;
 using Barcodes.Services.Generator;
 using Barcodes.Utils;
 using Prism.Commands;
 using Prism.Mvvm;
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -22,57 +18,33 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref randomBarcode, value);
         }
 
-        private string data;
-        public string Data
+        public BarcodeTypeViewModel SelectedBarcodeType
         {
-            get => data;
-            set => SetProperty(ref data, value);
-        }
-
-        private string title;
-        public string Title
-        {
-            get => title;
-            set => SetProperty(ref title, value);
-        }
-
-        public int BarcodesCount
-        {
-            get => Barcodes.Count;
-        }
-
-        private string statusMessage = string.Empty;
-        public string StatusMessage
-        {
-            get => statusMessage;
-            set => SetProperty(ref statusMessage, value);
+            get => Barcodes.SelectedBarcodeType;
+            set
+            {
+                Barcodes.SelectedBarcodeType = value;
+                RaisePropertyChanged();
+                ExtraInputCommand.RaiseCanExecuteChanged();
+            }
         }
 
         public bool ExtraInputEnabled
         {
             get
             {
-                if (SelectedBarcodeType == null)
+                if (Barcodes.SelectedBarcodeType == null)
                     return false;
-                return SelectedBarcodeType.ExtraInput != null;
+                return Barcodes.SelectedBarcodeType.ExtraInput != null;
             }
         }
 
-        private BarcodeTypeViewModel selectedBarcodeType;
-        public BarcodeTypeViewModel SelectedBarcodeType
+        private BarcodesViewModel barcodes;
+        public BarcodesViewModel Barcodes
         {
-            get => selectedBarcodeType;
-            set
-            {
-                SetProperty(ref selectedBarcodeType, value);
-                ExtraInputCommand.RaiseCanExecuteChanged();
-            }
+            get => barcodes;
+            set => SetProperty(ref barcodes, value);
         }
-
-        public BarcodeViewModel SelectedBarcode { get; set; }
-
-        public ObservableCollection<BarcodeTypeViewModel> BarcodeTypes { get; private set; }
-        public ObservableCollection<BarcodeViewModel> Barcodes { get; private set; } = new ObservableCollection<BarcodeViewModel>();
 
         private readonly IBarcodesGeneratorService barcodesGenerator;
         private readonly IDialogsService dialogsService;
@@ -84,11 +56,9 @@ namespace Barcodes.Core.ViewModels
             this.dialogsService = dialogsService;
             this.barcodeWindowsService = barcodeWindowsService;
 
-            InitializeBarcodeTypes();
-            GenerateRandomBarcode();
+            Barcodes = new BarcodesViewModel(barcodesGenerator, dialogsService, barcodeWindowsService);
 
-            Data = "Test data";
-            Title = "Test title";
+            GenerateRandomBarcode();
         }
 
         private DelegateCommand generateRandomBarcodeCommand;
@@ -100,7 +70,7 @@ namespace Barcodes.Core.ViewModels
         private DelegateCommand generateBarcodeCommand;
         public DelegateCommand GenerateBarcodeCommand
         {
-            get => generateBarcodeCommand = generateBarcodeCommand ?? new DelegateCommand(GenerateBarcode);
+            get => generateBarcodeCommand = generateBarcodeCommand ?? new DelegateCommand(Barcodes.GenerateBarcode);
         }
 
         private DelegateCommand extraInputCommand;
@@ -115,16 +85,16 @@ namespace Barcodes.Core.ViewModels
             get => openInNewWindowCommand = openInNewWindowCommand ?? new DelegateCommand(OpenInNewWindow);
         }
 
-        private DelegateCommand<BarcodeViewModel> copyToClipboardCommand;
-        public DelegateCommand<BarcodeViewModel> CopyToClipboardCommand
+        private DelegateCommand<BarcodeResultViewModel> copyToClipboardCommand;
+        public DelegateCommand<BarcodeResultViewModel> CopyToClipboardCommand
         {
-            get => copyToClipboardCommand = copyToClipboardCommand ?? new DelegateCommand<BarcodeViewModel>(CopyToClipboard);
+            get => copyToClipboardCommand = copyToClipboardCommand ?? new DelegateCommand<BarcodeResultViewModel>(CopyToClipboard);
         }
 
-        private DelegateCommand<BarcodeViewModel> deleteCommand;
-        public DelegateCommand<BarcodeViewModel> DeleteCommand
+        private DelegateCommand<BarcodeResultViewModel> deleteCommand;
+        public DelegateCommand<BarcodeResultViewModel> DeleteCommand
         {
-            get => deleteCommand = deleteCommand ?? new DelegateCommand<BarcodeViewModel>(Delete);
+            get => deleteCommand = deleteCommand ?? new DelegateCommand<BarcodeResultViewModel>(Barcodes.Delete);
         }
 
         private void ExtraInput()
@@ -132,7 +102,8 @@ namespace Barcodes.Core.ViewModels
             var result = SelectedBarcodeType.ExtraInput();
             if (string.IsNullOrEmpty(result))
                 return;
-            Data = result;
+
+            Barcodes.Data = result;
         }
 
         private void GenerateRandomBarcode()
@@ -143,114 +114,19 @@ namespace Barcodes.Core.ViewModels
 
         private void OpenInNewWindow()
         {
-            if (SelectedBarcode == null)
+            if (Barcodes.SelectedBarcode == null)
                 return;
 
-            barcodeWindowsService.OpenBarcodeWindow(SelectedBarcode);
+            barcodeWindowsService.OpenBarcodeWindow(Barcodes.SelectedBarcode);
         }
 
-        private void Delete(BarcodeViewModel barcode)
-        {
-            if (barcode == null)
-                return;
-
-            if (!dialogsService.ShowYesNoQuestion("Do you really want to delete selected barcode?"))
-                return;
-
-            Barcodes.Remove(barcode);
-            RaisePropertyChanged(nameof(BarcodesCount));
-        }
-
-        private void CopyToClipboard(BarcodeViewModel barcode)
+        private void CopyToClipboard(BarcodeResultViewModel barcode)
         {
             if (barcode == null)
                 return;
 
             Clipboard.SetImage(barcode.Barcode);
-            StatusMessage = $"Barcode \"{barcode.Title}\" copied to clipboard";
-        }
-
-        private void GenerateBarcode()
-        {
-            if (!GenerateValidation())
-                return;
-
-            var barcodeData = new BarcodeData
-            {
-                MinWidth = 300,
-                Data = Data,
-                ShowData = false,
-                Type = SelectedBarcodeType.Type
-            };
-
-            try
-            {
-                var barcode = barcodesGenerator.CreateBarcode(barcodeData);
-                Barcodes.Add(new BarcodeViewModel
-                {
-                    Barcode = barcode,
-                    Data = barcodeData.Data,
-                    Title = Title,
-                    TypeTitle = SelectedBarcodeType.TypeTitle
-                });
-                StatusMessage = $"Barcode \"{Title}\" generate successfully!";
-                RaisePropertyChanged(nameof(BarcodesCount));
-            }
-            catch (Exception exc)
-            {
-                dialogsService.ShowException("Exception during barcode generation", exc);
-            }
-        }
-
-        private bool GenerateValidation()
-        {
-            if (string.IsNullOrEmpty(Title))
-            {
-                dialogsService.ShowError("Enter barcode's title");
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(Data))
-            {
-                dialogsService.ShowError("Enter barcode's data");
-                return false;
-            }
-
-            return true;
-        }
-
-        private void InitializeBarcodeTypes()
-        {
-            BarcodeTypes = new ObservableCollection<BarcodeTypeViewModel>
-            {
-                new BarcodeTypeViewModel
-                {
-                    TypeTitle = "Ean13",
-                    Type = EncodeTypes.EAN13
-                },
-                new BarcodeTypeViewModel
-                {
-                    TypeTitle = "Ean128",
-                    Type = EncodeTypes.GS1Code128
-                },
-                new BarcodeTypeViewModel
-                {
-                    TypeTitle = "Code128",
-                    Type = EncodeTypes.Code128
-                },
-                new BarcodeTypeViewModel
-                {
-                    TypeTitle = "DataMatrix",
-                    Type = EncodeTypes.DataMatrix,
-                    ExtraInput = barcodeWindowsService.OpenNmvsInputWindow
-                },
-                new BarcodeTypeViewModel
-                {
-                    TypeTitle = "QR",
-                    Type = EncodeTypes.QR
-                },
-            };
-            SelectedBarcodeType = BarcodeTypes.First();
+            Barcodes.StatusMessage = $"Barcode \"{barcode.Title}\" copied to clipboard";
         }
     }
 }
