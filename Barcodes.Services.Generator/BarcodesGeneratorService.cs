@@ -25,7 +25,8 @@ namespace Barcodes.Services.Generator
 
         public BitmapSource CreateBarcode(BarcodeData barcodeData)
         {
-            using (var generator = new BarCodeGenerator(barcodeData.Type, barcodeData.Data))
+            var encodeType = barcodeData.Type.GetEncodeType();
+            using (var generator = new BarCodeGenerator(encodeType, barcodeData.Data))
             {
                 generator.ThrowExceptionWhenCodeTextIncorrect = true;
                 generator.AutoSizeMode = AutoSizeMode.Nearest;
@@ -39,7 +40,7 @@ namespace Barcodes.Services.Generator
                 if (barcodeData.MinWidth.HasValue && generator.BarCodeWidth.Pixels < barcodeData.MinWidth.Value)
                 {
                     generator.BarCodeWidth.Pixels = barcodeData.MinWidth.Value;
-                    if (barcodeData.Type.Classification == BarcodeClassifications.Type2D)
+                    if (encodeType.Classification == BarcodeClassifications.Type2D)
                         generator.BarCodeHeight.Pixels = generator.BarCodeWidth.Pixels;
                 }  
                 var barcodeImage = generator.GenerateBarCodeImage();

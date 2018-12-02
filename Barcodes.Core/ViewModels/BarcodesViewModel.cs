@@ -76,8 +76,8 @@ namespace Barcodes.Core.ViewModels
 
             InitializeBarcodeTypes();
 
-            Data = "Test data";
-            Title = "Test title";
+            Title = "Barcode1";
+            Data = "Data1";
         }
 
         private void InitializeBarcodeTypes()
@@ -86,29 +86,24 @@ namespace Barcodes.Core.ViewModels
             {
                 new BarcodeTypeViewModel
                 {
-                    TypeTitle = "Ean13",
-                    Type = EncodeTypes.EAN13
+                    Type = BarcodeType.Ean13
                 },
                 new BarcodeTypeViewModel
                 {
-                    TypeTitle = "Ean128",
-                    Type = EncodeTypes.GS1Code128
+                    Type = BarcodeType.Ean128
                 },
                 new BarcodeTypeViewModel
                 {
-                    TypeTitle = "Code128",
-                    Type = EncodeTypes.Code128
+                    Type = BarcodeType.Code128
                 },
                 new BarcodeTypeViewModel
                 {
-                    TypeTitle = "DataMatrix",
-                    Type = EncodeTypes.DataMatrix,
+                    Type = BarcodeType.DataMatrix,
                     ExtraInput = barcodeWindowsService.OpenNmvsInputWindow
                 },
                 new BarcodeTypeViewModel
                 {
-                    TypeTitle = "QR",
-                    Type = EncodeTypes.QR
+                    Type = BarcodeType.QRCode
                 },
             });
             SelectedBarcodeType = BarcodeTypes.First();
@@ -138,22 +133,13 @@ namespace Barcodes.Core.ViewModels
 
             var barcodeData = new BarcodeData
             {
-                MinWidth = 300,
                 Data = Data,
-                ShowData = false,
                 Type = SelectedBarcodeType.Type
             };
 
             try
             {
-                var barcode = barcodesGenerator.CreateBarcode(barcodeData);
-                Barcodes.Add(new BarcodeResultViewModel
-                {
-                    Barcode = barcode,
-                    Data = barcodeData.Data,
-                    Title = Title,
-                    TypeTitle = SelectedBarcodeType.TypeTitle
-                });
+                GenerateBarcode(barcodeData, Title);
                 StatusMessage = $"Barcode \"{Title}\" generate successfully!";
                 RaisePropertyChanged(nameof(BarcodesCount));
             }
@@ -161,6 +147,19 @@ namespace Barcodes.Core.ViewModels
             {
                 dialogsService.ShowException("Exception during barcode generation", exc);
             }
+        }
+
+        public void GenerateBarcode(BarcodeData barcodeData, string title)
+        {
+            var barcode = barcodesGenerator.CreateBarcode(barcodeData);
+            Barcodes.Add(new BarcodeResultViewModel
+            {
+                Barcode = barcode,
+                Data = barcodeData.Data,
+                Title = title,
+                BarcodeType = barcodeData.Type,
+            });
+            RaisePropertyChanged(nameof(BarcodesCount));
         }
 
         public void Delete(BarcodeResultViewModel barcode)

@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using Barcodes.Services.Generator;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,12 +23,12 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref title, value);
         }
 
-        private string typeTitle;
         public string TypeTitle
         {
-            get => typeTitle;
-            set => SetProperty(ref typeTitle, value);
+            get => BarcodeType.ToString();
         }
+
+        public BarcodeType BarcodeType { get; set; }
 
         private string data;
         public string Data

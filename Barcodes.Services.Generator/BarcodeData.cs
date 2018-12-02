@@ -9,9 +9,9 @@ namespace Barcodes.Services.Generator
 {
     public class BarcodeData
     {
-        public SymbologyEncodeType Type { get; set; }
-        public int? MinWidth { get; set; }
+        public BarcodeType Type { get; set; }
+        public int? MinWidth { get; set; } = 300;
         public string Data { get; set; }
-        public bool ShowData { get; set; }
+        public bool ShowData { get; set; } = false;
     }
 }

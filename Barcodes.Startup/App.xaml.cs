@@ -52,9 +52,12 @@ namespace Barcodes.Startup
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
         {
             base.RegisterRequiredTypes(containerRegistry);
+            
             containerRegistry.RegisterSingleton<IAppSettingsService, AppSettingsService>();
             containerRegistry.RegisterSingleton<IDialogsService, DialogsService>();
             RegisterGlobalExceptionHandler();
+
+            container.Resolve<IAppSettingsService>().Load(false);
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry) { }

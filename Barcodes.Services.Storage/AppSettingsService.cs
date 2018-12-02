@@ -10,10 +10,18 @@ namespace Barcodes.Services.Storage
 {
     public class AppSettingsService : IAppSettingsService
     {
-        public AppSettings AppSettings { get; private set; } 
-            = new AppSettings();
-        public string AppSettingsPath { get; } 
-            = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appSettings.json");
+        public string StoragePath
+        {
+            get => AppSettings.StoragePath;
+            set
+            {
+                AppSettings.StoragePath = value;
+                Save();
+            }
+        }
+
+        public string AppSettingsPath { get; }  = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appSettings.json");
+        public AppSettings AppSettings { get; private set; } = new AppSettings();
 
         public void Load(bool throwException = false)
         {

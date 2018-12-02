@@ -2,11 +2,14 @@
 using Barcodes.Core.Services;
 using Barcodes.Services.Dialogs;
 using Barcodes.Services.Generator;
+using Barcodes.Services.Storage;
 using Barcodes.Utils;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -42,13 +45,18 @@ namespace Barcodes.Core.ViewModels
         private readonly IBarcodesGeneratorService barcodesGenerator;
         private readonly IDialogsService dialogsService;
         private readonly IBarcodeWindowsService barcodeWindowsService;
+        private readonly IAppSettingsService appSettingsService;
+        private readonly IBarcodeStorageService barcodeStorageService;
 
         public ShellViewModel(IBarcodesGeneratorService barcodesGenerator, IDialogsService dialogsService, 
-            IBarcodeWindowsService barcodeWindowsService, IEventAggregator eventAggregator)
+            IBarcodeWindowsService barcodeWindowsService, IEventAggregator eventAggregator, 
+            IAppSettingsService appSettingsService, IBarcodeStorageService barcodeStorageService)
         {
             this.barcodesGenerator = barcodesGenerator;
             this.dialogsService = dialogsService;
             this.barcodeWindowsService = barcodeWindowsService;
+            this.appSettingsService = appSettingsService;
+            this.barcodeStorageService = barcodeStorageService;
 
             Barcodes = new BarcodesViewModel(barcodesGenerator, dialogsService, barcodeWindowsService);
 
@@ -59,15 +67,16 @@ namespace Barcodes.Core.ViewModels
             CopyToClipboardCommand = new DelegateCommand<BarcodeResultViewModel>(CopyToClipboard);
             DeleteCommand = new DelegateCommand<BarcodeResultViewModel>(Barcodes.Delete);
 
-            SaveToFileCommand = new DelegateCommand(SaveToFile);
-            LoadFromFileCommand = new DelegateCommand(LoadFromFile);
+            SaveToFileCommand = new DelegateCommand(SaveBarcodesToFile);
+            LoadFromFileCommand = new DelegateCommand(LoadBarcodesFromFile);
             OpenStorageLocationCommand = new DelegateCommand(OpenStorageLocation);
             CloseCommand = new DelegateCommand(() => eventAggregator.GetEvent<CloseEvent>().Publish());
             ExportToPdfCommand = new DelegateCommand(ExportToPdf);
             ShowHelpCommand = new DelegateCommand(ShowHelp);
 
-
             GenerateRandomBarcode();
+
+            LoadBarcodesFromFile(appSettingsService.StoragePath);
         }
 
         public DelegateCommand SaveToFileCommand { get; private set; }
@@ -119,17 +128,84 @@ namespace Barcodes.Core.ViewModels
 
         private void OpenStorageLocation()
         {
-            throw new NotImplementedException();
+            try
+            {
+                string argument = "/select, \"" + appSettingsService.StoragePath + "\"";
+                System.Diagnostics.Process.Start("explorer.exe", argument);
+            }
+            catch (Exception exc)
+            {
+                dialogsService.ShowException("Can not open storage file location", exc);
+            }
         }
 
-        private void LoadFromFile()
+        private void LoadBarcodesFromFile()
         {
-            throw new NotImplementedException();
+            var directoryPath = Path.GetDirectoryName(appSettingsService.StoragePath);
+            var filePath = dialogsService.OpenFile("Barcodes storage file", directoryPath, new DialogFilterPair { DisplayName = "json", ExtensionsList = "json" });
+            if (string.IsNullOrEmpty(filePath))
+                return;
+
+            LoadBarcodesFromFile(filePath);
         }
 
-        private void SaveToFile()
+        private void LoadBarcodesFromFile(string storagePath)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var barcodes = barcodeStorageService.Load(storagePath, false);
+                if (barcodes == null)
+                    return;
+
+                foreach (var barcode in barcodes)
+                {
+                    var barcodeData = new BarcodeData
+                    {
+                        Data = barcode.Data,
+                        Type = barcode.Type
+                    };
+                    Barcodes.GenerateBarcode(barcodeData, barcode.Title);
+                }
+                appSettingsService.StoragePath = storagePath;
+                Barcodes.StatusMessage = $"Successfully loaded barcodes from {Path.GetFileName(storagePath)}";
+            }
+            catch (Exception exc)
+            {
+                dialogsService.ShowException("Error during loading barcodes from file", exc);
+            }
+        }
+
+        private void SaveBarcodesToFile()
+        {
+            if (!Barcodes.Barcodes.Any())
+            {
+                dialogsService.ShowError("Generate barcodes before saving");
+                return;
+            }
+
+            try
+            {
+                var fileName = Path.GetFileName(appSettingsService.StoragePath);
+                var directoryPath = Path.GetDirectoryName(appSettingsService.StoragePath);
+                var filePath = dialogsService.SaveFile("Barcodes storage file", directoryPath, fileName, new DialogFilterPair { DisplayName = "json", ExtensionsList = "json" });
+                if (string.IsNullOrEmpty(filePath))
+                    return;
+
+                var barcodesToSave = Barcodes.Barcodes.Select(b => new BarcodeStorageEntry
+                {
+                    Data = b.Data,
+                    Title = b.Title,
+                    Type = b.BarcodeType
+                }).ToList();
+
+                barcodeStorageService.Save(filePath, barcodesToSave);
+                appSettingsService.StoragePath = filePath;
+                Barcodes.StatusMessage = $"Successfully saved barcodes to {fileName}";
+            }
+            catch(Exception exc)
+            {
+                dialogsService.ShowException("Error during saving barcodes to file", exc);
+            }
         }
     }
 }

@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,14 +46,24 @@
   <ItemGroup>
     <Compile Include="AppSettings.cs" />
     <Compile Include="AppSettingsService.cs" />
+    <Compile Include="BarcodeStorageService.cs" />
+    <Compile Include="BarcodeStorageEntry.cs" />
     <Compile Include="IAppSettingsService.cs" />
+    <Compile Include="IBarcodeStorageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Barcodes.Services.Generator\Barcodes.Services.Generator.csproj">
+      <Project>{D4D91166-8BF2-4E82-825A-BD1F46B05B48}</Project>
+      <Name>Barcodes.Services.Generator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Barcodes.Utils\Barcodes.Utils.csproj">
       <Project>{355f10fd-fe43-432a-a826-23ce5280170e}</Project>
       <Name>Barcodes.Utils</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

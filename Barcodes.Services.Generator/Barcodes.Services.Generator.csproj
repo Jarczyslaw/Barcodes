@@ -49,6 +49,8 @@
   <ItemGroup>
     <Compile Include="BarcodeData.cs" />
     <Compile Include="BarcodesGeneratorService.cs" />
+    <Compile Include="BarcodeType.cs" />
+    <Compile Include="BarcodeTypeExtensions.cs" />
     <Compile Include="IBarcodesGeneratorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

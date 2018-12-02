@@ -8,6 +8,7 @@ namespace Barcodes.Services.Storage
 {
     public interface IAppSettingsService
     {
+        string StoragePath { get; set; }
         AppSettings AppSettings { get; }
         string AppSettingsPath { get; }
         void Load(bool throwException = false);

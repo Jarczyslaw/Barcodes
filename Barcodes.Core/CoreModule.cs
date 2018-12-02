@@ -1,6 +1,7 @@
 ﻿using Barcodes.Core.Services;
 using Barcodes.Core.Views;
 using Barcodes.Services.Generator;
+using Barcodes.Services.Storage;
 using Barcodes.Services.Windows;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -26,6 +27,7 @@ namespace Barcodes.Core
             containerRegistry.RegisterSingleton<IBarcodesGeneratorService, BarcodesGeneratorService>();
             containerRegistry.RegisterSingleton<IWindowsService, WindowsService>();
             containerRegistry.RegisterSingleton<IBarcodeWindowsService, BarcodeWindowsService>();
+            containerRegistry.RegisterSingleton<IBarcodeStorageService, BarcodeStorageService>();
         }
     }
 }

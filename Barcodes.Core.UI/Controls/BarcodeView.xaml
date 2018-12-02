@@ -34,24 +34,24 @@
 
             <Label Grid.ColumnSpan="2"
                     FontWeight="Bold"
-                    Content="{Binding Title}"
+                    Content="{Binding Title, Mode=OneWay}"
                     HorizontalContentAlignment="Center" />
             <Label Grid.Row="1"
                     Content="Type:" />
             <TextBox Grid.Row="1"
                     Grid.Column="1"
-                    Text="{Binding TypeTitle}" />
+                    Text="{Binding TypeTitle, Mode=OneWay}" />
             <Label Grid.Row="2"
                     Content="Data:" />
             <TextBox Grid.Row="2"
                     Grid.Column="1"
-                    Text="{Binding Data}" />
+                    Text="{Binding Data, Mode=OneWay}" />
             <Image Grid.Row="3"
                     Grid.ColumnSpan="2"
                     Margin="40 5"
-                    Source="{Binding Barcode}"
-                    Width="{Binding BarcodeWidth}"
-                   Height="{Binding BarcodeHeight}" />
+                    Source="{Binding Barcode, Mode=OneWay}"
+                    Width="{Binding BarcodeWidth, Mode=OneWay}"
+                   Height="{Binding BarcodeHeight, Mode=OneWay}" />
         </Grid>
     </Border>
 </UserControl>
