@@ -157,7 +157,7 @@ namespace Barcodes.Core.ViewModels
                 Barcode = barcode,
                 Data = barcodeData.Data,
                 Title = title,
-                BarcodeType = barcodeData.Type,
+                Type = barcodeData.Type,
             });
             RaisePropertyChanged(nameof(BarcodesCount));
         }

@@ -25,10 +25,10 @@ namespace Barcodes.Core.ViewModels
 
         public string TypeTitle
         {
-            get => BarcodeType.ToString();
+            get => Type.ToString();
         }
 
-        public BarcodeType BarcodeType { get; set; }
+        public BarcodeType Type { get; set; }
 
         private string data;
         public string Data

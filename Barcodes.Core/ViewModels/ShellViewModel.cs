@@ -195,7 +195,7 @@ namespace Barcodes.Core.ViewModels
                 {
                     Data = b.Data,
                     Title = b.Title,
-                    Type = b.BarcodeType
+                    Type = b.Type
                 }).ToList();
 
                 barcodeStorageService.Save(filePath, barcodesToSave);
