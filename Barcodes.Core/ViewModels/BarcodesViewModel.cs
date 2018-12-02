@@ -37,6 +37,16 @@ namespace Barcodes.Core.ViewModels
             get => Barcodes.Count;
         }
 
+        public bool ExtraInputEnabled
+        {
+            get
+            {
+                if (SelectedBarcodeType == null)
+                    return false;
+                return SelectedBarcodeType.ExtraInput != null;
+            }
+        }
+
         private BarcodeTypeViewModel selectedBarcodeType;
         public BarcodeTypeViewModel SelectedBarcodeType
         {
@@ -51,7 +61,7 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref selectedBarcode, value);
         }
 
-        public ObservableCollection<BarcodeTypeViewModel> BarcodeTypes { get; private set; }
+        public ObservableCollection<BarcodeTypeViewModel> BarcodeTypes { get; private set; } = new ObservableCollection<BarcodeTypeViewModel>();
         public ObservableCollection<BarcodeResultViewModel> Barcodes { get; private set; } = new ObservableCollection<BarcodeResultViewModel>();
 
         private readonly IBarcodesGeneratorService barcodesGenerator;
@@ -72,7 +82,7 @@ namespace Barcodes.Core.ViewModels
 
         private void InitializeBarcodeTypes()
         {
-            BarcodeTypes = new ObservableCollection<BarcodeTypeViewModel>
+            BarcodeTypes.AddRange(new ObservableCollection<BarcodeTypeViewModel>
             {
                 new BarcodeTypeViewModel
                 {
@@ -100,7 +110,7 @@ namespace Barcodes.Core.ViewModels
                     TypeTitle = "QR",
                     Type = EncodeTypes.QR
                 },
-            };
+            });
             SelectedBarcodeType = BarcodeTypes.First();
         }
 
@@ -162,7 +172,17 @@ namespace Barcodes.Core.ViewModels
                 return;
 
             Barcodes.Remove(barcode);
+            StatusMessage = $"Successfully removed \"{barcode.Title}\"";
             RaisePropertyChanged(nameof(BarcodesCount));
+        }
+
+        public void ExtraInput()
+        {
+            var result = SelectedBarcodeType.ExtraInput();
+            if (string.IsNullOrEmpty(result))
+                return;
+
+            Data = result;
         }
     }
 }

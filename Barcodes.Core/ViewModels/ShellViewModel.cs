@@ -29,16 +29,6 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public bool ExtraInputEnabled
-        {
-            get
-            {
-                if (Barcodes.SelectedBarcodeType == null)
-                    return false;
-                return Barcodes.SelectedBarcodeType.ExtraInput != null;
-            }
-        }
-
         private BarcodesViewModel barcodes;
         public BarcodesViewModel Barcodes
         {
@@ -58,53 +48,22 @@ namespace Barcodes.Core.ViewModels
 
             Barcodes = new BarcodesViewModel(barcodesGenerator, dialogsService, barcodeWindowsService);
 
+            GenerateRandomBarcodeCommand = new DelegateCommand(GenerateRandomBarcode);
+            GenerateBarcodeCommand = new DelegateCommand(Barcodes.GenerateBarcode);
+            ExtraInputCommand = new DelegateCommand(Barcodes.ExtraInput, () => Barcodes.ExtraInputEnabled);
+            OpenInNewWindowCommand = new DelegateCommand(OpenInNewWindow);
+            CopyToClipboardCommand = new DelegateCommand<BarcodeResultViewModel>(CopyToClipboard);
+            DeleteCommand = new DelegateCommand<BarcodeResultViewModel>(Barcodes.Delete);
+
             GenerateRandomBarcode();
         }
 
-        private DelegateCommand generateRandomBarcodeCommand;
-        public DelegateCommand GenerateRandomBarcodeCommand
-        {
-            get => generateRandomBarcodeCommand = generateRandomBarcodeCommand ?? new DelegateCommand(GenerateRandomBarcode);
-        }
-
-        private DelegateCommand generateBarcodeCommand;
-        public DelegateCommand GenerateBarcodeCommand
-        {
-            get => generateBarcodeCommand = generateBarcodeCommand ?? new DelegateCommand(Barcodes.GenerateBarcode);
-        }
-
-        private DelegateCommand extraInputCommand;
-        public DelegateCommand ExtraInputCommand
-        {
-            get => extraInputCommand = extraInputCommand ?? new DelegateCommand(ExtraInput, () => ExtraInputEnabled);
-        }
-
-        private DelegateCommand openInNewWindowCommand;
-        public DelegateCommand OpenInNewWindowCommand
-        {
-            get => openInNewWindowCommand = openInNewWindowCommand ?? new DelegateCommand(OpenInNewWindow);
-        }
-
-        private DelegateCommand<BarcodeResultViewModel> copyToClipboardCommand;
-        public DelegateCommand<BarcodeResultViewModel> CopyToClipboardCommand
-        {
-            get => copyToClipboardCommand = copyToClipboardCommand ?? new DelegateCommand<BarcodeResultViewModel>(CopyToClipboard);
-        }
-
-        private DelegateCommand<BarcodeResultViewModel> deleteCommand;
-        public DelegateCommand<BarcodeResultViewModel> DeleteCommand
-        {
-            get => deleteCommand = deleteCommand ?? new DelegateCommand<BarcodeResultViewModel>(Barcodes.Delete);
-        }
-
-        private void ExtraInput()
-        {
-            var result = SelectedBarcodeType.ExtraInput();
-            if (string.IsNullOrEmpty(result))
-                return;
-
-            Barcodes.Data = result;
-        }
+        public DelegateCommand GenerateRandomBarcodeCommand { get; private set; }
+        public DelegateCommand GenerateBarcodeCommand { get; private set; }
+        public DelegateCommand ExtraInputCommand { get; private set; }
+        public DelegateCommand OpenInNewWindowCommand { get; private set; }
+        public DelegateCommand<BarcodeResultViewModel> CopyToClipboardCommand { get; private set; }
+        public DelegateCommand<BarcodeResultViewModel> DeleteCommand { get; private set; }
 
         private void GenerateRandomBarcode()
         {
