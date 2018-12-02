@@ -22,55 +22,117 @@
                 <Button Content="?" />
             </StatusBarItem>
         </StatusBar>
-        <StackPanel>
-            <Image Width="200"
-                   Height="200"
-                   Margin="0 10 0 0"
-                   Source="{Binding RandomBarcode}" />
-            <Label Content="Title" />
-            <TextBox Width="150"
-                     Text="{Binding Title}" />
-            <Label Content="Data" />
-            <TextBox Width="150"
-                     Text="{Binding Data}" />
-            <Button Content="..." 
-                    Command="{Binding ExtraInputCommand}" />
-            <ComboBox Width="150"
-                      ItemsSource="{Binding BarcodeTypes}"
-                      SelectedItem="{Binding SelectedBarcodeType}"
-                      DisplayMemberPath="TypeTitle" />
-            <Button Content="Generate"
-                    Command="{Binding GenerateBarcodeCommand}" />
-            <Label Content="Selected action:" />
-            <ComboBox Width="150"
-                      ItemsSource="{Binding SelectedActions}"
-                      SelectedItem="{Binding CurrentSelectedAction}"
-                      DisplayMemberPath="Title" />
-            <Button Content="Execute"
-                    Command="{Binding ExecuteSelectedActionCommand}" />
-            <ListView Height="300"
-                      SelectionMode="Single"
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <GroupBox Header="Barcode generation"
+                      Padding="5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Label Content="Title:" />
+                    <TextBox Grid.Column="1" 
+                            Text="{Binding Title}" />
+
+                    <Label Grid.Row="1" 
+                           Content="Data:" />
+                    <Grid Grid.Row="1" 
+                                Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox Text="{Binding Data}" />
+                        <Button Grid.Column="1"
+                                Content="Enter data" 
+                                Width="65"
+                                Command="{Binding ExtraInputCommand}" />
+                    </Grid>
+                    
+                    <Label Grid.Row="2" 
+                           Content="Type:" />
+                    <ComboBox Grid.Row="2" 
+                                Grid.Column="1" 
+                                Width="150"
+                                HorizontalAlignment="Left"
+                                ItemsSource="{Binding BarcodeTypes}"
+                                SelectedItem="{Binding SelectedBarcodeType}"
+                                DisplayMemberPath="TypeTitle" />
+
+                    <UniformGrid Grid.Row="4"
+                                Grid.ColumnSpan="2">
+                            <Button Content="Generate!"
+                                    Command="{Binding GenerateBarcodeCommand}" />
+                    </UniformGrid>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Grid.Column="1"
+                      Header="Random barcode"
+                      Padding="5">
+                <Image Width="200"
+                        Height="200"
+                        Margin="0 10 0 0"
+                        Source="{Binding RandomBarcode}" />
+            </GroupBox>
+
+            <GroupBox Grid.Row="2"
+                      Grid.ColumnSpan="2"
+                      Header="Barcodes">
+                <ListView SelectionMode="Single"
                       ItemsSource="{Binding Barcodes}"
-                      SelectedItem="{Binding SelectedBarcode}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseDoubleClick">
-                        <prism:InvokeCommandAction Command="{Binding OpenInNewWindowCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                      SelectedItem="{Binding SelectedBarcode}"
+                      Background="Transparent" 
+                      BorderThickness="0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <prism:InvokeCommandAction Command="{Binding OpenInNewWindowCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
                                    ItemWidth="{Binding (ListView.View).ItemWidth, RelativeSource={RelativeSource AncestorType=ListView}}"
                                    MinWidth="{Binding ItemWidth, RelativeSource={RelativeSource Self}}"
                                    ItemHeight="{Binding (ListView.View).ItemHeight, RelativeSource={RelativeSource AncestorType=ListView}}" />
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <controls:BarcodeView />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <controls:BarcodeView />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Open in new window"
+                                    Command="{Binding OpenInNewWindowCommand}" />
+                            <MenuItem Header="Copy to clipboard"
+                                    Command="{Binding CopyToClipboardCommand}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                            <MenuItem Header="Delete"
+                                    Command="{Binding DeleteCommand}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                </ListView>
+            </GroupBox>
+        </Grid>
     </DockPanel>
 </UserControl>

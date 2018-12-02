@@ -12,4 +12,9 @@
     <Style TargetType="Button">
         <Setter Property="Margin" Value="3" />
     </Style>
+
+    <Style TargetType="ComboBox">
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Margin" Value="3" />
+    </Style>
 </ResourceDictionary>

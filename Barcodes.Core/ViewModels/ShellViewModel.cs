@@ -2,16 +2,12 @@
 using Barcodes.Core.Services;
 using Barcodes.Services.Dialogs;
 using Barcodes.Services.Generator;
-using Barcodes.Services.Windows;
 using Barcodes.Utils;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -74,17 +70,17 @@ namespace Barcodes.Core.ViewModels
         }
 
         public BarcodeViewModel SelectedBarcode { get; set; }
-        public SelectedActionViewModel CurrentSelectedAction { get; set; }
 
         public DelegateCommand GenerateRandomBarcodeCommand { get; private set; }
         public DelegateCommand GenerateBarcodeCommand { get; private set; }
-        public DelegateCommand ExecuteSelectedActionCommand { get; private set; }
-        public DelegateCommand OpenInNewWindowCommand { get; private set; }
         public DelegateCommand ExtraInputCommand { get; private set; }
+
+        public DelegateCommand OpenInNewWindowCommand { get; private set; }
+        public DelegateCommand<BarcodeViewModel> CopyToClipboardCommand { get; private set; }
+        public DelegateCommand<BarcodeViewModel> DeleteCommand { get; private set; }
 
         public ObservableCollection<BarcodeTypeViewModel> BarcodeTypes { get; private set; }
         public ObservableCollection<BarcodeViewModel> Barcodes { get; private set; } = new ObservableCollection<BarcodeViewModel>();
-        public ObservableCollection<SelectedActionViewModel> SelectedActions { get; private set; }
 
         private readonly IBarcodesGeneratorService barcodesGenerator;
         private readonly IDialogsService dialogsService;
@@ -98,12 +94,13 @@ namespace Barcodes.Core.ViewModels
 
             GenerateRandomBarcodeCommand = new DelegateCommand(GenerateRandomBarcode);
             GenerateBarcodeCommand = new DelegateCommand(GenerateBarcode);
-            ExecuteSelectedActionCommand = new DelegateCommand(() => CurrentSelectedAction?.Action());
-            OpenInNewWindowCommand = new DelegateCommand(OpenInNewWindow);
             ExtraInputCommand = new DelegateCommand(ExtraInput, () => ExtraInputEnabled);
 
+            OpenInNewWindowCommand = new DelegateCommand(OpenInNewWindow);
+            CopyToClipboardCommand = new DelegateCommand<BarcodeViewModel>(CopyToClipboard);
+            DeleteCommand = new DelegateCommand<BarcodeViewModel>(Delete);
+
             InitializeBarcodeTypes();
-            InitializeSelectedActions();
             GenerateRandomBarcode();
 
             Data = "Test data";
@@ -124,29 +121,6 @@ namespace Barcodes.Core.ViewModels
             RandomBarcode = barcodesGenerator.CreateShellBarcode(400, randomText);
         }
 
-        private void InitializeSelectedActions()
-        {
-            SelectedActions = new ObservableCollection<SelectedActionViewModel>
-            {
-                new SelectedActionViewModel
-                {
-                    Title = "Open in new window",
-                    Action = OpenInNewWindow
-                },
-                new SelectedActionViewModel
-                {
-                    Title = "Copy to clipboard",
-                    Action = CopySelectedToClipboard
-                },
-                new SelectedActionViewModel
-                {
-                    Title = "Delete",
-                    Action = DeleteSelected
-                }
-            };
-            CurrentSelectedAction = SelectedActions.First();
-        }
-
         private void OpenInNewWindow()
         {
             if (SelectedBarcode == null)
@@ -155,25 +129,25 @@ namespace Barcodes.Core.ViewModels
             barcodeWindowsService.OpenBarcodeWindow(SelectedBarcode);
         }
 
-        private void DeleteSelected()
+        private void Delete(BarcodeViewModel barcode)
         {
-            if (SelectedBarcode == null)
+            if (barcode == null)
                 return;
 
             if (!dialogsService.ShowYesNoQuestion("Do you really want to delete selected barcode?"))
                 return;
 
-            Barcodes.Remove(SelectedBarcode);
+            Barcodes.Remove(barcode);
             RaisePropertyChanged(nameof(BarcodesCount));
         }
 
-        private void CopySelectedToClipboard()
+        private void CopyToClipboard(BarcodeViewModel barcode)
         {
-            if (SelectedBarcode == null)
+            if (barcode == null)
                 return;
 
-            Clipboard.SetImage(SelectedBarcode.Barcode);
-            StatusMessage = $"Barcode \"{SelectedBarcode.Title}\" copied to clipboard";
+            Clipboard.SetImage(barcode.Barcode);
+            StatusMessage = $"Barcode \"{barcode.Title}\" copied to clipboard";
         }
 
         private void GenerateBarcode()
@@ -199,6 +173,7 @@ namespace Barcodes.Core.ViewModels
                     Title = Title,
                     TypeTitle = SelectedBarcodeType.TypeTitle
                 });
+                StatusMessage = $"Barcode \"{Title}\" generate successfully!";
                 RaisePropertyChanged(nameof(BarcodesCount));
             }
             catch (Exception exc)

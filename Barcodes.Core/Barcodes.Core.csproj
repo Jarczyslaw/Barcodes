@@ -78,7 +78,6 @@
     <Compile Include="ViewModels\BarcodeTypeViewModel.cs" />
     <Compile Include="ViewModels\BarcodeViewModel.cs" />
     <Compile Include="ViewModels\NmvsInputViewModel.cs" />
-    <Compile Include="ViewModels\SelectedActionViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\NmvsInputWindow.xaml.cs">
       <DependentUpon>NmvsInputWindow.xaml</DependentUpon>
