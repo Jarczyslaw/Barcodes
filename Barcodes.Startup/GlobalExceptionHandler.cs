@@ -23,8 +23,11 @@ namespace Barcodes.Startup
                 "AppDomain.CurrentDomain.UnhandledException");
             TaskScheduler.UnobservedTaskException += (s, e) => LogUnhandledException(e.Exception,
                 "TaskScheduler.UnobservedTaskException");
-            app.DispatcherUnhandledException += (s, e) => LogUnhandledException(e.Exception,
-                "Application.Current.DispatcherUnhandledException");
+            app.DispatcherUnhandledException += (s, e) =>
+            {
+                e.Handled = true;
+                LogUnhandledException(e.Exception, "Application.Current.DispatcherUnhandledException");
+            };
         }
 
         private void LogUnhandledException(Exception exception, string source)

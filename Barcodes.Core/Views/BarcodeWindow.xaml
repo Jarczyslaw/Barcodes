@@ -6,7 +6,7 @@
         xmlns:controls="clr-namespace:Barcodes.Core.UI.Controls;assembly=Barcodes.Core.UI"    
         mc:Ignorable="d"
         Title="{Binding HeaderTitle}" 
-        ResizeMode="NoResize"
+        ResizeMode="CanMinimize"
         WindowStartupLocation="CenterOwner"
         SizeToContent="WidthAndHeight">
     <Grid>

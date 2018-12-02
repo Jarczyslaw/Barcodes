@@ -12,14 +12,20 @@
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
-                <MenuItem Header="Open barcodes from file" />
-                <MenuItem Header="Save barcodes to file" />
-                <MenuItem Header="Open storage location" />
+                <MenuItem Header="Load barcodes from file"
+                          Command="{Binding LoadFromFileCommand}" />
+                <MenuItem Header="Save barcodes to file"
+                          Command="{Binding SaveToFileCommand}"/>
+                <MenuItem Header="Open storage location"
+                          Command="{Binding OpenStorageLocationCommand}"/>
                 <Separator />
-                <MenuItem Header="Close" />
+                <MenuItem Header="Close"
+                          Command="{Binding CloseCommand}"/>
             </MenuItem>
-            <MenuItem Header="Export to PDF" />
-            <MenuItem Header="Help" />
+            <MenuItem Header="Export to PDF"
+                      Command="{Binding ExportToPdfCommand}" />
+            <MenuItem Header="Help"
+                      Command="{Binding ShowHelpCommand}" />
         </Menu>
         
         <StatusBar DockPanel.Dock="Bottom">

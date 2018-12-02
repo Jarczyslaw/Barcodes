@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Barcodes.Core.Events;
+using Prism.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,8 +22,13 @@ namespace Barcodes.Core.Views
     /// </summary>
     public partial class ShellWindow : Window
     {
-        public ShellWindow()
+        private readonly IEventAggregator eventAggregator;
+
+        public ShellWindow(IEventAggregator eventAggregator)
         {
+            this.eventAggregator = eventAggregator;
+            eventAggregator.GetEvent<CloseEvent>().Subscribe(Close, ThreadOption.UIThread, false);
+
             InitializeComponent();
         }
     }
