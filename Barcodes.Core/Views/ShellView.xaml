@@ -10,16 +10,24 @@
              d:DesignHeight="800" d:DesignWidth="800"
              prism:ViewModelLocator.AutoWireViewModel="True" Loaded="UserControl_Loaded">
     <DockPanel LastChildFill="True">
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Open barcodes from file" />
+                <MenuItem Header="Save barcodes to file" />
+                <MenuItem Header="Open storage location" />
+                <Separator />
+                <MenuItem Header="Close" />
+            </MenuItem>
+            <MenuItem Header="Export to PDF" />
+            <MenuItem Header="Help" />
+        </Menu>
+        
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
                 <TextBlock Text="{Binding BarcodesCount, StringFormat='Barcodes count: {0}'}" />
             </StatusBarItem>
-            <Separator Visibility="{Binding StatusMessage, Converter={StaticResource StringToVisibilityConverter}}"/>
-            <StatusBarItem>
-                <TextBlock Text="{Binding StatusMessage}" />
-            </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
-                <Button Content="?" />
+                <TextBlock Text="{Binding StatusMessage}" />
             </StatusBarItem>
         </StatusBar>
         <Grid>
@@ -93,7 +101,7 @@
                         Source="{Binding RandomBarcode}" />
             </GroupBox>
 
-            <GroupBox Grid.Row="2"
+            <GroupBox Grid.Row="1"
                       Grid.ColumnSpan="2"
                       Header="Barcodes">
                 <ListView SelectionMode="Single"

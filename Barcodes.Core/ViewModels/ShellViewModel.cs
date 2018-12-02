@@ -71,14 +71,6 @@ namespace Barcodes.Core.ViewModels
 
         public BarcodeViewModel SelectedBarcode { get; set; }
 
-        public DelegateCommand GenerateRandomBarcodeCommand { get; private set; }
-        public DelegateCommand GenerateBarcodeCommand { get; private set; }
-        public DelegateCommand ExtraInputCommand { get; private set; }
-
-        public DelegateCommand OpenInNewWindowCommand { get; private set; }
-        public DelegateCommand<BarcodeViewModel> CopyToClipboardCommand { get; private set; }
-        public DelegateCommand<BarcodeViewModel> DeleteCommand { get; private set; }
-
         public ObservableCollection<BarcodeTypeViewModel> BarcodeTypes { get; private set; }
         public ObservableCollection<BarcodeViewModel> Barcodes { get; private set; } = new ObservableCollection<BarcodeViewModel>();
 
@@ -92,19 +84,47 @@ namespace Barcodes.Core.ViewModels
             this.dialogsService = dialogsService;
             this.barcodeWindowsService = barcodeWindowsService;
 
-            GenerateRandomBarcodeCommand = new DelegateCommand(GenerateRandomBarcode);
-            GenerateBarcodeCommand = new DelegateCommand(GenerateBarcode);
-            ExtraInputCommand = new DelegateCommand(ExtraInput, () => ExtraInputEnabled);
-
-            OpenInNewWindowCommand = new DelegateCommand(OpenInNewWindow);
-            CopyToClipboardCommand = new DelegateCommand<BarcodeViewModel>(CopyToClipboard);
-            DeleteCommand = new DelegateCommand<BarcodeViewModel>(Delete);
-
             InitializeBarcodeTypes();
             GenerateRandomBarcode();
 
             Data = "Test data";
             Title = "Test title";
+        }
+
+        private DelegateCommand generateRandomBarcodeCommand;
+        public DelegateCommand GenerateRandomBarcodeCommand
+        {
+            get => generateRandomBarcodeCommand = generateRandomBarcodeCommand ?? new DelegateCommand(GenerateRandomBarcode);
+        }
+
+        private DelegateCommand generateBarcodeCommand;
+        public DelegateCommand GenerateBarcodeCommand
+        {
+            get => generateBarcodeCommand = generateBarcodeCommand ?? new DelegateCommand(GenerateBarcode);
+        }
+
+        private DelegateCommand extraInputCommand;
+        public DelegateCommand ExtraInputCommand
+        {
+            get => extraInputCommand = extraInputCommand ?? new DelegateCommand(ExtraInput, () => ExtraInputEnabled);
+        }
+
+        private DelegateCommand openInNewWindowCommand;
+        public DelegateCommand OpenInNewWindowCommand
+        {
+            get => openInNewWindowCommand = openInNewWindowCommand ?? new DelegateCommand(OpenInNewWindow);
+        }
+
+        private DelegateCommand<BarcodeViewModel> copyToClipboardCommand;
+        public DelegateCommand<BarcodeViewModel> CopyToClipboardCommand
+        {
+            get => copyToClipboardCommand = copyToClipboardCommand ?? new DelegateCommand<BarcodeViewModel>(CopyToClipboard);
+        }
+
+        private DelegateCommand<BarcodeViewModel> deleteCommand;
+        public DelegateCommand<BarcodeViewModel> DeleteCommand
+        {
+            get => deleteCommand = deleteCommand ?? new DelegateCommand<BarcodeViewModel>(Delete);
         }
 
         private void ExtraInput()
