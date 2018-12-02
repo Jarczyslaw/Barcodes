@@ -21,6 +21,16 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+            <Grid.Resources>
+                <Style TargetType="TextBox">
+                    <Setter Property="IsReadOnly" Value="True" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="Width" Value="300" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="Background" Value="{StaticResource LightGreyBrush}" />
+                    <Setter Property="Margin" Value="3" />
+                </Style>
+            </Grid.Resources>
 
             <Label Grid.ColumnSpan="2"
                     FontWeight="Bold"
@@ -30,17 +40,11 @@
                     Content="Type:" />
             <TextBox Grid.Row="1"
                     Grid.Column="1"
-                    IsReadOnly="True"
-                    Width="300"
-                    HorizontalAlignment="Left"
                     Text="{Binding TypeTitle}" />
             <Label Grid.Row="2"
                     Content="Data:" />
             <TextBox Grid.Row="2"
                     Grid.Column="1"
-                    IsReadOnly="true"
-                    Width="300"
-                    HorizontalAlignment="Left"
                     Text="{Binding Data}" />
             <Image Grid.Row="3"
                     Grid.ColumnSpan="2"

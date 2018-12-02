@@ -10,11 +10,10 @@ namespace Barcodes.Utils
         private static List<int> textsIndexes = new List<int>();
         private static List<string> texts = new List<string>
         {
-            "Informatyka dla biznesu - Polsoft Engineering Sp. z o.o.",
-             "Dorota kradnie mleko!",
+             "D. kradnie mleko!",
              "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
              "Jeśli historia mogłaby nas czegokolwiek nauczyć, to niewątpliwie tego, że żaden naród nie stworzył wyższej cywilizacji bez poszanowania prawa do posiadania własności prywatnej. ~Ludwig von Mises",
-             "Pytasz się, a słyszysz. ~D. Legęza",
+             "Pytasz się, a słyszysz",
              "Public static, public static, public static, public static, public static",
              "https://github.com/Jarczyslaw/",
              "Wszystkie nietrywialne zera funkcji dzeta mają część rzeczywistą równą jedna druga",
