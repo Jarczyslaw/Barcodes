@@ -37,13 +37,13 @@ namespace Barcodes.Core.ViewModels
             get => Barcodes.Count;
         }
 
-        public bool ExtraInputEnabled
+        public bool AdditionalInputEnabled
         {
             get
             {
                 if (SelectedBarcodeType == null)
                     return false;
-                return SelectedBarcodeType.ExtraInput != null;
+                return SelectedBarcodeType.AdditionalInput != null;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Barcodes.Core.ViewModels
                 new BarcodeTypeViewModel
                 {
                     Type = BarcodeType.DataMatrix,
-                    ExtraInput = barcodeWindowsService.OpenNmvsInputWindow
+                    AdditionalInput = barcodeWindowsService.OpenNmvsInputWindow
                 },
                 new BarcodeTypeViewModel
                 {
@@ -175,9 +175,9 @@ namespace Barcodes.Core.ViewModels
             RaisePropertyChanged(nameof(BarcodesCount));
         }
 
-        public void ExtraInput()
+        public void AdditionalInput()
         {
-            var result = SelectedBarcodeType.ExtraInput();
+            var result = SelectedBarcodeType.AdditionalInput();
             if (string.IsNullOrEmpty(result))
                 return;
 

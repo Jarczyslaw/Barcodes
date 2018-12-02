@@ -16,6 +16,6 @@ namespace Barcodes.Core.ViewModels
             get => Type.ToString();
         }
         public BarcodeType Type { get; set; }
-        public Func<string> ExtraInput { get; set; }
+        public Func<string> AdditionalInput { get; set; }
     }
 }

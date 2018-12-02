@@ -7,13 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Barcodes.Core.ViewModels
+namespace Barcodes.Core.ViewModels.AdditionalInput
 {
-    public class NmvsInputViewModel : BindableBase
+    public class NmvsInputViewModel : BaseAdditionalInputViewModel
     {
-        public Action CloseAction { get; set; }
-        public string ResultData { get; private set; } = null;
-
         private string productCode;
         public string ProductCode
         {
@@ -42,29 +39,17 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref serialNo, value);
         }
 
-        public DelegateCommand AcceptCommand { get; private set; }
-        public DelegateCommand CloseCommand { get; private set; }
-
-        private readonly IDialogsService dialogsService;
-
         public NmvsInputViewModel(IDialogsService dialogsService)
+            : base(dialogsService)
         {
-            this.dialogsService = dialogsService;
-
-            AcceptCommand = new DelegateCommand(Accept);
-            CloseCommand = new DelegateCommand(() => CloseAction?.Invoke());
         }
 
-        private void Accept()
+        protected override string GetResultData()
         {
-            if (!Validate())
-                return;
-
-            ResultData = $"01{ProductCode}17{BatchExpDate}21{SerialNo}GS10{BatchId}";
-            CloseAction?.Invoke();
+            return $"01{ProductCode}17{BatchExpDate}21{SerialNo}GS10{BatchId}";
         }
 
-        private bool Validate()
+        protected override bool Validate()
         {
             if (string.IsNullOrEmpty(ProductCode) || ProductCode.Length != 14)
             {

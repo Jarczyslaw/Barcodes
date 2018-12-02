@@ -76,15 +76,16 @@
     <Compile Include="RegionNames.cs" />
     <Compile Include="Services\AppWindowsService.cs" />
     <Compile Include="Services\IAppWindowsService.cs" />
+    <Compile Include="ViewModels\AdditionalInput\BaseAdditionalInputViewModel.cs" />
     <Compile Include="ViewModels\BarcodesViewModel.cs" />
     <Compile Include="ViewModels\BarcodeTypeViewModel.cs" />
     <Compile Include="ViewModels\BarcodeResultViewModel.cs" />
-    <Compile Include="ViewModels\NmvsInputViewModel.cs" />
+    <Compile Include="ViewModels\AdditionalInput\NmvsInputViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\HelpWindow.xaml.cs">
       <DependentUpon>HelpWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NmvsInputWindow.xaml.cs">
+    <Compile Include="Views\AdditionalInput\NmvsInputWindow.xaml.cs">
       <DependentUpon>NmvsInputWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BarcodeWindow.xaml.cs">
@@ -135,7 +136,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\NmvsInputWindow.xaml">
+    <Page Include="Views\AdditionalInput\NmvsInputWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

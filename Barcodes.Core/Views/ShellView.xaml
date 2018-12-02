@@ -76,7 +76,7 @@
                         <Button Grid.Column="1"
                                 Content="Enter data" 
                                 Width="65"
-                                Command="{Binding ExtraInputCommand}" />
+                                Command="{Binding AdditionalInputCommand}" />
                     </Grid>
                     
                     <Label Grid.Row="2" 

@@ -1,4 +1,5 @@
 ﻿using Barcodes.Core.ViewModels;
+using Barcodes.Core.ViewModels.AdditionalInput;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Barcodes.Core.Views
+namespace Barcodes.Core.Views.AdditionalInput
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

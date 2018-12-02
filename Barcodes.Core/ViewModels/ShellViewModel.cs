@@ -32,7 +32,7 @@ namespace Barcodes.Core.ViewModels
             {
                 Barcodes.SelectedBarcodeType = value;
                 RaisePropertyChanged();
-                ExtraInputCommand.RaiseCanExecuteChanged();
+                AdditionalInputCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -63,7 +63,7 @@ namespace Barcodes.Core.ViewModels
 
             GenerateRandomBarcodeCommand = new DelegateCommand(GenerateRandomBarcode);
             GenerateBarcodeCommand = new DelegateCommand(Barcodes.GenerateBarcode);
-            ExtraInputCommand = new DelegateCommand(Barcodes.ExtraInput, () => Barcodes.ExtraInputEnabled);
+            AdditionalInputCommand = new DelegateCommand(Barcodes.AdditionalInput, () => Barcodes.AdditionalInputEnabled);
             OpenInNewWindowCommand = new DelegateCommand(OpenInNewWindow);
             CopyToClipboardCommand = new DelegateCommand<BarcodeResultViewModel>(CopyToClipboard);
             DeleteCommand = new DelegateCommand<BarcodeResultViewModel>(Barcodes.Delete);
@@ -89,7 +89,7 @@ namespace Barcodes.Core.ViewModels
 
         public DelegateCommand GenerateRandomBarcodeCommand { get; private set; }
         public DelegateCommand GenerateBarcodeCommand { get; private set; }
-        public DelegateCommand ExtraInputCommand { get; private set; }
+        public DelegateCommand AdditionalInputCommand { get; private set; }
         public DelegateCommand OpenInNewWindowCommand { get; private set; }
         public DelegateCommand<BarcodeResultViewModel> CopyToClipboardCommand { get; private set; }
         public DelegateCommand<BarcodeResultViewModel> DeleteCommand { get; private set; }

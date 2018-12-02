@@ -1,5 +1,7 @@
 ﻿using Barcodes.Core.ViewModels;
+using Barcodes.Core.ViewModels.AdditionalInput;
 using Barcodes.Core.Views;
+using Barcodes.Core.Views.AdditionalInput;
 using Barcodes.Services.Dialogs;
 using Barcodes.Services.Windows;
 using Prism.Ioc;
