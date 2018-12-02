@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barcodes.Services.Dialogs",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barcodes.Services.Windows", "Barcodes.Services.Windows\Barcodes.Services.Windows.csproj", "{44CE1158-08AB-452E-ABCD-C6E305E1A01A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barcodes.Service.AppSettings", "Barcodes.Service.AppSettings\Barcodes.Service.AppSettings.csproj", "{EEB99D9E-5B41-4CD2-8426-C875BC8D2B08}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barcodes.Services.AppSettings", "Barcodes.Services.AppSettings\Barcodes.Services.AppSettings.csproj", "{EEB99D9E-5B41-4CD2-8426-C875BC8D2B08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

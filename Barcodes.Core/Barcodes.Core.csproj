@@ -106,9 +106,9 @@
       <Project>{930f2b1e-8fea-48bc-86cb-d8bcdab039f5}</Project>
       <Name>Barcodes.Core.UI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Barcodes.Service.AppSettings\Barcodes.Service.AppSettings.csproj">
+    <ProjectReference Include="..\Barcodes.Services.AppSettings\Barcodes.Services.AppSettings.csproj">
       <Project>{eeb99d9e-5b41-4cd2-8426-c875bc8d2b08}</Project>
-      <Name>Barcodes.Service.AppSettings</Name>
+      <Name>Barcodes.Services.AppSettings</Name>
     </ProjectReference>
     <ProjectReference Include="..\Barcodes.Services.Dialogs\Barcodes.Services.Dialogs.csproj">
       <Project>{7519097D-59FF-4717-A043-C083A7AA9A5D}</Project>
