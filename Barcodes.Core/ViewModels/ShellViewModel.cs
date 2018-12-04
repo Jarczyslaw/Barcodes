@@ -2,6 +2,7 @@
 using Barcodes.Core.Services;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.Dialogs;
+using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
 using Barcodes.Utils;
@@ -48,16 +49,19 @@ namespace Barcodes.Core.ViewModels
         private readonly IAppWindowsService barcodeWindowsService;
         private readonly IAppSettingsService appSettingsService;
         private readonly IBarcodeStorageService barcodeStorageService;
+        private readonly IDocExportService docExportService;
 
         public ShellViewModel(IBarcodesGeneratorService barcodesGenerator, IDialogsService dialogsService, 
             IAppWindowsService barcodeWindowsService, IEventAggregator eventAggregator, 
-            IAppSettingsService appSettingsService, IBarcodeStorageService barcodeStorageService)
+            IAppSettingsService appSettingsService, IBarcodeStorageService barcodeStorageService,
+            IDocExportService docExportService)
         {
             this.barcodesGenerator = barcodesGenerator;
             this.dialogsService = dialogsService;
             this.barcodeWindowsService = barcodeWindowsService;
             this.appSettingsService = appSettingsService;
             this.barcodeStorageService = barcodeStorageService;
+            this.docExportService = docExportService;
 
             Barcodes = new BarcodesViewModel(barcodesGenerator, dialogsService, barcodeWindowsService);
 
@@ -124,7 +128,20 @@ namespace Barcodes.Core.ViewModels
 
         private void ExportToPdf()
         {
-            throw new NotImplementedException();
+            if (Barcodes.BarcodesCount == 0)
+            {
+                dialogsService.ShowError("Generate barcodes before export");
+                return;
+            }
+
+            try
+            {
+                
+            }
+            catch (Exception exc)
+            {
+                dialogsService.ShowException("Error when generating a document", exc);
+            }
         }
 
         private void OpenStorageLocation()
@@ -172,13 +189,13 @@ namespace Barcodes.Core.ViewModels
             }
             catch (Exception exc)
             {
-                dialogsService.ShowException("Error during loading barcodes from file", exc);
+                dialogsService.ShowException("Error when loading barcodes from file", exc);
             }
         }
 
         private void SaveBarcodesToFile()
         {
-            if (!Barcodes.Barcodes.Any())
+            if (Barcodes.BarcodesCount == 0)
             {
                 dialogsService.ShowError("Generate barcodes before saving");
                 return;
@@ -205,7 +222,7 @@ namespace Barcodes.Core.ViewModels
             }
             catch(Exception exc)
             {
-                dialogsService.ShowException("Error during saving barcodes to file", exc);
+                dialogsService.ShowException("Error when saving barcodes to file", exc);
             }
         }
     }

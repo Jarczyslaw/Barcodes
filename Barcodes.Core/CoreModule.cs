@@ -1,5 +1,6 @@
 ﻿using Barcodes.Core.Services;
 using Barcodes.Core.Views;
+using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
 using Barcodes.Services.Windows;
@@ -28,6 +29,7 @@ namespace Barcodes.Core
             containerRegistry.RegisterSingleton<IWindowsService, WindowsService>();
             containerRegistry.RegisterSingleton<IAppWindowsService, AppWindowsService>();
             containerRegistry.RegisterSingleton<IBarcodeStorageService, BarcodeStorageService>();
+            containerRegistry.RegisterSingleton<IDocExportService, DocExportService>();
         }
     }
 }
