@@ -7,16 +7,91 @@
         mc:Ignorable="d"
         Title="Barcodes - Help" 
         ResizeMode="CanMinimize"
-        WindowStartupLocation="CenterOwner"
         Width="400"
-        Height="400">
-    <Grid>
-        <RichTextBox>
-            <FlowDocument>
-                <Paragraph>
-                    Help
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
-    </Grid>
+        SizeToContent="Height"
+        WindowStartupLocation="CenterOwner">
+    <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Image Source="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
+                   Width="70"
+                   Margin="10" />
+            <TextBlock Text="Barcodes"
+                       Grid.Column="1"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="40" />
+        </Grid>
+        <StackPanel Margin="5 0 0 0">
+            <TextBlock Text="Barcodes - simple app to manage all necessary barcodes" />
+            <TextBlock x:Name="tbVersion" />
+        </StackPanel>
+        <StackPanel Margin="5">
+            <GroupBox Header="Details">
+                <RichTextBox BorderThickness="0"
+                             IsReadOnly="True"
+                             IsDocumentEnabled="True">
+                    <RichTextBox.Resources>
+                        <Style TargetType="Hyperlink">
+                            <Setter Property="Cursor" Value="Hand" />
+                            <EventSetter Event="MouseLeftButtonDown" Handler="Hyperlink_MouseLeftButtonDown" />
+                        </Style>
+                    </RichTextBox.Resources>
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="Icons comes from" />
+                            <Hyperlink NavigateUri="https://iconmonstr.com">iconmonstr</Hyperlink>
+                            <LineBreak />
+                            <Run Text="Libraries used: " />
+                        </Paragraph>
+                        <List MarkerStyle="Disc" MarkerOffset="1">
+                            <ListItem>
+                                <Paragraph>
+                                    <Run Text=" Prism"/>
+                                </Paragraph>
+                            </ListItem>
+                            <ListItem>
+                                <Paragraph>
+                                    <Run Text=" Aspose.BarCode"/>
+                                </Paragraph>
+                            </ListItem>
+                            <ListItem>
+                                <Paragraph>
+                                    <Run Text=" MigraDoc"/>
+                                </Paragraph>
+                            </ListItem>
+                            <ListItem>
+                                <Paragraph>
+                                    <Run Text=" WindowsAPICodecPack"/>
+                                </Paragraph>
+                            </ListItem>
+                            <ListItem>
+                                <Paragraph>
+                                    <Run Text=" Json.NET by Newtonsoft"/>
+                                </Paragraph>
+                            </ListItem>
+                        </List>
+                        <Paragraph>
+                            <Run Text="Sources are available on GitHub:" />
+                            <Hyperlink NavigateUri="https://github.com/Jarczyslaw">https://github.com/Jarczyslaw</Hyperlink>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </GroupBox>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" 
+                    Content="Close"
+                    Click="Button_Click" />
+            </Grid>
+        </StackPanel>
+    </StackPanel>
 </Window>

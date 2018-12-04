@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +25,25 @@ namespace Barcodes.Core.Views
         public HelpWindow()
         {
             InitializeComponent();
+            ShowVersion();
+            
+        }
+
+        private void ShowVersion()
+        {
+            var appVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
+            tbVersion.Text = $"Version: {appVersion}";
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void Hyperlink_MouseLeftButtonDown(object sender, MouseEventArgs e)
+        {
+            var hyperlink = (Hyperlink)sender;
+            Process.Start(hyperlink.NavigateUri.ToString());
         }
     }
 }
