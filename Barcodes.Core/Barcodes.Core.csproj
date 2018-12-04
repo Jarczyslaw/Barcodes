@@ -114,6 +114,10 @@
       <Project>{7519097D-59FF-4717-A043-C083A7AA9A5D}</Project>
       <Name>Barcodes.Services.Dialogs</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Barcodes.Services.DocExport\Barcodes.Services.DocExport.csproj">
+      <Project>{0D0218CB-1FDB-4845-8C24-05D3F4036F7F}</Project>
+      <Name>Barcodes.Services.DocExport</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Barcodes.Services.Generator\Barcodes.Services.Generator.csproj">
       <Project>{D4D91166-8BF2-4E82-825A-BD1F46B05B48}</Project>
       <Name>Barcodes.Services.Generator</Name>
