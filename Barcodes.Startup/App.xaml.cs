@@ -16,6 +16,7 @@ using Barcodes.Services.Windows;
 using Barcodes.Core.Views;
 using Barcodes.Services.AppSettings;
 using Barcodes.Core.Services;
+using Barcodes.Services.System;
 
 namespace Barcodes.Startup
 {
@@ -56,6 +57,7 @@ namespace Barcodes.Startup
             base.RegisterRequiredTypes(containerRegistry);
             containerRegistry.RegisterSingleton<IAppSettingsService, AppSettingsService>();
             containerRegistry.RegisterSingleton<IAppDialogsService, AppDialogsService>();
+            containerRegistry.RegisterSingleton<ISystemService, SystemService>();
             RegisterGlobalExceptionHandler();
 
             container.Resolve<IAppSettingsService>().Load(false);

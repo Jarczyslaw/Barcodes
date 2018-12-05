@@ -26,7 +26,6 @@ namespace Barcodes.Core.Views
         {
             InitializeComponent();
             ShowVersion();
-            
         }
 
         private void ShowVersion()
@@ -42,8 +41,12 @@ namespace Barcodes.Core.Views
 
         private void Hyperlink_MouseLeftButtonDown(object sender, MouseEventArgs e)
         {
-            var hyperlink = (Hyperlink)sender;
-            Process.Start(hyperlink.NavigateUri.ToString());
+            try
+            {
+                var hyperlink = (Hyperlink)sender;
+                Process.Start(hyperlink.NavigateUri.ToString());
+            }
+            catch { }
         }
     }
 }

@@ -2,6 +2,7 @@
 using Barcodes.Core.Services;
 using Barcodes.Services.Dialogs;
 using Barcodes.Services.Generator;
+using Barcodes.Services.System;
 using Barcodes.Utils;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -82,12 +83,15 @@ namespace Barcodes.Core.ViewModels
         private readonly IBarcodesGeneratorService barcodesGenerator;
         private readonly IAppDialogsService dialogsService;
         private readonly IAppWindowsService appWindowsService;
+        private readonly ISystemService systemService;
 
-        public BarcodesViewModel(IBarcodesGeneratorService barcodesGenerator, IAppDialogsService dialogsService, IAppWindowsService appWindowsService)
+        public BarcodesViewModel(IBarcodesGeneratorService barcodesGenerator, IAppDialogsService dialogsService,
+            IAppWindowsService appWindowsService, ISystemService systemService)
         {
             this.barcodesGenerator = barcodesGenerator;
             this.dialogsService = dialogsService;
             this.appWindowsService = appWindowsService;
+            this.systemService = systemService;
 
             GenerateRandomBarcodeCommand = new DelegateCommand(GenerateRandomBarcode);
             GenerateBarcodeCommand = new DelegateCommand(GenerateBarcode);
@@ -219,7 +223,7 @@ namespace Barcodes.Core.ViewModels
             if (barcode == null)
                 return;
 
-            Clipboard.SetImage(barcode.Barcode);
+            systemService.CopyToClipboard(barcode.Barcode);
             StatusMessage = $"Barcode \"{barcode.Title}\" copied to clipboard";
         }
     }

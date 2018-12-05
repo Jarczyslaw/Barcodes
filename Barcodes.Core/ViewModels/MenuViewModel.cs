@@ -4,6 +4,7 @@ using Barcodes.Services.AppSettings;
 using Barcodes.Services.Dialogs;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
+using Barcodes.Services.System;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -29,14 +30,16 @@ namespace Barcodes.Core.ViewModels
         private readonly IAppSettingsService appSettingsService;
         private readonly IBarcodeStorageService barcodeStorageService;
         private readonly IAppWindowsService appWindowsService;
+        private readonly ISystemService systemService;
 
         public MenuViewModel(IAppDialogsService dialogsService, IEventAggregator eventAggregator, IAppSettingsService appSettingsService,
-            IBarcodeStorageService barcodeStorageService, IAppWindowsService appWindowsService)
+            IBarcodeStorageService barcodeStorageService, IAppWindowsService appWindowsService, ISystemService systemService)
         {
             this.dialogsService = dialogsService;
             this.appSettingsService = appSettingsService;
             this.barcodeStorageService = barcodeStorageService;
             this.appWindowsService = appWindowsService;
+            this.systemService = systemService;
 
             SaveToFileCommand = new DelegateCommand(SaveBarcodesToFile);
             LoadFromFileCommand = new DelegateCommand(LoadBarcodesFromFile);
@@ -60,7 +63,7 @@ namespace Barcodes.Core.ViewModels
 
         private void LoadBarcodesFromFile()
         {
-            var filePath = dialogsService.OpenStorageFilePath(appSettingsService.AppSettings.StoragePath);
+            var filePath = dialogsService.OpenStorageFilePath(appSettingsService.StoragePath);
             if (string.IsNullOrEmpty(filePath))
                 return;
 
@@ -103,7 +106,7 @@ namespace Barcodes.Core.ViewModels
 
             try
             {
-                var filePath = dialogsService.SaveStorageFilePath(appSettingsService.AppSettings.StoragePath);
+                var filePath = dialogsService.SaveStorageFilePath(appSettingsService.StoragePath);
                 if (string.IsNullOrEmpty(filePath))
                     return;
 
@@ -151,8 +154,7 @@ namespace Barcodes.Core.ViewModels
         {
             try
             {
-                string argument = "/select, \"" + appSettingsService.StoragePath + "\"";
-                System.Diagnostics.Process.Start("explorer.exe", argument);
+                systemService.OpenLocation(appSettingsService.StoragePath);
             }
             catch (Exception exc)
             {
