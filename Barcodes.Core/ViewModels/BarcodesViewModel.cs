@@ -2,15 +2,26 @@
 using Barcodes.Core.Services;
 using Barcodes.Services.Dialogs;
 using Barcodes.Services.Generator;
+using Barcodes.Utils;
+using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace Barcodes.Core.ViewModels
 {
     public class BarcodesViewModel : BindableBase
     {
+        private BitmapSource randomBarcode;
+        public BitmapSource RandomBarcode
+        {
+            get => randomBarcode;
+            set => SetProperty(ref randomBarcode, value);
+        }
+
         private string statusMessage = string.Empty;
         public string StatusMessage
         {
@@ -51,7 +62,11 @@ namespace Barcodes.Core.ViewModels
         public BarcodeTypeViewModel SelectedBarcodeType
         {
             get => selectedBarcodeType;
-            set => SetProperty(ref selectedBarcodeType, value);
+            set
+            {
+                SetProperty(ref selectedBarcodeType, value);
+                AdditionalInputCommand.RaiseCanExecuteChanged();
+            }
         }
 
         private BarcodeResultViewModel selectedBarcode;
@@ -66,13 +81,20 @@ namespace Barcodes.Core.ViewModels
 
         private readonly IBarcodesGeneratorService barcodesGenerator;
         private readonly IDialogsService dialogsService;
-        private readonly IAppWindowsService barcodeWindowsService;
+        private readonly IAppWindowsService appWindowsService;
 
-        public BarcodesViewModel(IBarcodesGeneratorService barcodesGenerator, IDialogsService dialogsService, IAppWindowsService barcodeWindowsService)
+        public BarcodesViewModel(IBarcodesGeneratorService barcodesGenerator, IDialogsService dialogsService, IAppWindowsService appWindowsService)
         {
             this.barcodesGenerator = barcodesGenerator;
             this.dialogsService = dialogsService;
-            this.barcodeWindowsService = barcodeWindowsService;
+            this.appWindowsService = appWindowsService;
+
+            GenerateRandomBarcodeCommand = new DelegateCommand(GenerateRandomBarcode);
+            GenerateBarcodeCommand = new DelegateCommand(GenerateBarcode);
+            AdditionalInputCommand = new DelegateCommand(AdditionalInput, () => AdditionalInputEnabled);
+            OpenInNewWindowCommand = new DelegateCommand(OpenInNewWindow);
+            CopyToClipboardCommand = new DelegateCommand<BarcodeResultViewModel>(CopyToClipboard);
+            DeleteCommand = new DelegateCommand<BarcodeResultViewModel>(Delete);
 
             InitializeBarcodeTypes();
 
@@ -80,31 +102,26 @@ namespace Barcodes.Core.ViewModels
             Data = "Data1";
         }
 
+        public DelegateCommand GenerateRandomBarcodeCommand { get; private set; }
+        public DelegateCommand GenerateBarcodeCommand { get; private set; }
+        public DelegateCommand AdditionalInputCommand { get; private set; }
+        public DelegateCommand OpenInNewWindowCommand { get; private set; }
+        public DelegateCommand<BarcodeResultViewModel> CopyToClipboardCommand { get; private set; }
+        public DelegateCommand<BarcodeResultViewModel> DeleteCommand { get; private set; }
+
         private void InitializeBarcodeTypes()
         {
             BarcodeTypes.AddRange(new ObservableCollection<BarcodeTypeViewModel>
             {
-                new BarcodeTypeViewModel
-                {
-                    Type = BarcodeType.Ean13
-                },
-                new BarcodeTypeViewModel
-                {
-                    Type = BarcodeType.Ean128
-                },
-                new BarcodeTypeViewModel
-                {
-                    Type = BarcodeType.Code128
-                },
+                new BarcodeTypeViewModel { Type = BarcodeType.Ean13 },
+                new BarcodeTypeViewModel { Type = BarcodeType.Ean128 },
+                new BarcodeTypeViewModel { Type = BarcodeType.Code128 },
                 new BarcodeTypeViewModel
                 {
                     Type = BarcodeType.DataMatrix,
-                    AdditionalInput = barcodeWindowsService.OpenNmvsInputWindow
+                    AdditionalInput = appWindowsService.OpenNmvsInputWindow
                 },
-                new BarcodeTypeViewModel
-                {
-                    Type = BarcodeType.QRCode
-                },
+                new BarcodeTypeViewModel { Type = BarcodeType.QRCode },
             });
             SelectedBarcodeType = BarcodeTypes.First();
         }
@@ -182,6 +199,28 @@ namespace Barcodes.Core.ViewModels
                 return;
 
             Data = result;
+        }
+
+        public void GenerateRandomBarcode()
+        {
+            var randomText = RandomTexts.Get();
+            RandomBarcode = barcodesGenerator.CreateShellBarcode(400, randomText);
+        }
+        private void OpenInNewWindow()
+        {
+            if (SelectedBarcode == null)
+                return;
+
+            appWindowsService.OpenBarcodeWindow(SelectedBarcode);
+        }
+
+        private void CopyToClipboard(BarcodeResultViewModel barcode)
+        {
+            if (barcode == null)
+                return;
+
+            Clipboard.SetImage(barcode.Barcode);
+            StatusMessage = $"Barcode \"{barcode.Title}\" copied to clipboard";
         }
     }
 }

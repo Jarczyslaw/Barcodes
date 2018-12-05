@@ -13,19 +13,19 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Header="Load barcodes from file"
-                          Command="{Binding LoadFromFileCommand}" />
+                          Command="{Binding Menu.LoadFromFileCommand}" />
                 <MenuItem Header="Save barcodes to file"
-                          Command="{Binding SaveToFileCommand}"/>
+                          Command="{Binding Menu.SaveToFileCommand}"/>
                 <MenuItem Header="Open storage location"
-                          Command="{Binding OpenStorageLocationCommand}"/>
+                          Command="{Binding Menu.OpenStorageLocationCommand}"/>
                 <Separator />
                 <MenuItem Header="Close"
-                          Command="{Binding CloseCommand}"/>
+                          Command="{Binding Menu.CloseCommand}"/>
             </MenuItem>
             <MenuItem Header="Export to PDF"
-                      Command="{Binding ExportToPdfCommand}" />
+                      Command="{Binding Menu.ExportToPdfCommand}" />
             <MenuItem Header="Help"
-                      Command="{Binding ShowHelpCommand}" />
+                      Command="{Binding Menu.ShowHelpCommand}" />
         </Menu>
         
         <StatusBar DockPanel.Dock="Bottom">
@@ -76,7 +76,7 @@
                         <Button Grid.Column="1"
                                 Content="Enter data" 
                                 Width="65"
-                                Command="{Binding AdditionalInputCommand}" />
+                                Command="{Binding Barcodes.AdditionalInputCommand}" />
                     </Grid>
                     
                     <Label Grid.Row="2" 
@@ -86,13 +86,13 @@
                                 Width="150"
                                 HorizontalAlignment="Left"
                                 ItemsSource="{Binding Barcodes.BarcodeTypes}"
-                                SelectedItem="{Binding SelectedBarcodeType}"
+                                SelectedItem="{Binding Barcodes.SelectedBarcodeType}"
                                 DisplayMemberPath="TypeTitle" />
 
                     <UniformGrid Grid.Row="4"
                                 Grid.ColumnSpan="2">
                             <Button Content="Generate!"
-                                    Command="{Binding GenerateBarcodeCommand}" />
+                                    Command="{Binding Barcodes.GenerateBarcodeCommand}" />
                     </UniformGrid>
                 </Grid>
             </GroupBox>
@@ -102,7 +102,7 @@
                 <Image Width="200"
                         Height="200"
                         Margin="0 10 0 0"
-                        Source="{Binding RandomBarcode}" />
+                        Source="{Binding Barcodes.RandomBarcode}" />
             </GroupBox>
 
             <GroupBox Grid.Row="1"
@@ -116,7 +116,7 @@
                       BorderThickness="0">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDoubleClick">
-                            <prism:InvokeCommandAction Command="{Binding OpenInNewWindowCommand}" />
+                            <prism:InvokeCommandAction Command="{Binding Barcodes.OpenInNewWindowCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <ListView.ItemsPanel>
@@ -135,12 +135,12 @@
                     <ListView.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Open in new window"
-                                    Command="{Binding OpenInNewWindowCommand}" />
+                                    Command="{Binding Barcodes.OpenInNewWindowCommand}" />
                             <MenuItem Header="Copy to clipboard"
-                                    Command="{Binding CopyToClipboardCommand}"
+                                    Command="{Binding Barcodes.CopyToClipboardCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                             <MenuItem Header="Delete"
-                                    Command="{Binding DeleteCommand}"
+                                    Command="{Binding Barcodes.DeleteCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                         </ContextMenu>
                     </ListView.ContextMenu>

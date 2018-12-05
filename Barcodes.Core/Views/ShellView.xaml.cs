@@ -37,7 +37,7 @@ namespace Barcodes.Core.Views
                 return;
 
             if (e.Key == Key.F5)
-                viewModel.GenerateRandomBarcodeCommand.Execute();
+                viewModel.Barcodes.GenerateRandomBarcodeCommand.Execute();
         }
     }
 }
