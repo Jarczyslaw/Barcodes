@@ -80,10 +80,10 @@ namespace Barcodes.Core.ViewModels
         public ObservableCollection<BarcodeResultViewModel> Barcodes { get; private set; } = new ObservableCollection<BarcodeResultViewModel>();
 
         private readonly IBarcodesGeneratorService barcodesGenerator;
-        private readonly IDialogsService dialogsService;
+        private readonly IAppDialogsService dialogsService;
         private readonly IAppWindowsService appWindowsService;
 
-        public BarcodesViewModel(IBarcodesGeneratorService barcodesGenerator, IDialogsService dialogsService, IAppWindowsService appWindowsService)
+        public BarcodesViewModel(IBarcodesGeneratorService barcodesGenerator, IAppDialogsService dialogsService, IAppWindowsService appWindowsService)
         {
             this.barcodesGenerator = barcodesGenerator;
             this.dialogsService = dialogsService;

@@ -1,4 +1,5 @@
-﻿using Barcodes.Services.Dialogs;
+﻿using Barcodes.Core.Services;
+using Barcodes.Services.Dialogs;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
@@ -39,7 +40,7 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
             set => SetProperty(ref serialNo, value);
         }
 
-        public NmvsInputViewModel(IDialogsService dialogsService)
+        public NmvsInputViewModel(IAppDialogsService dialogsService)
             : base(dialogsService)
         {
         }

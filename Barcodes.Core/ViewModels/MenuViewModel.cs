@@ -25,12 +25,12 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref barcodes, value);
         }
 
-        private readonly IDialogsService dialogsService;
+        private readonly IAppDialogsService dialogsService;
         private readonly IAppSettingsService appSettingsService;
         private readonly IBarcodeStorageService barcodeStorageService;
         private readonly IAppWindowsService appWindowsService;
 
-        public MenuViewModel(IDialogsService dialogsService, IEventAggregator eventAggregator, IAppSettingsService appSettingsService,
+        public MenuViewModel(IAppDialogsService dialogsService, IEventAggregator eventAggregator, IAppSettingsService appSettingsService,
             IBarcodeStorageService barcodeStorageService, IAppWindowsService appWindowsService)
         {
             this.dialogsService = dialogsService;
@@ -60,8 +60,7 @@ namespace Barcodes.Core.ViewModels
 
         private void LoadBarcodesFromFile()
         {
-            var directoryPath = Path.GetDirectoryName(appSettingsService.StoragePath);
-            var filePath = dialogsService.OpenFile("Barcodes storage file", directoryPath, new DialogFilterPair { DisplayName = "json", ExtensionsList = "json" });
+            var filePath = dialogsService.OpenStorageFilePath(appSettingsService.AppSettings.StoragePath);
             if (string.IsNullOrEmpty(filePath))
                 return;
 
@@ -104,9 +103,7 @@ namespace Barcodes.Core.ViewModels
 
             try
             {
-                var fileName = Path.GetFileName(appSettingsService.StoragePath);
-                var directoryPath = Path.GetDirectoryName(appSettingsService.StoragePath);
-                var filePath = dialogsService.SaveFile("Barcodes storage file", directoryPath, fileName, new DialogFilterPair { DisplayName = "json", ExtensionsList = "json" });
+                var filePath = dialogsService.SaveStorageFilePath(appSettingsService.AppSettings.StoragePath);
                 if (string.IsNullOrEmpty(filePath))
                     return;
 
@@ -119,7 +116,7 @@ namespace Barcodes.Core.ViewModels
 
                 barcodeStorageService.Save(filePath, barcodesToSave);
                 appSettingsService.StoragePath = filePath;
-                Barcodes.StatusMessage = $"Successfully saved barcodes to {fileName}";
+                Barcodes.StatusMessage = $"Successfully saved {Path.GetFileName(filePath)}";
             }
             catch (Exception exc)
             {

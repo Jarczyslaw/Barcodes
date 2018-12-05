@@ -1,4 +1,5 @@
-﻿using Barcodes.Services.Dialogs;
+﻿using Barcodes.Core.Services;
+using Barcodes.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,9 @@ namespace Barcodes.Startup
 {
     public class GlobalExceptionHandler
     {
-        private readonly IDialogsService _dialogsService;
+        private readonly IAppDialogsService _dialogsService;
 
-        public GlobalExceptionHandler(IDialogsService dialogsService)
+        public GlobalExceptionHandler(IAppDialogsService dialogsService)
         {
             _dialogsService = dialogsService;
         }

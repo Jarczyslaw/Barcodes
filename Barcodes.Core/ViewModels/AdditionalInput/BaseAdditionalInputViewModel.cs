@@ -1,4 +1,5 @@
-﻿using Barcodes.Services.Dialogs;
+﻿using Barcodes.Core.Services;
+using Barcodes.Services.Dialogs;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
@@ -17,9 +18,9 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
         public DelegateCommand AcceptCommand { get; private set; }
         public DelegateCommand CloseCommand { get; private set; }
 
-        protected readonly IDialogsService dialogsService;
+        protected readonly IAppDialogsService dialogsService;
 
-        public BaseAdditionalInputViewModel(IDialogsService dialogsService)
+        public BaseAdditionalInputViewModel(IAppDialogsService dialogsService)
         {
             this.dialogsService = dialogsService;
 
