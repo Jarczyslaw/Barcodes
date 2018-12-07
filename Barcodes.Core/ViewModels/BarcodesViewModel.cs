@@ -109,12 +109,16 @@ namespace Barcodes.Core.ViewModels
             BarcodeTypes.AddRange(new ObservableCollection<BarcodeTypeViewModel>
             {
                 new BarcodeTypeViewModel { Type = BarcodeType.Ean13 },
-                new BarcodeTypeViewModel { Type = BarcodeType.Ean128 },
+                new BarcodeTypeViewModel
+                {
+                    Type = BarcodeType.Ean128,
+                    AdditionalInput = appWindowsService.OpenEan128ProductWindow
+                },
                 new BarcodeTypeViewModel { Type = BarcodeType.Code128 },
                 new BarcodeTypeViewModel
                 {
                     Type = BarcodeType.DataMatrix,
-                    AdditionalInput = appWindowsService.OpenNmvsInputWindow
+                    AdditionalInput = appWindowsService.OpenNmvsProductWindow
                 },
                 new BarcodeTypeViewModel { Type = BarcodeType.QRCode },
             });

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Barcodes.Core.ViewModels.AdditionalInput
 {
-    public class NmvsInputViewModel : BaseAdditionalInputViewModel
+    public class NmvsProductViewModel : BaseInputViewModel
     {
         private string productCode;
         public string ProductCode
@@ -26,11 +26,16 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
             set => SetProperty(ref batchId, value);
         }
 
-        private string batchExpDate;
         public string BatchExpDate
         {
-            get => batchExpDate;
-            set => SetProperty(ref batchExpDate, value);
+            get => selectedDateTime.ToString("yyMMdd");
+        }
+
+        private DateTime selectedDateTime = DateTime.Now;
+        public DateTime SelectedDateTime
+        {
+            get => selectedDateTime;
+            set => SetProperty(ref selectedDateTime, value);
         }
 
         private string serialNo;
@@ -40,7 +45,7 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
             set => SetProperty(ref serialNo, value);
         }
 
-        public NmvsInputViewModel(IAppDialogsService dialogsService)
+        public NmvsProductViewModel(IAppDialogsService dialogsService)
             : base(dialogsService)
         {
         }

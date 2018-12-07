@@ -20,9 +20,9 @@ namespace Barcodes.Core.Views.AdditionalInput
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class NmvsInputWindow : Window
+    public partial class NmvsProductWindow : Window
     {
-        public NmvsInputWindow(NmvsInputViewModel viewModel)
+        public NmvsProductWindow(NmvsProductViewModel viewModel)
         {
             InitializeComponent();
 

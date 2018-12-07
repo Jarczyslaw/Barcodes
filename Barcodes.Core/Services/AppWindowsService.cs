@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Barcodes.Core.Services
 {
@@ -27,10 +28,19 @@ namespace Barcodes.Core.Services
             Show<BarcodeWindow>(barcodeViewModel);
         }
 
-        public string OpenNmvsInputWindow()
+        public string OpenNmvsProductWindow()
         {
-            var dataContext = containerExtension.Resolve<NmvsInputViewModel>();
-            new NmvsInputWindow(dataContext).ShowDialog();
+            var dataContext = containerExtension.Resolve<NmvsProductViewModel>();
+            var window = new NmvsProductWindow(dataContext);
+            window.ShowDialog();
+            return dataContext.ResultData;
+        }
+
+        public string OpenEan128ProductWindow()
+        {
+            var dataContext = containerExtension.Resolve<Ean128ProductViewModel>();
+            var window = new Ean128ProductWindow(dataContext);
+            window.ShowDialog();
             return dataContext.ResultData;
         }
 

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Barcodes.Core.ViewModels.AdditionalInput
 {
-    public abstract class BaseAdditionalInputViewModel : BindableBase
+    public abstract class BaseInputViewModel : BindableBase
     {
         public Action CloseAction { get; set; }
         public string ResultData { get; private set; } = null;
@@ -20,7 +20,7 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
 
         protected readonly IAppDialogsService dialogsService;
 
-        public BaseAdditionalInputViewModel(IAppDialogsService dialogsService)
+        public BaseInputViewModel(IAppDialogsService dialogsService)
         {
             this.dialogsService = dialogsService;
 
