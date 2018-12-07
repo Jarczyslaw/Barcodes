@@ -164,7 +164,7 @@ namespace Barcodes.Core.ViewModels
         public void GenerateBarcode(BarcodeData barcodeData, string title)
         {
             var barcode = barcodesGenerator.CreateBarcode(barcodeData);
-            Barcodes.Add(new BarcodeResultViewModel
+            Barcodes.Insert(0, new BarcodeResultViewModel
             {
                 Barcode = barcode,
                 Data = barcodeData.Data,
