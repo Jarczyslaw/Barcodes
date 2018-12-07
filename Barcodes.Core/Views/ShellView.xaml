@@ -8,7 +8,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800"
-             prism:ViewModelLocator.AutoWireViewModel="True" Loaded="UserControl_Loaded">
+             prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
@@ -37,10 +37,6 @@
             </StatusBarItem>
         </StatusBar>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -49,7 +45,9 @@
             <GroupBox Header="Barcode generation">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="100" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -78,7 +76,7 @@
                                 Width="65"
                                 Command="{Binding Barcodes.AdditionalInputCommand}" />
                     </Grid>
-                    
+
                     <Label Grid.Row="2" 
                            Content="Type:" />
                     <ComboBox Grid.Row="2" 
@@ -88,25 +86,15 @@
                                 ItemsSource="{Binding Barcodes.BarcodeTypes}"
                                 SelectedItem="{Binding Barcodes.SelectedBarcodeType}"
                                 DisplayMemberPath="TypeTitle" />
-
-                    <UniformGrid Grid.Row="4"
-                                Grid.ColumnSpan="2">
-                            <Button Content="Generate!"
-                                    Command="{Binding Barcodes.GenerateBarcodeCommand}" />
-                    </UniformGrid>
+                    
+                    <Button Grid.Row="4"
+                            Grid.ColumnSpan="4"
+                            Content="Generate!"
+                            Command="{Binding Barcodes.GenerateBarcodeCommand}" />
                 </Grid>
             </GroupBox>
 
-            <GroupBox Grid.Column="1"
-                      Header="Random barcode">
-                <Image Width="200"
-                        Height="200"
-                        Margin="0 10 0 0"
-                        Source="{Binding Barcodes.RandomBarcode}" />
-            </GroupBox>
-
             <GroupBox Grid.Row="1"
-                      Grid.ColumnSpan="2"
                       Padding="0"
                       Header="Barcodes">
                 <ListView SelectionMode="Single"

@@ -39,8 +39,6 @@ namespace Barcodes.Core.ViewModels
             Barcodes = container.Resolve<BarcodesViewModel>();
             Menu = container.Resolve<MenuViewModel>();
             Menu.Barcodes = Barcodes;
-
-            Barcodes.GenerateRandomBarcode();
             Menu.InitialBarcodesLoad();
         }
     }

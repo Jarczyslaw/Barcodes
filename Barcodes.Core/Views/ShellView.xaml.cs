@@ -25,19 +25,5 @@ namespace Barcodes.Core.Views
         {
             InitializeComponent();
         }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            KeyDown += ShellView_KeyDown;      
-        }
-
-        private void ShellView_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!(DataContext is ShellViewModel viewModel))
-                return;
-
-            if (e.Key == Key.F5)
-                viewModel.Barcodes.GenerateRandomBarcodeCommand.Execute();
-        }
     }
 }

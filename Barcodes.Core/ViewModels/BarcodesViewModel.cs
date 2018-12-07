@@ -16,13 +16,6 @@ namespace Barcodes.Core.ViewModels
 {
     public class BarcodesViewModel : BindableBase
     {
-        private BitmapSource randomBarcode;
-        public BitmapSource RandomBarcode
-        {
-            get => randomBarcode;
-            set => SetProperty(ref randomBarcode, value);
-        }
-
         private string statusMessage = string.Empty;
         public string StatusMessage
         {
@@ -93,7 +86,6 @@ namespace Barcodes.Core.ViewModels
             this.appWindowsService = appWindowsService;
             this.systemService = systemService;
 
-            GenerateRandomBarcodeCommand = new DelegateCommand(GenerateRandomBarcode);
             GenerateBarcodeCommand = new DelegateCommand(GenerateBarcode);
             AdditionalInputCommand = new DelegateCommand(AdditionalInput, () => AdditionalInputEnabled);
             OpenInNewWindowCommand = new DelegateCommand(OpenInNewWindow);
@@ -106,7 +98,6 @@ namespace Barcodes.Core.ViewModels
             Data = "Data1";
         }
 
-        public DelegateCommand GenerateRandomBarcodeCommand { get; private set; }
         public DelegateCommand GenerateBarcodeCommand { get; private set; }
         public DelegateCommand AdditionalInputCommand { get; private set; }
         public DelegateCommand OpenInNewWindowCommand { get; private set; }
@@ -205,11 +196,6 @@ namespace Barcodes.Core.ViewModels
             Data = result;
         }
 
-        public void GenerateRandomBarcode()
-        {
-            var randomText = RandomTexts.Get();
-            RandomBarcode = barcodesGenerator.CreateShellBarcode(400, randomText);
-        }
         private void OpenInNewWindow()
         {
             if (SelectedBarcode == null)

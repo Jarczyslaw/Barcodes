@@ -29,14 +29,15 @@ namespace Barcodes.Core.Services
 
         public string OpenNmvsInputWindow()
         {
-            var viewModel = containerExtension.Resolve<NmvsInputViewModel>();
-            new NmvsInputWindow(viewModel).ShowDialog();
-            return viewModel.ResultData;
+            var dataContext = containerExtension.Resolve<NmvsInputViewModel>();
+            new NmvsInputWindow(dataContext).ShowDialog();
+            return dataContext.ResultData;
         }
 
         public void ShowHelpWindow()
         {
-            ShowModal<HelpWindow>(null);
+            var dataContext = containerExtension.Resolve<HelpViewModel>();
+            ShowModal<HelpWindow>(dataContext);
         }
     }
 }

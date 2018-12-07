@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Barcodes.Core.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -28,6 +29,11 @@ namespace Barcodes.Core.Views
             ShowVersion();
         }
 
+        private void HelpWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            KeyDown += HelpWindow_KeyDown;
+        }
+
         private void ShowVersion()
         {
             var appVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
@@ -47,6 +53,15 @@ namespace Barcodes.Core.Views
                 Process.Start(hyperlink.NavigateUri.ToString());
             }
             catch { }
+        }
+
+        private void HelpWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!(DataContext is HelpViewModel viewModel))
+                return;
+
+            if (e.Key == Key.F5)
+                viewModel.GenerateRandomBarcodeCommand.Execute();
         }
     }
 }

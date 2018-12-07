@@ -4,12 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Barcodes.Core.UI.Controls;assembly=Barcodes.Core.UI"    
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
         Title="Barcodes - Help" 
         ResizeMode="CanMinimize"
         Width="400"
         SizeToContent="Height"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        Loaded="HelpWindow_Loaded">
     <StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -17,15 +20,16 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Image Source="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
-                   Width="70"
+            <Image Source="{Binding RandomBarcode}"
+                   Width="150"
+                   Height="150"
                    Margin="10" />
             <TextBlock Text="Barcodes"
                        Grid.Column="1"
                        FontWeight="Bold"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       FontSize="40" />
+                       FontSize="48" />
         </Grid>
         <StackPanel Margin="5 0 0 0">
             <TextBlock Text="Barcodes - simple app to manage all necessary barcodes" />
