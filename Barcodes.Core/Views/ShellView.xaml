@@ -6,6 +6,7 @@
              xmlns:controls="clr-namespace:Barcodes.Core.UI.Controls;assembly=Barcodes.Core.UI"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit" 
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800"
              prism:ViewModelLocator.AutoWireViewModel="True">
@@ -45,9 +46,10 @@
             <GroupBox Header="Barcode generation">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="80" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -86,9 +88,38 @@
                                 ItemsSource="{Binding Barcodes.BarcodeTypes}"
                                 SelectedItem="{Binding Barcodes.SelectedBarcodeType}"
                                 DisplayMemberPath="TypeTitle" />
+
+                    <CheckBox Grid.Row="0"
+                            Grid.Column="3"
+                              Grid.ColumnSpan="2"
+                            IsChecked="{Binding Barcodes.DefaultSize}"
+                              VerticalContentAlignment="Center"
+                              Content="Use default sizes" />
+
+                    <Label Grid.Row="1"
+                           Grid.Column="3"
+                           Content="Width: " />
+                    <toolkit:IntegerUpDown Grid.Row="1"
+                                           Grid.Column="4"
+                                           TextAlignment="Left"
+                                           Minimum="100"
+                                           Margin="{StaticResource DefaultMargin}"
+                                           Value="{Binding Barcodes.Width}"
+                                           IsReadOnly="{Binding Barcodes.DefaultSize}" />
                     
-                    <Button Grid.Row="4"
-                            Grid.ColumnSpan="4"
+                    <Label Grid.Row="2"
+                           Grid.Column="3"
+                           Content="Height: " />
+                    <toolkit:IntegerUpDown Grid.Row="2"
+                                           Grid.Column="4"
+                                           TextAlignment="Left"
+                                           Minimum="100"
+                                           Margin="{StaticResource DefaultMargin}"
+                                           Value="{Binding Barcodes.Height}"
+                                           IsReadOnly="{Binding Barcodes.DefaultSize}" />
+
+                    <Button Grid.Row="5"
+                            Grid.ColumnSpan="5"
                             Content="Generate!"
                             Command="{Binding Barcodes.GenerateBarcodeCommand}" />
                 </Grid>

@@ -37,6 +37,27 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref title, value);
         }
 
+        private bool defaultSize = true;
+        public bool DefaultSize
+        {
+            get => defaultSize;
+            set => SetProperty(ref defaultSize, value);
+        }
+
+        private int width = 100;
+        public int Width
+        {
+            get => width;
+            set => SetProperty(ref width, value);
+        }
+
+        private int height = 100;
+        public int Height
+        {
+            get => height;
+            set => SetProperty(ref height, value);
+        }
+
         public int BarcodesCount
         {
             get => Barcodes.Count;
@@ -150,7 +171,10 @@ namespace Barcodes.Core.ViewModels
             var barcodeData = new BarcodeData
             {
                 Data = Data,
-                Type = SelectedBarcodeType.Type
+                Type = SelectedBarcodeType.Type,
+                DefaultSize = DefaultSize,
+                Width = Width,
+                Height = Height
             };
 
             try

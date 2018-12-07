@@ -36,15 +36,25 @@ namespace Barcodes.Services.Generator
                     generator.CaptionAbove.Visible =
                         generator.CaptionBelow.Visible = false;
                 }
-                generator.RecalculateValues();
-                if (barcodeData.MinWidth.HasValue && generator.BarCodeWidth.Pixels < barcodeData.MinWidth.Value)
-                {
-                    generator.BarCodeWidth.Pixels = barcodeData.MinWidth.Value;
-                    if (encodeType.Classification == BarcodeClassifications.Type2D)
-                        generator.BarCodeHeight.Pixels = generator.BarCodeWidth.Pixels;
-                }  
+                FitSizes(generator, barcodeData);
                 var barcodeImage = generator.GenerateBarCodeImage();
                 return barcodeImage.ToBitmapSource();
+            }
+        }
+
+        private void FitSizes(BarCodeGenerator generator, BarcodeData barcodeData)
+        {
+            generator.RecalculateValues();
+            if (barcodeData.DefaultSize && generator.BarCodeWidth.Pixels < barcodeData.MinWidth)
+            {
+                generator.BarCodeWidth.Pixels = barcodeData.MinWidth;
+                if (generator.EncodeType.Classification == BarcodeClassifications.Type2D)
+                    generator.BarCodeHeight.Pixels = generator.BarCodeWidth.Pixels;
+            }
+            else if (!barcodeData.DefaultSize)
+            {
+                generator.BarCodeWidth.Pixels = barcodeData.Width;
+                generator.BarCodeHeight.Pixels = barcodeData.Height;
             }
         }
     }

@@ -21,4 +21,9 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Margin" Value="{StaticResource DefaultMargin}" />
     </Style>
+
+    <Style TargetType="CheckBox">
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Margin" Value="{StaticResource DefaultMargin}" />
+    </Style>
 </ResourceDictionary>

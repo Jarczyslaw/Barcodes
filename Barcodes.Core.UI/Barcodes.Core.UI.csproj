@@ -69,6 +69,7 @@
     <Compile Include="Controls\BarcodeView.xaml.cs">
       <DependentUpon>BarcodeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BoolNegationConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

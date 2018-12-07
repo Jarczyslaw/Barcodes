@@ -79,6 +79,11 @@
                                     <Run Text=" Json.NET by Newtonsoft"/>
                                 </Paragraph>
                             </ListItem>
+                            <ListItem>
+                                <Paragraph>
+                                    <Run Text=" Extended WPF Toolkit"/>
+                                </Paragraph>
+                            </ListItem>
                         </List>
                         <Paragraph>
                             <Run Text="Sources are available on GitHub:" />
