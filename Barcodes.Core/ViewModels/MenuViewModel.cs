@@ -78,6 +78,7 @@ namespace Barcodes.Core.ViewModels
                 if (barcodesFromStorage == null)
                     return;
 
+                barcodesFromStorage.Reverse();
                 foreach (var barcode in barcodesFromStorage)
                 {
                     var barcodeData = new BarcodeData
