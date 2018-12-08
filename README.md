@@ -11,3 +11,4 @@ Libraries used:
 * WindowsAPICodecPack
 * Json.NET by Newtonsoft
 * Extended WPF Toolkit
+* Fody

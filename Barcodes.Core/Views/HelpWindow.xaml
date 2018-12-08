@@ -29,9 +29,10 @@
                        FontWeight="Bold"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       FontSize="48" />
+                       FontSize="48"
+                       Margin="0 0 10 0"/>
         </Grid>
-        <StackPanel Margin="5 0 0 0">
+        <StackPanel Margin="10 0 10 0">
             <TextBlock Text="Barcodes - simple app to manage all necessary barcodes" />
             <TextBlock x:Name="tbVersion" />
         </StackPanel>
@@ -82,6 +83,11 @@
                             <ListItem>
                                 <Paragraph>
                                     <Run Text=" Extended WPF Toolkit"/>
+                                </Paragraph>
+                            </ListItem>
+                            <ListItem>
+                                <Paragraph>
+                                    <Run Text=" Fody"/>
                                 </Paragraph>
                             </ListItem>
                         </List>
