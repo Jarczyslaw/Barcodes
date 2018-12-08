@@ -20,12 +20,8 @@ namespace Barcodes.Core.ViewModels
 {
     public class MenuViewModel : BindableBase
     {
-        private BarcodesViewModel barcodes;
-        public BarcodesViewModel Barcodes
-        {
-            get => barcodes;
-            set => SetProperty(ref barcodes, value);
-        }
+        public BarcodesViewModel Barcodes { get; set; }
+        public ShellViewModel Shell { get; set; }
 
         private readonly IAppDialogsService dialogsService;
         private readonly IAppSettingsService appSettingsService;
@@ -136,7 +132,7 @@ namespace Barcodes.Core.ViewModels
             appWindowsService.ShowHelpWindow();
         }
 
-        private void ExportToPdf()
+        private async void ExportToPdf()
         {
             if (Barcodes.BarcodesCount == 0)
             {
@@ -150,6 +146,9 @@ namespace Barcodes.Core.ViewModels
                 if (string.IsNullOrEmpty(filePath))
                     return;
 
+                Shell.BusyMessage = "Generating document...";
+                await Task.Delay(2000);
+
                 var barcodesToExport = Barcodes.Barcodes.Select(b => new DocBarcodeData
                 {
                     Title = b.Title,
@@ -157,6 +156,8 @@ namespace Barcodes.Core.ViewModels
                     Barcode = b.Barcode
                 }).ToList();
                 docExportService.Export(barcodesToExport, filePath);
+
+                Shell.BusyMessage = null;
                 Barcodes.StatusMessage = $"Successfully exported to {filePath}";
             }
             catch (Exception exc)
