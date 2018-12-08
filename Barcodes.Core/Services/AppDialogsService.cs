@@ -10,19 +10,25 @@ namespace Barcodes.Core.Services
 {
     public class AppDialogsService : DialogsService, IAppDialogsService
     {
-        private readonly DialogFilterPair defaultFilter = new DialogFilterPair { DisplayName = "json", ExtensionsList = "json" };
+        private readonly DialogFilterPair jsonFilter = new DialogFilterPair { DisplayName = "json", ExtensionsList = "json" };
+        private readonly DialogFilterPair pdfFilter = new DialogFilterPair { DisplayName = "pdf", ExtensionsList = "pdf" };
 
-        public string OpenStorageFilePath(string currentFilePath)
+        public string OpenStorageFile(string currentFilePath)
         {
             var directoryPath = Path.GetDirectoryName(currentFilePath);
-            return OpenFile("Barcodes storage file", directoryPath, defaultFilter);
+            return OpenFile("Barcodes storage file", directoryPath, jsonFilter);
         }
 
-        public string SaveStorageFilePath(string currentFilePath)
+        public string SaveStorageFile(string currentFilePath)
         {
             var fileName = Path.GetFileName(currentFilePath);
             var directoryPath = Path.GetDirectoryName(currentFilePath);
-            return SaveFile("Barcodes storage file", directoryPath, fileName, defaultFilter);
+            return SaveFile("Barcodes storage file", directoryPath, fileName, jsonFilter);
+        }
+
+        public string SavePdfFile()
+        {
+            return SaveFile("Barcodes PDF file", null, "barcodes.pdf", pdfFilter);
         }
     }
 }

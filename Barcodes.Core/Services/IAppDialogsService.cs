@@ -9,7 +9,8 @@ namespace Barcodes.Core.Services
 {
     public interface IAppDialogsService : IDialogsService
     {
-        string OpenStorageFilePath(string currentFilePath);
-        string SaveStorageFilePath(string currentFilePath);
+        string OpenStorageFile(string currentFilePath);
+        string SaveStorageFile(string currentFilePath);
+        string SavePdfFile();
     }
 }

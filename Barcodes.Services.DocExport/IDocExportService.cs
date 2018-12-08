@@ -8,6 +8,6 @@ namespace Barcodes.Services.DocExport
 {
     public interface IDocExportService
     {
-        void Export(string filePath);
+        void Export(List<DocBarcodeData> barcodes, string filePath);
     }
 }

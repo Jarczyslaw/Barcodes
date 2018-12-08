@@ -2,6 +2,7 @@
 using Barcodes.Core.Services;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.Dialogs;
+using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
 using Barcodes.Services.System;
@@ -31,15 +32,18 @@ namespace Barcodes.Core.ViewModels
         private readonly IBarcodeStorageService barcodeStorageService;
         private readonly IAppWindowsService appWindowsService;
         private readonly ISystemService systemService;
+        private readonly IDocExportService docExportService;
 
         public MenuViewModel(IAppDialogsService dialogsService, IEventAggregator eventAggregator, IAppSettingsService appSettingsService,
-            IBarcodeStorageService barcodeStorageService, IAppWindowsService appWindowsService, ISystemService systemService)
+            IBarcodeStorageService barcodeStorageService, IAppWindowsService appWindowsService, ISystemService systemService,
+            IDocExportService docExportService)
         {
             this.dialogsService = dialogsService;
             this.appSettingsService = appSettingsService;
             this.barcodeStorageService = barcodeStorageService;
             this.appWindowsService = appWindowsService;
             this.systemService = systemService;
+            this.docExportService = docExportService;
 
             SaveToFileCommand = new DelegateCommand(SaveBarcodesToFile);
             LoadFromFileCommand = new DelegateCommand(LoadBarcodesFromFile);
@@ -63,7 +67,7 @@ namespace Barcodes.Core.ViewModels
 
         private void LoadBarcodesFromFile()
         {
-            var filePath = dialogsService.OpenStorageFilePath(appSettingsService.StoragePath);
+            var filePath = dialogsService.OpenStorageFile(appSettingsService.StoragePath);
             if (string.IsNullOrEmpty(filePath))
                 return;
 
@@ -106,7 +110,7 @@ namespace Barcodes.Core.ViewModels
 
             try
             {
-                var filePath = dialogsService.SaveStorageFilePath(appSettingsService.StoragePath);
+                var filePath = dialogsService.SaveStorageFile(appSettingsService.StoragePath);
                 if (string.IsNullOrEmpty(filePath))
                     return;
 
@@ -142,7 +146,18 @@ namespace Barcodes.Core.ViewModels
 
             try
             {
+                var filePath = dialogsService.SavePdfFile();
+                if (string.IsNullOrEmpty(filePath))
+                    return;
 
+                var barcodesToExport = Barcodes.Barcodes.Select(b => new DocBarcodeData
+                {
+                    Title = b.Title,
+                    Data = b.Data,
+                    Barcode = b.Barcode
+                }).ToList();
+                docExportService.Export(barcodesToExport, filePath);
+                Barcodes.StatusMessage = $"Successfully exported to {filePath}";
             }
             catch (Exception exc)
             {
