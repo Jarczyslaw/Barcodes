@@ -52,7 +52,7 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
 
         protected override string GetResultData()
         {
-            return $"01{ProductCode}17{BatchExpDate}21{SerialNo}GS10{BatchId}";
+            return $"01{ProductCode}17{BatchExpDate}21{SerialNo}↔10{BatchId}";
         }
 
         protected override bool Validate()

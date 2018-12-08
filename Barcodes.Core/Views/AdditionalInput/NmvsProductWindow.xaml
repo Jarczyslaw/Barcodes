@@ -24,7 +24,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Label Content="Product code:" />
+                <Label Content="Product code (GTIN):" />
                 <TextBox Grid.Column="1"
                         Text="{Binding ProductCode}" />
 
