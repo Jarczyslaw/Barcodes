@@ -159,12 +159,15 @@ namespace Barcodes.Core.ViewModels
                 }).ToList();
                 docExportService.Export(barcodesToExport, filePath);
 
-                Shell.BusyMessage = null;
                 Barcodes.StatusMessage = $"Successfully exported to {filePath}";
             }
             catch (Exception exc)
             {
                 dialogsService.ShowException("Error when generating a document", exc);
+            }
+            finally
+            {
+                Shell.BusyMessage = null;
             }
         }
 

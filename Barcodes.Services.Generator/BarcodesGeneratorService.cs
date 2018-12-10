@@ -30,6 +30,7 @@ namespace Barcodes.Services.Generator
             {
                 generator.ThrowExceptionWhenCodeTextIncorrect = true;
                 generator.AutoSizeMode = AutoSizeMode.Nearest;
+                generator.EnableEscape = true;
                 if (!barcodeData.ShowData)
                 {
                     generator.D2.DisplayText = string.Empty;
