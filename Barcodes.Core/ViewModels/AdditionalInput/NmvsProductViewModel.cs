@@ -52,7 +52,8 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
 
         protected override string GetResultData()
         {
-            return $"01{ProductCode}17{BatchExpDate}21{SerialNo}\\GS10{BatchId}";
+            var groupSeparator = "\u001D";
+            return string.Format(@"01{0}17{1}21{2}{3}10{4}", ProductCode, BatchExpDate, SerialNo, groupSeparator, BatchId);
         }
 
         protected override bool Validate()
