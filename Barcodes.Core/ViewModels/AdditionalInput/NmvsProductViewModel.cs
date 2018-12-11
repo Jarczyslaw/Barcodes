@@ -1,5 +1,6 @@
 ﻿using Barcodes.Core.Services;
 using Barcodes.Services.Dialogs;
+using Barcodes.Utils;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
@@ -28,7 +29,14 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
 
         public string BatchExpDate
         {
-            get => selectedDateTime.ToString("yyMMdd");
+            get => selectedDateTime.ToExpireDate(EmptyDay);
+        }
+
+        private bool emptyDay;
+        public bool EmptyDay
+        {
+            get => emptyDay;
+            set => SetProperty(ref emptyDay, value);
         }
 
         private DateTime selectedDateTime = DateTime.Now;
