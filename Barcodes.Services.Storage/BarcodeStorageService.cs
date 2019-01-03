@@ -1,9 +1,5 @@
 ﻿using Barcodes.Utils;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barcodes.Services.Storage
 {
@@ -18,7 +14,10 @@ namespace Barcodes.Services.Storage
             catch
             {
                 if (throwException)
+                {
                     throw;
+                }
+
                 return null;
             }
         }

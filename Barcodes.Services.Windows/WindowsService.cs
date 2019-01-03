@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 
 namespace Barcodes.Services.Windows
@@ -20,7 +16,10 @@ namespace Barcodes.Services.Windows
             where T : Window
         {
             if (dataContext != null)
+            {
                 window.DataContext = dataContext;
+            }
+
             window.Show();
         }
 
@@ -35,7 +34,10 @@ namespace Barcodes.Services.Windows
             where T : Window
         {
             if (dataContext != null)
+            {
                 window.DataContext = dataContext;
+            }
+
             return window.ShowDialog();
         }
 
@@ -49,11 +51,13 @@ namespace Barcodes.Services.Windows
         public void RestoreWindows<T>()
             where T : Window
         {
-            var windows = Application.Current.Windows.OfType<T>();
-            foreach (var window in windows)
+            foreach (var window in Application.Current.Windows.OfType<T>())
             {
                 if (window.WindowState == WindowState.Minimized)
+                {
                     window.WindowState = WindowState.Normal;
+                }
+
                 window.Activate();
             }
         }

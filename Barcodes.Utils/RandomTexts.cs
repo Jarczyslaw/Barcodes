@@ -6,9 +6,10 @@ namespace Barcodes.Utils
 {
     public static class RandomTexts
     {
-        private static Random random = new Random();
-        private static List<int> textsIndexes = new List<int>();
-        private static List<string> texts = new List<string>
+        private static readonly Random random = new Random();
+        private static readonly List<int> textsIndexes = new List<int>();
+
+        private static readonly List<string> texts = new List<string>
         {
              "D. kradnie mleko!",
              "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -29,7 +30,7 @@ namespace Barcodes.Utils
         {
             var index = textsIndexes[random.Next(textsIndexes.Count)];
             textsIndexes.Remove(index);
-            if (!textsIndexes.Any())
+            if (textsIndexes.Count == 0)
                 RefreshIndexesList(index);
             return texts[index];
         }

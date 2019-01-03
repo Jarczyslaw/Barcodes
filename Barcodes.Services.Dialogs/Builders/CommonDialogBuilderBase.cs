@@ -1,9 +1,6 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barcodes.Services.Dialogs.Builders
 {
@@ -23,14 +20,18 @@ namespace Barcodes.Services.Dialogs.Builders
             if (filters != null)
             {
                 foreach (var filter in filters)
+                {
                     AddFilter(filter);
+                }
             }
         }
 
         protected void CheckDialogInstance()
         {
             if (dialog == null)
+            {
                 throw new Exception(Resources.Resources.InitializeException);
+            }
         }
 
         public T Build()

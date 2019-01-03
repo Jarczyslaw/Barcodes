@@ -1,16 +1,11 @@
-﻿using Aspose.BarCode.Generation;
-using Barcodes.Core.Services;
-using Barcodes.Services.Dialogs;
+﻿using Barcodes.Core.Services;
 using Barcodes.Services.Generator;
 using Barcodes.Services.System;
-using Barcodes.Utils;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
-using System.Windows.Media.Imaging;
 
 namespace Barcodes.Core.ViewModels
 {
@@ -68,7 +63,10 @@ namespace Barcodes.Core.ViewModels
             get
             {
                 if (SelectedBarcodeType == null)
+                {
                     return false;
+                }
+
                 return SelectedBarcodeType.AdditionalInput != null;
             }
         }
@@ -91,8 +89,8 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref selectedBarcode, value);
         }
 
-        public ObservableCollection<BarcodeTypeViewModel> BarcodeTypes { get; private set; } = new ObservableCollection<BarcodeTypeViewModel>();
-        public ObservableCollection<BarcodeResultViewModel> Barcodes { get; private set; } = new ObservableCollection<BarcodeResultViewModel>();
+        public ObservableCollection<BarcodeTypeViewModel> BarcodeTypes { get; } = new ObservableCollection<BarcodeTypeViewModel>();
+        public ObservableCollection<BarcodeResultViewModel> Barcodes { get; } = new ObservableCollection<BarcodeResultViewModel>();
 
         private readonly IBarcodesGeneratorService barcodesGenerator;
         private readonly IAppDialogsService dialogsService;
@@ -119,11 +117,11 @@ namespace Barcodes.Core.ViewModels
             Data = "Data1";
         }
 
-        public DelegateCommand GenerateBarcodeCommand { get; private set; }
-        public DelegateCommand AdditionalInputCommand { get; private set; }
-        public DelegateCommand OpenInNewWindowCommand { get; private set; }
-        public DelegateCommand<BarcodeResultViewModel> CopyToClipboardCommand { get; private set; }
-        public DelegateCommand<BarcodeResultViewModel> DeleteCommand { get; private set; }
+        public DelegateCommand GenerateBarcodeCommand { get; }
+        public DelegateCommand AdditionalInputCommand { get; }
+        public DelegateCommand OpenInNewWindowCommand { get; }
+        public DelegateCommand<BarcodeResultViewModel> CopyToClipboardCommand { get; }
+        public DelegateCommand<BarcodeResultViewModel> DeleteCommand { get; }
 
         private void InitializeBarcodeTypes()
         {
@@ -166,7 +164,9 @@ namespace Barcodes.Core.ViewModels
         public void GenerateBarcode()
         {
             if (!GenerateValidation())
+            {
                 return;
+            }
 
             var barcodeData = new BarcodeData
             {
@@ -205,10 +205,14 @@ namespace Barcodes.Core.ViewModels
         public void Delete(BarcodeResultViewModel barcode)
         {
             if (barcode == null)
+            {
                 return;
+            }
 
             if (!dialogsService.ShowYesNoQuestion($"Do you really want to delete barcode \"{barcode.Title}?\""))
+            {
                 return;
+            }
 
             Barcodes.Remove(barcode);
             StatusMessage = $"Successfully removed \"{barcode.Title}\"";
@@ -219,7 +223,9 @@ namespace Barcodes.Core.ViewModels
         {
             var result = SelectedBarcodeType.AdditionalInput();
             if (string.IsNullOrEmpty(result))
+            {
                 return;
+            }
 
             Data = result;
         }
@@ -227,7 +233,9 @@ namespace Barcodes.Core.ViewModels
         private void OpenInNewWindow()
         {
             if (SelectedBarcode == null)
+            {
                 return;
+            }
 
             appWindowsService.OpenBarcodeWindow(SelectedBarcode);
         }
@@ -235,7 +243,9 @@ namespace Barcodes.Core.ViewModels
         private void CopyToClipboard(BarcodeResultViewModel barcode)
         {
             if (barcode == null)
+            {
                 return;
+            }
 
             systemService.CopyToClipboard(barcode.Barcode);
             StatusMessage = $"Barcode \"{barcode.Title}\" copied to clipboard";

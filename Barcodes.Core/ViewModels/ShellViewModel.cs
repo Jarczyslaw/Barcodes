@@ -1,20 +1,5 @@
-﻿using Barcodes.Core.Events;
-using Barcodes.Core.Services;
-using Barcodes.Services.AppSettings;
-using Barcodes.Services.Dialogs;
-using Barcodes.Services.DocExport;
-using Barcodes.Services.Generator;
-using Barcodes.Services.Storage;
-using Barcodes.Utils;
-using Prism.Commands;
-using Prism.Events;
-using Prism.Ioc;
+﻿using Prism.Ioc;
 using Prism.Mvvm;
-using System;
-using System.IO;
-using System.Linq;
-using System.Windows;
-using System.Windows.Media.Imaging;
 
 namespace Barcodes.Core.ViewModels
 {
@@ -34,7 +19,7 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref menu, value);
         }
 
-        public bool IsBusy { get; set; } = false;
+        public bool IsBusy { get; set; }
 
         private string busyMessage = string.Empty;
         public string BusyMessage

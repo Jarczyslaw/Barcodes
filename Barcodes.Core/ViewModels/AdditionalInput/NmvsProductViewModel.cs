@@ -1,13 +1,6 @@
 ﻿using Barcodes.Core.Services;
-using Barcodes.Services.Dialogs;
 using Barcodes.Utils;
-using Prism.Commands;
-using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barcodes.Core.ViewModels.AdditionalInput
 {
@@ -61,7 +54,7 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
         protected override string GetResultData()
         {
             var groupSeparator = "\u001D";
-            return string.Format(@"01{0}17{1}21{2}{3}10{4}", ProductCode, BatchExpDate, SerialNo, groupSeparator, BatchId);
+            return string.Format("01{0}17{1}21{2}{3}10{4}", ProductCode, BatchExpDate, SerialNo, groupSeparator, BatchId);
         }
 
         protected override bool Validate()

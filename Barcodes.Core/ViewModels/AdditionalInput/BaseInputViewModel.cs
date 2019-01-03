@@ -1,33 +1,30 @@
 ﻿using Barcodes.Core.Services;
-using Barcodes.Services.Dialogs;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barcodes.Core.ViewModels.AdditionalInput
 {
     public abstract class BaseInputViewModel : BindableBase
     {
         public Action CloseAction { get; set; }
-        public string ResultData { get; private set; } = null;
+        public string ResultData { get; private set; }
 
-        public DelegateCommand AcceptCommand { get; private set; }
-        public DelegateCommand CloseCommand { get; private set; }
+        public DelegateCommand AcceptCommand { get; }
+        public DelegateCommand CloseCommand { get; }
 
         protected readonly IAppDialogsService dialogsService;
 
-        public BaseInputViewModel(IAppDialogsService dialogsService)
+        protected BaseInputViewModel(IAppDialogsService dialogsService)
         {
             this.dialogsService = dialogsService;
 
             AcceptCommand = new DelegateCommand(() =>
             {
                 if (!Validate())
+                {
                     return;
+                }
 
                 ResultData = GetResultData();
                 CloseAction?.Invoke();

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows.Media.Imaging;
 
 namespace Barcodes.Utils
@@ -38,7 +33,9 @@ namespace Barcodes.Utils
             BitmapFrame frame = BitmapFrame.Create(bitmapSource);
             encoder.Frames.Add(frame);
             using (var stream = File.Create(filePath))
+            {
                 encoder.Save(stream);
+            }
         }
     }
 }

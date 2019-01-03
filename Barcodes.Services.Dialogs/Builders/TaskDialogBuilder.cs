@@ -1,9 +1,5 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barcodes.Services.Dialogs.Builders
 {
@@ -67,7 +63,10 @@ namespace Barcodes.Services.Dialogs.Builders
 
             var buttonsSum = TaskDialogStandardButtons.None;
             foreach (var button in buttons)
+            {
                 buttonsSum |= button;
+            }
+
             dialog.StandardButtons = buttonsSum;
             return this;
         }
@@ -108,18 +107,19 @@ namespace Barcodes.Services.Dialogs.Builders
         {
             CheckDialogInstance();
 
-            var progressBar = new TaskDialogProgressBar(minValue, maxValue, minValue)
+            dialog.ProgressBar = new TaskDialogProgressBar(minValue, maxValue, minValue)
             {
                 State = state
             };
-            dialog.ProgressBar = progressBar;
             return this;
         }
 
         private void CheckDialogInstance()
         {
             if (dialog == null)
+            {
                 throw new Exception(Resources.Resources.InitializeException);
+            }
         }
 
         public TaskDialog Build()

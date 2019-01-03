@@ -2,11 +2,6 @@
 using Barcodes.Utils;
 using Prism.Commands;
 using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace Barcodes.Core.ViewModels
@@ -30,7 +25,7 @@ namespace Barcodes.Core.ViewModels
             GenerateRandomBarcode();
         }
 
-        public DelegateCommand GenerateRandomBarcodeCommand { get; private set; }
+        public DelegateCommand GenerateRandomBarcodeCommand { get; }
 
         public void GenerateRandomBarcode()
         {

@@ -1,22 +1,12 @@
-﻿using Prism.Unity;
-using Prism.Ioc;
-using Prism.Modularity;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using Barcodes.Core;
-using Barcodes.Services.Generator;
-using Barcodes.Services.Storage;
-using Barcodes.Services.Dialogs;
-using Barcodes.Services.Windows;
+﻿using Barcodes.Core;
+using Barcodes.Core.Services;
 using Barcodes.Core.Views;
 using Barcodes.Services.AppSettings;
-using Barcodes.Core.Services;
 using Barcodes.Services.System;
+using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Unity;
+using System.Windows;
 
 namespace Barcodes.Startup
 {
@@ -25,18 +15,11 @@ namespace Barcodes.Startup
     /// </summary>
     public partial class App : PrismApplication
     {
-        private IContainerExtension container;
         private GlobalExceptionHandler globalExceptionHandler;
 
         protected override Window CreateShell()
         {
             return Container.Resolve<ShellWindow>();
-        }
-
-        protected override IContainerExtension CreateContainerExtension()
-        {
-            container = base.CreateContainerExtension();
-            return container;
         }
 
         protected override void InitializeShell(Window shell)
@@ -60,14 +43,14 @@ namespace Barcodes.Startup
             containerRegistry.RegisterSingleton<ISystemService, SystemService>();
             RegisterGlobalExceptionHandler();
 
-            container.Resolve<IAppSettingsService>().Load(false);
+            Container.Resolve<IAppSettingsService>().Load(false);
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry) { }
 
         private void RegisterGlobalExceptionHandler()
         {
-            globalExceptionHandler = container.Resolve<GlobalExceptionHandler>();
+            globalExceptionHandler = Container.Resolve<GlobalExceptionHandler>();
             globalExceptionHandler.RegisterEvents(this);
         }
     }

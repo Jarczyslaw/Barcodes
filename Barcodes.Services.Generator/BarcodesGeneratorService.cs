@@ -1,11 +1,6 @@
 ﻿using Aspose.BarCode.Generation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 using Barcodes.Utils;
+using System.Windows.Media.Imaging;
 
 namespace Barcodes.Services.Generator
 {
@@ -50,7 +45,9 @@ namespace Barcodes.Services.Generator
             {
                 generator.BarCodeWidth.Pixels = barcodeData.MinWidth;
                 if (generator.EncodeType.Classification == BarcodeClassifications.Type2D)
+                {
                     generator.BarCodeHeight.Pixels = generator.BarCodeWidth.Pixels;
+                }
             }
             else if (!barcodeData.DefaultSize)
             {

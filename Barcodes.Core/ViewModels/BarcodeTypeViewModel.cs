@@ -1,11 +1,6 @@
-﻿using Aspose.BarCode.Generation;
-using Barcodes.Services.Generator;
+﻿using Barcodes.Services.Generator;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barcodes.Core.ViewModels
 {
@@ -15,7 +10,9 @@ namespace Barcodes.Core.ViewModels
         {
             get => Type.ToString();
         }
+
         public BarcodeType Type { get; set; }
+
         public Func<string> AdditionalInput { get; set; }
     }
 }

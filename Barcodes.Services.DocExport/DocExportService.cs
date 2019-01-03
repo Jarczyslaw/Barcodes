@@ -1,11 +1,7 @@
 ﻿using Barcodes.Utils;
-using MigraDoc.DocumentObjectModel;
-using MigraDoc.Rendering;
-using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace Barcodes.Services.DocExport
 {
@@ -38,7 +34,10 @@ namespace Barcodes.Services.DocExport
             builder.AddTitle()
                 .AddPageNumber();
             foreach (var barcode in barcodes)
+            {
                 builder.AddBarcode(barcode);
+            }
+
             var document = builder.Render();
             document.Save(filePath);
             document.Close();

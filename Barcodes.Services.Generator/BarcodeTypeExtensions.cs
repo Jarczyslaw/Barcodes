@@ -1,9 +1,5 @@
 ﻿using Aspose.BarCode.Generation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barcodes.Services.Generator
 {
@@ -11,7 +7,7 @@ namespace Barcodes.Services.Generator
     {
         public static SymbologyEncodeType GetEncodeType(this BarcodeType barcodeType)
         {
-            switch(barcodeType)
+            switch (barcodeType)
             {
                 case BarcodeType.Code128:
                     return EncodeTypes.Code128;

@@ -63,7 +63,9 @@ namespace Barcodes.Services.DocExport
         private void AddLineBreaks(Paragraph paragraph, int count = 1)
         {
             for (int i = 0; i < count; i++)
+            {
                 paragraph.AddLineBreak();
+            }
         }
 
         private void InitializeDocument()
@@ -74,7 +76,7 @@ namespace Barcodes.Services.DocExport
                 Document.Info.Author = "Barcodes";
 
             var pageSetup = Document.DefaultPageSetup.Clone();
-            var margin = 1d;
+            const double margin = 1d;
             pageSetup.TopMargin = Unit.FromCentimeter(margin);
             pageSetup.BottomMargin = Unit.FromCentimeter(margin);
             pageSetup.LeftMargin = Unit.FromCentimeter(margin);
