@@ -50,6 +50,7 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
         public NmvsProductViewModel(IAppDialogsService dialogsService, IViewModelStateSaver viewModelStateSaver)
             : base(dialogsService, viewModelStateSaver)
         {
+            viewModelStateSaver.LoadState(this);
         }
 
         protected override string GetResultData()
@@ -89,7 +90,7 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
 
         protected override void SaveState()
         {
-            throw new NotImplementedException();
+            viewModelStateSaver.SaveState(this);
         }
     }
 }

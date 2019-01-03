@@ -11,6 +11,7 @@ namespace Barcodes.Core.Services.ViewModelState
     {
         void SaveState(Ean128ProductViewModel viewModel);
         void LoadState(Ean128ProductViewModel viewModel);
-        void SaveState(NmvsProductViewModelState viewModel);
+        void SaveState(NmvsProductViewModel viewModel);
+        void LoadState(NmvsProductViewModel viewModel);
     }
 }

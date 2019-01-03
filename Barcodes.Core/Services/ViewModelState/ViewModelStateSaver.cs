@@ -21,12 +21,12 @@ namespace Barcodes.Core.Services.ViewModelState
             }
         }
 
-        public void SaveState(NmvsProductViewModelState viewModel)
+        public void SaveState(NmvsProductViewModel viewModel)
         {
             nmvsProductViewModelState = TinyMapper.Map<NmvsProductViewModelState>(viewModel);
         }
 
-        public void LoadState(NmvsProductViewModelState viewModel)
+        public void LoadState(NmvsProductViewModel viewModel)
         {
             if (nmvsProductViewModelState != null)
             {
