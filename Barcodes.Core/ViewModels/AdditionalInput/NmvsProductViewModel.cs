@@ -1,4 +1,5 @@
 ﻿using Barcodes.Core.Services;
+using Barcodes.Core.Services.ViewModelState;
 using Barcodes.Utils;
 using System;
 
@@ -46,8 +47,8 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
             set => SetProperty(ref serialNo, value);
         }
 
-        public NmvsProductViewModel(IAppDialogsService dialogsService)
-            : base(dialogsService)
+        public NmvsProductViewModel(IAppDialogsService dialogsService, IViewModelStateSaver viewModelStateSaver)
+            : base(dialogsService, viewModelStateSaver)
         {
         }
 
@@ -84,6 +85,11 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
             }
 
             return true;
+        }
+
+        protected override void SaveState()
+        {
+            throw new NotImplementedException();
         }
     }
 }

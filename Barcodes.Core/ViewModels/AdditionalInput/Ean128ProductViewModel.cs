@@ -1,4 +1,5 @@
 ﻿using Barcodes.Core.Services;
+using Barcodes.Core.Services.ViewModelState;
 using Barcodes.Utils;
 using System;
 
@@ -39,9 +40,10 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
             set => SetProperty(ref selectedDateTime, value);
         }
 
-        public Ean128ProductViewModel(IAppDialogsService dialogsService)
-            : base(dialogsService)
+        public Ean128ProductViewModel(IAppDialogsService dialogsService, IViewModelStateSaver viewModelStateSaver)
+            : base(dialogsService, viewModelStateSaver)
         {
+            viewModelStateSaver.LoadState(this);
         }
 
         protected override string GetResultData()
@@ -70,6 +72,11 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
             }
 
             return true;
+        }
+
+        protected override void SaveState()
+        {
+            viewModelStateSaver.SaveState(this);
         }
     }
 }
