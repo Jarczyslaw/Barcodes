@@ -89,8 +89,8 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref selectedBarcode, value);
         }
 
-        public ObservableCollection<BarcodeTypeViewModel> BarcodeTypes { get; } = new ObservableCollection<BarcodeTypeViewModel>();
-        public ObservableCollection<BarcodeResultViewModel> Barcodes { get; } = new ObservableCollection<BarcodeResultViewModel>();
+        public ObservableCollection<BarcodeTypeViewModel> BarcodeTypes { get; private set; }
+        public ObservableCollection<BarcodeResultViewModel> Barcodes { get; private set; }
 
         private readonly IBarcodesGeneratorService barcodesGenerator;
         private readonly IAppDialogsService dialogsService;
@@ -111,7 +111,7 @@ namespace Barcodes.Core.ViewModels
             CopyToClipboardCommand = new DelegateCommand<BarcodeResultViewModel>(CopyToClipboard);
             DeleteCommand = new DelegateCommand<BarcodeResultViewModel>(Delete);
 
-            InitializeBarcodeTypes();
+            InitializeBarcodes();
 
             Title = "Barcode1";
             Data = "Data1";
@@ -123,9 +123,11 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand<BarcodeResultViewModel> CopyToClipboardCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> DeleteCommand { get; }
 
-        private void InitializeBarcodeTypes()
+        private void InitializeBarcodes()
         {
-            BarcodeTypes.AddRange(new ObservableCollection<BarcodeTypeViewModel>
+            Barcodes = new ObservableCollection<BarcodeResultViewModel>();
+
+            BarcodeTypes = new ObservableCollection<BarcodeTypeViewModel>()
             {
                 new BarcodeTypeViewModel { Type = BarcodeType.Ean13 },
                 new BarcodeTypeViewModel
@@ -140,7 +142,7 @@ namespace Barcodes.Core.ViewModels
                     AdditionalInput = appWindowsService.OpenNmvsProductWindow
                 },
                 new BarcodeTypeViewModel { Type = BarcodeType.QRCode },
-            });
+            };
             SelectedBarcodeType = BarcodeTypes.First();
         }
 
@@ -192,6 +194,7 @@ namespace Barcodes.Core.ViewModels
         public void GenerateBarcode(BarcodeData barcodeData, string title)
         {
             var barcode = barcodesGenerator.CreateBarcode(barcodeData);
+            barcode.Freeze();
             Barcodes.Insert(0, new BarcodeResultViewModel
             {
                 Barcode = barcode,

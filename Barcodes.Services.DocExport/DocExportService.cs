@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Barcodes.Services.DocExport
 {
@@ -26,6 +27,11 @@ namespace Barcodes.Services.DocExport
             {
                 Directory.Delete(tempImagesPath, true);
             }
+        }
+
+        public Task ExportAsync(List<DocBarcodeData> barcodes, string filePath)
+        {
+            return Task.Run(() => Export(barcodes, filePath));
         }
 
         private void CreateDocument(List<DocBarcodeData> barcodes, string filePath)

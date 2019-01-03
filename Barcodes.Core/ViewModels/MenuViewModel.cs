@@ -12,6 +12,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Barcodes.Core.ViewModels
 {
@@ -154,8 +155,6 @@ namespace Barcodes.Core.ViewModels
                 }
 
                 Shell.BusyMessage = "Generating document...";
-                await Task.Delay(2000)
-                    .ConfigureAwait(false);
 
                 var barcodesToExport = Barcodes.Barcodes.Select(b => new DocBarcodeData
                 {
@@ -163,7 +162,10 @@ namespace Barcodes.Core.ViewModels
                     Data = b.Data,
                     Barcode = b.Barcode
                 }).ToList();
-                docExportService.Export(barcodesToExport, filePath);
+                await docExportService.ExportAsync(barcodesToExport, filePath)
+                    .ConfigureAwait(false);
+                await Task.Delay(2000)
+                    .ConfigureAwait(false);
 
                 Barcodes.StatusMessage = $"Successfully exported to {filePath}";
             }
