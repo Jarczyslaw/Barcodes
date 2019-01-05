@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Barcodes.Utils
 {
-    public static class ListExtensions
+    public static class CollectionExtensions
     {
-        public static void ShiftLeft<T>(this List<T> list, int index)
+        public static void ShiftLeft<T>(this Collection<T> list, int index)
         {
             if (list.Count < 2)
                 return;
@@ -17,11 +18,11 @@ namespace Barcodes.Utils
                 return;
 
             var temp = list[index - 1];
-            list[index - 1] = list[index];
-            list[index - 1] = temp;
+            list.RemoveAt(index - 1);
+            list.Insert(index, temp);
         }
 
-        public static void ShiftRight<T>(this List<T> list, int index)
+        public static void ShiftRight<T>(this Collection<T> list, int index)
         {
             if (list.Count < 2)
                 return;
@@ -30,8 +31,8 @@ namespace Barcodes.Utils
                 return;
 
             var temp = list[index + 1];
-            list[index + 1] = list[index];
-            list[index + 1] = temp;
+            list.RemoveAt(index + 1);
+            list.Insert(index, temp);
         }
     }
 }

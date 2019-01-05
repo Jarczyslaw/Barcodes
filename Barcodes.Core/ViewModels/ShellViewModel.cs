@@ -5,6 +5,7 @@ using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
 using Barcodes.Services.System;
+using Barcodes.Utils;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -56,6 +57,8 @@ namespace Barcodes.Core.ViewModels
             GenerateBarcodeCommand = new DelegateCommand(GenerateBarcode);
             AdditionalInputCommand = new DelegateCommand(AdditionalInput, () => AdditionalInputEnabled);
 
+            MoveUpCommand = new DelegateCommand<BarcodeResultViewModel>(MoveUp);
+            MoveDownCommand = new DelegateCommand<BarcodeResultViewModel>(MoveDown);
             OpenInNewWindowCommand = new DelegateCommand(OpenInNewWindow);
             CopyToClipboardCommand = new DelegateCommand<BarcodeResultViewModel>(CopyToClipboard);
             DeleteCommand = new DelegateCommand<BarcodeResultViewModel>(Delete);
@@ -75,6 +78,8 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand GenerateBarcodeCommand { get; }
         public DelegateCommand AdditionalInputCommand { get; }
 
+        public DelegateCommand<BarcodeResultViewModel> MoveUpCommand { get; }
+        public DelegateCommand<BarcodeResultViewModel> MoveDownCommand { get; }
         public DelegateCommand OpenInNewWindowCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> CopyToClipboardCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> DeleteCommand { get; }
@@ -313,7 +318,7 @@ namespace Barcodes.Core.ViewModels
         }
 
         private void InitialBarcodesLoad()
-        { 
+        {
             LoadBarcodesFromFile(appSettingsService.StoragePath);
         }
 
@@ -454,6 +459,18 @@ namespace Barcodes.Core.ViewModels
             {
                 dialogsService.ShowException(openErrorMessage, exc);
             }
+        }
+
+        private void MoveDown(BarcodeResultViewModel barcode)
+        {
+            var index = Barcodes.IndexOf(barcode);
+            Barcodes.ShiftRight(index);
+        }
+
+        private void MoveUp(BarcodeResultViewModel barcode)
+        {
+            var index = Barcodes.IndexOf(barcode);
+            Barcodes.ShiftLeft(index);
         }
     }
 }

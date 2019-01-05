@@ -154,11 +154,20 @@
                         </ListView.ItemTemplate>
                         <ListView.ContextMenu>
                             <ContextMenu>
+                                <MenuItem Header="Order">
+                                    <MenuItem Header="Move up"
+                                              Command="{Binding MoveUpCommand}"
+                                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                                    <MenuItem Header="Move down"
+                                              Command="{Binding MoveDownCommand}"
+                                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                                </MenuItem>
                                 <MenuItem Header="Open in new window"
                                     Command="{Binding OpenInNewWindowCommand}" />
                                 <MenuItem Header="Copy to clipboard"
                                     Command="{Binding CopyToClipboardCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                                <Separator />
                                 <MenuItem Header="Delete"
                                     Command="{Binding DeleteCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
