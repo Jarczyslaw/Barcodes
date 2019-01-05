@@ -1,7 +1,5 @@
 ﻿using Barcodes.Core;
 using Barcodes.Core.Services;
-using Barcodes.Core.Services.ViewModelState;
-using Barcodes.Core.ViewModels.AdditionalInput;
 using Barcodes.Core.Views;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.System;
@@ -43,7 +41,6 @@ namespace Barcodes.Startup
             containerRegistry.RegisterSingleton<IAppSettingsService, AppSettingsService>();
             containerRegistry.RegisterSingleton<IAppDialogsService, AppDialogsService>();
             containerRegistry.RegisterSingleton<ISystemService, SystemService>();
-            containerRegistry.RegisterSingleton<IViewModelStateSaver, ViewModelStateSaver>();
 
             RegisterGlobalExceptionHandler();
         }

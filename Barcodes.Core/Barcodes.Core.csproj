@@ -99,6 +99,8 @@
     <Compile Include="Services\AppWindowsService.cs" />
     <Compile Include="Services\IAppDialogsService.cs" />
     <Compile Include="Services\IAppWindowsService.cs" />
+    <Compile Include="Services\IServicesContainer.cs" />
+    <Compile Include="Services\ServicesContainer.cs" />
     <Compile Include="Services\ViewModelState\Ean128ProductViewModelState.cs" />
     <Compile Include="Services\ViewModelState\IViewModelStateSaver.cs" />
     <Compile Include="Services\ViewModelState\NmvsProductViewModelState.cs" />

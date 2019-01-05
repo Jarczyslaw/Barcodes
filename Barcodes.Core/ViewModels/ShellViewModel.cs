@@ -32,27 +32,11 @@ namespace Barcodes.Core.ViewModels
 
         private string busyMessage = string.Empty;
 
-        private readonly IEventAggregator eventAggregator;
-        private readonly IBarcodesGeneratorService barcodesGenerator;
-        private readonly IAppDialogsService dialogsService;
-        private readonly IAppWindowsService appWindowsService;
-        private readonly ISystemService systemService;
-        private readonly IAppSettingsService appSettingsService;
-        private readonly IBarcodeStorageService barcodeStorageService;
-        private readonly IDocExportService docExportService;
+        private readonly IServicesContainer services;
 
-        public ShellViewModel(IEventAggregator eventAggregator, IBarcodesGeneratorService barcodesGenerator, IAppDialogsService dialogsService,
-            IAppWindowsService appWindowsService, ISystemService systemService, IAppSettingsService appSettingsService,
-            IBarcodeStorageService barcodeStorageService, IDocExportService docExportService)
+        public ShellViewModel(IServicesContainer services)
         {
-            this.eventAggregator = eventAggregator;
-            this.barcodesGenerator = barcodesGenerator;
-            this.dialogsService = dialogsService;
-            this.appWindowsService = appWindowsService;
-            this.systemService = systemService;
-            this.appSettingsService = appSettingsService;
-            this.barcodeStorageService = barcodeStorageService;
-            this.docExportService = docExportService;
+            this.services = services;
 
             GenerateBarcodeCommand = new DelegateCommand(GenerateBarcode);
             AdditionalInputCommand = new DelegateCommand(AdditionalInput, () => AdditionalInputEnabled);
@@ -66,11 +50,11 @@ namespace Barcodes.Core.ViewModels
             SaveToFileCommand = new DelegateCommand(SaveBarcodesToFile);
             LoadFromFileCommand = new DelegateCommand(LoadBarcodesFromFile);
             OpenStorageLocationCommand = new DelegateCommand(OpenStorageLocation);
-            CloseCommand = new DelegateCommand(() => eventAggregator.GetEvent<CloseEvent>().Publish());
+            CloseCommand = new DelegateCommand(() => services.EventAggregator.GetEvent<CloseEvent>().Publish());
             ExportToPdfCommand = new DelegateCommand(ExportToPdf);
             ShowHelpCommand = new DelegateCommand(ShowHelp);
 
-            appSettingsService.Load();
+            services.AppSettingsService.Load();
             InitializeBarcodes();
             InitialBarcodesLoad();
         }
@@ -196,13 +180,13 @@ namespace Barcodes.Core.ViewModels
                 new BarcodeTypeViewModel
                 {
                     Type = BarcodeType.Ean128,
-                    AdditionalInput = appWindowsService.OpenEan128ProductWindow
+                    AdditionalInput = services.AppWindowsService.OpenEan128ProductWindow
                 },
                 new BarcodeTypeViewModel { Type = BarcodeType.Code128 },
                 new BarcodeTypeViewModel
                 {
                     Type = BarcodeType.DataMatrix,
-                    AdditionalInput = appWindowsService.OpenNmvsProductWindow
+                    AdditionalInput = services.AppWindowsService.OpenNmvsProductWindow
                 },
                 new BarcodeTypeViewModel { Type = BarcodeType.QRCode },
             };
@@ -213,13 +197,13 @@ namespace Barcodes.Core.ViewModels
         {
             if (string.IsNullOrEmpty(Title))
             {
-                dialogsService.ShowError("Enter barcode's title");
+                services.DialogsService.ShowError("Enter barcode's title");
                 return false;
             }
 
             if (string.IsNullOrEmpty(Data))
             {
-                dialogsService.ShowError("Enter barcode's data");
+                services.DialogsService.ShowError("Enter barcode's data");
                 return false;
             }
 
@@ -250,13 +234,13 @@ namespace Barcodes.Core.ViewModels
             }
             catch (Exception exc)
             {
-                dialogsService.ShowException("Exception during barcode generation", exc);
+                services.DialogsService.ShowException("Exception during barcode generation", exc);
             }
         }
 
         private void GenerateBarcode(BarcodeData barcodeData, string title)
         {
-            var barcode = barcodesGenerator.CreateBarcode(barcodeData);
+            var barcode = services.BarcodesGenerator.CreateBarcode(barcodeData);
             barcode.Freeze();
             Barcodes.Insert(0, new BarcodeResultViewModel
             {
@@ -275,7 +259,7 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
-            if (!dialogsService.ShowYesNoQuestion($"Do you really want to delete barcode \"{barcode.Title}?\""))
+            if (!services.DialogsService.ShowYesNoQuestion($"Do you really want to delete barcode \"{barcode.Title}?\""))
             {
                 return;
             }
@@ -303,7 +287,7 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
-            appWindowsService.OpenBarcodeWindow(SelectedBarcode);
+            services.AppWindowsService.OpenBarcodeWindow(SelectedBarcode);
         }
 
         private void CopyToClipboard(BarcodeResultViewModel barcode)
@@ -313,18 +297,18 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
-            systemService.CopyToClipboard(barcode.Barcode);
+            services.SystemService.CopyToClipboard(barcode.Barcode);
             StatusMessage = $"Barcode \"{barcode.Title}\" copied to clipboard";
         }
 
         private void InitialBarcodesLoad()
         {
-            LoadBarcodesFromFile(appSettingsService.StoragePath);
+            LoadBarcodesFromFile(services.AppSettingsService.StoragePath);
         }
 
         private void LoadBarcodesFromFile()
         {
-            var filePath = dialogsService.OpenStorageFile(appSettingsService.StoragePath);
+            var filePath = services.DialogsService.OpenStorageFile(services.AppSettingsService.StoragePath);
             if (string.IsNullOrEmpty(filePath))
             {
                 return;
@@ -337,7 +321,7 @@ namespace Barcodes.Core.ViewModels
         {
             try
             {
-                var barcodesFromStorage = barcodeStorageService.Load(storagePath, false);
+                var barcodesFromStorage = services.BarcodeStorageService.Load(storagePath, false);
                 if (barcodesFromStorage == null)
                 {
                     return;
@@ -354,12 +338,12 @@ namespace Barcodes.Core.ViewModels
                     };
                     GenerateBarcode(barcodeData, barcode.Title);
                 }
-                appSettingsService.StoragePath = storagePath;
+                services.AppSettingsService.StoragePath = storagePath;
                 StatusMessage = $"Successfully loaded barcodes from {Path.GetFileName(storagePath)}";
             }
             catch (Exception exc)
             {
-                dialogsService.ShowException("Error when loading barcodes from file", exc);
+                services.DialogsService.ShowException("Error when loading barcodes from file", exc);
             }
         }
 
@@ -367,13 +351,13 @@ namespace Barcodes.Core.ViewModels
         {
             if (BarcodesCount == 0)
             {
-                dialogsService.ShowError("Generate barcodes before saving");
+                services.DialogsService.ShowError("Generate barcodes before saving");
                 return;
             }
 
             try
             {
-                var filePath = dialogsService.SaveStorageFile(appSettingsService.StoragePath);
+                var filePath = services.DialogsService.SaveStorageFile(services.AppSettingsService.StoragePath);
                 if (string.IsNullOrEmpty(filePath))
                 {
                     return;
@@ -386,32 +370,32 @@ namespace Barcodes.Core.ViewModels
                     Type = b.Type
                 }).ToList();
 
-                barcodeStorageService.Save(filePath, barcodesToSave);
-                appSettingsService.StoragePath = filePath;
+                services.BarcodeStorageService.Save(filePath, barcodesToSave);
+                services.AppSettingsService.StoragePath = filePath;
                 StatusMessage = $"Successfully saved {Path.GetFileName(filePath)}";
             }
             catch (Exception exc)
             {
-                dialogsService.ShowException("Error when saving barcodes to file", exc);
+                services.DialogsService.ShowException("Error when saving barcodes to file", exc);
             }
         }
 
         private void ShowHelp()
         {
-            appWindowsService.ShowHelpWindow();
+            services.AppWindowsService.ShowHelpWindow();
         }
 
         private async void ExportToPdf()
         {
             if (BarcodesCount == 0)
             {
-                dialogsService.ShowError("Generate barcodes before export");
+                services.DialogsService.ShowError("Generate barcodes before export");
                 return;
             }
 
             try
             {
-                var filePath = dialogsService.SavePdfFile();
+                var filePath = services.DialogsService.SavePdfFile();
                 if (string.IsNullOrEmpty(filePath))
                 {
                     return;
@@ -425,16 +409,22 @@ namespace Barcodes.Core.ViewModels
                     Data = b.Data,
                     Barcode = b.Barcode
                 }).ToList();
-                await docExportService.ExportAsync(barcodesToExport, filePath)
+                await services.DocExportService.ExportAsync(barcodesToExport, filePath)
                     .ConfigureAwait(false);
                 await Task.Delay(2000)
                     .ConfigureAwait(false);
 
                 StatusMessage = $"Successfully exported to {filePath}";
+                BusyMessage = null;
+
+                if (services.DialogsService.ShowYesNoQuestion($"Do you want to open the newly generated file?"))
+                {
+                    services.SystemService.StartProcess(filePath);
+                }
             }
             catch (Exception exc)
             {
-                dialogsService.ShowException("Error when generating a document", exc);
+                services.DialogsService.ShowException("Error when generating a document", exc);
             }
             finally
             {
@@ -447,17 +437,17 @@ namespace Barcodes.Core.ViewModels
             const string openErrorMessage = "Can not open storage file location";
             try
             {
-                if (!File.Exists(appSettingsService.StoragePath))
+                if (!File.Exists(services.AppSettingsService.StoragePath))
                 {
-                    dialogsService.ShowError(openErrorMessage);
+                    services.DialogsService.ShowError(openErrorMessage);
                     return;
                 }
 
-                systemService.OpenLocation(appSettingsService.StoragePath);
+                services.SystemService.OpenLocation(services.AppSettingsService.StoragePath);
             }
             catch (Exception exc)
             {
-                dialogsService.ShowException(openErrorMessage, exc);
+                services.DialogsService.ShowException(openErrorMessage, exc);
             }
         }
 
