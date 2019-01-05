@@ -90,6 +90,11 @@
                                     <Run Text=" Fody"/>
                                 </Paragraph>
                             </ListItem>
+                            <ListItem>
+                                <Paragraph>
+                                    <Run Text=" GitInfo"/>
+                                </Paragraph>
+                            </ListItem>
                         </List>
                         <Paragraph>
                             <Run Text="Sources are available on GitHub:" />
