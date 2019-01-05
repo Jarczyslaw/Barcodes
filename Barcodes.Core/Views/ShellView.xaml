@@ -15,27 +15,27 @@
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="File">
                     <MenuItem Header="Load barcodes from file"
-                          Command="{Binding Menu.LoadFromFileCommand}" />
+                          Command="{Binding LoadFromFileCommand}" />
                     <MenuItem Header="Save barcodes to file"
-                          Command="{Binding Menu.SaveToFileCommand}"/>
+                          Command="{Binding SaveToFileCommand}"/>
                     <MenuItem Header="Open storage location"
-                          Command="{Binding Menu.OpenStorageLocationCommand}"/>
+                          Command="{Binding OpenStorageLocationCommand}"/>
                     <Separator />
                     <MenuItem Header="Close"
-                          Command="{Binding Menu.CloseCommand}"/>
+                          Command="{Binding CloseCommand}"/>
                 </MenuItem>
                 <MenuItem Header="Export to PDF"
-                      Command="{Binding Menu.ExportToPdfCommand}" />
+                      Command="{Binding ExportToPdfCommand}" />
                 <MenuItem Header="Help"
-                      Command="{Binding Menu.ShowHelpCommand}" />
+                      Command="{Binding ShowHelpCommand}" />
             </Menu>
 
             <StatusBar DockPanel.Dock="Bottom">
                 <StatusBarItem>
-                    <TextBlock Text="{Binding Barcodes.BarcodesCount, StringFormat='Barcodes count: {0}'}" />
+                    <TextBlock Text="{Binding BarcodesCount, StringFormat='Barcodes count: {0}'}" />
                 </StatusBarItem>
                 <StatusBarItem HorizontalAlignment="Right">
-                    <TextBlock Text="{Binding Barcodes.StatusMessage}" />
+                    <TextBlock Text="{Binding StatusMessage}" />
                 </StatusBarItem>
             </StatusBar>
             <Grid>
@@ -63,7 +63,7 @@
 
                         <Label Content="Title:" />
                         <TextBox Grid.Column="1" 
-                            Text="{Binding Barcodes.Title}" />
+                            Text="{Binding Title}" />
 
                         <Label Grid.Row="1" 
                            Content="Data:" />
@@ -73,11 +73,11 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBox Text="{Binding Barcodes.Data}" />
+                            <TextBox Text="{Binding Data}" />
                             <Button Grid.Column="1"
                                 Content="Enter data" 
                                 Width="65"
-                                Command="{Binding Barcodes.AdditionalInputCommand}" />
+                                Command="{Binding AdditionalInputCommand}" />
                         </Grid>
 
                         <Label Grid.Row="2" 
@@ -86,14 +86,14 @@
                                 Grid.Column="1" 
                                 Width="150"
                                 HorizontalAlignment="Left"
-                                ItemsSource="{Binding Barcodes.BarcodeTypes}"
-                                SelectedItem="{Binding Barcodes.SelectedBarcodeType}"
+                                ItemsSource="{Binding BarcodeTypes}"
+                                SelectedItem="{Binding SelectedBarcodeType}"
                                 DisplayMemberPath="TypeTitle" />
 
                         <CheckBox Grid.Row="0"
                             Grid.Column="3"
                               Grid.ColumnSpan="2"
-                            IsChecked="{Binding Barcodes.DefaultSize}"
+                            IsChecked="{Binding DefaultSize}"
                               VerticalContentAlignment="Center"
                               Content="Use default sizes" />
 
@@ -105,8 +105,8 @@
                                            TextAlignment="Left"
                                            Minimum="100"
                                            Margin="{StaticResource DefaultMargin}"
-                                           Value="{Binding Barcodes.Width}"
-                                           IsReadOnly="{Binding Barcodes.DefaultSize}" />
+                                           Value="{Binding Width}"
+                                           IsReadOnly="{Binding DefaultSize}" />
 
                         <Label Grid.Row="2"
                            Grid.Column="3"
@@ -116,13 +116,13 @@
                                            TextAlignment="Left"
                                            Minimum="100"
                                            Margin="{StaticResource DefaultMargin}"
-                                           Value="{Binding Barcodes.Height}"
-                                           IsReadOnly="{Binding Barcodes.DefaultSize}" />
+                                           Value="{Binding Height}"
+                                           IsReadOnly="{Binding DefaultSize}" />
 
                         <Button Grid.Row="5"
                             Grid.ColumnSpan="5"
                             Content="Generate!"
-                            Command="{Binding Barcodes.GenerateBarcodeCommand}" />
+                            Command="{Binding GenerateBarcodeCommand}" />
                     </Grid>
                 </GroupBox>
 
@@ -130,13 +130,13 @@
                       Padding="0"
                       Header="Barcodes">
                     <ListView SelectionMode="Single"
-                      ItemsSource="{Binding Barcodes.Barcodes}"
-                      SelectedItem="{Binding Barcodes.SelectedBarcode}"
+                      ItemsSource="{Binding Barcodes}"
+                      SelectedItem="{Binding SelectedBarcode}"
                       Background="Transparent" 
                       BorderThickness="0">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseDoubleClick">
-                                <prism:InvokeCommandAction Command="{Binding Barcodes.OpenInNewWindowCommand}" />
+                                <prism:InvokeCommandAction Command="{Binding OpenInNewWindowCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <ListView.ItemsPanel>
@@ -155,12 +155,12 @@
                         <ListView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Open in new window"
-                                    Command="{Binding Barcodes.OpenInNewWindowCommand}" />
+                                    Command="{Binding OpenInNewWindowCommand}" />
                                 <MenuItem Header="Copy to clipboard"
-                                    Command="{Binding Barcodes.CopyToClipboardCommand}"
+                                    Command="{Binding CopyToClipboardCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                                 <MenuItem Header="Delete"
-                                    Command="{Binding Barcodes.DeleteCommand}"
+                                    Command="{Binding DeleteCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                             </ContextMenu>
                         </ListView.ContextMenu>
