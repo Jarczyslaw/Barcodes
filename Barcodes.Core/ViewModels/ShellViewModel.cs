@@ -1,13 +1,10 @@
 ﻿using Barcodes.Core.Events;
 using Barcodes.Core.Services;
-using Barcodes.Services.AppSettings;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
-using Barcodes.Services.System;
 using Barcodes.Utils;
 using Prism.Commands;
-using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
@@ -230,7 +227,6 @@ namespace Barcodes.Core.ViewModels
             {
                 GenerateBarcode(barcodeData, Title);
                 StatusMessage = $"Barcode \"{Title}\" generate successfully!";
-                RaisePropertyChanged(nameof(BarcodesCount));
             }
             catch (Exception exc)
             {
