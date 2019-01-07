@@ -9,11 +9,6 @@ namespace Barcodes.Core.ViewModels
     public class HelpViewModel : BindableBase
     {
         private BitmapSource randomBarcode;
-        public BitmapSource RandomBarcode
-        {
-            get => randomBarcode;
-            set => SetProperty(ref randomBarcode, value);
-        }
 
         private readonly IBarcodesGeneratorService barcodesGenerator;
 
@@ -27,10 +22,16 @@ namespace Barcodes.Core.ViewModels
 
         public DelegateCommand GenerateRandomBarcodeCommand { get; }
 
+        public BitmapSource RandomBarcode
+        {
+            get => randomBarcode;
+            set => SetProperty(ref randomBarcode, value);
+        }
+
         public void GenerateRandomBarcode()
         {
             var randomText = RandomTexts.Get();
-            RandomBarcode = barcodesGenerator.CreateShellBarcode(300, randomText);
+            RandomBarcode = barcodesGenerator.CreateQRBarcode(300, randomText);
         }
     }
 }

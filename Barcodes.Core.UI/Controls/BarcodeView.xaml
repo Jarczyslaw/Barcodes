@@ -50,8 +50,8 @@
                     Grid.ColumnSpan="2"
                     Margin="40 5"
                     Source="{Binding Barcode, Mode=OneWay}"
-                    Width="{Binding BarcodeWidth, Mode=OneWay}"
-                   Height="{Binding BarcodeHeight, Mode=OneWay}" />
+                    Width="{Binding BarcodeBitmapWidth, Mode=OneWay}"
+                   Height="{Binding BarcodeBitmapHeight, Mode=OneWay}" />
         </Grid>
     </Border>
 </UserControl>

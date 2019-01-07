@@ -6,12 +6,15 @@ namespace Barcodes.Core.ViewModels
 {
     public class BarcodeResultViewModel : BindableBase
     {
+        private string title;
+        private string data;
+        private BitmapSource barcode;
+
         public string HeaderTitle
         {
             get { return $"Barcodes - {Title}"; }
         }
 
-        private string title;
         public string Title
         {
             get => title;
@@ -25,24 +28,26 @@ namespace Barcodes.Core.ViewModels
 
         public BarcodeType Type { get; set; }
 
-        private string data;
         public string Data
         {
             get => data;
             set => SetProperty(ref data, value);
         }
 
-        public int BarcodeWidth
+        public int BarcodeBitmapWidth
         {
             get => Barcode.PixelWidth;
         }
 
-        public int BarcodeHeight
+        public int BarcodeBitmapHeight
         {
             get => Barcode.PixelHeight;
         }
 
-        private BitmapSource barcode;
+        public int BarcodeWidth { get; set; }
+
+        public int BarcodeHeight { get; set; }
+
         public BitmapSource Barcode
         {
             get => barcode;

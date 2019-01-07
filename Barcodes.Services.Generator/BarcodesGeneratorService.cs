@@ -6,7 +6,7 @@ namespace Barcodes.Services.Generator
 {
     public class BarcodesGeneratorService : IBarcodesGeneratorService
     {
-        public BitmapSource CreateShellBarcode(int size, string textData)
+        public BitmapSource CreateQRBarcode(int size, string textData)
         {
             using (var generator = new BarCodeGenerator(EncodeTypes.QR, textData))
             {

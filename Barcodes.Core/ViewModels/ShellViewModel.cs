@@ -244,6 +244,8 @@ namespace Barcodes.Core.ViewModels
                 Data = barcodeData.Data,
                 Title = title,
                 Type = barcodeData.Type,
+                BarcodeWidth = barcodeData.Width,
+                BarcodeHeight = barcodeData.Height
             });
             RaisePropertyChanged(nameof(BarcodesCount));
         }
@@ -325,17 +327,39 @@ namespace Barcodes.Core.ViewModels
 
                 Barcodes.Clear();
                 barcodesFromStorage.Reverse();
+
+                int successfullyGenerated = 0;
                 foreach (var barcode in barcodesFromStorage)
                 {
+                    if (!barcode.IsValid)
+                        continue;
+
                     var barcodeData = new BarcodeData
                     {
                         Data = barcode.Data,
-                        Type = barcode.Type
+                        Type = barcode.Type,
+                        DefaultSize = false
                     };
-                    GenerateBarcode(barcodeData, barcode.Title);
+                    if (!barcode.ValidSizes)
+                    {
+                        barcodeData.DefaultSize = true;
+                    }
+                    else
+                    {
+                        barcodeData.Width = barcode.Width;
+                        barcodeData.Height = barcode.Height;
+                    }
+
+                    try
+                    {
+                        GenerateBarcode(barcodeData, barcode.Title);
+                        successfullyGenerated++;
+                    }
+                    catch { }
                 }
+
                 services.AppSettingsService.StoragePath = storagePath;
-                StatusMessage = $"Successfully loaded barcodes from {Path.GetFileName(storagePath)}";
+                StatusMessage = $"Successfully loaded {successfullyGenerated} barcodes from {Path.GetFileName(storagePath)}";
             }
             catch (Exception exc)
             {
@@ -363,7 +387,9 @@ namespace Barcodes.Core.ViewModels
                 {
                     Data = b.Data,
                     Title = b.Title,
-                    Type = b.Type
+                    Type = b.Type,
+                    Width = b.BarcodeWidth,
+                    Height = b.BarcodeHeight
                 }).ToList();
 
                 services.BarcodeStorageService.Save(filePath, barcodesToSave);
