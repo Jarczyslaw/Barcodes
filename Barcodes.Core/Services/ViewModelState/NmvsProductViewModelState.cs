@@ -10,8 +10,7 @@ namespace Barcodes.Core.Services.ViewModelState
     {
         public string ProductCode { get; set; }
         public string BatchId { get; set; }
-        public bool EmptyDay { get; set; }
-        public DateTime SelectedDateTime { get; set; }
+        public string BatchExpDate { get; set; }
         public string SerialNo { get; set; }
     }
 }

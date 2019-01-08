@@ -35,9 +35,9 @@
                         Text="{Binding BatchId}" />
 
                 <Label Grid.Row="2" 
-                        Content="Batch exp. date:" />
-                <Grid Grid.Row="2"  
-                        Grid.Column="1">
+                        Content="Batch exp. date (yyMMdd / yyMM00):" />
+                <!--<Grid Grid.Row="2"  
+                        >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
@@ -57,8 +57,14 @@
                     <CheckBox Grid.Column="1" 
                               Content="Empty Day"
                               IsChecked="{Binding EmptyDay}" />
-                </Grid>
-                
+                </Grid>-->
+                <TextBox Grid.Row="2"
+                         Margin="3"
+                         Grid.Column="1"
+                         MaxLength="6"
+                         TextAlignment="Left" 
+                         Text="{Binding BatchExpDate}" />
+
                 <Label Grid.Row="3" 
                         Content="Serial no.:" />
                 <TextBox Grid.Row="3"  

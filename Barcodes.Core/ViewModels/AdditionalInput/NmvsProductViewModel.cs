@@ -8,44 +8,9 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
     public class NmvsProductViewModel : BaseInputViewModel
     {
         private string productCode;
-        public string ProductCode
-        {
-            get => productCode;
-            set => SetProperty(ref productCode, value);
-        }
-
         private string batchId;
-        public string BatchId
-        {
-            get => batchId;
-            set => SetProperty(ref batchId, value);
-        }
-
-        public string BatchExpDate
-        {
-            get => selectedDateTime.ToExpireDate(EmptyDay);
-        }
-
-        private bool emptyDay;
-        public bool EmptyDay
-        {
-            get => emptyDay;
-            set => SetProperty(ref emptyDay, value);
-        }
-
-        private DateTime selectedDateTime = DateTime.Now;
-        public DateTime SelectedDateTime
-        {
-            get => selectedDateTime;
-            set => SetProperty(ref selectedDateTime, value);
-        }
-
+        private string batchExpDate;
         private string serialNo;
-        public string SerialNo
-        {
-            get => serialNo;
-            set => SetProperty(ref serialNo, value);
-        }
 
         public NmvsProductViewModel(IAppDialogsService dialogsService, IViewModelStateSaver viewModelStateSaver)
             : base(dialogsService, viewModelStateSaver)
@@ -53,9 +18,33 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
             viewModelStateSaver.LoadState(this);
         }
 
+        public string ProductCode
+        {
+            get => productCode;
+            set => SetProperty(ref productCode, value);
+        }
+
+        public string BatchId
+        {
+            get => batchId;
+            set => SetProperty(ref batchId, value);
+        }
+
+        public string SerialNo
+        {
+            get => serialNo;
+            set => SetProperty(ref serialNo, value);
+        }
+
+        public string BatchExpDate
+        {
+            get => batchExpDate;
+            set => SetProperty(ref batchExpDate, value);
+        }
+
         protected override string GetResultData()
         {
-            var groupSeparator = "\u001D";
+            const string groupSeparator = "\u001D";
             return string.Format("01{0}17{1}21{2}{3}10{4}", ProductCode, BatchExpDate, SerialNo, groupSeparator, BatchId);
         }
 
@@ -67,7 +56,7 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
                 return false;
             }
 
-            if (string.IsNullOrEmpty(BatchExpDate) || BatchExpDate.Length != 6)
+            if (!NmvsDate.TryParse(BatchExpDate, out NmvsDate date))
             {
                 dialogsService.ShowError("Invalid batch expiration date");
                 return false;
