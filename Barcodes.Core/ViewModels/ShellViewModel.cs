@@ -336,24 +336,18 @@ namespace Barcodes.Core.ViewModels
                 int successfullyGenerated = 0;
                 foreach (var barcode in barcodesFromStorage)
                 {
-                    if (!barcode.IsValid)
+                    if (!barcode.IsValid || !barcode.ValidSizes)
                         continue;
 
                     var barcodeData = new GenerationData
                     {
                         Data = barcode.Data,
                         Type = barcode.Type,
-                        DefaultSize = false
+                        DefaultSize = barcode.DefaultSize,
+                        ValidateCodeText = false,
+                        Width = barcode.Width,
+                        Height = barcode.Height
                     };
-                    if (!barcode.ValidSizes)
-                    {
-                        barcodeData.DefaultSize = true;
-                    }
-                    else
-                    {
-                        barcodeData.Width = barcode.Width;
-                        barcodeData.Height = barcode.Height;
-                    }
 
                     try
                     {
@@ -390,11 +384,12 @@ namespace Barcodes.Core.ViewModels
 
                 var barcodesToSave = Barcodes.Select(b => new StorageEntry
                 {
-                    Data = b.Data,
+                    Data = b.GenerationData.Data,
                     Title = b.Title,
-                    Type = b.Type,
-                    Width = b.BarcodeWidth,
-                    Height = b.BarcodeHeight
+                    Type = b.GenerationData.Type,
+                    Width = b.GenerationData.Width,
+                    Height = b.GenerationData.Height,
+                    DefaultSize = b.GenerationData.DefaultSize
                 }).ToList();
 
                 services.BarcodeStorageService.Save(filePath, barcodesToSave);
@@ -433,7 +428,7 @@ namespace Barcodes.Core.ViewModels
                 var barcodesToExport = Barcodes.Select(b => new DocBarcodeData
                 {
                     Title = b.Title,
-                    Data = b.Data,
+                    Data = b.GenerationData.Data,
                     Barcode = b.Barcode
                 }).ToList();
                 await services.DocExportService.ExportAsync(barcodesToExport, filePath)

@@ -32,40 +32,10 @@ namespace Barcodes.Core.ViewModels
             get => GenerationData.Type.ToString();
         }
 
-        public BarcodeType Type
-        {
-            get => GenerationData.Type;
-        }
-
-        public string Data
-        {
-            get => GenerationData.Data;
-        }
-
         public BitmapSource Barcode
         {
             get => barcode;
             set => SetProperty(ref barcode, value);
-        }
-
-        public int BarcodeBitmapWidth
-        {
-            get => Barcode.PixelWidth;
-        }
-
-        public int BarcodeBitmapHeight
-        {
-            get => Barcode.PixelHeight;
-        }
-
-        public int BarcodeWidth
-        {
-            get => GenerationData.Width;
-        }
-
-        public int BarcodeHeight
-        {
-            get => GenerationData.Height;
         }
     }
 }

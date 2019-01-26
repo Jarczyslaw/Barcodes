@@ -10,6 +10,7 @@ namespace Barcodes.Services.Storage
         public string Data { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+        public bool DefaultSize { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public BarcodeType Type { get; set; }
@@ -18,6 +19,6 @@ namespace Barcodes.Services.Storage
         public bool IsValid => !string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(Data);
 
         [JsonIgnore]
-        public bool ValidSizes => Width != 0 && Height != 0;
+        public bool ValidSizes => DefaultSize || (Width != 0 && Height != 0);
     }
 }

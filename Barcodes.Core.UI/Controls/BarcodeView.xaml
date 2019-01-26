@@ -45,13 +45,13 @@
                     Content="Data:" />
             <TextBox Grid.Row="2"
                     Grid.Column="1"
-                    Text="{Binding Data, Mode=OneWay}" />
+                    Text="{Binding GenerationData.Data, Mode=OneWay}" />
             <Image Grid.Row="3"
                     Grid.ColumnSpan="2"
                     Margin="40 5"
                     Source="{Binding Barcode, Mode=OneWay}"
-                    Width="{Binding BarcodeBitmapWidth, Mode=OneWay}"
-                   Height="{Binding BarcodeBitmapHeight, Mode=OneWay}" />
+                    Width="{Binding Barcode.Width, Mode=OneWay}"
+                   Height="{Binding Barcode.Height, Mode=OneWay}" />
         </Grid>
     </Border>
 </UserControl>

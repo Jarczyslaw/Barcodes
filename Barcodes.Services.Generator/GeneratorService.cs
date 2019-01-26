@@ -26,12 +26,7 @@ namespace Barcodes.Services.Generator
                 generator.ThrowExceptionWhenCodeTextIncorrect = barcodeData.ValidateCodeText;
                 generator.AutoSizeMode = AutoSizeMode.Nearest;
                 generator.EnableEscape = true;
-                if (!barcodeData.ShowData)
-                {
-                    generator.D2.DisplayText = string.Empty;
-                    generator.CaptionAbove.Visible =
-                        generator.CaptionBelow.Visible = false;
-                }
+                HideTexts(generator);
                 FitSizes(generator, barcodeData);
                 var barcodeImage = generator.GenerateBarCodeImage();
                 return barcodeImage.ToBitmapSource();
@@ -54,6 +49,13 @@ namespace Barcodes.Services.Generator
                 generator.BarCodeWidth.Pixels = barcodeData.Width;
                 generator.BarCodeHeight.Pixels = barcodeData.Height;
             }
+        }
+
+        private void HideTexts(BarCodeGenerator generator)
+        {
+            generator.D2.DisplayText = string.Empty;
+            generator.CaptionAbove.Visible =
+                generator.CaptionBelow.Visible = false;
         }
     }
 }
