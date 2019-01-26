@@ -90,6 +90,13 @@
                                 SelectedItem="{Binding SelectedBarcodeType}"
                                 DisplayMemberPath="TypeTitle" />
 
+                        <CheckBox Grid.Row="2"
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                IsChecked="{Binding ValidateCodeText}"
+                                VerticalContentAlignment="Center"
+                                Content="Validate data" />
+                        
                         <CheckBox Grid.Row="0"
                             Grid.Column="3"
                               Grid.ColumnSpan="2"

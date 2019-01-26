@@ -9,5 +9,6 @@
         public int Height { get; set; }
         public string Data { get; set; }
         public bool ShowData { get; set; }
+        public bool ValidateCodeText { get; set; }
     }
 }

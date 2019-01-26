@@ -22,6 +22,8 @@ namespace Barcodes.Core.ViewModels
         private bool defaultSize = true;
         private int width = 100;
         private int height = 100;
+        private bool validateCodeText = true;
+
         private BarcodeTypeViewModel selectedBarcodeType;
         private BarcodeResultViewModel selectedBarcode;
         private ObservableCollection<BarcodeTypeViewModel> barcodeTypes;
@@ -119,6 +121,12 @@ namespace Barcodes.Core.ViewModels
         {
             get => height;
             set => SetProperty(ref height, value);
+        }
+
+        public bool ValidateCodeText
+        {
+            get => validateCodeText;
+            set => SetProperty(ref validateCodeText, value);
         }
 
         public int BarcodesCount
@@ -220,7 +228,8 @@ namespace Barcodes.Core.ViewModels
                 Type = SelectedBarcodeType.Type,
                 DefaultSize = DefaultSize,
                 Width = Width,
-                Height = Height
+                Height = Height,
+                ValidateCodeText = ValidateCodeText
             };
 
             try

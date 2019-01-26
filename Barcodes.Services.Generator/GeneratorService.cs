@@ -23,7 +23,7 @@ namespace Barcodes.Services.Generator
             var encodeType = barcodeData.Type.GetEncodeType();
             using (var generator = new BarCodeGenerator(encodeType, barcodeData.Data))
             {
-                generator.ThrowExceptionWhenCodeTextIncorrect = false;
+                generator.ThrowExceptionWhenCodeTextIncorrect = barcodeData.ValidateCodeText;
                 generator.AutoSizeMode = AutoSizeMode.Nearest;
                 generator.EnableEscape = true;
                 if (!barcodeData.ShowData)
