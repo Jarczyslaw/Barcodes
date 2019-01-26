@@ -380,7 +380,7 @@ namespace Barcodes.Core.ViewModels
         {
             if (BarcodesCount == 0)
             {
-                services.DialogsService.ShowError("Generate barcodes before saving");
+                services.DialogsService.ShowError("No barcodes to save");
                 return;
             }
 
