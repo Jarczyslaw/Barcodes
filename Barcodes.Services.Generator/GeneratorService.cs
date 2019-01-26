@@ -4,7 +4,7 @@ using System.Windows.Media.Imaging;
 
 namespace Barcodes.Services.Generator
 {
-    public class BarcodesGeneratorService : IBarcodesGeneratorService
+    public class GeneratorService : IGeneratorService
     {
         public BitmapSource CreateQRBarcode(int size, string textData)
         {
@@ -18,7 +18,7 @@ namespace Barcodes.Services.Generator
             }
         }
 
-        public BitmapSource CreateBarcode(BarcodeData barcodeData)
+        public BitmapSource CreateBarcode(GenerationData barcodeData)
         {
             var encodeType = barcodeData.Type.GetEncodeType();
             using (var generator = new BarCodeGenerator(encodeType, barcodeData.Data))
@@ -38,7 +38,7 @@ namespace Barcodes.Services.Generator
             }
         }
 
-        private void FitSizes(BarCodeGenerator generator, BarcodeData barcodeData)
+        private void FitSizes(BarCodeGenerator generator, GenerationData barcodeData)
         {
             generator.RecalculateValues();
             if (barcodeData.DefaultSize && generator.BarCodeWidth.Pixels < barcodeData.MinWidth)

@@ -21,10 +21,10 @@ namespace Barcodes.Core
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<IBarcodesGeneratorService, BarcodesGeneratorService>();
+            containerRegistry.RegisterSingleton<IGeneratorService, GeneratorService>();
             containerRegistry.RegisterSingleton<IWindowsService, WindowsService>();
             containerRegistry.RegisterSingleton<IAppWindowsService, AppWindowsService>();
-            containerRegistry.RegisterSingleton<IBarcodeStorageService, BarcodeStorageService>();
+            containerRegistry.RegisterSingleton<IStorageService, StorageService>();
             containerRegistry.RegisterSingleton<IDocExportService, DocExportService>();
             containerRegistry.RegisterSingleton<IServicesContainer, ServicesContainer>();
             containerRegistry.RegisterSingleton<IViewModelStateSaver, ViewModelStateSaver>();

@@ -10,12 +10,12 @@ namespace Barcodes.Core.Services
     public interface IServicesContainer
     {
         IEventAggregator EventAggregator { get; }
-        IBarcodesGeneratorService BarcodesGenerator { get; }
+        IGeneratorService BarcodesGenerator { get; }
         IAppDialogsService DialogsService { get; }
         IAppWindowsService AppWindowsService { get; }
         ISystemService SystemService { get; }
         IAppSettingsService AppSettingsService { get; }
-        IBarcodeStorageService BarcodeStorageService { get; }
+        IStorageService BarcodeStorageService { get; }
         IDocExportService DocExportService { get; }
     }
 }

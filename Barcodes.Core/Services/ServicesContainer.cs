@@ -10,17 +10,17 @@ namespace Barcodes.Core.Services
     public class ServicesContainer : IServicesContainer
     {
         public IEventAggregator EventAggregator { get; }
-        public IBarcodesGeneratorService BarcodesGenerator { get; }
+        public IGeneratorService BarcodesGenerator { get; }
         public IAppDialogsService DialogsService { get; }
         public IAppWindowsService AppWindowsService { get; }
         public ISystemService SystemService { get; }
         public IAppSettingsService AppSettingsService { get; }
-        public IBarcodeStorageService BarcodeStorageService { get; }
+        public IStorageService BarcodeStorageService { get; }
         public IDocExportService DocExportService { get; }
 
-        public ServicesContainer(IEventAggregator eventAggregator, IBarcodesGeneratorService barcodesGenerator, IAppDialogsService dialogsService,
+        public ServicesContainer(IEventAggregator eventAggregator, IGeneratorService barcodesGenerator, IAppDialogsService dialogsService,
             IAppWindowsService appWindowsService, ISystemService systemService, IAppSettingsService appSettingsService,
-            IBarcodeStorageService barcodeStorageService, IDocExportService docExportService)
+            IStorageService barcodeStorageService, IDocExportService docExportService)
         {
             EventAggregator = eventAggregator;
             BarcodesGenerator = barcodesGenerator;

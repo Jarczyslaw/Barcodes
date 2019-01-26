@@ -47,11 +47,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BarcodeData.cs" />
-    <Compile Include="BarcodesGeneratorService.cs" />
+    <Compile Include="GenerationData.cs" />
+    <Compile Include="GeneratorService.cs" />
     <Compile Include="BarcodeType.cs" />
     <Compile Include="BarcodeTypeExtensions.cs" />
-    <Compile Include="IBarcodesGeneratorService.cs" />
+    <Compile Include="IGeneratorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

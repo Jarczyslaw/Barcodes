@@ -2,9 +2,9 @@
 
 namespace Barcodes.Services.Generator
 {
-    public interface IBarcodesGeneratorService
+    public interface IGeneratorService
     {
         BitmapSource CreateQRBarcode(int size, string textData);
-        BitmapSource CreateBarcode(BarcodeData barcodeData);
+        BitmapSource CreateBarcode(GenerationData barcodeData);
     }
 }

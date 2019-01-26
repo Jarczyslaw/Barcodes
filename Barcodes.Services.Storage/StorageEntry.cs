@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Barcodes.Services.Storage
 {
-    public class BarcodeStorageEntry
+    public class StorageEntry
     {
         public string Title { get; set; }
         public string Data { get; set; }

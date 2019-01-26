@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace Barcodes.Services.Storage
 {
-    public class BarcodeStorageService : IBarcodeStorageService
+    public class StorageService : IStorageService
     {
-        public List<BarcodeStorageEntry> Load(string filePath, bool throwException = false)
+        public List<StorageEntry> Load(string filePath, bool throwException = false)
         {
             try
             {
-                return Serializer.FromFile<List<BarcodeStorageEntry>>(filePath);
+                return Serializer.FromFile<List<StorageEntry>>(filePath);
             }
             catch
             {
@@ -22,7 +22,7 @@ namespace Barcodes.Services.Storage
             }
         }
 
-        public void Save(string filePath, List<BarcodeStorageEntry> barcodes)
+        public void Save(string filePath, List<StorageEntry> barcodes)
         {
             Serializer.ToFile(barcodes, filePath);
         }

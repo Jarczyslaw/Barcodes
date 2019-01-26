@@ -214,7 +214,7 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
-            var barcodeData = new BarcodeData
+            var barcodeData = new GenerationData
             {
                 Data = Data,
                 Type = SelectedBarcodeType.Type,
@@ -234,7 +234,7 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        private void GenerateBarcode(BarcodeData barcodeData, string title)
+        private void GenerateBarcode(GenerationData barcodeData, string title)
         {
             var barcode = services.BarcodesGenerator.CreateBarcode(barcodeData);
             barcode.Freeze();
@@ -334,7 +334,7 @@ namespace Barcodes.Core.ViewModels
                     if (!barcode.IsValid)
                         continue;
 
-                    var barcodeData = new BarcodeData
+                    var barcodeData = new GenerationData
                     {
                         Data = barcode.Data,
                         Type = barcode.Type,
@@ -383,7 +383,7 @@ namespace Barcodes.Core.ViewModels
                     return;
                 }
 
-                var barcodesToSave = Barcodes.Select(b => new BarcodeStorageEntry
+                var barcodesToSave = Barcodes.Select(b => new StorageEntry
                 {
                     Data = b.Data,
                     Title = b.Title,

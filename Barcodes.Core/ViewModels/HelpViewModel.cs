@@ -10,9 +10,9 @@ namespace Barcodes.Core.ViewModels
     {
         private BitmapSource randomBarcode;
 
-        private readonly IBarcodesGeneratorService barcodesGenerator;
+        private readonly IGeneratorService barcodesGenerator;
 
-        public HelpViewModel(IBarcodesGeneratorService barcodesGenerator)
+        public HelpViewModel(IGeneratorService barcodesGenerator)
         {
             this.barcodesGenerator = barcodesGenerator;
 
