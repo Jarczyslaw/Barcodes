@@ -1,1 +1,0 @@
-The first time you download the repository and build a solution, you must restart Visual Studio to get GitInfo generating all neccessary classes correctly.

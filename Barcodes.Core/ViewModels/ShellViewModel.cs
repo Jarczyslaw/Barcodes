@@ -245,16 +245,12 @@ namespace Barcodes.Core.ViewModels
 
         private void GenerateBarcode(GenerationData barcodeData, string title)
         {
-            var barcode = services.BarcodesGenerator.CreateBarcode(barcodeData);
-            barcode.Freeze();
-            Barcodes.Insert(0, new BarcodeResultViewModel
+            var barcodeBitmap = services.BarcodesGenerator.CreateBarcode(barcodeData);
+            barcodeBitmap.Freeze();
+            Barcodes.Insert(0, new BarcodeResultViewModel(barcodeData)
             {
-                Barcode = barcode,
-                Data = barcodeData.Data,
-                Title = title,
-                Type = barcodeData.Type,
-                BarcodeWidth = barcodeData.Width,
-                BarcodeHeight = barcodeData.Height
+                Barcode = barcodeBitmap,
+                Title = title
             });
             RaisePropertyChanged(nameof(BarcodesCount));
         }

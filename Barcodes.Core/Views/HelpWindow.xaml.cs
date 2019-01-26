@@ -26,7 +26,7 @@ namespace Barcodes.Core.Views
         private void ShowVersion()
         {
             var appVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
-            tbVersion.Text = $"Version: {appVersion}, branch: {ThisAssembly.Git.Branch}, commit: {ThisAssembly.Git.Commit}";
+            tbVersion.Text = $"Version: {appVersion}";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

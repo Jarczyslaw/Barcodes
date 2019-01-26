@@ -7,8 +7,14 @@ namespace Barcodes.Core.ViewModels
     public class BarcodeResultViewModel : BindableBase
     {
         private string title;
-        private string data;
         private BitmapSource barcode;
+
+        public BarcodeResultViewModel(GenerationData generationData)
+        {
+            GenerationData = generationData;
+        }
+
+        public GenerationData GenerationData { get; }
 
         public string HeaderTitle
         {
@@ -23,15 +29,23 @@ namespace Barcodes.Core.ViewModels
 
         public string TypeTitle
         {
-            get => Type.ToString();
+            get => GenerationData.Type.ToString();
         }
 
-        public BarcodeType Type { get; set; }
+        public BarcodeType Type
+        {
+            get => GenerationData.Type;
+        }
 
         public string Data
         {
-            get => data;
-            set => SetProperty(ref data, value);
+            get => GenerationData.Data;
+        }
+
+        public BitmapSource Barcode
+        {
+            get => barcode;
+            set => SetProperty(ref barcode, value);
         }
 
         public int BarcodeBitmapWidth
@@ -44,14 +58,14 @@ namespace Barcodes.Core.ViewModels
             get => Barcode.PixelHeight;
         }
 
-        public int BarcodeWidth { get; set; }
-
-        public int BarcodeHeight { get; set; }
-
-        public BitmapSource Barcode
+        public int BarcodeWidth
         {
-            get => barcode;
-            set => SetProperty(ref barcode, value);
+            get => GenerationData.Width;
+        }
+
+        public int BarcodeHeight
+        {
+            get => GenerationData.Height;
         }
     }
 }
