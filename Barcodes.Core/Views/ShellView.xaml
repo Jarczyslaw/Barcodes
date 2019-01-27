@@ -13,8 +13,6 @@
     <toolkit:BusyIndicator IsBusy="{Binding IsBusy}" BusyContent="{Binding BusyMessage}" >
         <DockPanel LastChildFill="True">
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="Add new barcode"
-                          Command="{Binding AddNewBarcodeCommand}" />
                 <MenuItem Header="File">
                     <MenuItem Header="Load barcodes from file"
                           Command="{Binding LoadFromFileCommand}" />
@@ -26,6 +24,8 @@
                     <MenuItem Header="Close"
                           Command="{Binding CloseCommand}"/>
                 </MenuItem>
+                <MenuItem Header="Add new barcode"
+                          Command="{Binding AddNewBarcodeCommand}" />
                 <MenuItem Header="Export to PDF"
                       Command="{Binding ExportToPdfCommand}" />
                 <MenuItem Header="Help"
