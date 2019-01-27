@@ -1,4 +1,7 @@
-﻿namespace Barcodes.Core.Services
+﻿using Barcodes.Core.ViewModels;
+using Barcodes.Services.Generator;
+
+namespace Barcodes.Core.Services
 {
     public interface IAppWindowsService
     {
@@ -6,5 +9,6 @@
         string OpenNmvsProductWindow();
         string OpenEan128ProductWindow();
         void ShowHelpWindow();
+        BarcodeResultViewModel ShowGenerationWindow(BarcodeResultViewModel data = null);
     }
 }

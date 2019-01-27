@@ -94,7 +94,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoreModule.cs" />
-    <Compile Include="Events\CloseEvent.cs" />
+    <Compile Include="Events\GenerationWindowClose.cs" />
+    <Compile Include="Events\ShellWindowClose.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegionNames.cs" />
     <Compile Include="Services\AppDialogsService.cs" />
@@ -112,10 +113,14 @@
     <Compile Include="ViewModels\BarcodeTypeViewModel.cs" />
     <Compile Include="ViewModels\BarcodeResultViewModel.cs" />
     <Compile Include="ViewModels\AdditionalInput\NmvsProductViewModel.cs" />
+    <Compile Include="ViewModels\GenerationViewModel.cs" />
     <Compile Include="ViewModels\HelpViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\AdditionalInput\Ean128ProductWindow.xaml.cs">
       <DependentUpon>Ean128ProductWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GenerationWindow.xaml.cs">
+      <DependentUpon>GenerationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HelpWindow.xaml.cs">
       <DependentUpon>HelpWindow.xaml</DependentUpon>
@@ -177,6 +182,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\AdditionalInput\Ean128ProductWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GenerationWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

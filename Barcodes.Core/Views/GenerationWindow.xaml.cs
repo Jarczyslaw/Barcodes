@@ -7,11 +7,11 @@ namespace Barcodes.Core.Views
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class ShellWindow : Window
+    public partial class GenerationWindow : Window
     {
-        public ShellWindow(IEventAggregator eventAggregator)
+        public GenerationWindow(IEventAggregator eventAggregator)
         {
-            eventAggregator.GetEvent<ShellWindowClose>().Subscribe(Close, ThreadOption.UIThread, false);
+            eventAggregator.GetEvent<GenerationWindowClose>().Subscribe(Close, ThreadOption.UIThread, false);
 
             InitializeComponent();
         }

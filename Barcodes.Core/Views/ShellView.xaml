@@ -13,6 +13,8 @@
     <toolkit:BusyIndicator IsBusy="{Binding IsBusy}" BusyContent="{Binding BusyMessage}" >
         <DockPanel LastChildFill="True">
             <Menu DockPanel.Dock="Top">
+                <MenuItem Header="Add new barcode"
+                          Command="{Binding AddNewBarcodeCommand}" />
                 <MenuItem Header="File">
                     <MenuItem Header="Load barcodes from file"
                           Command="{Binding LoadFromFileCommand}" />
@@ -38,151 +40,59 @@
                     <TextBlock Text="{Binding StatusMessage}" />
                 </StatusBarItem>
             </StatusBar>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <GroupBox Header="Barcode generation">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80" />
-                            <ColumnDefinition Width="3*" />
-                            <ColumnDefinition Width="20" />
-                            <ColumnDefinition Width="80" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <Label Content="Title:" />
-                        <TextBox Grid.Column="1" 
-                            Text="{Binding Title}" />
-
-                        <Label Grid.Row="1" 
-                           Content="Data:" />
-                        <Grid Grid.Row="1" 
-                                Grid.Column="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBox Text="{Binding Data}" />
-                            <Button Grid.Column="1"
-                                Content="Enter data" 
-                                Width="65"
-                                Command="{Binding AdditionalInputCommand}" />
-                        </Grid>
-
-                        <Label Grid.Row="2" 
-                           Content="Type:" />
-                        <ComboBox Grid.Row="2" 
-                                Grid.Column="1" 
-                                Width="150"
-                                HorizontalAlignment="Left"
-                                ItemsSource="{Binding BarcodeTypes}"
-                                SelectedItem="{Binding SelectedBarcodeType}"
-                                DisplayMemberPath="TypeTitle" />
-
-                        <CheckBox Grid.Row="2"
-                                Grid.Column="1"
-                                HorizontalAlignment="Right"
-                                IsChecked="{Binding ValidateCodeText}"
-                                VerticalContentAlignment="Center"
-                                Content="Validate data" />
-                        
-                        <CheckBox Grid.Row="0"
-                            Grid.Column="3"
-                              Grid.ColumnSpan="2"
-                            IsChecked="{Binding DefaultSize}"
-                              VerticalContentAlignment="Center"
-                              Content="Use default sizes" />
-
-                        <Label Grid.Row="1"
-                           Grid.Column="3"
-                           Content="Width: " />
-                        <toolkit:IntegerUpDown Grid.Row="1"
-                                           Grid.Column="4"
-                                           TextAlignment="Left"
-                                           Minimum="100"
-                                           Margin="{StaticResource DefaultMargin}"
-                                           Value="{Binding Width}"
-                                           IsReadOnly="{Binding DefaultSize}" />
-
-                        <Label Grid.Row="2"
-                           Grid.Column="3"
-                           Content="Height: " />
-                        <toolkit:IntegerUpDown Grid.Row="2"
-                                           Grid.Column="4"
-                                           TextAlignment="Left"
-                                           Minimum="100"
-                                           Margin="{StaticResource DefaultMargin}"
-                                           Value="{Binding Height}"
-                                           IsReadOnly="{Binding DefaultSize}" />
-
-                        <Button Grid.Row="5"
-                            Grid.ColumnSpan="5"
-                            Content="Generate!"
-                            Command="{Binding GenerateBarcodeCommand}" />
-                    </Grid>
-                </GroupBox>
-
-                <GroupBox Grid.Row="1"
+            
+            <GroupBox Grid.Row="1"
                       Padding="0"
                       Header="Barcodes">
-                    <ListView SelectionMode="Single"
+                <ListView SelectionMode="Single"
                       ItemsSource="{Binding Barcodes}"
                       SelectedItem="{Binding SelectedBarcode}"
                       Background="Transparent" 
                       BorderThickness="0">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDoubleClick">
-                                <prism:InvokeCommandAction Command="{Binding OpenInNewWindowCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <prism:InvokeCommandAction Command="{Binding OpenInNewWindowCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
                                    ItemWidth="{Binding (ListView.View).ItemWidth, RelativeSource={RelativeSource AncestorType=ListView}}"
                                    MinWidth="{Binding ItemWidth, RelativeSource={RelativeSource Self}}"
                                    ItemHeight="{Binding (ListView.View).ItemHeight, RelativeSource={RelativeSource AncestorType=ListView}}" />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <controls:BarcodeView />
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                        <ListView.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Order">
-                                    <MenuItem Header="Move up"
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <controls:BarcodeView />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Edit"
+                                    Command="{Binding EditBarcodeCommand}"
+                                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                            <MenuItem Header="Order">
+                                <MenuItem Header="Move up"
                                               Command="{Binding MoveUpCommand}"
                                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
-                                    <MenuItem Header="Move down"
+                                <MenuItem Header="Move down"
                                               Command="{Binding MoveDownCommand}"
                                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
-                                </MenuItem>
-                                <MenuItem Header="Open in new window"
+                            </MenuItem>
+                            <MenuItem Header="Open in new window"
                                     Command="{Binding OpenInNewWindowCommand}" />
-                                <MenuItem Header="Copy to clipboard"
+                            <MenuItem Header="Copy to clipboard"
                                     Command="{Binding CopyToClipboardCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
-                                <Separator />
-                                <MenuItem Header="Delete"
+                            <Separator />
+                            <MenuItem Header="Delete"
                                     Command="{Binding DeleteCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
-                            </ContextMenu>
-                        </ListView.ContextMenu>
-                    </ListView>
-                </GroupBox>
-            </Grid>
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                </ListView>
+            </GroupBox>
         </DockPanel>
     </toolkit:BusyIndicator>
 </UserControl>

@@ -2,7 +2,7 @@
 
 namespace Barcodes.Core.Events
 {
-    public class CloseEvent : PubSubEvent
+    public class GenerationWindowClose : PubSubEvent
     {
     }
 }
