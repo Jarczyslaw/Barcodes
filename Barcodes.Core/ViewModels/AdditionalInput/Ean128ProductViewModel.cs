@@ -1,5 +1,6 @@
 ﻿using Barcodes.Core.Services;
-using Barcodes.Core.Services.ViewModelState;
+using Barcodes.Core.Services.StateSaver;
+using Barcodes.Core.Services.StateSaver.States;
 using Barcodes.Utils;
 using System;
 
@@ -8,42 +9,43 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
     public class Ean128ProductViewModel : BaseInputViewModel
     {
         private string productCode;
-        public string ProductCode
-        {
-            get => productCode;
-            set => SetProperty(ref productCode, value);
-        }
-
         private string serialNumber;
-        public string SerialNumber
-        {
-            get => serialNumber;
-            set => SetProperty(ref serialNumber, value);
-        }
-
-        public string ExpirationDate
-        {
-            get => selectedDateTime.ToExpireDate(EmptyDay);
-        }
-
         private bool emptyDay;
-        public bool EmptyDay
+        private DateTime selectedDateTime = DateTime.Now;
+      
+        public Ean128ProductViewModel(IAppDialogsService dialogsService, IStateSaverService stateSaverService)
+            : base(dialogsService, stateSaverService)
         {
-            get => emptyDay;
-            set => SetProperty(ref emptyDay, value);
+            stateSaverService.Load<Ean128ProductViewModel, Ean128ProductViewModelState>(this);
         }
 
-        private DateTime selectedDateTime = DateTime.Now;
         public DateTime SelectedDateTime
         {
             get => selectedDateTime;
             set => SetProperty(ref selectedDateTime, value);
         }
 
-        public Ean128ProductViewModel(IAppDialogsService dialogsService, IViewModelStateSaver viewModelStateSaver)
-            : base(dialogsService, viewModelStateSaver)
+        public bool EmptyDay
         {
-            viewModelStateSaver.LoadState(this);
+            get => emptyDay;
+            set => SetProperty(ref emptyDay, value);
+        }
+
+        public string SerialNumber
+        {
+            get => serialNumber;
+            set => SetProperty(ref serialNumber, value);
+        }
+
+        public string ProductCode
+        {
+            get => productCode;
+            set => SetProperty(ref productCode, value);
+        }
+
+        public string ExpirationDate
+        {
+            get => selectedDateTime.ToExpireDate(EmptyDay);
         }
 
         protected override string GetResultData()
@@ -76,7 +78,7 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
 
         protected override void SaveState()
         {
-            viewModelStateSaver.SaveState(this);
+            stateSaverService.Save<Ean128ProductViewModel, Ean128ProductViewModelState>(this);
         }
     }
 }

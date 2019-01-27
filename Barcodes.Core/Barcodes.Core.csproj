@@ -104,10 +104,11 @@
     <Compile Include="Services\IAppWindowsService.cs" />
     <Compile Include="Services\IServicesContainer.cs" />
     <Compile Include="Services\ServicesContainer.cs" />
-    <Compile Include="Services\ViewModelState\Ean128ProductViewModelState.cs" />
-    <Compile Include="Services\ViewModelState\IViewModelStateSaver.cs" />
-    <Compile Include="Services\ViewModelState\NmvsProductViewModelState.cs" />
-    <Compile Include="Services\ViewModelState\ViewModelStateSaver.cs" />
+    <Compile Include="Services\StateSaver\States\Ean128ProductViewModelState.cs" />
+    <Compile Include="Services\StateSaver\States\GenerationViewModelState.cs" />
+    <Compile Include="Services\StateSaver\IStateSaverService.cs" />
+    <Compile Include="Services\StateSaver\States\NmvsProductViewModelState.cs" />
+    <Compile Include="Services\StateSaver\StateSaverService.cs" />
     <Compile Include="ViewModels\AdditionalInput\BaseInputViewModel.cs" />
     <Compile Include="ViewModels\AdditionalInput\Ean128ProductViewModel.cs" />
     <Compile Include="ViewModels\BarcodeTypeViewModel.cs" />

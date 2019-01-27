@@ -1,5 +1,5 @@
 ﻿using Barcodes.Core.Services;
-using Barcodes.Core.Services.ViewModelState;
+using Barcodes.Core.Services.StateSaver;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
@@ -8,19 +8,13 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
 {
     public abstract class BaseInputViewModel : BindableBase
     {
-        public Action CloseAction { get; set; }
-        public string ResultData { get; private set; }
-
-        public DelegateCommand AcceptCommand { get; }
-        public DelegateCommand CloseCommand { get; }
-
         protected readonly IAppDialogsService dialogsService;
-        protected readonly IViewModelStateSaver viewModelStateSaver;
+        protected readonly IStateSaverService stateSaverService;
 
-        protected BaseInputViewModel(IAppDialogsService dialogsService, IViewModelStateSaver viewModelStateSaver)
+        protected BaseInputViewModel(IAppDialogsService dialogsService, IStateSaverService stateSaverService)
         {
             this.dialogsService = dialogsService;
-            this.viewModelStateSaver = viewModelStateSaver;
+            this.stateSaverService = stateSaverService;
 
             AcceptCommand = new DelegateCommand(() =>
             {
@@ -35,6 +29,12 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
             });
             CloseCommand = new DelegateCommand(() => CloseAction?.Invoke());
         }
+
+        public Action CloseAction { get; set; }
+        public string ResultData { get; private set; }
+
+        public DelegateCommand AcceptCommand { get; }
+        public DelegateCommand CloseCommand { get; }
 
         protected abstract bool Validate();
         protected abstract void SaveState();

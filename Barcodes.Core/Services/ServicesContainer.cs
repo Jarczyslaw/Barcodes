@@ -1,4 +1,5 @@
-﻿using Barcodes.Services.AppSettings;
+﻿using Barcodes.Core.Services.StateSaver;
+using Barcodes.Services.AppSettings;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
@@ -17,10 +18,11 @@ namespace Barcodes.Core.Services
         public IAppSettingsService AppSettingsService { get; }
         public IStorageService BarcodeStorageService { get; }
         public IDocExportService DocExportService { get; }
+        public IStateSaverService StateSaverService { get; }
 
         public ServicesContainer(IEventAggregator eventAggregator, IGeneratorService barcodesGenerator, IAppDialogsService dialogsService,
             IAppWindowsService appWindowsService, ISystemService systemService, IAppSettingsService appSettingsService,
-            IStorageService barcodeStorageService, IDocExportService docExportService)
+            IStorageService barcodeStorageService, IDocExportService docExportService, IStateSaverService stateSaverService)
         {
             EventAggregator = eventAggregator;
             BarcodesGenerator = barcodesGenerator;
@@ -30,6 +32,7 @@ namespace Barcodes.Core.Services
             AppSettingsService = appSettingsService;
             BarcodeStorageService = barcodeStorageService;
             DocExportService = docExportService;
+            StateSaverService = stateSaverService;
         }
     }
 }

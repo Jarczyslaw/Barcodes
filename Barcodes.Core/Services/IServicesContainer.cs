@@ -1,4 +1,5 @@
-﻿using Barcodes.Services.AppSettings;
+﻿using Barcodes.Core.Services.StateSaver;
+using Barcodes.Services.AppSettings;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
@@ -17,5 +18,6 @@ namespace Barcodes.Core.Services
         IAppSettingsService AppSettingsService { get; }
         IStorageService BarcodeStorageService { get; }
         IDocExportService DocExportService { get; }
+        IStateSaverService StateSaverService { get; }
     }
 }

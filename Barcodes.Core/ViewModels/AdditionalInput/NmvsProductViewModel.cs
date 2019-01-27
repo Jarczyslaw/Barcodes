@@ -1,7 +1,7 @@
 ﻿using Barcodes.Core.Services;
-using Barcodes.Core.Services.ViewModelState;
+using Barcodes.Core.Services.StateSaver;
+using Barcodes.Core.Services.StateSaver.States;
 using Barcodes.Utils;
-using System;
 
 namespace Barcodes.Core.ViewModels.AdditionalInput
 {
@@ -12,10 +12,10 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
         private string batchExpDate;
         private string serialNo;
 
-        public NmvsProductViewModel(IAppDialogsService dialogsService, IViewModelStateSaver viewModelStateSaver)
-            : base(dialogsService, viewModelStateSaver)
+        public NmvsProductViewModel(IAppDialogsService dialogsService, IStateSaverService stateSaverService)
+            : base(dialogsService, stateSaverService)
         {
-            viewModelStateSaver.LoadState(this);
+            stateSaverService.Load<NmvsProductViewModel, NmvsProductViewModelState>(this);
         }
 
         public string ProductCode
@@ -79,7 +79,7 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
 
         protected override void SaveState()
         {
-            viewModelStateSaver.SaveState(this);
+            stateSaverService.Save<NmvsProductViewModel, NmvsProductViewModelState>(this);
         }
     }
 }

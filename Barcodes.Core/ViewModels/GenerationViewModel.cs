@@ -1,5 +1,6 @@
 ﻿using Barcodes.Core.Events;
 using Barcodes.Core.Services;
+using Barcodes.Core.Services.StateSaver.States;
 using Barcodes.Services.Generator;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -32,6 +33,8 @@ namespace Barcodes.Core.ViewModels
             AcceptCommand = new DelegateCommand(GenerateBarcode);
             CancelCommand = new DelegateCommand(() => services.EventAggregator.GetEvent<GenerationWindowClose>().Publish());
             AdditionalInputCommand = new DelegateCommand(AdditionalInput, () => AdditionalInputEnabled);
+
+            services.StateSaverService.Load<GenerationViewModel, GenerationViewModelState>(this);
         }
 
         public DelegateCommand AcceptCommand { get; }
@@ -179,6 +182,7 @@ namespace Barcodes.Core.ViewModels
                 Barcode = barcodeBitmap,
                 Title = title
             };
+            services.StateSaverService.Save<GenerationViewModel, GenerationViewModelState>(this);
             services.EventAggregator.GetEvent<GenerationWindowClose>().Publish();
         }
 

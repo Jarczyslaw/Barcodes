@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Barcodes.Core.Services.ViewModelState
+namespace Barcodes.Core.Services.StateSaver.States
 {
     public class NmvsProductViewModelState
     {
