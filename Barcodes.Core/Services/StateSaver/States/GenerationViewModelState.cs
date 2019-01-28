@@ -5,7 +5,7 @@ namespace Barcodes.Core.Services.StateSaver.States
     public class GenerationViewModelState
     {
         public string Title { get; set; }
-        public BarcodeTypeViewModel SelectedBarcodeType { get; set; }
+        public AdditionalInputViewModel SelectedAdditionalInput { get; set; }
         public string Data { get; set; }
         public bool ValidateCodeText { get; set; }
         public bool DefaultSize { get; set; }

@@ -23,6 +23,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Label Content="Title:" />
@@ -33,7 +34,7 @@
                            Content="Type:" />
                 <ComboBox Grid.Row="1" 
                                 Grid.Column="1" 
-                                Width="120"
+                                Width="180"
                                 HorizontalAlignment="Left"
                                 ItemsSource="{Binding BarcodeTypes}"
                                 SelectedItem="{Binding SelectedBarcodeType}"
@@ -52,27 +53,34 @@
                          Width="300"
                          Height="60" />
 
-                <StackPanel Grid.Row="3"
+                <CheckBox Grid.Row="3"
+                            Grid.Column="1"
+                            IsChecked="{Binding ValidateCodeText}"
+                            VerticalContentAlignment="Center"
+                            Content="Validate data" />
+                
+                <StackPanel Grid.Row="4"
                             Grid.Column="1"
                             Orientation="Horizontal">
-                    <Button Content="Enter additional data" 
-                                Width="120"
-                                Command="{Binding AdditionalInputCommand}" />
-                    <CheckBox HorizontalAlignment="Right"
-                                IsChecked="{Binding ValidateCodeText}"
-                                VerticalContentAlignment="Center"
-                                Content="Validate data" />
+                    <ComboBox Width="180"
+                                HorizontalAlignment="Left"
+                                ItemsSource="{Binding AdditionalInputs}"
+                                SelectedItem="{Binding SelectedAdditionalInput}"
+                                DisplayMemberPath="Title" />
+                    <Button Content="Enter data"
+                            Width="80"
+                            Command="{Binding AdditionalInputCommand}" />
                 </StackPanel>
 
-                <CheckBox Grid.Row="4"
+                <CheckBox Grid.Row="5"
                           Grid.Column="1"
                           IsChecked="{Binding DefaultSize}"
                           VerticalContentAlignment="Center"
                           Content="Use default sizes" />
 
-                <Label Grid.Row="5"
+                <Label Grid.Row="6"
                        Content="Width: " />
-                <toolkit:IntegerUpDown Grid.Row="5"
+                <toolkit:IntegerUpDown Grid.Row="6"
                                            Grid.Column="1"
                                            TextAlignment="Left"
                                            Minimum="100"
@@ -82,9 +90,9 @@
                                            Value="{Binding Width}"
                                            IsReadOnly="{Binding DefaultSize}" />
 
-                <Label Grid.Row="6"
+                <Label Grid.Row="7"
                        Content="Height: " />
-                <toolkit:IntegerUpDown Grid.Row="6"
+                <toolkit:IntegerUpDown Grid.Row="7"
                                            Grid.Column="1"
                                            TextAlignment="Left"
                                            Minimum="100"

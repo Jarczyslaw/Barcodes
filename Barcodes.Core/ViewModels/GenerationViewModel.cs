@@ -21,6 +21,8 @@ namespace Barcodes.Core.ViewModels
 
         private BarcodeTypeViewModel selectedBarcodeType;
         private ObservableCollection<BarcodeTypeViewModel> barcodeTypes;
+        private AdditionalInputViewModel selectedAdditionalInput;
+        private ObservableCollection<AdditionalInputViewModel> additionalInputs;
 
         private readonly IServicesContainer services;
 
@@ -28,11 +30,12 @@ namespace Barcodes.Core.ViewModels
         {
             this.services = services;
 
-            InitializeBarcodes();
+            InitializeBarcodeTypes();
+            InitializeAdditionalInputs();
 
             AcceptCommand = new DelegateCommand(GenerateBarcode);
             CancelCommand = new DelegateCommand(() => services.EventAggregator.GetEvent<GenerationWindowClose>().Publish());
-            AdditionalInputCommand = new DelegateCommand(AdditionalInput, () => AdditionalInputEnabled);
+            AdditionalInputCommand = new DelegateCommand(AdditionalInput);
 
             services.StateSaverService.Load<GenerationViewModel, GenerationViewModelState>(this);
         }
@@ -79,19 +82,6 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref validateCodeText, value);
         }
 
-        public bool AdditionalInputEnabled
-        {
-            get
-            {
-                if (SelectedBarcodeType == null)
-                {
-                    return false;
-                }
-
-                return SelectedBarcodeType.AdditionalInput != null;
-            }
-        }
-
         public BarcodeTypeViewModel SelectedBarcodeType
         {
             get => selectedBarcodeType;
@@ -108,23 +98,49 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref barcodeTypes, value);
         }
 
-        private void InitializeBarcodes()
+        public AdditionalInputViewModel SelectedAdditionalInput
+        {
+            get => selectedAdditionalInput;
+            set => SetProperty(ref selectedAdditionalInput, value);
+        }
+
+        public ObservableCollection<AdditionalInputViewModel> AdditionalInputs
+        {
+            get => additionalInputs;
+            set => SetProperty(ref additionalInputs, value);
+        }
+
+        private void InitializeAdditionalInputs()
+        {
+            AdditionalInputs = new ObservableCollection<AdditionalInputViewModel>
+            {
+                new AdditionalInputViewModel
+                {
+                    Title = "Select additional input"
+                },
+                new AdditionalInputViewModel
+                {
+                    Title = "EAN128 - Product code",
+                    Handler = services.AppWindowsService.OpenEan128ProductWindow
+                },
+                new AdditionalInputViewModel
+                {
+                    Title = "DataMatrix - NMVS",
+                    Handler = services.AppWindowsService.OpenNmvsProductWindow
+                }
+            };
+            SelectedAdditionalInput = AdditionalInputs.First();
+        }
+
+        private void InitializeBarcodeTypes()
         {
             BarcodeTypes = new ObservableCollection<BarcodeTypeViewModel>()
             {
-                new BarcodeTypeViewModel { Type = BarcodeType.Ean13 },
-                new BarcodeTypeViewModel
-                {
-                    Type = BarcodeType.Ean128,
-                    AdditionalInput = services.AppWindowsService.OpenEan128ProductWindow
-                },
-                new BarcodeTypeViewModel { Type = BarcodeType.Code128 },
-                new BarcodeTypeViewModel
-                {
-                    Type = BarcodeType.DataMatrix,
-                    AdditionalInput = services.AppWindowsService.OpenNmvsProductWindow
-                },
-                new BarcodeTypeViewModel { Type = BarcodeType.QRCode },
+                new BarcodeTypeViewModel(BarcodeType.Ean13),
+                new BarcodeTypeViewModel(BarcodeType.Ean128),
+                new BarcodeTypeViewModel(BarcodeType.Code128),
+                new BarcodeTypeViewModel(BarcodeType.DataMatrix),
+                new BarcodeTypeViewModel(BarcodeType.QRCode),
             };
             SelectedBarcodeType = BarcodeTypes.First(t => t.Type == BarcodeType.DataMatrix);
         }
@@ -188,7 +204,13 @@ namespace Barcodes.Core.ViewModels
 
         private void AdditionalInput()
         {
-            var result = SelectedBarcodeType.AdditionalInput();
+            if (SelectedAdditionalInput == null)
+                return;
+
+            if (SelectedAdditionalInput.Handler == null)
+                return;
+
+            var result = SelectedAdditionalInput.Handler();
             if (string.IsNullOrEmpty(result))
             {
                 return;
