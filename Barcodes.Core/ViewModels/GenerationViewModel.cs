@@ -169,7 +169,7 @@ namespace Barcodes.Core.ViewModels
             }
             catch (Exception exc)
             {
-                services.DialogsService.ShowException("Exception during barcode generation", exc);
+                services.DialogsService.ShowException("Exception during barcode generation. Try disable Data validation", exc);
             }
         }
 

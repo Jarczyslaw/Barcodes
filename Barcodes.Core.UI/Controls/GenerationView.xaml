@@ -61,7 +61,7 @@
                     <CheckBox HorizontalAlignment="Right"
                                 IsChecked="{Binding ValidateCodeText}"
                                 VerticalContentAlignment="Center"
-                                Content="Validate data" />
+                                Content="Data validation" />
                 </StackPanel>
 
                 <CheckBox Grid.Row="4"
