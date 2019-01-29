@@ -18,6 +18,7 @@ namespace Barcodes.Core.ViewModels
         private int width = 100;
         private int height = 100;
         private bool validateCodeText = true;
+        private bool additionalInputEnabled;
 
         private BarcodeTypeViewModel selectedBarcodeType;
         private ObservableCollection<BarcodeTypeViewModel> barcodeTypes;
@@ -35,7 +36,7 @@ namespace Barcodes.Core.ViewModels
 
             AcceptCommand = new DelegateCommand(GenerateBarcode);
             CancelCommand = new DelegateCommand(() => services.EventAggregator.GetEvent<GenerationWindowClose>().Publish());
-            AdditionalInputCommand = new DelegateCommand(AdditionalInput);
+            AdditionalInputCommand = new DelegateCommand(AdditionalInput, () => AdditionalInputEnabled);
 
             services.StateSaverService.Load<GenerationViewModel, GenerationViewModelState>(this);
         }
@@ -101,7 +102,26 @@ namespace Barcodes.Core.ViewModels
         public AdditionalInputViewModel SelectedAdditionalInput
         {
             get => selectedAdditionalInput;
-            set => SetProperty(ref selectedAdditionalInput, value);
+            set
+            {
+                SetProperty(ref selectedAdditionalInput, value);
+                AdditionalInputEnabled = value.Handler != null;
+                AdditionalInputCommand?.RaiseCanExecuteChanged();
+            }
+        }
+
+        public bool AdditionalInputEnabled { get; set; }
+
+        public int SelectedAdditionalInputIndex
+        {
+            get => AdditionalInputs.IndexOf(SelectedAdditionalInput);
+            set
+            {
+                if (value != -1)
+                {
+                    SelectedAdditionalInput = AdditionalInputs[value];
+                }
+            }
         }
 
         public ObservableCollection<AdditionalInputViewModel> AdditionalInputs
@@ -205,10 +225,14 @@ namespace Barcodes.Core.ViewModels
         private void AdditionalInput()
         {
             if (SelectedAdditionalInput == null)
+            {
                 return;
+            }
 
             if (SelectedAdditionalInput.Handler == null)
+            {
                 return;
+            }
 
             var result = SelectedAdditionalInput.Handler();
             if (string.IsNullOrEmpty(result))
