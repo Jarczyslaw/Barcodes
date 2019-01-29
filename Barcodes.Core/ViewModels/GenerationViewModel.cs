@@ -18,7 +18,6 @@ namespace Barcodes.Core.ViewModels
         private int width = 100;
         private int height = 100;
         private bool validateCodeText = true;
-        private bool additionalInputEnabled;
 
         private BarcodeTypeViewModel selectedBarcodeType;
         private ObservableCollection<BarcodeTypeViewModel> barcodeTypes;
@@ -205,7 +204,7 @@ namespace Barcodes.Core.ViewModels
             }
             catch (Exception exc)
             {
-                services.DialogsService.ShowException("Exception during barcode generation", exc);
+                services.DialogsService.ShowException("Exception during barcode generation. Try disable Data validation", exc);
             }
         }
 
