@@ -96,7 +96,7 @@
                                            Grid.Column="1"
                                            TextAlignment="Left"
                                            Minimum="100"
-                                            Width="120"
+                                           Width="120"
                                            HorizontalAlignment="Left"
                                            Margin="{StaticResource DefaultMargin}"
                                            Value="{Binding Height}"
@@ -104,11 +104,15 @@
 
             </Grid>
         </GroupBox>
-        <UniformGrid Columns="2">
+        <UniformGrid Columns="3">
             <Button Grid.Row="5"
                             Grid.ColumnSpan="5"
-                            Content="Accept"
-                            Command="{Binding AcceptCommand}" />
+                            Content="Add new"
+                            Command="{Binding AddNewCommand}" />
+            <Button Grid.Row="5"
+                            Grid.ColumnSpan="5"
+                            Content="Edit"
+                            Command="{Binding EditCommand}" />
             <Button Grid.Row="5"
                             Grid.ColumnSpan="5"
                             Content="Cancel"

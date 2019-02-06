@@ -9,6 +9,6 @@ namespace Barcodes.Core.Services
         string OpenNmvsProductWindow();
         string OpenEan128ProductWindow();
         void ShowHelpWindow();
-        BarcodeResultViewModel ShowGenerationWindow(BarcodeResultViewModel data = null);
+        GenerationViewModel.GenerationViewModelResult ShowGenerationWindow(BarcodeResultViewModel barcode = null);
     }
 }

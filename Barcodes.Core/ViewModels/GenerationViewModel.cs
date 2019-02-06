@@ -18,6 +18,7 @@ namespace Barcodes.Core.ViewModels
         private int width = 100;
         private int height = 100;
         private bool validateCodeText = true;
+        private bool edit;
 
         private BarcodeTypeViewModel selectedBarcodeType;
         private ObservableCollection<BarcodeTypeViewModel> barcodeTypes;
@@ -33,18 +34,26 @@ namespace Barcodes.Core.ViewModels
             InitializeBarcodeTypes();
             InitializeAdditionalInputs();
 
-            AcceptCommand = new DelegateCommand(GenerateBarcode);
+            AddNewCommand = new DelegateCommand(() => GenerateBarcode(true));
+            EditCommand = new DelegateCommand(() => GenerateBarcode(false), () => Edit);
             CancelCommand = new DelegateCommand(() => services.EventAggregator.GetEvent<GenerationWindowClose>().Publish());
             AdditionalInputCommand = new DelegateCommand(AdditionalInput, () => AdditionalInputEnabled);
 
             services.StateSaverService.Load<GenerationViewModel, GenerationViewModelState>(this);
         }
 
-        public DelegateCommand AcceptCommand { get; }
+        public DelegateCommand AddNewCommand { get; }
+        public DelegateCommand EditCommand { get; }
         public DelegateCommand CancelCommand { get; }
         public DelegateCommand AdditionalInputCommand { get; }
 
-        public BarcodeResultViewModel Result { get; private set; }
+        public GenerationViewModelResult Result { get; private set; }
+
+        public bool Edit
+        {
+            get => edit;
+            set => SetProperty(ref edit, value);
+        }
 
         public string Data
         {
@@ -181,7 +190,7 @@ namespace Barcodes.Core.ViewModels
             return true;
         }
 
-        private void GenerateBarcode()
+        private void GenerateBarcode(bool addAsNew)
         {
             if (!GenerateValidation())
             {
@@ -200,7 +209,13 @@ namespace Barcodes.Core.ViewModels
 
             try
             {
-                GenerateBarcode(barcodeData, Title);
+                Result = new GenerationViewModelResult
+                {
+                    Barcode = RunGenerator(barcodeData, Title),
+                    AddAsNew = addAsNew
+                };
+                services.StateSaverService.Save<GenerationViewModel, GenerationViewModelState>(this);
+                services.EventAggregator.GetEvent<GenerationWindowClose>().Publish();
             }
             catch (Exception exc)
             {
@@ -208,17 +223,15 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        private void GenerateBarcode(GenerationData barcodeData, string title)
+        private BarcodeResultViewModel RunGenerator(GenerationData barcodeData, string title)
         {
             var barcodeBitmap = services.BarcodesGenerator.CreateBarcode(barcodeData);
             barcodeBitmap.Freeze();
-            Result = new BarcodeResultViewModel(barcodeData)
+            return new BarcodeResultViewModel(barcodeData)
             {
                 Barcode = barcodeBitmap,
                 Title = title
             };
-            services.StateSaverService.Save<GenerationViewModel, GenerationViewModelState>(this);
-            services.EventAggregator.GetEvent<GenerationWindowClose>().Publish();
         }
 
         private void AdditionalInput()
@@ -249,12 +262,19 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
+            Edit = true;
             Data = barcode.GenerationData.Data;
             SelectedBarcodeType = BarcodeTypes.FirstOrDefault(b => b.Type == barcode.GenerationData.Type);
             Title = barcode.Title;
             DefaultSize = barcode.GenerationData.DefaultSize;
             Width = barcode.GenerationData.Width;
             Height = barcode.GenerationData.Height;
+        }
+
+        public class GenerationViewModelResult
+        {
+            public BarcodeResultViewModel Barcode { get; set; }
+            public bool AddAsNew { get; set; }
         }
     }
 }

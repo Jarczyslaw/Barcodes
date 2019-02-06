@@ -334,21 +334,38 @@ namespace Barcodes.Core.ViewModels
 
         private void AddNewBarcode()
         {
-            var newBarcode = services.AppWindowsService.ShowGenerationWindow();
-            if (newBarcode == null)
+            var result = services.AppWindowsService.ShowGenerationWindow();
+            if (result == null)
                 return;
 
-            Barcodes.Insert(0, newBarcode);
-            StatusMessage = $"Barcode \"{newBarcode.Title}\" generated successfully!";
+            InsertNewBarcode(result.Barcode);
+        }
+
+        private void InsertNewBarcode(BarcodeResultViewModel barcode)
+        {
+            Barcodes.Insert(0, barcode);
+            StatusMessage = $"Barcode \"{barcode.Title}\" generated successfully!";
             RaisePropertyChanged(nameof(BarcodesCount));
         }
 
         private void EditBarcode(BarcodeResultViewModel barcode)
         {
-            var newBarcode = services.AppWindowsService.ShowGenerationWindow(barcode);
-            if (newBarcode == null)
+            var result = services.AppWindowsService.ShowGenerationWindow(barcode);
+            if (result == null)
                 return;
 
+            if (result.AddAsNew)
+            {
+                InsertNewBarcode(result.Barcode);
+            }
+            else
+            {
+                ReplaceBarcode(barcode, result.Barcode);
+            }
+        }
+
+        private void ReplaceBarcode(BarcodeResultViewModel barcode, BarcodeResultViewModel newBarcode)
+        {
             var barcodeIndex = Barcodes.IndexOf(barcode);
             Barcodes.Remove(barcode);
             Barcodes.Insert(barcodeIndex, newBarcode);
