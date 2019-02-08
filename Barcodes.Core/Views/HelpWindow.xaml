@@ -12,6 +12,7 @@
         Width="400"
         SizeToContent="Height"
         WindowStartupLocation="CenterOwner"
+        Icon="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
         Loaded="HelpWindow_Loaded">
     <StackPanel>
         <Grid>

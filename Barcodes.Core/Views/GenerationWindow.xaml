@@ -8,6 +8,7 @@
         Title="Barcodes - Generation" 
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterOwner"
+        Icon="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
         SizeToContent="WidthAndHeight">
     <Grid>
         <controls:GenerationView />

@@ -9,6 +9,7 @@
         Title="Barcodes - Product data" 
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
+        Icon="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
         SizeToContent="WidthAndHeight">
     <StackPanel Margin="5">
         <GroupBox Header="Product data">
