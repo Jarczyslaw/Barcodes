@@ -22,12 +22,12 @@ namespace Barcodes.Core.Views.AdditionalInput
     /// </summary>
     public partial class NmvsProductWindow : Window
     {
-        public NmvsProductWindow(NmvsProductViewModel viewModel)
+        public NmvsProductWindow(IClosable dataContext)
         {
             InitializeComponent();
 
-            DataContext = viewModel;
-            viewModel.CloseAction = () => Close();
+            DataContext = dataContext;
+            dataContext.CloseAction = () => Close();
         }
     }
 }

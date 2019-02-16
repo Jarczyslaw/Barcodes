@@ -6,7 +6,7 @@ using System;
 
 namespace Barcodes.Core.ViewModels.AdditionalInput
 {
-    public abstract class BaseInputViewModel : BindableBase
+    public abstract class BaseInputViewModel : BindableBase, IClosable
     {
         protected readonly IAppDialogsService dialogsService;
         protected readonly IStateSaverService stateSaverService;
