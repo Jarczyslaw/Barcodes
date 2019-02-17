@@ -1,19 +1,24 @@
-﻿using Barcodes.Core.ViewModels;
+﻿using Barcodes.Services.Generator;
+using Barcodes.Utils;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 
-namespace Barcodes.Core.Views
+namespace Barcodes.Core.UI.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class HelpWindow : Window
     {
-        public HelpWindow()
+        private readonly IGeneratorService barcodesGenerator;
+
+        public HelpWindow(IGeneratorService barcodesGenerator)
         {
+            this.barcodesGenerator = barcodesGenerator;
+
             InitializeComponent();
             ShowVersion();
         }
@@ -21,6 +26,7 @@ namespace Barcodes.Core.Views
         private void HelpWindow_Loaded(object sender, RoutedEventArgs e)
         {
             KeyDown += HelpWindow_KeyDown;
+            GenerateRandomBarcode();
         }
 
         private void ShowVersion()
@@ -46,15 +52,16 @@ namespace Barcodes.Core.Views
 
         private void HelpWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!(DataContext is HelpViewModel viewModel))
-            {
-                return;
-            }
-
             if (e.Key == Key.F5)
             {
-                viewModel.GenerateRandomBarcodeCommand.Execute();
+                GenerateRandomBarcode();
             }
+        }
+
+        private void GenerateRandomBarcode()
+        {
+            var randomText = RandomTexts.Get();
+            imgBarcode.Source = barcodesGenerator.CreateQRBarcode(300, randomText);
         }
     }
 }

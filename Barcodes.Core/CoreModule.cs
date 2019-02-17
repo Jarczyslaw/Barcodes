@@ -1,6 +1,6 @@
 ﻿using Barcodes.Core.Services;
 using Barcodes.Core.Services.StateSaver;
-using Barcodes.Core.Views;
+using Barcodes.Core.UI.Views;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;

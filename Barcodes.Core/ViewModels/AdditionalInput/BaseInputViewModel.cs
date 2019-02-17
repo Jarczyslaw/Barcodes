@@ -1,4 +1,5 @@
-﻿using Barcodes.Core.Services;
+﻿using Barcodes.Core.Common;
+using Barcodes.Core.Services;
 using Barcodes.Core.Services.StateSaver;
 using Prism.Commands;
 using Prism.Mvvm;

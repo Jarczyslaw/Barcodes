@@ -1,11 +1,13 @@
 ﻿using Barcodes.Core;
 using Barcodes.Core.Services;
-using Barcodes.Core.Views;
+using Barcodes.Core.UI.Views;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.System;
 using Prism.Ioc;
 using Prism.Modularity;
+using Prism.Mvvm;
 using Prism.Unity;
+using System;
 using System.Windows;
 
 namespace Barcodes.Startup
@@ -52,6 +54,16 @@ namespace Barcodes.Startup
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry) { }
+
+        protected override void ConfigureViewModelLocator()
+        {
+            base.ConfigureViewModelLocator();
+            ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver(viewType =>
+            {
+                var viewModelResolver = new ViewModelResolver();
+                return viewModelResolver.Resolve(viewType);
+            });
+        }
 
         private void RegisterGlobalExceptionHandler()
         {

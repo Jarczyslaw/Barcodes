@@ -109,6 +109,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GlobalExceptionHandler.cs" />
+    <Compile Include="ViewModelResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -144,6 +145,10 @@
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Barcodes.Core.Common\Barcodes.Core.Common.csproj">
+      <Project>{AEAF919B-70E7-42A2-AB75-8CF9DBAF6EE7}</Project>
+      <Name>Barcodes.Core.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Barcodes.Core.UI\Barcodes.Core.UI.csproj">
       <Project>{930f2b1e-8fea-48bc-86cb-d8bcdab039f5}</Project>
       <Name>Barcodes.Core.UI</Name>

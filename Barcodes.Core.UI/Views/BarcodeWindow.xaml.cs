@@ -1,10 +1,8 @@
-﻿using System.Windows;
+﻿using Barcodes.Core.Common;
+using System.Windows;
 
-namespace Barcodes.Core.Views
+namespace Barcodes.Core.UI.Views
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class BarcodeWindow : Window
     {
         public BarcodeWindow()

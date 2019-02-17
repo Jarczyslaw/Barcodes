@@ -1,4 +1,4 @@
-﻿using Barcodes.Core.Events;
+﻿using Barcodes.Core.Common.Events;
 using Barcodes.Core.Services;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
@@ -336,7 +336,9 @@ namespace Barcodes.Core.ViewModels
         {
             var result = services.AppWindowsService.ShowGenerationWindow();
             if (result == null)
+            {
                 return;
+            }
 
             InsertNewBarcode(result.Barcode);
         }
@@ -352,7 +354,9 @@ namespace Barcodes.Core.ViewModels
         {
             var result = services.AppWindowsService.ShowGenerationWindow(barcode);
             if (result == null)
+            {
                 return;
+            }
 
             if (result.AddAsNew)
             {

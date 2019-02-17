@@ -1,4 +1,4 @@
-﻿using Barcodes.Core.Events;
+﻿using Barcodes.Core.Common.Events;
 using Barcodes.Core.Services;
 using Barcodes.Core.Services.StateSaver.States;
 using Barcodes.Services.Generator;

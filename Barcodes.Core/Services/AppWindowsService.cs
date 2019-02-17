@@ -1,7 +1,7 @@
-﻿using Barcodes.Core.ViewModels;
+﻿using Barcodes.Core.UI.Views;
+using Barcodes.Core.UI.Views.AdditionalInput;
+using Barcodes.Core.ViewModels;
 using Barcodes.Core.ViewModels.AdditionalInput;
-using Barcodes.Core.Views;
-using Barcodes.Core.Views.AdditionalInput;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Windows;
 using Prism.Ioc;
@@ -40,8 +40,8 @@ namespace Barcodes.Core.Services
 
         public void ShowHelpWindow()
         {
-            var dataContext = containerExtension.Resolve<HelpViewModel>();
-            ShowModal<HelpWindow>(dataContext);
+            var window = containerExtension.Resolve<HelpWindow>();
+            ShowModal(window, null);
         }
 
         public GenerationViewModel.GenerationViewModelResult ShowGenerationWindow(BarcodeResultViewModel barcode = null)
