@@ -33,6 +33,7 @@ namespace Barcodes.Core.ViewModels
             MoveUpCommand = new DelegateCommand<BarcodeResultViewModel>(MoveUp);
             MoveDownCommand = new DelegateCommand<BarcodeResultViewModel>(MoveDown);
             OpenInNewWindowCommand = new DelegateCommand(OpenInNewWindow);
+            SaveToImageFileCommand = new DelegateCommand<BarcodeResultViewModel>(SaveToImageFile);
             CopyToClipboardCommand = new DelegateCommand<BarcodeResultViewModel>(CopyToClipboard);
             DeleteCommand = new DelegateCommand<BarcodeResultViewModel>(Delete);
 
@@ -60,6 +61,7 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand<BarcodeResultViewModel> MoveUpCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> MoveDownCommand { get; }
         public DelegateCommand OpenInNewWindowCommand { get; }
+        public DelegateCommand<BarcodeResultViewModel> SaveToImageFileCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> CopyToClipboardCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> DeleteCommand { get; }
 
@@ -124,6 +126,25 @@ namespace Barcodes.Core.ViewModels
             }
 
             services.AppWindowsService.OpenBarcodeWindow(SelectedBarcode);
+        }
+
+        private void SaveToImageFile(BarcodeResultViewModel barcode)
+        {
+            if (barcode == null)
+            {
+                return;
+            }
+
+            try
+            {
+                var filePath = services.DialogsService.SavePngFile(barcode.Title);
+                barcode.Barcode.ToPng(filePath);
+                StatusMessage = $"Barcode \"{barcode.Title}\" saved in {Path.GetFileName(filePath)}";
+            }
+            catch (Exception exc)
+            {
+                services.DialogsService.ShowException("Error when saving barcode to png file", exc);
+            }
         }
 
         private void CopyToClipboard(BarcodeResultViewModel barcode)

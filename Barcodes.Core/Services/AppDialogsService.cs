@@ -6,7 +6,6 @@ namespace Barcodes.Core.Services
     public class AppDialogsService : DialogsService, IAppDialogsService
     {
         private readonly DialogFilterPair jsonFilter = new DialogFilterPair { DisplayName = "json", ExtensionsList = "json" };
-        private readonly DialogFilterPair pdfFilter = new DialogFilterPair { DisplayName = "pdf", ExtensionsList = "pdf" };
 
         public string OpenStorageFile(string currentFilePath)
         {
@@ -23,7 +22,22 @@ namespace Barcodes.Core.Services
 
         public string SavePdfFile()
         {
-            return SaveFile("Barcodes PDF file", null, "barcodes.pdf", pdfFilter);
+            var filter = new DialogFilterPair
+            {
+                DisplayName = "pdf",
+                ExtensionsList = "pdf"
+            };
+            return SaveFile("Barcodes PDF file", null, "barcodes.pdf", filter);
+        }
+
+        public string SavePngFile(string defaultFileName)
+        {
+            var filter = new DialogFilterPair
+            {
+                DisplayName = "png",
+                ExtensionsList = "png"
+            };
+            return SaveFile("Barcodes image file", null, defaultFileName + ".png", filter);
         }
     }
 }

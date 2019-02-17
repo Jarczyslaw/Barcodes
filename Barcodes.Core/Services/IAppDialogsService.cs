@@ -7,5 +7,6 @@ namespace Barcodes.Core.Services
         string OpenStorageFile(string currentFilePath);
         string SaveStorageFile(string currentFilePath);
         string SavePdfFile();
+        string SavePngFile(string defaultFileName);
     }
 }
