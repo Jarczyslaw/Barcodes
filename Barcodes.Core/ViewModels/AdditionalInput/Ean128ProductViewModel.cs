@@ -8,8 +8,8 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
 {
     public class Ean128ProductViewModel : BaseInputViewModel
     {
-        private string productCode;
-        private string serialNumber;
+        private string productCode = string.Empty;
+        private string serialNumber = string.Empty;
         private bool emptyDay;
         private DateTime selectedDateTime = DateTime.Now;
       
@@ -50,12 +50,13 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
 
         protected override string GetResultData()
         {
-            return $"(02)0{ProductCode}(17){ExpirationDate}(10){SerialNumber}";
+            return $"(02)0{ProductCode.Trim()}(17){ExpirationDate}(10){SerialNumber.Trim()}";
         }
 
         protected override bool Validate()
         {
-            if (string.IsNullOrEmpty(ProductCode) || ProductCode.Length != 13)
+            var productCode = ProductCode.Trim();
+            if (string.IsNullOrEmpty(productCode) || productCode.Length != 13)
             {
                 dialogsService.ShowError("Invalid product code");
                 return false;
@@ -67,7 +68,8 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
                 return false;
             }
 
-            if (string.IsNullOrEmpty(SerialNumber))
+            var serialNumber = SerialNumber.Trim();
+            if (string.IsNullOrEmpty(serialNumber))
             {
                 dialogsService.ShowError("Invalid serial number");
                 return false;

@@ -175,13 +175,15 @@ namespace Barcodes.Core.ViewModels
 
         private bool GenerateValidation()
         {
-            if (string.IsNullOrEmpty(Title))
+            var title = Title.Trim();
+            if (string.IsNullOrEmpty(title))
             {
                 services.DialogsService.ShowError("Enter barcode's title");
                 return false;
             }
 
-            if (string.IsNullOrEmpty(Data))
+            var data = Data.Trim();
+            if (string.IsNullOrEmpty(data))
             {
                 services.DialogsService.ShowError("Enter barcode's data");
                 return false;
@@ -199,7 +201,7 @@ namespace Barcodes.Core.ViewModels
 
             var barcodeData = new GenerationData
             {
-                Data = Data,
+                Data = Data.Trim(),
                 Type = SelectedBarcodeType.Type,
                 DefaultSize = DefaultSize,
                 Width = Width,
@@ -211,7 +213,7 @@ namespace Barcodes.Core.ViewModels
             {
                 Result = new GenerationViewModelResult
                 {
-                    Barcode = RunGenerator(barcodeData, Title),
+                    Barcode = RunGenerator(barcodeData, Title.Trim()),
                     AddAsNew = addAsNew
                 };
                 services.StateSaverService.Save<GenerationViewModel, GenerationViewModelState>(this);

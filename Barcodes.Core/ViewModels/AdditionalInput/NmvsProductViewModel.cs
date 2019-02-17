@@ -7,10 +7,10 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
 {
     public class NmvsProductViewModel : BaseInputViewModel
     {
-        private string productCode;
-        private string batchId;
-        private string batchExpDate;
-        private string serialNo;
+        private string productCode = string.Empty;
+        private string batchId = string.Empty;
+        private string batchExpDate = string.Empty;
+        private string serialNo = string.Empty;
 
         public NmvsProductViewModel(IAppDialogsService dialogsService, IStateSaverService stateSaverService)
             : base(dialogsService, stateSaverService)
@@ -45,30 +45,35 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
         protected override string GetResultData()
         {
             const string groupSeparator = "\u001D";
-            return string.Format("01{0}17{1}21{2}{3}10{4}", ProductCode, BatchExpDate, SerialNo, groupSeparator, BatchId);
+            return string.Format("01{0}17{1}21{2}{3}10{4}", 
+                ProductCode.Trim(), BatchExpDate.Trim(), SerialNo.Trim(), groupSeparator, BatchId.Trim());
         }
 
         protected override bool Validate()
         {
-            if (string.IsNullOrEmpty(ProductCode) || ProductCode.Length != 14)
+            var productCode = ProductCode.Trim();
+            if (string.IsNullOrEmpty(productCode) || productCode.Length != 14)
             {
                 dialogsService.ShowError("Invalid product code");
                 return false;
             }
 
-            if (!NmvsDate.TryParse(BatchExpDate, out NmvsDate date))
+            var batchExpDate = BatchExpDate.Trim();
+            if (!NmvsDate.TryParse(batchExpDate, out NmvsDate date))
             {
                 dialogsService.ShowError("Invalid batch expiration date");
                 return false;
             }
 
-            if (string.IsNullOrEmpty(SerialNo) || SerialNo.Length > 20)
+            var serialNo = SerialNo.Trim();
+            if (string.IsNullOrEmpty(serialNo) || serialNo.Length > 20)
             {
                 dialogsService.ShowError("Invalid serial number");
                 return false;
             }
 
-            if (string.IsNullOrEmpty(BatchId))
+            var batchId = BatchId.Trim();
+            if (string.IsNullOrEmpty(batchId))
             {
                 dialogsService.ShowError("Invalid batch identifier");
                 return false;

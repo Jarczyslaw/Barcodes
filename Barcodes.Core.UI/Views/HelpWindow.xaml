@@ -23,7 +23,8 @@
             <Image x:Name="imgBarcode"
                    Width="150"
                    Height="150"
-                   Margin="10" />
+                   Margin="10"
+                   MouseDown="ImgBarcode_MouseDown" />
             <TextBlock Text="Barcodes"
                        Grid.Column="1"
                        FontWeight="Bold"

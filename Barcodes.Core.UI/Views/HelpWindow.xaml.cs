@@ -63,5 +63,10 @@ namespace Barcodes.Core.UI.Views
             var randomText = RandomTexts.Get();
             imgBarcode.Source = barcodesGenerator.CreateQRBarcode(300, randomText);
         }
+
+        private void ImgBarcode_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            GenerateRandomBarcode();
+        }
     }
 }
