@@ -81,7 +81,8 @@
                                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                             </MenuItem>
                             <MenuItem Header="Open in new window"
-                                    Command="{Binding OpenInNewWindowCommand}" />
+                                    Command="{Binding OpenInNewWindowCommand}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                             <MenuItem Header="Save to image file"
                                     Command="{Binding SaveToImageFileCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />

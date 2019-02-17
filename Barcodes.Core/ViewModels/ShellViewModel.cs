@@ -32,7 +32,7 @@ namespace Barcodes.Core.ViewModels
             EditBarcodeCommand = new DelegateCommand<BarcodeResultViewModel>(EditBarcode);
             MoveUpCommand = new DelegateCommand<BarcodeResultViewModel>(MoveUp);
             MoveDownCommand = new DelegateCommand<BarcodeResultViewModel>(MoveDown);
-            OpenInNewWindowCommand = new DelegateCommand(OpenInNewWindow);
+            OpenInNewWindowCommand = new DelegateCommand<BarcodeResultViewModel>(OpenInNewWindow);
             SaveToImageFileCommand = new DelegateCommand<BarcodeResultViewModel>(SaveToImageFile);
             CopyToClipboardCommand = new DelegateCommand<BarcodeResultViewModel>(CopyToClipboard);
             DeleteCommand = new DelegateCommand<BarcodeResultViewModel>(Delete);
@@ -60,7 +60,7 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand<BarcodeResultViewModel> EditBarcodeCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> MoveUpCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> MoveDownCommand { get; }
-        public DelegateCommand OpenInNewWindowCommand { get; }
+        public DelegateCommand<BarcodeResultViewModel> OpenInNewWindowCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> SaveToImageFileCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> CopyToClipboardCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> DeleteCommand { get; }
@@ -118,14 +118,14 @@ namespace Barcodes.Core.ViewModels
             RaisePropertyChanged(nameof(BarcodesCount));
         }
 
-        private void OpenInNewWindow()
+        private void OpenInNewWindow(BarcodeResultViewModel barcode)
         {
-            if (SelectedBarcode == null)
+            if (barcode == null)
             {
                 return;
             }
 
-            services.AppWindowsService.OpenBarcodeWindow(SelectedBarcode);
+            services.AppWindowsService.OpenBarcodeWindow(barcode);
         }
 
         private void SaveToImageFile(BarcodeResultViewModel barcode)
