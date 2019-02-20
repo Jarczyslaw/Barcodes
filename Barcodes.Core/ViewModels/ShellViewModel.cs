@@ -1,9 +1,9 @@
 ﻿using Barcodes.Core.Common.Events;
 using Barcodes.Core.Services;
+using Barcodes.Extensions;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
-using Barcodes.Utils;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;

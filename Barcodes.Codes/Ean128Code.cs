@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Barcodes.Extensions;
+using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace Barcodes.Utils
+namespace Barcodes.Codes
 {
     public class Ean128Code
     {

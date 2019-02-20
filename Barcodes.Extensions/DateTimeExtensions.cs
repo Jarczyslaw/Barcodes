@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Barcodes.Utils
+namespace Barcodes.Extensions
 {
     public static class DateTimeExtensions
     {

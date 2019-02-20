@@ -1,7 +1,5 @@
-﻿using Barcodes.Core.Services;
-using Barcodes.Core.Services.StateSaver;
-using Barcodes.Core.Services.StateSaver.States;
-using Barcodes.Utils;
+﻿using Barcodes.Codes;
+using Barcodes.Core.Services;
 using System;
 
 namespace Barcodes.Core.ViewModels.AdditionalInput

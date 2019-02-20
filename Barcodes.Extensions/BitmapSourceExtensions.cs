@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Windows.Media.Imaging;
 
-namespace Barcodes.Utils
+namespace Barcodes.Extensions
 {
     public static class BitmapSourceExtensions
     {

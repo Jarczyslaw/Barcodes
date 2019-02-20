@@ -1,5 +1,5 @@
-﻿using Barcodes.Core.Services;
-using Barcodes.Utils;
+﻿using Barcodes.Codes;
+using Barcodes.Core.Services;
 
 namespace Barcodes.Core.ViewModels.AdditionalInput
 {

@@ -122,6 +122,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Barcodes.Codes\Barcodes.Codes.csproj">
+      <Project>{AE51D926-BFB4-4B5E-9C5A-D26025AB5AB0}</Project>
+      <Name>Barcodes.Codes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Barcodes.Core.Common\Barcodes.Core.Common.csproj">
       <Project>{aeaf919b-70e7-42a2-ab75-8cf9dbaf6ee7}</Project>
       <Name>Barcodes.Core.Common</Name>
@@ -129,6 +133,10 @@
     <ProjectReference Include="..\Barcodes.Core.UI\Barcodes.Core.UI.csproj">
       <Project>{930f2b1e-8fea-48bc-86cb-d8bcdab039f5}</Project>
       <Name>Barcodes.Core.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Barcodes.Extensions\Barcodes.Extensions.csproj">
+      <Project>{F2EAF86B-611C-4CD8-964E-8EA3A62B82AC}</Project>
+      <Name>Barcodes.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Barcodes.Services.AppSettings\Barcodes.Services.AppSettings.csproj">
       <Project>{eeb99d9e-5b41-4cd2-8426-c875bc8d2b08}</Project>

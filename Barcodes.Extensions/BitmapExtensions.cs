@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 
-namespace Barcodes.Utils
+namespace Barcodes.Extensions
 {
     public static class BitmapExtensions
     {

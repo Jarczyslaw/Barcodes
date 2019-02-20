@@ -1,4 +1,4 @@
-﻿using Barcodes.Utils;
+﻿using Barcodes.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;

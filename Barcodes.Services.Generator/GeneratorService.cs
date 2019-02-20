@@ -1,5 +1,5 @@
 ﻿using Aspose.BarCode.Generation;
-using Barcodes.Utils;
+using Barcodes.Extensions;
 using System.Windows.Media.Imaging;
 
 namespace Barcodes.Services.Generator

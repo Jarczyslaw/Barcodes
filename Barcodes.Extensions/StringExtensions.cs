@@ -1,4 +1,4 @@
-﻿namespace Barcodes.Utils
+﻿namespace Barcodes.Extensions
 {
     public static class StringExtensions
     {

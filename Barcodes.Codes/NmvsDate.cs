@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Barcodes.Utils
+namespace Barcodes.Codes
 {
     public class NmvsDate
     {

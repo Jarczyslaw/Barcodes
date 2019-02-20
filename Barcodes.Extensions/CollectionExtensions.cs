@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Barcodes.Utils
+namespace Barcodes.Extensions
 {
     public static class CollectionExtensions
     {
