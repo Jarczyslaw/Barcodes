@@ -1,6 +1,4 @@
 ﻿using Barcodes.Core.Services;
-using Barcodes.Core.Services.StateSaver;
-using Barcodes.Core.Services.StateSaver.States;
 using Barcodes.Utils;
 
 namespace Barcodes.Core.ViewModels.AdditionalInput
@@ -12,10 +10,9 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
         private string batchExpDate = string.Empty;
         private string serialNo = string.Empty;
 
-        public NmvsProductViewModel(IAppDialogsService dialogsService, IStateSaverService stateSaverService)
-            : base(dialogsService, stateSaverService)
+        public NmvsProductViewModel(IAppDialogsService dialogsService)
+            : base(dialogsService)
         {
-            stateSaverService.Load<NmvsProductViewModel, NmvsProductViewModelState>(this);
         }
 
         public string ProductCode
@@ -42,10 +39,15 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
             set => SetProperty(ref batchExpDate, value);
         }
 
+        public void LoadData(string nmvsData)
+        {
+
+        }
+
         protected override string GetResultData()
         {
             const string groupSeparator = "\u001D";
-            return string.Format("01{0}17{1}21{2}{3}10{4}", 
+            return string.Format("01{0}17{1}21{2}{3}10{4}",
                 ProductCode.Trim(), BatchExpDate.Trim(), SerialNo.Trim(), groupSeparator, BatchId.Trim());
         }
 
@@ -80,11 +82,6 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
             }
 
             return true;
-        }
-
-        protected override void SaveState()
-        {
-            stateSaverService.Save<NmvsProductViewModel, NmvsProductViewModelState>(this);
         }
     }
 }

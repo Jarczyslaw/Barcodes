@@ -24,7 +24,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Label Content="Product code (13 digits):" />
+                <Label Content="Product code (14 digits):" />
                 <TextBox Grid.Column="1"
                         Text="{Binding ProductCode}" />
 
@@ -36,16 +36,9 @@
 
                 <Label Grid.Row="2" 
                         Content="Expiration date:" />
-                <Grid Grid.Row="2"  
-                        Grid.Column="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <toolkit:DateTimePicker
-                        Value="{Binding SelectedDateTime}"
-                        Grid.Column="0"
+                <toolkit:DateTimePicker Grid.Row="2"
+                        Grid.Column="1"
+                        Value="{Binding ExpireDate}"
                         Margin="3"    
                         Format="Custom" 
                         HorizontalContentAlignment="Left"
@@ -54,10 +47,6 @@
                         AutoCloseCalendar="True"
                         FormatString="yyyy-MM-dd"
                         TimePickerVisibility="Collapsed" />
-                    <CheckBox Grid.Column="1" 
-                              Content="Empty Day"
-                              IsChecked="{Binding EmptyDay}" />
-                </Grid>
             </Grid>
         </GroupBox>
         <UniformGrid Columns="2">

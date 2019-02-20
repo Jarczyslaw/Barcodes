@@ -10,25 +10,17 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
     {
         private string productCode = string.Empty;
         private string serialNumber = string.Empty;
-        private bool emptyDay;
-        private DateTime selectedDateTime = DateTime.Now;
-      
-        public Ean128ProductViewModel(IAppDialogsService dialogsService, IStateSaverService stateSaverService)
-            : base(dialogsService, stateSaverService)
+        private DateTime expireDate = DateTime.Now;
+
+        public Ean128ProductViewModel(IAppDialogsService dialogsService)
+            : base(dialogsService)
         {
-            stateSaverService.Load<Ean128ProductViewModel, Ean128ProductViewModelState>(this);
         }
 
-        public DateTime SelectedDateTime
+        public DateTime ExpireDate
         {
-            get => selectedDateTime;
-            set => SetProperty(ref selectedDateTime, value);
-        }
-
-        public bool EmptyDay
-        {
-            get => emptyDay;
-            set => SetProperty(ref emptyDay, value);
+            get => expireDate;
+            set => SetProperty(ref expireDate, value);
         }
 
         public string SerialNumber
@@ -43,44 +35,38 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
             set => SetProperty(ref productCode, value);
         }
 
-        public string ExpirationDate
+        public void LoadData(string ean128Data)
         {
-            get => selectedDateTime.ToExpireDate(EmptyDay);
+            if (string.IsNullOrEmpty(ean128Data))
+            {
+                return;
+            }
+
+            if (Ean128Code.TryParse(ean128Data, out Ean128Code ean128Code))
+            {
+                ExpireDate = ean128Code.ExpireDate;
+                SerialNumber = ean128Code.SerialNumber;
+                ProductCode = ean128Code.ProductCode;
+            }
         }
 
         protected override string GetResultData()
         {
-            return $"(02)0{ProductCode.Trim()}(17){ExpirationDate}(10){SerialNumber.Trim()}";
+            return new Ean128Code(ProductCode.Trim(), SerialNumber.Trim(), ExpireDate).ToString();
         }
 
         protected override bool Validate()
         {
-            var productCode = ProductCode.Trim();
-            if (string.IsNullOrEmpty(productCode) || productCode.Length != 13)
+            try
             {
-                dialogsService.ShowError("Invalid product code");
+                var ean128Code = new Ean128Code(ProductCode.Trim(), SerialNumber.Trim(), ExpireDate);
+                return true;
+            }
+            catch (Exception exc)
+            {
+                dialogsService.ShowException(null, exc);
                 return false;
             }
-
-            if (string.IsNullOrEmpty(ExpirationDate) || ExpirationDate.Length != 6)
-            {
-                dialogsService.ShowError("Invalid batch expiration date");
-                return false;
-            }
-
-            var serialNumber = SerialNumber.Trim();
-            if (string.IsNullOrEmpty(serialNumber))
-            {
-                dialogsService.ShowError("Invalid serial number");
-                return false;
-            }
-
-            return true;
-        }
-
-        protected override void SaveState()
-        {
-            stateSaverService.Save<Ean128ProductViewModel, Ean128ProductViewModelState>(this);
         }
     }
 }

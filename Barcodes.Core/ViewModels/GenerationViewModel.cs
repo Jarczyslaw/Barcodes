@@ -248,7 +248,7 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
-            var result = SelectedAdditionalInput.Handler();
+            var result = SelectedAdditionalInput.Handler(Data);
             if (string.IsNullOrEmpty(result))
             {
                 return;
@@ -271,12 +271,6 @@ namespace Barcodes.Core.ViewModels
             DefaultSize = barcode.GenerationData.DefaultSize;
             Width = barcode.GenerationData.Width;
             Height = barcode.GenerationData.Height;
-        }
-
-        public class GenerationViewModelResult
-        {
-            public BarcodeResultViewModel Barcode { get; set; }
-            public bool AddAsNew { get; set; }
         }
     }
 }

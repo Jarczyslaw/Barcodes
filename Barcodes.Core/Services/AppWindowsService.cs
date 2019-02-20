@@ -22,17 +22,21 @@ namespace Barcodes.Core.Services
             Show<BarcodeWindow>(barcodeViewModel);
         }
 
-        public string OpenNmvsProductWindow()
+        public string OpenNmvsProductWindow(string nmvsData)
         {
             var dataContext = containerExtension.Resolve<NmvsProductViewModel>();
+            dataContext.LoadData(nmvsData);
+
             var window = new NmvsProductWindow(dataContext);
             window.ShowDialog();
             return dataContext.ResultData;
         }
 
-        public string OpenEan128ProductWindow()
+        public string OpenEan128ProductWindow(string ean128Data)
         {
             var dataContext = containerExtension.Resolve<Ean128ProductViewModel>();
+            dataContext.LoadData(ean128Data);
+
             var window = new Ean128ProductWindow(dataContext);
             window.ShowDialog();
             return dataContext.ResultData;
@@ -44,7 +48,7 @@ namespace Barcodes.Core.Services
             ShowModal(window, null);
         }
 
-        public GenerationViewModel.GenerationViewModelResult ShowGenerationWindow(BarcodeResultViewModel barcode = null)
+        public GenerationViewModelResult ShowGenerationWindow(BarcodeResultViewModel barcode = null)
         {
             var dataContext = containerExtension.Resolve<GenerationViewModel>();
             dataContext.Load(barcode);

@@ -167,7 +167,11 @@ namespace Barcodes.Services.Dialogs
 
         private void ShowExceptionDialog(string caption, string message, Exception exception, IntPtr? owner)
         {
-            var text = message + Environment.NewLine + exception.Message;
+            var text = exception.Message;
+            if (!string.IsNullOrEmpty(message))
+            {
+                text = message + Environment.NewLine + text;
+            }
             var builder = new TaskDialogBuilder()
                 .Initialize(caption, text, TaskDialogStandardIcon.Error, Resources.Resources.ExceptionOccured)
                 .AddDetails(Resources.Resources.ShowDetails, Resources.Resources.HideDetails, exception.StackTrace)
