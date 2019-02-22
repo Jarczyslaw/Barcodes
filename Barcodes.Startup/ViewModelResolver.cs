@@ -1,21 +1,22 @@
 ﻿using Barcodes.Core;
-using Barcodes.Core.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barcodes.Startup
 {
     public class ViewModelResolver
     {
+        private readonly List<string> viewsSuffixes = new List<string>
+        {
+            "View",
+            "Window"
+        };
+
         public Type Resolve(Type viewType)
         {
             var viewModelsAssembly = typeof(CoreModule).Assembly;
-            var baseName = viewType.Name.Replace("View", string.Empty)
-                .Replace("Window", string.Empty);
-            var viewModelName = baseName + "ViewModel";
+            var viewName = viewType.Name;
+            var viewModelName = GetViewModelName(viewName);
 
             foreach (var type in viewModelsAssembly.GetTypes())
             {
@@ -26,6 +27,20 @@ namespace Barcodes.Startup
             }
 
             throw new Exception($"Can not find {viewModelName} in {viewModelsAssembly.GetName().FullName}");
+        }
+
+        private string GetViewModelName(string viewName)
+        {
+            foreach (var suffix in viewsSuffixes)
+            {
+                if (viewName.EndsWith(suffix))
+                {
+                    viewName = viewName.Replace(suffix, string.Empty);
+                    break;
+                }
+            }
+
+            return viewName + "ViewModel";
         }
     }
 }
