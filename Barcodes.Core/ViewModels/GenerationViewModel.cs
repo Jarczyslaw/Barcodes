@@ -38,8 +38,6 @@ namespace Barcodes.Core.ViewModels
             EditCommand = new DelegateCommand(() => GenerateBarcode(false), () => Edit);
             CancelCommand = new DelegateCommand(() => services.EventAggregator.GetEvent<GenerationWindowClose>().Publish());
             AdditionalInputCommand = new DelegateCommand(AdditionalInput, () => AdditionalInputEnabled);
-
-            services.StateSaverService.Load<GenerationViewModel, GenerationViewModelState>(this);
         }
 
         public DelegateCommand AddNewCommand { get; }
@@ -216,7 +214,6 @@ namespace Barcodes.Core.ViewModels
                     Barcode = RunGenerator(barcodeData, Title.Trim()),
                     AddAsNew = addAsNew
                 };
-                services.StateSaverService.Save<GenerationViewModel, GenerationViewModelState>(this);
                 services.EventAggregator.GetEvent<GenerationWindowClose>().Publish();
             }
             catch (Exception exc)

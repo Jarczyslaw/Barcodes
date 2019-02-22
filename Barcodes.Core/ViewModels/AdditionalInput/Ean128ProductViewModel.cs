@@ -33,6 +33,11 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
             set => SetProperty(ref productCode, value);
         }
 
+        private Ean128Code GetEan128Code()
+        {
+            return new Ean128Code(ProductCode.Trim(), SerialNumber.Trim(), ExpireDate);
+        }
+
         public void LoadData(string ean128Data)
         {
             if (string.IsNullOrEmpty(ean128Data))
@@ -43,21 +48,21 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
             if (Ean128Code.TryParse(ean128Data, out Ean128Code ean128Code))
             {
                 ExpireDate = ean128Code.ExpireDate;
-                SerialNumber = ean128Code.SerialNumber;
+                SerialNumber = ean128Code.BatchId;
                 ProductCode = ean128Code.ProductCode;
             }
         }
 
         protected override string GetResultData()
         {
-            return new Ean128Code(ProductCode.Trim(), SerialNumber.Trim(), ExpireDate).ToString();
+            return GetEan128Code().ToString();
         }
 
         protected override bool Validate()
         {
             try
             {
-                var ean128Code = new Ean128Code(ProductCode.Trim(), SerialNumber.Trim(), ExpireDate);
+                var ean128Code = GetEan128Code();
                 return true;
             }
             catch (Exception exc)

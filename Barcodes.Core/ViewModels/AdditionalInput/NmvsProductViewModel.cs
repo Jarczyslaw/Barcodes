@@ -1,5 +1,6 @@
 ﻿using Barcodes.Codes;
 using Barcodes.Core.Services;
+using System;
 
 namespace Barcodes.Core.ViewModels.AdditionalInput
 {
@@ -39,49 +40,44 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
             set => SetProperty(ref batchExpDate, value);
         }
 
+        public NmvsCode GetNmvsCode()
+        {
+            return new NmvsCode(ProductCode.Trim(), SerialNo.Trim(), BatchId.Trim(), BatchExpDate.Trim());
+        }
+
         public void LoadData(string nmvsData)
         {
+            if (string.IsNullOrEmpty(nmvsData))
+            {
+                return;
+            }
 
+            if (NmvsCode.TryParse(nmvsData, out NmvsCode nmvsCode))
+            {
+                ProductCode = nmvsCode.ProductCode;
+                BatchId = nmvsCode.BatchId;
+                SerialNo = nmvsCode.SerialNo;
+                BatchExpDate = nmvsCode.ExpireDate.ToString();
+            }
         }
 
         protected override string GetResultData()
         {
-            const string groupSeparator = "\u001D";
-            return string.Format("01{0}17{1}21{2}{3}10{4}",
-                ProductCode.Trim(), BatchExpDate.Trim(), SerialNo.Trim(), groupSeparator, BatchId.Trim());
+            return GetNmvsCode().ToString();
         }
 
         protected override bool Validate()
         {
-            var productCode = ProductCode.Trim();
-            if (string.IsNullOrEmpty(productCode) || productCode.Length != 14)
+            try
             {
-                dialogsService.ShowError("Invalid product code");
+                var nmvsCode = GetNmvsCode();
+                return true;
+            }
+            catch (Exception exc)
+            {
+                dialogsService.ShowException(null, exc);
                 return false;
             }
-
-            var batchExpDate = BatchExpDate.Trim();
-            if (!NmvsDate.TryParse(batchExpDate, out NmvsDate date))
-            {
-                dialogsService.ShowError("Invalid batch expiration date");
-                return false;
-            }
-
-            var serialNo = SerialNo.Trim();
-            if (string.IsNullOrEmpty(serialNo) || serialNo.Length > 20)
-            {
-                dialogsService.ShowError("Invalid serial number");
-                return false;
-            }
-
-            var batchId = BatchId.Trim();
-            if (string.IsNullOrEmpty(batchId))
-            {
-                dialogsService.ShowError("Invalid batch identifier");
-                return false;
-            }
-
-            return true;
         }
     }
 }

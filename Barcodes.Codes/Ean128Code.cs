@@ -5,34 +5,39 @@ using System.Text.RegularExpressions;
 
 namespace Barcodes.Codes
 {
-    public class Ean128Code
+    public class Ean128Code : IEquatable<Ean128Code>
     {
-        public Ean128Code(string codeString) : this(Parse(codeString))
+        public Ean128Code(string codeString)
+            : this(Parse(codeString))
         {
         }
 
-        public Ean128Code(string productCode, string serialNumber, DateTime expireDate)
+        public Ean128Code(string productCode, string batchId, string expireDate)
+            : this(productCode, batchId, DateTime.ParseExact(expireDate, "yyMMdd", null))
         {
-            Validate(productCode, serialNumber, expireDate);
+        }
+
+        public Ean128Code(string productCode, string batchId, DateTime expireDate)
+        {
+            Validate(productCode, batchId);
             ProductCode = productCode;
-            SerialNumber = serialNumber;
+            BatchId = batchId;
             ExpireDate = expireDate;
         }
 
         public Ean128Code(Ean128Code ean128Code)
         {
             ProductCode = ean128Code.ProductCode;
-            SerialNumber = ean128Code.SerialNumber;
+            BatchId = ean128Code.BatchId;
             ExpireDate = ean128Code.ExpireDate;
         }
 
         public string ProductCode { get; }
-        public string SerialNumber { get; }
+        public string BatchId { get; }
         public DateTime ExpireDate { get; }
 
         public static Ean128Code Parse(string codeString)
         {
-            codeString = codeString.Trim();
             var match = Regex.Match(codeString, @"\(02\)(\d{14})\(17\)(\d{6})\(10\)(.+)");
             if (!match.Success)
             {
@@ -41,16 +46,10 @@ namespace Barcodes.Codes
 
             var productCode = match.Groups[1].Value;
             var expireDate = match.Groups[2].Value;
-            var serialNumber = match.Groups[3].Value;
+            var batchId = match.Groups[3].Value;
 
-            if (DateTime.TryParseExact(expireDate, "yyMMdd", null, DateTimeStyles.None, out DateTime expireDateTime))
-            {
-                return new Ean128Code(productCode, serialNumber, expireDateTime);
-            }
-            else
-            {
-                throw new ArgumentException("Invalid date time value");
-            }
+            var date = DateTime.ParseExact(expireDate, "yyMMdd", null, DateTimeStyles.None);
+            return new Ean128Code(productCode, batchId, date);
         }
 
         public static bool TryParse(string codeString, out Ean128Code ean128Code)
@@ -67,21 +66,16 @@ namespace Barcodes.Codes
             }
         }
 
-        public void Validate(string productCode, string serialNumber, DateTime expireDate)
+        public static void Validate(string productCode, string batchId)
         {
             if (!ValidateProductCode(productCode))
             {
                 throw new ArgumentException("Invalid product code");
             }
 
-            if (!ValidateSerialNumber(serialNumber))
+            if (!ValidateBatchId(batchId))
             {
-                throw new ArgumentException("Invalid serial number");
-            }
-
-            if (!ValidateExpireDate(expireDate))
-            {
-                throw new ArgumentException("Invalid batch expiration date");
+                throw new ArgumentException("Invalid batch id");
             }
         }
 
@@ -90,19 +84,20 @@ namespace Barcodes.Codes
             return !string.IsNullOrEmpty(productCode) && productCode.Length == 14 && productCode.ContainsOnlyDigits();
         }
 
-        public static bool ValidateSerialNumber(string serialNumber)
+        public static bool ValidateBatchId(string batchId)
         {
-            return !string.IsNullOrEmpty(serialNumber);
-        }
-
-        public static bool ValidateExpireDate(DateTime expireDate)
-        {
-            return expireDate != default(DateTime);
+            return !string.IsNullOrEmpty(batchId);
         }
 
         public override string ToString()
         {
-            return $"(02){ProductCode}(17){ExpireDate.ToExpireDate(false)}(10){SerialNumber}";
+            return $"(02){ProductCode}(17){ExpireDate.ToExpireDate(false)}(10){BatchId}";
+        }
+
+        public bool Equals(Ean128Code other)
+        {
+            return ProductCode == other.ProductCode && BatchId == other.BatchId
+                && ExpireDate == other.ExpireDate;
         }
     }
 }
