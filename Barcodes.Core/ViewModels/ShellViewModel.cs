@@ -238,8 +238,11 @@ namespace Barcodes.Core.ViewModels
         {
             if (BarcodesCount == 0)
             {
-                services.DialogsService.ShowError("No barcodes to save");
-                return;
+                var dialogResult = services.DialogsService.ShowYesNoQuestion("You don't have any barcodes to save. Do you want to clear default storage file?");
+                if (!dialogResult)
+                {
+                    return;
+                }
             }
 
             try

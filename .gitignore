@@ -193,3 +193,4 @@ git_stats/*
 StyleCop.Cache
 bin
 obj
+/Barcodes.Startup/Properties/AssemblyInfo.cs
