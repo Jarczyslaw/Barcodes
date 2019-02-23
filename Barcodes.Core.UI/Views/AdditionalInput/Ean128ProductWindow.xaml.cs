@@ -1,16 +1,10 @@
-﻿using Barcodes.Core.Common;
-using System.Windows;
-
-namespace Barcodes.Core.UI.Views.AdditionalInput
+﻿namespace Barcodes.Core.UI.Views.AdditionalInput
 {
-    public partial class Ean128ProductWindow : Window
+    public partial class Ean128ProductWindow : BaseWindow
     {
-        public Ean128ProductWindow(ICloseAware dataContext)
+        public Ean128ProductWindow()
         {
             InitializeComponent();
-
-            DataContext = dataContext;
-            dataContext.OnClose = () => Close();
         }
     }
 }

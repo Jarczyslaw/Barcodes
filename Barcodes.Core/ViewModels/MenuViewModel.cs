@@ -1,5 +1,4 @@
-﻿using Barcodes.Core.Common.Events;
-using Barcodes.Core.Services;
+﻿using Barcodes.Core.Services;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
@@ -26,7 +25,7 @@ namespace Barcodes.Core.ViewModels
             SaveToFileCommand = new DelegateCommand(SaveBarcodesToFile);
             LoadFromFileCommand = new DelegateCommand(LoadBarcodesFromFile);
             OpenStorageLocationCommand = new DelegateCommand(OpenStorageLocation);
-            CloseCommand = new DelegateCommand(() => servicesContainer.EventAggregator.GetEvent<ShellWindowClose>().Publish());
+            CloseCommand = new DelegateCommand(() => OnClose?.Invoke());
             ExportToPdfCommand = new DelegateCommand(ExportToPdf);
             ShowHelpCommand = new DelegateCommand(ShowHelp);
         }
@@ -38,6 +37,8 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand CloseCommand { get; }
         public DelegateCommand ExportToPdfCommand { get; }
         public DelegateCommand ShowHelpCommand { get; }
+
+        public Action OnClose { get; set; }
 
         public void AddNewBarcode()
         {

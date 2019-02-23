@@ -1,4 +1,4 @@
-﻿using Barcodes.Core;
+﻿using Barcodes.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 
@@ -14,7 +14,7 @@ namespace Barcodes.Startup
 
         public Type Resolve(Type viewType)
         {
-            var viewModelsAssembly = typeof(CoreModule).Assembly;
+            var viewModelsAssembly = typeof(ShellViewModel).Assembly;
             var viewName = viewType.Name;
             var viewModelName = GetViewModelName(viewName);
 

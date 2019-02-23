@@ -100,6 +100,7 @@
     <Compile Include="Views\AdditionalInput\NmvsProductWindow.xaml.cs">
       <DependentUpon>NmvsProductWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BaseWindow.cs" />
     <Compile Include="Views\BarcodeWindow.xaml.cs">
       <DependentUpon>BarcodeWindow.xaml</DependentUpon>
     </Compile>
@@ -108,9 +109,6 @@
     </Compile>
     <Compile Include="Views\HelpWindow.xaml.cs">
       <DependentUpon>HelpWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ShellView.xaml.cs">
-      <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShellWindow.xaml.cs">
       <DependentUpon>ShellWindow.xaml</DependentUpon>
@@ -154,10 +152,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\HelpWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

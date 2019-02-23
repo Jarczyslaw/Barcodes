@@ -1,4 +1,5 @@
-﻿using Barcodes.Core.Common;
+﻿using System;
+using Barcodes.Core.Common;
 using Barcodes.Core.Services;
 using Barcodes.Services.AppSettings;
 using Prism.Mvvm;
@@ -6,7 +7,7 @@ using Unity;
 
 namespace Barcodes.Core.ViewModels
 {
-    public class ShellViewModel : BindableBase, IShownAware
+    public class ShellViewModel : BindableBase, IShowAware, ICloseAware
     {
         private readonly IAppSettingsService appSettingsService;
 
@@ -25,7 +26,13 @@ namespace Barcodes.Core.ViewModels
         public MenuViewModel Menu { get; }
         public ContextMenuViewModel ContextMenu { get; }
 
-        public void OnViewShown()
+        public Action OnClose
+        {
+            get => Menu.OnClose;
+            set => Menu.OnClose = value;
+        }
+
+        public void OnShow()
         {
             if (AppState.BarcodesCount == 0)
             {

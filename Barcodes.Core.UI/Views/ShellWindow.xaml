@@ -1,17 +1,108 @@
-﻿<Window x:Class="Barcodes.Core.UI.Views.ShellWindow"
+﻿<ui:BaseWindow x:Class="Barcodes.Core.UI.Views.ShellWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
+        xmlns:controls="clr-namespace:Barcodes.Core.UI.Controls"
+        xmlns:ui="clr-namespace:Barcodes.Core.UI"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit" 
+        mc:Ignorable="d"
         Title="Barcodes" 
         Height="{StaticResource ShellHeight}" 
         Width="{StaticResource ShellWidth}"
         MinHeight="{StaticResource ShellHeight}" 
         MinWidth="{StaticResource ShellWidth}"
+        prism:ViewModelLocator.AutoWireViewModel="True"
         Icon="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico">
-    <Grid>
-        <ContentControl prism:RegionManager.RegionName="Core" />
-    </Grid>
-</Window>
+    <toolkit:BusyIndicator IsBusy="{Binding AppState.IsBusy}" BusyContent="{Binding AppState.BusyMessage}" >
+        <DockPanel LastChildFill="True">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="File">
+                    <MenuItem Header="Load barcodes from file"
+                          Command="{Binding Menu.LoadFromFileCommand}" />
+                    <MenuItem Header="Save barcodes to file"
+                          Command="{Binding Menu.SaveToFileCommand}"/>
+                    <MenuItem Header="Open storage location"
+                          Command="{Binding Menu.OpenStorageLocationCommand}"/>
+                    <Separator />
+                    <MenuItem Header="Close"
+                          Command="{Binding Menu.CloseCommand}"/>
+                </MenuItem>
+                <MenuItem Header="Add new barcode"
+                          Command="{Binding Menu.AddNewBarcodeCommand}" />
+                <MenuItem Header="Export to PDF"
+                      Command="{Binding Menu.ExportToPdfCommand}" />
+                <MenuItem Header="Help"
+                      Command="{Binding Menu.ShowHelpCommand}" />
+            </Menu>
+
+            <StatusBar DockPanel.Dock="Bottom">
+                <StatusBarItem>
+                    <TextBlock Text="{Binding AppState.BarcodesCount, StringFormat='Barcodes count: {0}'}" />
+                </StatusBarItem>
+                <StatusBarItem HorizontalAlignment="Right">
+                    <TextBlock Text="{Binding AppState.StatusMessage}" />
+                </StatusBarItem>
+            </StatusBar>
+
+            <GroupBox Grid.Row="1"
+                      Padding="0"
+                      Header="Barcodes">
+                <ListView SelectionMode="Single"
+                      ItemsSource="{Binding AppState.Barcodes}"
+                      SelectedItem="{Binding AppState.SelectedBarcode}"
+                      Background="Transparent" 
+                      BorderThickness="0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <prism:InvokeCommandAction Command="{Binding ContextMenu.OpenInNewWindowCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                                   ItemWidth="{Binding (ListView.View).ItemWidth, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                   MinWidth="{Binding ItemWidth, RelativeSource={RelativeSource Self}}"
+                                   ItemHeight="{Binding (ListView.View).ItemHeight, RelativeSource={RelativeSource AncestorType=ListView}}" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <controls:BarcodeView />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Edit"
+                                    Command="{Binding ContextMenu.EditBarcodeCommand}"
+                                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                            <MenuItem Header="Order">
+                                <MenuItem Header="Move up"
+                                              Command="{Binding ContextMenu.MoveUpCommand}"
+                                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                                <MenuItem Header="Move down"
+                                              Command="{Binding ContextMenu.MoveDownCommand}"
+                                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                            </MenuItem>
+                            <MenuItem Header="Open in new window"
+                                    Command="{Binding ContextMenu.OpenInNewWindowCommand}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                            <MenuItem Header="Save to image file"
+                                    Command="{Binding ContextMenu.SaveToImageFileCommand}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                            <MenuItem Header="Copy to clipboard"
+                                    Command="{Binding ContextMenu.CopyToClipboardCommand}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                            <Separator />
+                            <MenuItem Header="Delete"
+                                    Command="{Binding ContextMenu.DeleteCommand}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                </ListView>
+            </GroupBox>
+        </DockPanel>
+    </toolkit:BusyIndicator>
+</ui:BaseWindow>

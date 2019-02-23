@@ -1,16 +1,10 @@
-﻿using Barcodes.Core.Common;
-using System.Windows;
-
-namespace Barcodes.Core.UI.Views.AdditionalInput
+﻿namespace Barcodes.Core.UI.Views.AdditionalInput
 {
-    public partial class NmvsProductWindow : Window
+    public partial class NmvsProductWindow : BaseWindow
     {
-        public NmvsProductWindow(ICloseAware dataContext)
+        public NmvsProductWindow()
         {
             InitializeComponent();
-
-            DataContext = dataContext;
-            dataContext.OnClose = () => Close();
         }
     }
 }

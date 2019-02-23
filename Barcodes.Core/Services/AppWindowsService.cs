@@ -26,9 +26,7 @@ namespace Barcodes.Core.Services
         {
             var dataContext = containerExtension.Resolve<NmvsProductViewModel>();
             dataContext.LoadData(nmvsData);
-
-            var window = new NmvsProductWindow(dataContext);
-            ShowModal(window, null);
+            ShowModal<NmvsProductWindow>(dataContext);
             return dataContext.ResultData;
         }
 
@@ -36,9 +34,7 @@ namespace Barcodes.Core.Services
         {
             var dataContext = containerExtension.Resolve<Ean128ProductViewModel>();
             dataContext.LoadData(ean128Data);
-
-            var window = new Ean128ProductWindow(dataContext);
-            ShowModal(window, null);
+            ShowModal<Ean128ProductWindow>(dataContext);
             return dataContext.ResultData;
         }
 
@@ -52,8 +48,7 @@ namespace Barcodes.Core.Services
         {
             var dataContext = containerExtension.Resolve<GenerationViewModel>();
             dataContext.Load(barcode);
-            var window = containerExtension.Resolve<GenerationWindow>();
-            ShowModal(window, dataContext);
+            ShowModal<GenerationWindow>(dataContext);
             return dataContext.Result;
         }
     }

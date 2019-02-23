@@ -8,10 +8,7 @@ using System.Windows.Input;
 
 namespace Barcodes.Core.UI.Views
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class HelpWindow : Window
+    public partial class HelpWindow : BaseWindow
     {
         private readonly IGeneratorService barcodesGenerator;
 

@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace Barcodes.Core.UI.Views
 {
-    public partial class BarcodeWindow : Window
+    public partial class BarcodeWindow : BaseWindow
     {
         public BarcodeWindow()
         {

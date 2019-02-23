@@ -1,15 +1,9 @@
-﻿using Barcodes.Core.Common.Events;
-using Prism.Events;
-using System.Windows;
-
-namespace Barcodes.Core.UI.Views
+﻿namespace Barcodes.Core.UI.Views
 {
-    public partial class GenerationWindow : Window
+    public partial class GenerationWindow : BaseWindow
     {
-        public GenerationWindow(IEventAggregator eventAggregator)
+        public GenerationWindow()
         {
-            eventAggregator.GetEvent<GenerationWindowClose>().Subscribe(Close, ThreadOption.UIThread, false);
-
             InitializeComponent();
         }
     }

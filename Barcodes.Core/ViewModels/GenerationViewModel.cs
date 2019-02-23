@@ -1,6 +1,5 @@
-﻿using Barcodes.Core.Common.Events;
+﻿using Barcodes.Core.Common;
 using Barcodes.Core.Services;
-using Barcodes.Core.Services.StateSaver.States;
 using Barcodes.Services.Generator;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -10,7 +9,7 @@ using System.Linq;
 
 namespace Barcodes.Core.ViewModels
 {
-    public class GenerationViewModel : BindableBase
+    public class GenerationViewModel : BindableBase, ICloseAware
     {
         private string data = "Barcode Data";
         private string title = "Barcode Title";
@@ -36,7 +35,7 @@ namespace Barcodes.Core.ViewModels
 
             AddNewCommand = new DelegateCommand(() => GenerateBarcode(true));
             EditCommand = new DelegateCommand(() => GenerateBarcode(false), () => Edit);
-            CancelCommand = new DelegateCommand(() => services.EventAggregator.GetEvent<GenerationWindowClose>().Publish());
+            CancelCommand = new DelegateCommand(() => OnClose?.Invoke());
             AdditionalInputCommand = new DelegateCommand(AdditionalInput, () => AdditionalInputEnabled);
         }
 
@@ -136,6 +135,8 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref additionalInputs, value);
         }
 
+        public Action OnClose { get; set; }
+
         private void InitializeAdditionalInputs()
         {
             AdditionalInputs = new ObservableCollection<AdditionalInputViewModel>
@@ -214,7 +215,7 @@ namespace Barcodes.Core.ViewModels
                     Barcode = RunGenerator(barcodeData, Title.Trim()),
                     AddNew = addAsNew
                 };
-                services.EventAggregator.GetEvent<GenerationWindowClose>().Publish();
+                OnClose?.Invoke();
             }
             catch (Exception exc)
             {

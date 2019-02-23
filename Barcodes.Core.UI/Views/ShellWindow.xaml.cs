@@ -1,15 +1,9 @@
-﻿using Barcodes.Core.Common.Events;
-using Prism.Events;
-using System.Windows;
-
-namespace Barcodes.Core.UI.Views
+﻿namespace Barcodes.Core.UI.Views
 {
-    public partial class ShellWindow : Window
+    public partial class ShellWindow : BaseWindow
     {
-        public ShellWindow(IEventAggregator eventAggregator)
+        public ShellWindow()
         {
-            eventAggregator.GetEvent<ShellWindowClose>().Subscribe(Close, ThreadOption.UIThread, false);
-
             InitializeComponent();
         }
     }
