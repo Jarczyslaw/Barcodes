@@ -11,26 +11,26 @@ namespace Barcodes.Core.Services
     public class ServicesContainer : IServicesContainer
     {
         public IEventAggregator EventAggregator { get; }
-        public IGeneratorService BarcodesGenerator { get; }
-        public IAppDialogsService DialogsService { get; }
+        public IGeneratorService GeneratorService { get; }
+        public IAppDialogsService AppDialogsService { get; }
         public IAppWindowsService AppWindowsService { get; }
         public ISystemService SystemService { get; }
         public IAppSettingsService AppSettingsService { get; }
-        public IStorageService BarcodeStorageService { get; }
+        public IStorageService StorageService { get; }
         public IDocExportService DocExportService { get; }
         public IStateSaverService StateSaverService { get; }
 
-        public ServicesContainer(IEventAggregator eventAggregator, IGeneratorService barcodesGenerator, IAppDialogsService dialogsService,
+        public ServicesContainer(IEventAggregator eventAggregator, IGeneratorService generatorService, IAppDialogsService appDialogsService,
             IAppWindowsService appWindowsService, ISystemService systemService, IAppSettingsService appSettingsService,
-            IStorageService barcodeStorageService, IDocExportService docExportService, IStateSaverService stateSaverService)
+            IStorageService storageService, IDocExportService docExportService, IStateSaverService stateSaverService)
         {
             EventAggregator = eventAggregator;
-            BarcodesGenerator = barcodesGenerator;
-            DialogsService = dialogsService;
+            GeneratorService = generatorService;
+            AppDialogsService = appDialogsService;
             AppWindowsService = appWindowsService;
             SystemService = systemService;
             AppSettingsService = appSettingsService;
-            BarcodeStorageService = barcodeStorageService;
+            StorageService = storageService;
             DocExportService = docExportService;
             StateSaverService = stateSaverService;
         }

@@ -7,14 +7,10 @@ using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Unity;
-using System;
 using System.Windows;
 
 namespace Barcodes.Startup
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : PrismApplication
     {
         private GlobalExceptionHandler globalExceptionHandler;
@@ -40,6 +36,7 @@ namespace Barcodes.Startup
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
         {
             base.RegisterRequiredTypes(containerRegistry);
+            containerRegistry.RegisterSingleton<IAppState, AppState>();
             containerRegistry.RegisterSingleton<IAppSettingsService, AppSettingsService>();
             containerRegistry.RegisterSingleton<IAppDialogsService, AppDialogsService>();
             containerRegistry.RegisterSingleton<ISystemService, SystemService>();

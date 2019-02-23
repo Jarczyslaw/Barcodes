@@ -176,14 +176,14 @@ namespace Barcodes.Core.ViewModels
             var title = Title.Trim();
             if (string.IsNullOrEmpty(title))
             {
-                services.DialogsService.ShowError("Enter barcode's title");
+                services.AppDialogsService.ShowError("Enter barcode's title");
                 return false;
             }
 
             var data = Data.Trim();
             if (string.IsNullOrEmpty(data))
             {
-                services.DialogsService.ShowError("Enter barcode's data");
+                services.AppDialogsService.ShowError("Enter barcode's data");
                 return false;
             }
 
@@ -218,13 +218,13 @@ namespace Barcodes.Core.ViewModels
             }
             catch (Exception exc)
             {
-                services.DialogsService.ShowException("Exception during barcode generation. Try disable Data validation", exc);
+                services.AppDialogsService.ShowException("Exception during barcode generation. Try disable Data validation", exc);
             }
         }
 
         private BarcodeResultViewModel RunGenerator(GenerationData barcodeData, string title)
         {
-            var barcodeBitmap = services.BarcodesGenerator.CreateBarcode(barcodeData);
+            var barcodeBitmap = services.GeneratorService.CreateBarcode(barcodeData);
             barcodeBitmap.Freeze();
             return new BarcodeResultViewModel(barcodeData)
             {

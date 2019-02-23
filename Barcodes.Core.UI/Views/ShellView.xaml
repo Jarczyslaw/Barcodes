@@ -10,34 +10,34 @@
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <toolkit:BusyIndicator IsBusy="{Binding IsBusy}" BusyContent="{Binding BusyMessage}" >
+    <toolkit:BusyIndicator IsBusy="{Binding AppState.IsBusy}" BusyContent="{Binding AppState.BusyMessage}" >
         <DockPanel LastChildFill="True">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="File">
                     <MenuItem Header="Load barcodes from file"
-                          Command="{Binding LoadFromFileCommand}" />
+                          Command="{Binding Menu.LoadFromFileCommand}" />
                     <MenuItem Header="Save barcodes to file"
-                          Command="{Binding SaveToFileCommand}"/>
+                          Command="{Binding Menu.SaveToFileCommand}"/>
                     <MenuItem Header="Open storage location"
-                          Command="{Binding OpenStorageLocationCommand}"/>
+                          Command="{Binding Menu.OpenStorageLocationCommand}"/>
                     <Separator />
                     <MenuItem Header="Close"
-                          Command="{Binding CloseCommand}"/>
+                          Command="{Binding Menu.CloseCommand}"/>
                 </MenuItem>
                 <MenuItem Header="Add new barcode"
-                          Command="{Binding AddNewBarcodeCommand}" />
+                          Command="{Binding Menu.AddNewBarcodeCommand}" />
                 <MenuItem Header="Export to PDF"
-                      Command="{Binding ExportToPdfCommand}" />
+                      Command="{Binding Menu.ExportToPdfCommand}" />
                 <MenuItem Header="Help"
-                      Command="{Binding ShowHelpCommand}" />
+                      Command="{Binding Menu.ShowHelpCommand}" />
             </Menu>
 
             <StatusBar DockPanel.Dock="Bottom">
                 <StatusBarItem>
-                    <TextBlock Text="{Binding BarcodesCount, StringFormat='Barcodes count: {0}'}" />
+                    <TextBlock Text="{Binding AppState.BarcodesCount, StringFormat='Barcodes count: {0}'}" />
                 </StatusBarItem>
                 <StatusBarItem HorizontalAlignment="Right">
-                    <TextBlock Text="{Binding StatusMessage}" />
+                    <TextBlock Text="{Binding AppState.StatusMessage}" />
                 </StatusBarItem>
             </StatusBar>
             
@@ -45,13 +45,13 @@
                       Padding="0"
                       Header="Barcodes">
                 <ListView SelectionMode="Single"
-                      ItemsSource="{Binding Barcodes}"
-                      SelectedItem="{Binding SelectedBarcode}"
+                      ItemsSource="{Binding AppState.Barcodes}"
+                      SelectedItem="{Binding AppState.SelectedBarcode}"
                       Background="Transparent" 
                       BorderThickness="0">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDoubleClick">
-                            <prism:InvokeCommandAction Command="{Binding OpenInNewWindowCommand}" />
+                            <prism:InvokeCommandAction Command="{Binding ContextMenu.OpenInNewWindowCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <ListView.ItemsPanel>
@@ -70,28 +70,28 @@
                     <ListView.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Edit"
-                                    Command="{Binding EditBarcodeCommand}"
+                                    Command="{Binding ContextMenu.EditBarcodeCommand}"
                                       CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                             <MenuItem Header="Order">
                                 <MenuItem Header="Move up"
-                                              Command="{Binding MoveUpCommand}"
+                                              Command="{Binding ContextMenu.MoveUpCommand}"
                                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                                 <MenuItem Header="Move down"
-                                              Command="{Binding MoveDownCommand}"
+                                              Command="{Binding ContextMenu.MoveDownCommand}"
                                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                             </MenuItem>
                             <MenuItem Header="Open in new window"
-                                    Command="{Binding OpenInNewWindowCommand}"
+                                    Command="{Binding ContextMenu.OpenInNewWindowCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                             <MenuItem Header="Save to image file"
-                                    Command="{Binding SaveToImageFileCommand}"
+                                    Command="{Binding ContextMenu.SaveToImageFileCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                             <MenuItem Header="Copy to clipboard"
-                                    Command="{Binding CopyToClipboardCommand}"
+                                    Command="{Binding ContextMenu.CopyToClipboardCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                             <Separator />
                             <MenuItem Header="Delete"
-                                    Command="{Binding DeleteCommand}"
+                                    Command="{Binding ContextMenu.DeleteCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                         </ContextMenu>
                     </ListView.ContextMenu>
