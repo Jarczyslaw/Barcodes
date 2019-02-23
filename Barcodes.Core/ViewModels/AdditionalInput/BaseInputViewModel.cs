@@ -1,13 +1,12 @@
 ﻿using Barcodes.Core.Common;
 using Barcodes.Core.Services;
-using Barcodes.Core.Services.StateSaver;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
 
 namespace Barcodes.Core.ViewModels.AdditionalInput
 {
-    public abstract class BaseInputViewModel : BindableBase, IClosable
+    public abstract class BaseInputViewModel : BindableBase, ICloseAware
     {
         protected readonly IAppDialogsService dialogsService;
 
@@ -23,12 +22,12 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
                 }
 
                 ResultData = GetResultData();
-                CloseAction?.Invoke();
+                OnClose?.Invoke();
             });
-            CloseCommand = new DelegateCommand(() => CloseAction?.Invoke());
+            CloseCommand = new DelegateCommand(() => OnClose?.Invoke());
         }
 
-        public Action CloseAction { get; set; }
+        public Action OnClose { get; set; }
         public string ResultData { get; private set; }
 
         public DelegateCommand AcceptCommand { get; }

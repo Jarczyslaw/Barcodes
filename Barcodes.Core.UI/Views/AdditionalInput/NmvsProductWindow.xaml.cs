@@ -5,12 +5,12 @@ namespace Barcodes.Core.UI.Views.AdditionalInput
 {
     public partial class NmvsProductWindow : Window
     {
-        public NmvsProductWindow(IClosable dataContext)
+        public NmvsProductWindow(ICloseAware dataContext)
         {
             InitializeComponent();
 
             DataContext = dataContext;
-            dataContext.CloseAction = () => Close();
+            dataContext.OnClose = () => Close();
         }
     }
 }

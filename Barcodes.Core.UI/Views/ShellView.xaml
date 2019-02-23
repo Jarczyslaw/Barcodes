@@ -9,7 +9,7 @@
              xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit" 
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800"
-             prism:ViewModelLocator.AutoWireViewModel="True">
+             prism:ViewModelLocator.AutoWireViewModel="True" Loaded="UserControl_Loaded">
     <toolkit:BusyIndicator IsBusy="{Binding AppState.IsBusy}" BusyContent="{Binding AppState.BusyMessage}" >
         <DockPanel LastChildFill="True">
             <Menu DockPanel.Dock="Top">

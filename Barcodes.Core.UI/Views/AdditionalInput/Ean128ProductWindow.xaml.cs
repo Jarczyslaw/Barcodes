@@ -5,12 +5,12 @@ namespace Barcodes.Core.UI.Views.AdditionalInput
 {
     public partial class Ean128ProductWindow : Window
     {
-        public Ean128ProductWindow(IClosable dataContext)
+        public Ean128ProductWindow(ICloseAware dataContext)
         {
             InitializeComponent();
 
             DataContext = dataContext;
-            dataContext.CloseAction = () => Close();
+            dataContext.OnClose = () => Close();
         }
     }
 }

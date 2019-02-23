@@ -29,8 +29,6 @@ namespace Barcodes.Core.ViewModels
             CloseCommand = new DelegateCommand(() => servicesContainer.EventAggregator.GetEvent<ShellWindowClose>().Publish());
             ExportToPdfCommand = new DelegateCommand(ExportToPdf);
             ShowHelpCommand = new DelegateCommand(ShowHelp);
-
-            InitialSequence();
         }
 
         public DelegateCommand AddNewBarcodeCommand { get; }
@@ -41,14 +39,7 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand ExportToPdfCommand { get; }
         public DelegateCommand ShowHelpCommand { get; }
 
-        private void InitialSequence()
-        {
-            servicesContainer.AppSettingsService.Load();
-            var storagePath = servicesContainer.AppSettingsService.StoragePath;
-            LoadBarcodesFromFile(storagePath);
-        }
-
-        private void AddNewBarcode()
+        public void AddNewBarcode()
         {
             var result = servicesContainer.AppWindowsService.ShowGenerationWindow();
             if (result == null)
