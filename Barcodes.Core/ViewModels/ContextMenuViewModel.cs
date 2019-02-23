@@ -48,7 +48,7 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
-            if (result.AddAsNew)
+            if (result.AddNew)
             {
                 appState.InsertNewBarcode(result.Barcode);
             }

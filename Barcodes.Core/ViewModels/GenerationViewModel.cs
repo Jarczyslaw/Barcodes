@@ -212,7 +212,7 @@ namespace Barcodes.Core.ViewModels
                 Result = new GenerationViewModelResult
                 {
                     Barcode = RunGenerator(barcodeData, Title.Trim()),
-                    AddAsNew = addAsNew
+                    AddNew = addAsNew
                 };
                 services.EventAggregator.GetEvent<GenerationWindowClose>().Publish();
             }

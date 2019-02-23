@@ -15,11 +15,7 @@ namespace Barcodes.Services.Windows
         public void Show<T>(T window, object dataContext)
             where T : Window
         {
-            if (dataContext != null)
-            {
-                window.DataContext = dataContext;
-            }
-
+            window.DataContext = dataContext;
             window.Show();
         }
 
@@ -33,11 +29,7 @@ namespace Barcodes.Services.Windows
         public bool? ShowModal<T>(T window, object dataContext)
             where T : Window
         {
-            if (dataContext != null)
-            {
-                window.DataContext = dataContext;
-            }
-
+            window.DataContext = dataContext;
             return window.ShowDialog();
         }
 
@@ -60,6 +52,11 @@ namespace Barcodes.Services.Windows
 
                 window.Activate();
             }
+        }
+
+        private Window GetActiveWindow()
+        {
+            return Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
         }
     }
 }
