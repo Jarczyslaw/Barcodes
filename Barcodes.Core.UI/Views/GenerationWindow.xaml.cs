@@ -9,7 +9,6 @@ namespace Barcodes.Core.UI.Views
         public GenerationWindow(IEventAggregator eventAggregator)
         {
             eventAggregator.GetEvent<GenerationWindowClose>().Subscribe(Close, ThreadOption.UIThread, false);
-            eventAggregator.GetEvent<GenerationWindowClose>().Subscribe(Close, ThreadOption.UIThread, false);
 
             InitializeComponent();
         }

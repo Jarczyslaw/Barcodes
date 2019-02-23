@@ -28,7 +28,7 @@ namespace Barcodes.Core.Services
             dataContext.LoadData(nmvsData);
 
             var window = new NmvsProductWindow(dataContext);
-            window.ShowDialog();
+            ShowModal(window, null);
             return dataContext.ResultData;
         }
 
@@ -38,7 +38,7 @@ namespace Barcodes.Core.Services
             dataContext.LoadData(ean128Data);
 
             var window = new Ean128ProductWindow(dataContext);
-            window.ShowDialog();
+            ShowModal(window, null);
             return dataContext.ResultData;
         }
 
