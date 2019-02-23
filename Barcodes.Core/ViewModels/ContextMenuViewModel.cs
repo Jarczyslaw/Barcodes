@@ -26,7 +26,7 @@ namespace Barcodes.Core.ViewModels
             EditBarcodeCommand = new DelegateCommand<BarcodeResultViewModel>(EditBarcode);
             MoveUpCommand = new DelegateCommand<BarcodeResultViewModel>(MoveUp);
             MoveDownCommand = new DelegateCommand<BarcodeResultViewModel>(MoveDown);
-            OpenInNewWindowCommand = new DelegateCommand<BarcodeResultViewModel>(OpenInNewWindow);
+            OpenInNewWindowCommand = new DelegateCommand(OpenInNewWindow);
             SaveToImageFileCommand = new DelegateCommand<BarcodeResultViewModel>(SaveToImageFile);
             CopyToClipboardCommand = new DelegateCommand<BarcodeResultViewModel>(CopyToClipboard);
             DeleteCommand = new DelegateCommand<BarcodeResultViewModel>(Delete);
@@ -35,7 +35,7 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand<BarcodeResultViewModel> EditBarcodeCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> MoveUpCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> MoveDownCommand { get; }
-        public DelegateCommand<BarcodeResultViewModel> OpenInNewWindowCommand { get; }
+        public DelegateCommand OpenInNewWindowCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> SaveToImageFileCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> CopyToClipboardCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> DeleteCommand { get; }
@@ -73,14 +73,14 @@ namespace Barcodes.Core.ViewModels
             appState.RemoveBarcode(barcode);
         }
 
-        private void OpenInNewWindow(BarcodeResultViewModel barcode)
+        private void OpenInNewWindow()
         {
-            if (barcode == null)
+            if (appState.SelectedBarcode == null)
             {
                 return;
             }
 
-            appWindowsService.OpenBarcodeWindow(barcode);
+            appWindowsService.OpenBarcodeWindow(appState.SelectedBarcode);
         }
 
         private void SaveToImageFile(BarcodeResultViewModel barcode)

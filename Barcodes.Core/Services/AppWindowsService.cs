@@ -2,7 +2,6 @@
 using Barcodes.Core.UI.Views.AdditionalInput;
 using Barcodes.Core.ViewModels;
 using Barcodes.Core.ViewModels.AdditionalInput;
-using Barcodes.Services.Generator;
 using Barcodes.Services.Windows;
 using Prism.Ioc;
 
@@ -19,14 +18,14 @@ namespace Barcodes.Core.Services
 
         public void OpenBarcodeWindow(object barcodeViewModel)
         {
-            Show<BarcodeWindow>(barcodeViewModel);
+            Show<BarcodeWindow>(barcodeViewModel, GetActiveWindow());
         }
 
         public string OpenNmvsProductWindow(string nmvsData)
         {
             var dataContext = containerExtension.Resolve<NmvsProductViewModel>();
             dataContext.LoadData(nmvsData);
-            ShowModal<NmvsProductWindow>(dataContext);
+            Show<NmvsProductWindow>(dataContext, GetActiveWindow(), true);
             return dataContext.ResultData;
         }
 
@@ -34,21 +33,21 @@ namespace Barcodes.Core.Services
         {
             var dataContext = containerExtension.Resolve<Ean128ProductViewModel>();
             dataContext.LoadData(ean128Data);
-            ShowModal<Ean128ProductWindow>(dataContext);
+            Show<Ean128ProductWindow>(dataContext, GetActiveWindow(), true);
             return dataContext.ResultData;
         }
 
         public void ShowHelpWindow()
         {
             var window = containerExtension.Resolve<HelpWindow>();
-            ShowModal(window, null);
+            Show(window, null, GetActiveWindow(), true);
         }
 
         public GenerationViewModelResult ShowGenerationWindow(BarcodeResultViewModel barcode = null)
         {
             var dataContext = containerExtension.Resolve<GenerationViewModel>();
             dataContext.Load(barcode);
-            ShowModal<GenerationWindow>(dataContext);
+            Show<GenerationWindow>(dataContext, GetActiveWindow(), true);
             return dataContext.Result;
         }
     }

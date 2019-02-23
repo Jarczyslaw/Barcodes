@@ -5,38 +5,34 @@ namespace Barcodes.Services.Windows
 {
     public class WindowsService : IWindowsService
     {
-        public void Show<T>(object dataContext)
-           where T : Window, new()
-        {
-            var window = new T();
-            Show(window, dataContext);
-        }
-
-        public void Show<T>(T window, object dataContext)
-            where T : Window
-        {
-            if (dataContext != null)
-            {
-                window.DataContext = dataContext;
-            }
-            window.Show();
-        }
-
-        public bool? ShowModal<T>(object dataContext)
+        public bool? Show<T>(object dataContext, Window owner = null, bool modal = false)
             where T : Window, new()
         {
             var window = new T();
-            return ShowModal(window, dataContext);
+            return Show(window, dataContext, owner, modal);
         }
 
-        public bool? ShowModal<T>(T window, object dataContext)
-            where T : Window
+        public bool? Show(Window window, object dataContext, Window owner = null, bool modal = false)
         {
             if (dataContext != null)
             {
                 window.DataContext = dataContext;
             }
-            return window.ShowDialog();
+
+            if (owner != null)
+            {
+                window.Owner = owner;
+            }
+
+            if (modal)
+            {
+                return window.ShowDialog();
+            }
+            else
+            {
+                window.Show();
+                return true;
+            }
         }
 
         public bool IsWindowOpen<T>()
@@ -60,7 +56,7 @@ namespace Barcodes.Services.Windows
             }
         }
 
-        private Window GetActiveWindow()
+        public Window GetActiveWindow()
         {
             return Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
         }
