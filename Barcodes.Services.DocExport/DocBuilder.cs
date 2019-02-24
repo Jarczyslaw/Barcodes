@@ -17,7 +17,7 @@ namespace Barcodes.Services.DocExport
 
         public PdfDocument Render()
         {
-            var renderer = new PdfDocumentRenderer(true, PdfFontEmbedding.Always)
+            var renderer = new PdfDocumentRenderer(true)
             {
                 Document = Document
             };
