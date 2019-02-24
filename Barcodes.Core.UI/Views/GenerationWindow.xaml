@@ -1,16 +1,17 @@
-﻿<ui:BaseWindow x:Class="Barcodes.Core.UI.Views.GenerationWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:Barcodes.Core.UI.Controls" 
-        xmlns:ui="clr-namespace:Barcodes.Core.UI"
-        mc:Ignorable="d"
-        Title="Barcodes - Generation" 
-        ResizeMode="CanMinimize"
-        WindowStartupLocation="CenterOwner"
-        Icon="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
-        SizeToContent="WidthAndHeight">
+﻿<ui:BaseWindow
+    x:Class="Barcodes.Core.UI.Views.GenerationWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Barcodes.Core.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:Barcodes.Core.UI"
+    Title="Barcodes - Generation"
+    Icon="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
+    ResizeMode="CanMinimize"
+    SizeToContent="WidthAndHeight"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
     <Grid>
         <controls:GenerationView />
     </Grid>
