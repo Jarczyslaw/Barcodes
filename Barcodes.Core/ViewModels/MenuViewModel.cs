@@ -5,6 +5,7 @@ using Barcodes.Services.Storage;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -76,11 +77,12 @@ namespace Barcodes.Core.ViewModels
                 appState.Barcodes.Clear();
                 barcodesFromStorage.Reverse();
 
-                int successfullyGenerated = 0;
+                var invalidCodes = new List<string>();
                 foreach (var barcode in barcodesFromStorage)
                 {
                     if (!barcode.IsValid || !barcode.ValidSizes)
                     {
+                        invalidCodes.Add($"Barcode {barcode.Title} can not be generated due to invalid sizes");
                         continue;
                     }
 
@@ -97,20 +99,34 @@ namespace Barcodes.Core.ViewModels
                     try
                     {
                         appState.GenerateAndInsertBarcode(barcodeData, barcode.Title);
-                        successfullyGenerated++;
                     }
-                    catch { }
+                    catch (Exception exc)
+                    {
+                        invalidCodes.Add($"Barcode {barcode.Title} can not be generated due to generation error: {exc.Message}");
+                    }
                 }
 
                 servicesContainer.AppSettingsService.StoragePath = storagePath;
-                appState.SetMessageAndCounter($"Successfully loaded {successfullyGenerated} barcodes from {Path.GetFileName(storagePath)}");
+
+                var successfullyGenerated = barcodesFromStorage.Count - invalidCodes.Count;
+                if (successfullyGenerated > 0)
+                {
+                    appState.SetMessageAndCounter($"Successfully loaded {successfullyGenerated} barcodes from {Path.GetFileName(storagePath)}");
+                }
+
+                if (invalidCodes.Count != 0)
+                {
+                    const int invalidCodesDisplayCount = 10;
+                    var detailsMessage = $"Total invalid barcodes: {invalidCodes.Count}. First {Math.Min(invalidCodesDisplayCount, invalidCodes.Count)} errors: {Environment.NewLine}";
+                    detailsMessage += string.Join(Environment.NewLine, invalidCodes.Take(invalidCodesDisplayCount));
+                    servicesContainer.AppDialogsService.ShowError("Some barcodes are not generated successfully. Check details for further informations", detailsMessage);
+                }
             }
             catch (Exception exc)
             {
                 servicesContainer.AppDialogsService.ShowException("Error when loading barcodes from file", exc);
             }
         }
-
 
         private void SaveBarcodesToFile()
         {

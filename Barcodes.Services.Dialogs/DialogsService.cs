@@ -8,10 +8,11 @@ namespace Barcodes.Services.Dialogs
 {
     public class DialogsService : IDialogsService
     {
-        public void ShowInfo(string message, IntPtr? owner = null)
+        public void ShowInfo(string message, string details = null, IntPtr? owner = null)
         {
             var builder = new TaskDialogBuilder()
                 .Initialize(Resources.Resources.Information, message, TaskDialogStandardIcon.Information, Resources.Resources.Information)
+                .AddDetails(Resources.Resources.ShowDetails, Resources.Resources.HideDetails, details)
                 .SetOwner(GetOwnerHandle(owner));
 
             using (var dialog = builder.Build())
@@ -20,10 +21,11 @@ namespace Barcodes.Services.Dialogs
             }
         }
 
-        public void ShowWarning(string message, IntPtr? owner = null)
+        public void ShowWarning(string message, string details = null, IntPtr? owner = null)
         {
             var builder = new TaskDialogBuilder()
                 .Initialize(Resources.Resources.Warning, message, TaskDialogStandardIcon.Warning, Resources.Resources.Warning)
+                .AddDetails(Resources.Resources.ShowDetails, Resources.Resources.HideDetails, details)
                 .SetOwner(GetOwnerHandle(owner));
 
             using (var dialog = builder.Build())
@@ -32,10 +34,11 @@ namespace Barcodes.Services.Dialogs
             }
         }
 
-        public void ShowError(string error, IntPtr? owner = null)
+        public void ShowError(string error, string details = null, IntPtr? owner = null)
         {
             var builder = new TaskDialogBuilder()
                 .Initialize(Resources.Resources.Error, error, TaskDialogStandardIcon.Error, Resources.Resources.Error)
+                .AddDetails(Resources.Resources.ShowDetails, Resources.Resources.HideDetails, details)
                 .SetOwner(GetOwnerHandle(owner));
 
             using (var dialog = builder.Build())
