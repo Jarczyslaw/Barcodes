@@ -8,14 +8,14 @@ using System.IO;
 
 namespace Barcodes.Core.ViewModels
 {
-    public class ContextMenuViewModel : BindableBase
+    public class BarcodeMenuViewModel : BindableBase
     {
         private readonly IAppState appState;
         private readonly IAppWindowsService appWindowsService;
         private readonly IAppDialogsService appDialogsService;
         private readonly ISystemService systemService;
 
-        public ContextMenuViewModel(IAppState appState, IAppWindowsService appWindowsService, IAppDialogsService appDialogsService,
+        public BarcodeMenuViewModel(IAppState appState, IAppWindowsService appWindowsService, IAppDialogsService appDialogsService,
             ISystemService systemService)
         {
             this.appState = appState;
@@ -23,6 +23,7 @@ namespace Barcodes.Core.ViewModels
             this.appDialogsService = appDialogsService;
             this.systemService = systemService;
 
+            AddNewBarcodeCommand = new DelegateCommand(AddNewBarcode);
             EditBarcodeCommand = new DelegateCommand<BarcodeResultViewModel>(EditBarcode);
             MoveUpCommand = new DelegateCommand<BarcodeResultViewModel>(MoveUp);
             MoveDownCommand = new DelegateCommand<BarcodeResultViewModel>(MoveDown);
@@ -32,6 +33,7 @@ namespace Barcodes.Core.ViewModels
             DeleteCommand = new DelegateCommand<BarcodeResultViewModel>(Delete);
         }
 
+        public DelegateCommand AddNewBarcodeCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> EditBarcodeCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> MoveUpCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> MoveDownCommand { get; }
@@ -39,6 +41,17 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand<BarcodeResultViewModel> SaveToImageFileCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> CopyToClipboardCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> DeleteCommand { get; }
+
+        public void AddNewBarcode()
+        {
+            var result = appWindowsService.ShowGenerationWindow();
+            if (result == null)
+            {
+                return;
+            }
+
+            appState.InsertNewBarcode(result.Barcode);
+        }
 
         private void EditBarcode(BarcodeResultViewModel barcode)
         {

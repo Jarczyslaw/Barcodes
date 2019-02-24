@@ -95,7 +95,7 @@
     <Compile Include="Services\AppDialogsService.cs" />
     <Compile Include="Services\AppState.cs" />
     <Compile Include="Services\AppWindowsService.cs" />
-    <Compile Include="ViewModels\ContextMenuViewModel.cs" />
+    <Compile Include="ViewModels\BarcodeMenuViewModel.cs" />
     <Compile Include="Services\IAppDialogsService.cs" />
     <Compile Include="Services\IAppState.cs" />
     <Compile Include="Services\IAppWindowsService.cs" />

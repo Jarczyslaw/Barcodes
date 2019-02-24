@@ -17,14 +17,14 @@ namespace Barcodes.Core.ViewModels
 
             AppState = unityContainer.Resolve<IAppState>();
             Menu = unityContainer.Resolve<MenuViewModel>();
-            ContextMenu = unityContainer.Resolve<ContextMenuViewModel>();
+            BarcodeMenu = unityContainer.Resolve<BarcodeMenuViewModel>();
 
             InitialSequence();
         }
 
         public IAppState AppState { get; }
         public MenuViewModel Menu { get; }
-        public ContextMenuViewModel ContextMenu { get; }
+        public BarcodeMenuViewModel BarcodeMenu { get; }
 
         public Action OnClose
         {
@@ -36,7 +36,7 @@ namespace Barcodes.Core.ViewModels
         {
             if (AppState.BarcodesCount == 0)
             {
-                Menu.AddNewBarcode();
+                BarcodeMenu.AddNewBarcode();
             }
         }
 

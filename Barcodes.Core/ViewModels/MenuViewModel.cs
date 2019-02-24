@@ -22,7 +22,6 @@ namespace Barcodes.Core.ViewModels
             this.appState = appState;
             this.servicesContainer = servicesContainer;
 
-            AddNewBarcodeCommand = new DelegateCommand(AddNewBarcode);
             SaveToFileCommand = new DelegateCommand(SaveBarcodesToFile);
             LoadFromFileCommand = new DelegateCommand(LoadBarcodesFromFile);
             OpenStorageLocationCommand = new DelegateCommand(OpenStorageLocation);
@@ -31,7 +30,6 @@ namespace Barcodes.Core.ViewModels
             ShowHelpCommand = new DelegateCommand(ShowHelp);
         }
 
-        public DelegateCommand AddNewBarcodeCommand { get; }
         public DelegateCommand SaveToFileCommand { get; }
         public DelegateCommand LoadFromFileCommand { get; }
         public DelegateCommand OpenStorageLocationCommand { get; }
@@ -40,17 +38,6 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand ShowHelpCommand { get; }
 
         public Action OnClose { get; set; }
-
-        public void AddNewBarcode()
-        {
-            var result = servicesContainer.AppWindowsService.ShowGenerationWindow();
-            if (result == null)
-            {
-                return;
-            }
-
-            appState.InsertNewBarcode(result.Barcode);
-        }
 
         private void LoadBarcodesFromFile()
         {
