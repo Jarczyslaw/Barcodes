@@ -50,7 +50,23 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
-            appState.InsertNewBarcode(result.Barcode);
+            if (appState.Workspaces.Count == 0)
+            {
+                var workspaceName = appWindowsService.ShowWorkspaceNameWindow();
+                if (string.IsNullOrEmpty(workspaceName))
+                {
+                    return;
+                }
+
+                var workspace = new WorkspaceViewModel
+                {
+                    Default = true,
+                    Title = workspaceName
+                };
+                appState.AddWorkspace(workspace);
+            }
+
+            appState.SelectedWorkspace.InsertNewBarcode(result.Barcode);
         }
 
         private void EditBarcode(BarcodeResultViewModel barcode)
@@ -63,11 +79,11 @@ namespace Barcodes.Core.ViewModels
 
             if (result.AddNew)
             {
-                appState.InsertNewBarcode(result.Barcode);
+                appState.SelectedWorkspace.InsertNewBarcode(result.Barcode);
             }
             else
             {
-                appState.ReplaceBarcode(barcode, result.Barcode);
+                appState.SelectedWorkspace.ReplaceBarcode(barcode, result.Barcode);
             }
         }
 
@@ -83,17 +99,17 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
-            appState.RemoveBarcode(barcode);
+            appState.SelectedWorkspace.RemoveBarcode(barcode);
         }
 
         private void OpenInNewWindow()
         {
-            if (appState.SelectedBarcode == null)
+            if (appState.SelectedWorkspace.SelectedBarcode == null)
             {
                 return;
             }
 
-            appWindowsService.OpenBarcodeWindow(appState.SelectedBarcode);
+            appWindowsService.OpenBarcodeWindow(appState.SelectedWorkspace.SelectedBarcode);
         }
 
         private void SaveToImageFile(BarcodeResultViewModel barcode)
@@ -128,12 +144,12 @@ namespace Barcodes.Core.ViewModels
 
         private void MoveDown(BarcodeResultViewModel barcode)
         {
-            appState.MoveDown(barcode);
+            appState.SelectedWorkspace.MoveDown(barcode);
         }
 
         private void MoveUp(BarcodeResultViewModel barcode)
         {
-            appState.MoveUp(barcode);
+            appState.SelectedWorkspace.MoveUp(barcode);
         }
     }
 }

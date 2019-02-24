@@ -29,7 +29,9 @@ namespace Barcodes.Services.Generator
                 HideTexts(generator);
                 FitSizes(generator, barcodeData);
                 var barcodeImage = generator.GenerateBarCodeImage();
-                return barcodeImage.ToBitmapSource();
+                var barcodeBitmapSource = barcodeImage.ToBitmapSource();
+                barcodeBitmapSource.Freeze();
+                return barcodeBitmapSource;
             }
         }
 

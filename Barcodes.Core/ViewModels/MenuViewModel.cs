@@ -28,6 +28,7 @@ namespace Barcodes.Core.ViewModels
             CloseCommand = new DelegateCommand(() => OnClose?.Invoke());
             ExportToPdfCommand = new DelegateCommand(ExportToPdf);
             ShowHelpCommand = new DelegateCommand(ShowHelp);
+            AddNewWorkspaceCommand = new DelegateCommand(AddNewWorkspace);
         }
 
         public DelegateCommand SaveToFileCommand { get; }
@@ -36,8 +37,14 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand CloseCommand { get; }
         public DelegateCommand ExportToPdfCommand { get; }
         public DelegateCommand ShowHelpCommand { get; }
+        public DelegateCommand AddNewWorkspaceCommand { get; }
 
         public Action OnClose { get; set; }
+
+        private void AddNewWorkspace()
+        {
+            throw new NotImplementedException();
+        }
 
         private void LoadBarcodesFromFile()
         {
@@ -55,47 +62,62 @@ namespace Barcodes.Core.ViewModels
         {
             try
             {
-                var barcodesFromStorage = servicesContainer.StorageService.Load(storagePath, false);
-                if (barcodesFromStorage == null)
+                var storageWorkspaces = servicesContainer.StorageService.Load(storagePath, false);
+                if (storageWorkspaces == null)
                 {
                     return;
                 }
 
-                appState.Barcodes.Clear();
-                barcodesFromStorage.Reverse();
+                appState.Workspaces.Clear();
 
                 var invalidCodes = new List<string>();
-                foreach (var barcode in barcodesFromStorage)
+                foreach (var storageWorkspace in storageWorkspaces)
                 {
-                    if (!barcode.IsValid || !barcode.ValidSizes)
+                    var workspace = new WorkspaceViewModel
                     {
-                        invalidCodes.Add($"Barcode {barcode.Title} can not be generated due to invalid sizes");
-                        continue;
-                    }
-
-                    var barcodeData = new GenerationData
-                    {
-                        Data = barcode.Data,
-                        Type = barcode.Type,
-                        DefaultSize = barcode.DefaultSize,
-                        ValidateCodeText = false,
-                        Width = barcode.Width,
-                        Height = barcode.Height
+                        Title = storageWorkspace.Title,
+                        Default = storageWorkspace.Default
                     };
 
-                    try
+                    foreach (var storageBarcode in storageWorkspace.Barcodes)
                     {
-                        appState.GenerateAndInsertBarcode(barcodeData, barcode.Title);
+                        if (!storageBarcode.IsValid || !storageBarcode.ValidSizes)
+                        {
+                            invalidCodes.Add($"Barcode {storageBarcode.Title} can not be generated due to invalid sizes");
+                            continue;
+                        }
+
+                        var barcodeData = new GenerationData
+                        {
+                            Data = storageBarcode.Data,
+                            Type = storageBarcode.Type,
+                            DefaultSize = storageBarcode.DefaultSize,
+                            ValidateCodeText = false,
+                            Width = storageBarcode.Width,
+                            Height = storageBarcode.Height
+                        };
+
+                        try
+                        {
+                            var barcodeResult = new BarcodeResultViewModel(barcodeData)
+                            {
+                                Title = storageBarcode.Title,
+                                Barcode = servicesContainer.GeneratorService.CreateBarcode(barcodeData)
+                            };
+                            workspace.Barcodes.Add(barcodeResult);
+                        }
+                        catch (Exception exc)
+                        {
+                            invalidCodes.Add($"Barcode {storageBarcode.Title} can not be generated due to generation error: {exc.Message}");
+                        }
                     }
-                    catch (Exception exc)
-                    {
-                        invalidCodes.Add($"Barcode {barcode.Title} can not be generated due to generation error: {exc.Message}");
-                    }
+
+                    appState.AddWorkspace(workspace);
                 }
 
                 servicesContainer.AppSettingsService.StoragePath = storagePath;
 
-                var successfullyGenerated = barcodesFromStorage.Count - invalidCodes.Count;
+                var successfullyGenerated = storageWorkspaces.Sum(s => s.Barcodes.Count) - invalidCodes.Count;
                 if (successfullyGenerated > 0)
                 {
                     appState.SetMessageAndCounter($"Successfully loaded {successfullyGenerated} barcodes from {Path.GetFileName(storagePath)}");
@@ -128,23 +150,29 @@ namespace Barcodes.Core.ViewModels
 
             try
             {
-                var filePath = servicesContainer.AppDialogsService.SaveStorageFile(servicesContainer.AppSettingsService.StoragePath);
+                var filePath = servicesContainer.AppSettingsService.StoragePath;
+                servicesContainer.AppDialogsService.SaveStorageFile(filePath);
                 if (string.IsNullOrEmpty(filePath))
                 {
                     return;
                 }
 
-                var barcodesToSave = appState.Barcodes.Select(b => new StorageEntry
+                var storageWorkspaces = appState.Workspaces.Select(w => new StorageWorkspace
                 {
-                    Data = b.GenerationData.Data,
-                    Title = b.Title,
-                    Type = b.GenerationData.Type,
-                    Width = b.GenerationData.Width,
-                    Height = b.GenerationData.Height,
-                    DefaultSize = b.GenerationData.DefaultSize
+                    Title = w.Title,
+                    Default = w.Default,
+                    Barcodes = w.Barcodes.Select(b => new StorageBarcode
+                    {
+                        Data = b.GenerationData.Data,
+                        Title = b.Title,
+                        Type = b.GenerationData.Type,
+                        Width = b.GenerationData.Width,
+                        Height = b.GenerationData.Height,
+                        DefaultSize = b.GenerationData.DefaultSize
+                    }).ToList()
                 }).ToList();
 
-                servicesContainer.StorageService.Save(filePath, barcodesToSave);
+                servicesContainer.StorageService.Save(filePath, storageWorkspaces);
                 servicesContainer.AppSettingsService.StoragePath = filePath;
                 appState.StatusMessage = $"Successfully saved {Path.GetFileName(filePath)}";
             }
@@ -177,7 +205,7 @@ namespace Barcodes.Core.ViewModels
 
                 appState.BusyMessage = "Generating document...";
 
-                var barcodesToExport = appState.Barcodes.Select(b => new DocBarcodeData
+                var barcodesToExport = appState.SelectedWorkspace.Barcodes.Select(b => new DocBarcodeData
                 {
                     Title = b.Title,
                     Data = b.GenerationData.Data,

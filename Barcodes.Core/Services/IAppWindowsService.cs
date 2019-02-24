@@ -10,5 +10,6 @@ namespace Barcodes.Core.Services
         string OpenEan128ProductWindow(string ean128Data);
         void ShowHelpWindow();
         GenerationViewModelResult ShowGenerationWindow(BarcodeResultViewModel barcode = null);
+        string ShowWorkspaceNameWindow(string currentName = "Default workspace");
     }
 }

@@ -100,6 +100,7 @@
     <Compile Include="Services\IAppState.cs" />
     <Compile Include="Services\IAppWindowsService.cs" />
     <Compile Include="Services\IServicesContainer.cs" />
+    <Compile Include="ViewModels\InputViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="Services\ServicesContainer.cs" />
     <Compile Include="Services\StateSaver\States\Ean128ProductViewModelState.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="ViewModels\AdditionalInput\NmvsProductViewModel.cs" />
     <Compile Include="ViewModels\GenerationViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\WorkspaceViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

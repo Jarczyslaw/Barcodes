@@ -45,9 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="StorageService.cs" />
-    <Compile Include="StorageEntry.cs" />
+    <Compile Include="StorageBarcode.cs" />
     <Compile Include="IStorageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StorageWorkspace.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Barcodes.Services.Generator\Barcodes.Services.Generator.csproj">

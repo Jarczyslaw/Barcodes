@@ -1,15 +1,16 @@
-﻿<ui:BaseWindow x:Class="Barcodes.Core.UI.Views.AdditionalInput.NmvsProductWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ui="clr-namespace:Barcodes.Core.UI"
-        mc:Ignorable="d"
-        Title="Barcodes - NMVS Pack data" 
-        ResizeMode="NoResize"
-        WindowStartupLocation="CenterOwner"
-        Icon="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
-        SizeToContent="WidthAndHeight">
+﻿<ui:BaseWindow
+    x:Class="Barcodes.Core.UI.Views.AdditionalInput.NmvsProductWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:Barcodes.Core.UI"
+    Title="Barcodes - NMVS Pack data"
+    Icon="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
+    ResizeMode="NoResize"
+    SizeToContent="WidthAndHeight"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
     <StackPanel Margin="5">
         <GroupBox Header="NMVS data">
             <Grid>
@@ -25,58 +26,55 @@
                 </Grid.RowDefinitions>
 
                 <Label Content="Product code (GTIN, 14 digits):" />
-                <TextBox Grid.Column="1"
-                        Text="{Binding ProductCode}" />
+                <TextBox Grid.Column="1" Text="{Binding ProductCode}" />
 
-                <Label Grid.Row="1" 
-                        Content="Batch ID:" />
-                <TextBox Grid.Row="1"  
-                        Grid.Column="1"
-                        Text="{Binding BatchId}" />
+                <Label Grid.Row="1" Content="Batch ID:" />
+                <TextBox
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="{Binding BatchId}" />
 
-                <Label Grid.Row="2" 
-                        Content="Batch exp. date (yyMMdd / yyMM00):" />
-                <!--<Grid Grid.Row="2"  
+                <Label Grid.Row="2" Content="Batch exp. date (yyMMdd / yyMM00):" />
+                <!--<Grid Grid.Row="2"
                         >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    
+
                     <toolkit:DateTimePicker
                         Value="{Binding SelectedDateTime}"
                         Grid.Column="0"
-                        Margin="3"    
-                        Format="Custom" 
+                        Margin="3"
+                        Format="Custom"
                         HorizontalContentAlignment="Left"
                         VerticalContentAlignment="Center"
                         TextAlignment="Left"
                         AutoCloseCalendar="True"
                         FormatString="yyyy-MM-dd"
                         TimePickerVisibility="Collapsed" />
-                    <CheckBox Grid.Column="1" 
+                    <CheckBox Grid.Column="1"
                               Content="Empty Day"
                               IsChecked="{Binding EmptyDay}" />
                 </Grid>-->
-                <TextBox Grid.Row="2"
-                         Margin="3"
-                         Grid.Column="1"
-                         MaxLength="6"
-                         TextAlignment="Left" 
-                         Text="{Binding BatchExpDate}" />
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="3"
+                    MaxLength="6"
+                    Text="{Binding BatchExpDate}"
+                    TextAlignment="Left" />
 
-                <Label Grid.Row="3" 
-                        Content="Serial no.:" />
-                <TextBox Grid.Row="3"  
-                        Grid.Column="1"
-                        Text="{Binding SerialNo}" />
+                <Label Grid.Row="3" Content="Serial no.:" />
+                <TextBox
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Text="{Binding SerialNo}" />
             </Grid>
         </GroupBox>
         <UniformGrid Columns="2">
-            <Button Content="Accept"
-                    Command="{Binding AcceptCommand}" />
-            <Button Content="Close"
-                        Command="{Binding CloseCommand}" />
+            <Button Command="{Binding AcceptCommand}" Content="Accept" />
+            <Button Command="{Binding CloseCommand}" Content="Close" />
         </UniformGrid>
     </StackPanel>
 </ui:BaseWindow>
