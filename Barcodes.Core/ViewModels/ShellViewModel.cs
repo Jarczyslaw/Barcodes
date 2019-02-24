@@ -15,14 +15,14 @@ namespace Barcodes.Core.ViewModels
         {
             this.appSettingsService = appSettingsService;
 
-            AppState = unityContainer.Resolve<IAppState>();
-            Menu = unityContainer.Resolve<MenuViewModel>();
-            BarcodeMenu = unityContainer.Resolve<BarcodeMenuViewModel>();
+            App = unityContainer.Resolve<AppViewModel>();
+            Menu = new MenuViewModel(App);
+            BarcodeMenu = new BarcodeMenuViewModel(App);
 
             InitialSequence();
         }
 
-        public IAppState AppState { get; }
+        public AppViewModel App { get; }
         public MenuViewModel Menu { get; }
         public BarcodeMenuViewModel BarcodeMenu { get; }
 
@@ -34,9 +34,9 @@ namespace Barcodes.Core.ViewModels
 
         public void OnShow()
         {
-            if (AppState.BarcodesCount == 0)
+            if (App.IsEmpty)
             {
-                BarcodeMenu.AddNewBarcode();
+                App.AddNewBarcode();
             }
         }
 
@@ -44,7 +44,7 @@ namespace Barcodes.Core.ViewModels
         {
             appSettingsService.Load();
             var storagePath = appSettingsService.StoragePath;
-            Menu.LoadBarcodesFromFile(storagePath);
+            App.LoadBarcodesFromFile(storagePath);
         }
     }
 }

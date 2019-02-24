@@ -22,7 +22,7 @@
         <ui:BindingProxy x:Key="Proxy" Proxy="{Binding}" />
     </ui:BaseWindow.Resources>
 
-    <toolkit:BusyIndicator BusyContent="{Binding AppState.BusyMessage}" IsBusy="{Binding AppState.IsBusy}">
+    <toolkit:BusyIndicator BusyContent="{Binding App.BusyMessage}" IsBusy="{Binding App.IsBusy}">
         <DockPanel LastChildFill="True">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="File">
@@ -42,17 +42,17 @@
 
             <StatusBar DockPanel.Dock="Bottom">
                 <StatusBarItem>
-                    <TextBlock Text="{Binding AppState.BarcodesCount, StringFormat='Barcodes count: {0}'}" />
+                    <TextBlock Text="{Binding App.BarcodesCount, StringFormat='Barcodes count: {0}'}" />
                 </StatusBarItem>
                 <StatusBarItem HorizontalAlignment="Right">
-                    <TextBlock Text="{Binding AppState.StatusMessage}" />
+                    <TextBlock Text="{Binding App.StatusMessage}" />
                 </StatusBarItem>
             </StatusBar>
 
-            <TabControl ItemsSource="{Binding AppState.Workspaces}" SelectedItem="{Binding AppState.SelectedWorkspace}">
+            <TabControl ItemsSource="{Binding App.Workspaces}" SelectedItem="{Binding App.SelectedWorkspace}">
                 <TabControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Margin="5" Text="{Binding Title}" />
+                        <TextBlock Margin="3" Text="{Binding Title}" />
                     </DataTemplate>
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
@@ -69,7 +69,7 @@
                                 SelectionMode="Single">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseDoubleClick">
-                                        <prism:InvokeCommandAction Command="{Binding Proxy.ContextMenu.OpenInNewWindowCommand, Source={StaticResource Proxy}}" />
+                                        <prism:InvokeCommandAction Command="{Binding Proxy.BarcodeMenu.OpenInNewWindowCommand, Source={StaticResource Proxy}}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <ListView.ItemsPanel>

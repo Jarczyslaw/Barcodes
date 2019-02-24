@@ -33,7 +33,6 @@ namespace Barcodes.Startup
         {
             base.RegisterRequiredTypes(containerRegistry);
 
-            containerRegistry.RegisterSingleton<IAppState, AppState>();
             containerRegistry.RegisterSingleton<IAppSettingsService, AppSettingsService>();
             containerRegistry.RegisterSingleton<IAppDialogsService, AppDialogsService>();
             containerRegistry.RegisterSingleton<ISystemService, SystemService>();
