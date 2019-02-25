@@ -59,6 +59,10 @@
                                         <ContextMenu>
                                             <MenuItem Command="{Binding Proxy.WorkspaceMenu.RenameWorkspaceCommand, Source={StaticResource Proxy}}" Header="Rename" />
                                             <MenuItem Command="{Binding Proxy.WorkspaceMenu.SetAsDefaultWorkspaceCommand, Source={StaticResource Proxy}}" Header="Set as default" />
+                                            <MenuItem Header="Change order">
+                                                <MenuItem Command="{Binding Proxy.WorkspaceMenu.MoveUpCommand, Source={StaticResource Proxy}}" Header="Move left" />
+                                                <MenuItem Command="{Binding Proxy.WorkspaceMenu.MoveDownCommand, Source={StaticResource Proxy}}" Header="Move right" />
+                                            </MenuItem>
                                             <Separator />
                                             <MenuItem Command="{Binding Proxy.WorkspaceMenu.DeleteWorkspaceCommand, Source={StaticResource Proxy}}" Header="Delete" />
                                         </ContextMenu>

@@ -332,9 +332,9 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
-            if (Workspaces.Count == 0)
+            if (Workspaces.Count == 0 && !AddInitialWorkspace())
             {
-                AddInitialWorkspace();
+                return;
             }
 
             SelectedWorkspace.InsertNewBarcode(result.Barcode);
@@ -442,17 +442,26 @@ namespace Barcodes.Core.ViewModels
 
         public void RenameWorkspace()
         {
-
+            if (SelectedWorkspace == null)
+            {
+                return;
+            }
         }
 
         public void DeleteWorkspace()
         {
-
+            if (SelectedWorkspace == null)
+            {
+                return;
+            }
         }
 
         public void SetAsDefaultWorkspace()
         {
-
+            if (SelectedWorkspace == null)
+            {
+                return;
+            }
         }
 
         public void MoveWorkspaceLeft()
