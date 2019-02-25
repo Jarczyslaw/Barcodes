@@ -98,12 +98,6 @@ namespace Barcodes.Core.ViewModels
             SelectedWorkspace = workspace;
         }
 
-        public void SetMessageAndCounter(string message)
-        {
-            StatusMessage = message;
-            RaisePropertyChanged(nameof(BarcodesCount));
-        }
-
         private bool WorkspaceValidationRule(string workspaceName)
         {
             if (string.IsNullOrEmpty(workspaceName))
@@ -145,10 +139,10 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
-            LoadBarcodesFromFile(filePath);
+            LoadFromFile(filePath);
         }
 
-        public void LoadBarcodesFromFile(string storagePath)
+        public void LoadFromFile(string storagePath)
         {
             try
             {
@@ -212,7 +206,8 @@ namespace Barcodes.Core.ViewModels
                 var successfullyGenerated = storageWorkspaces.Sum(s => s.Barcodes.Count) - invalidCodes.Count;
                 if (successfullyGenerated > 0)
                 {
-                    SetMessageAndCounter($"Successfully loaded {successfullyGenerated} barcodes from {Path.GetFileName(storagePath)}");
+                    UpdateMessage($"Successfully loaded {successfullyGenerated} barcodes from {Path.GetFileName(storagePath)}");
+                    UpdateBarcodesCount();
                 }
 
                 if (invalidCodes.Count != 0)
@@ -229,7 +224,7 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public void SaveBarcodesToFile()
+        public void SaveToFile()
         {
             if (BarcodesCount == 0)
             {
@@ -469,7 +464,7 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
-            var workspaceName = servicesContainer.AppWindowsService.ShowWorkspaceNameWindow(string.Empty, WorkspaceValidationRule);
+            var workspaceName = servicesContainer.AppWindowsService.ShowWorkspaceNameWindow(SelectedWorkspace.Name, WorkspaceValidationRule);
             if (string.IsNullOrEmpty(workspaceName))
             {
                 return;

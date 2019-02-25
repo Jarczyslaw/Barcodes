@@ -46,7 +46,7 @@ namespace Barcodes.Core.ViewModels
         {
             appSettingsService.Load();
             var storagePath = appSettingsService.StoragePath;
-            App.LoadBarcodesFromFile(storagePath);
+            App.LoadFromFile(storagePath);
         }
     }
 }
