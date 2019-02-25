@@ -136,6 +136,7 @@
                                             Command="{Binding Proxy.BarcodeMenu.CopyToClipboardCommand, Source={StaticResource Proxy}}"
                                             CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
                                             Header="Copy to clipboard" />
+                                        <MenuItem Command="{Binding Proxy.BarcodeMenu.ChangeBarcodesWorkspaceCommand, Source={StaticResource Proxy}}" Header="Change workspace" />
                                         <Separator />
                                         <MenuItem
                                             Command="{Binding Proxy.BarcodeMenu.DeleteCommand, Source={StaticResource Proxy}}"

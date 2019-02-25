@@ -522,5 +522,26 @@ namespace Barcodes.Core.ViewModels
             var index = workspaces.IndexOf(SelectedWorkspace);
             workspaces.ShiftRight(index);
         }
+
+        public void ChangeBarcodesWorkspace()
+        {
+            if (SelectedWorkspace == null || SelectedWorkspace.SelectedBarcode == null)
+            {
+                return;
+            }
+
+            if (Workspaces.Count() == 1)
+            {
+                servicesContainer.AppDialogsService.ShowInfo("There is no workspace to switch to");
+            }
+            else if (Workspaces.Count == 2)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
     }
 }

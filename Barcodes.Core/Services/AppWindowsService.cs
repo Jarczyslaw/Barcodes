@@ -5,6 +5,9 @@ using Barcodes.Core.ViewModels.AdditionalInput;
 using Barcodes.Services.Windows;
 using Prism.Ioc;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Barcodes.Core.Services
 {
@@ -65,6 +68,14 @@ namespace Barcodes.Core.Services
         {
             var dataContext = new InputViewModel(title, contentHeader, label, inputValue, validationRule);
             Show<InputWindow>(dataContext, GetActiveWindow(), true);
+            return dataContext.Result;
+        }
+
+        public WorkspaceViewModel ChangeBarcodesWorkspace(IEnumerable<WorkspaceViewModel> workspaces)
+        {
+            var selectedWorkspace = workspaces.First();
+            var dataContext = new SelectionViewModel<WorkspaceViewModel>("Barcodes - Workspaces", "Select desired workspace", "Workspace:", workspaces, selectedWorkspace, "Name");
+            Show<SelectionWindow>(dataContext, GetActiveWindow(), true);
             return dataContext.Result;
         }
     }
