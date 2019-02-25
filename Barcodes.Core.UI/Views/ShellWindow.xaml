@@ -33,7 +33,7 @@
                     <MenuItem Command="{Binding Menu.CloseCommand}" Header="Close" />
                 </MenuItem>
                 <MenuItem Header="Add">
-                    <MenuItem Command="{Binding BarcodeMenu.AddNewBarcodeCommand}" Header="Barcode" />
+                    <MenuItem Command="{Binding Menu.AddNewBarcodeCommand}" Header="Barcode" />
                     <MenuItem Command="{Binding Menu.AddNewWorkspaceCommand}" Header="Workspace" />
                 </MenuItem>
                 <MenuItem Command="{Binding Menu.ExportToPdfCommand}" Header="Export to PDF" />
@@ -50,9 +50,27 @@
             </StatusBar>
 
             <TabControl ItemsSource="{Binding App.Workspaces}" SelectedItem="{Binding App.SelectedWorkspace}">
+                <TabControl.ItemContainerStyle>
+                    <Style TargetType="{x:Type TabItem}">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="ContextMenu">
+                                    <Setter.Value>
+                                        <ContextMenu>
+                                            <MenuItem Command="{Binding Proxy.WorkspaceMenu.RenameWorkspaceCommand, Source={StaticResource Proxy}}" Header="Rename" />
+                                            <MenuItem Command="{Binding Proxy.WorkspaceMenu.SetAsDefaultWorkspaceCommand, Source={StaticResource Proxy}}" Header="Set as default" />
+                                            <Separator />
+                                            <MenuItem Command="{Binding Proxy.WorkspaceMenu.DeleteWorkspaceCommand, Source={StaticResource Proxy}}" Header="Delete" />
+                                        </ContextMenu>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TabControl.ItemContainerStyle>
                 <TabControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Margin="3" Text="{Binding Name}" />
+                        <TextBlock Margin="16,3" Text="{Binding Name}" />
                     </DataTemplate>
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
@@ -88,12 +106,10 @@
                                 </ListView.ItemTemplate>
                                 <ListView.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Command="{Binding Proxy.BarcodeMenu.AddNewBarcodeCommand, Source={StaticResource Proxy}}" Header="Add new barcode" />
-                                        <Separator />
                                         <MenuItem
                                             Command="{Binding Proxy.BarcodeMenu.EditBarcodeCommand, Source={StaticResource Proxy}}"
                                             CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
-                                            Header="Edit existing" />
+                                            Header="Edit" />
                                         <MenuItem Header="Change order">
                                             <MenuItem
                                                 Command="{Binding Proxy.BarcodeMenu.MoveUpCommand, Source={StaticResource Proxy}}"

@@ -6,15 +6,16 @@ namespace Barcodes.Core.ViewModels
 {
     public class MenuViewModel : BindableBase
     {
-        public MenuViewModel(AppViewModel appViewModel)
+        public MenuViewModel(AppViewModel app) 
         {
-            SaveToFileCommand = new DelegateCommand(appViewModel.SaveBarcodesToFile);
-            LoadFromFileCommand = new DelegateCommand(appViewModel.LoadBarcodesFromFile);
-            OpenStorageLocationCommand = new DelegateCommand(appViewModel.OpenStorageLocation);
+            SaveToFileCommand = new DelegateCommand(app.SaveBarcodesToFile);
+            LoadFromFileCommand = new DelegateCommand(app.LoadBarcodesFromFile);
+            OpenStorageLocationCommand = new DelegateCommand(app.OpenStorageLocation);
             CloseCommand = new DelegateCommand(() => OnClose?.Invoke());
-            ExportToPdfCommand = new DelegateCommand(appViewModel.ExportToPdf);
-            ShowHelpCommand = new DelegateCommand(appViewModel.ShowHelp);
-            AddNewWorkspaceCommand = new DelegateCommand(appViewModel.AddNewWorkspace);
+            ExportToPdfCommand = new DelegateCommand(app.ExportToPdf);
+            ShowHelpCommand = new DelegateCommand(app.ShowHelp);
+            AddNewWorkspaceCommand = new DelegateCommand(app.AddNewWorkspace);
+            AddNewBarcodeCommand = new DelegateCommand(app.AddNewBarcode);
         }
 
         public DelegateCommand SaveToFileCommand { get; }
@@ -24,6 +25,7 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand ExportToPdfCommand { get; }
         public DelegateCommand ShowHelpCommand { get; }
         public DelegateCommand AddNewWorkspaceCommand { get; }
+        public DelegateCommand AddNewBarcodeCommand { get; }
 
         public Action OnClose { get; set; }
     }

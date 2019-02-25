@@ -18,6 +18,7 @@ namespace Barcodes.Core.ViewModels
             App = unityContainer.Resolve<AppViewModel>();
             Menu = new MenuViewModel(App);
             BarcodeMenu = new BarcodeMenuViewModel(App);
+            WorkspaceMenu = new WorkspaceMenuViewModel(App);
 
             InitialSequence();
         }
@@ -25,6 +26,7 @@ namespace Barcodes.Core.ViewModels
         public AppViewModel App { get; }
         public MenuViewModel Menu { get; }
         public BarcodeMenuViewModel BarcodeMenu { get; }
+        public WorkspaceMenuViewModel WorkspaceMenu { get; }
 
         public Action OnClose
         {

@@ -5,19 +5,17 @@ namespace Barcodes.Core.ViewModels
 {
     public class BarcodeMenuViewModel : BindableBase
     {
-        public BarcodeMenuViewModel(AppViewModel appViewModel)
+        public BarcodeMenuViewModel(AppViewModel app)
         {
-            AddNewBarcodeCommand = new DelegateCommand(appViewModel.AddNewBarcode);
-            EditBarcodeCommand = new DelegateCommand<BarcodeResultViewModel>(appViewModel.EditBarcode);
-            MoveUpCommand = new DelegateCommand<BarcodeResultViewModel>(appViewModel.MoveUp);
-            MoveDownCommand = new DelegateCommand<BarcodeResultViewModel>(appViewModel.MoveDown);
-            OpenInNewWindowCommand = new DelegateCommand(appViewModel.OpenInNewWindow);
-            SaveToImageFileCommand = new DelegateCommand<BarcodeResultViewModel>(appViewModel.SaveToImageFile);
-            CopyToClipboardCommand = new DelegateCommand<BarcodeResultViewModel>(appViewModel.CopyToClipboard);
-            DeleteCommand = new DelegateCommand<BarcodeResultViewModel>(appViewModel.Delete);
+            EditBarcodeCommand = new DelegateCommand<BarcodeResultViewModel>(app.EditBarcode);
+            MoveUpCommand = new DelegateCommand<BarcodeResultViewModel>(app.MoveBarcodeUp);
+            MoveDownCommand = new DelegateCommand<BarcodeResultViewModel>(app.MoveBarcodeDown);
+            OpenInNewWindowCommand = new DelegateCommand(app.OpenInNewWindow);
+            SaveToImageFileCommand = new DelegateCommand<BarcodeResultViewModel>(app.SaveToImageFile);
+            CopyToClipboardCommand = new DelegateCommand<BarcodeResultViewModel>(app.CopyToClipboard);
+            DeleteCommand = new DelegateCommand<BarcodeResultViewModel>(app.Delete);
         }
 
-        public DelegateCommand AddNewBarcodeCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> EditBarcodeCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> MoveUpCommand { get; }
         public DelegateCommand<BarcodeResultViewModel> MoveDownCommand { get; }

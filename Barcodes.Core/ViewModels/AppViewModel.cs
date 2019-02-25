@@ -430,14 +430,51 @@ namespace Barcodes.Core.ViewModels
             StatusMessage = $"Barcode \"{barcode.Title}\" copied to clipboard";
         }
 
-        public void MoveDown(BarcodeResultViewModel barcode)
+        public void MoveBarcodeDown(BarcodeResultViewModel barcode)
         {
             SelectedWorkspace.MoveDown(barcode);
         }
 
-        public void MoveUp(BarcodeResultViewModel barcode)
+        public void MoveBarcodeUp(BarcodeResultViewModel barcode)
         {
             SelectedWorkspace.MoveUp(barcode);
+        }
+
+        public void RenameWorkspace()
+        {
+
+        }
+
+        public void DeleteWorkspace()
+        {
+
+        }
+
+        public void SetAsDefaultWorkspace()
+        {
+
+        }
+
+        public void MoveWorkspaceLeft()
+        {
+            if (SelectedWorkspace == null)
+            {
+                return;
+            }
+
+            var index = workspaces.IndexOf(SelectedWorkspace);
+            workspaces.ShiftLeft(index);
+        }
+
+        public void MoveWorkspaceRight()
+        {
+            if (SelectedWorkspace == null)
+            {
+                return;
+            }
+
+            var index = workspaces.IndexOf(SelectedWorkspace);
+            workspaces.ShiftRight(index);
         }
     }
 }

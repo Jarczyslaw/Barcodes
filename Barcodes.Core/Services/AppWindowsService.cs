@@ -58,7 +58,7 @@ namespace Barcodes.Core.Services
             {
                 currentName = "Default workspace";
             }
-            return ShowInputWindow("Barcodes - Workspace name", "Enter workspace's name", "Name:", currentName, validationRule);
+            return ShowInputWindow("Barcodes - Workspace", "Enter workspace's name", "Name:", currentName, validationRule);
         }
 
         private string ShowInputWindow(string title, string contentHeader, string label, string inputValue, Func<string, bool> validationRule)
