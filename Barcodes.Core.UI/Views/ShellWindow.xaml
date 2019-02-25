@@ -26,8 +26,8 @@
         <DockPanel LastChildFill="True">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="File">
-                    <MenuItem Command="{Binding Menu.LoadFromFileCommand}" Header="Load barcodes from file" />
-                    <MenuItem Command="{Binding Menu.SaveToFileCommand}" Header="Save barcodes to file" />
+                    <MenuItem Command="{Binding Menu.LoadFromFileCommand}" Header="Load from file" />
+                    <MenuItem Command="{Binding Menu.SaveToFileCommand}" Header="Save to file" />
                     <MenuItem Command="{Binding Menu.OpenStorageLocationCommand}" Header="Open storage location" />
                     <Separator />
                     <MenuItem Command="{Binding Menu.CloseCommand}" Header="Close" />
@@ -60,8 +60,8 @@
                                             <MenuItem Command="{Binding Proxy.WorkspaceMenu.RenameWorkspaceCommand, Source={StaticResource Proxy}}" Header="Rename" />
                                             <MenuItem Command="{Binding Proxy.WorkspaceMenu.SetAsDefaultWorkspaceCommand, Source={StaticResource Proxy}}" Header="Set as default" />
                                             <MenuItem Header="Change order">
-                                                <MenuItem Command="{Binding Proxy.WorkspaceMenu.MoveUpCommand, Source={StaticResource Proxy}}" Header="Move left" />
-                                                <MenuItem Command="{Binding Proxy.WorkspaceMenu.MoveDownCommand, Source={StaticResource Proxy}}" Header="Move right" />
+                                                <MenuItem Command="{Binding Proxy.WorkspaceMenu.MoveLeftCommand, Source={StaticResource Proxy}}" Header="Move left" />
+                                                <MenuItem Command="{Binding Proxy.WorkspaceMenu.MoveRightCommand, Source={StaticResource Proxy}}" Header="Move right" />
                                             </MenuItem>
                                             <Separator />
                                             <MenuItem Command="{Binding Proxy.WorkspaceMenu.DeleteWorkspaceCommand, Source={StaticResource Proxy}}" Header="Delete" />

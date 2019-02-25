@@ -13,7 +13,7 @@ namespace Barcodes.Core.ViewModels
             OpenInNewWindowCommand = new DelegateCommand(app.OpenInNewWindow);
             SaveToImageFileCommand = new DelegateCommand<BarcodeResultViewModel>(app.SaveToImageFile);
             CopyToClipboardCommand = new DelegateCommand<BarcodeResultViewModel>(app.CopyToClipboard);
-            DeleteCommand = new DelegateCommand<BarcodeResultViewModel>(app.Delete);
+            DeleteCommand = new DelegateCommand<BarcodeResultViewModel>(app.DeleteBarcode);
         }
 
         public DelegateCommand<BarcodeResultViewModel> EditBarcodeCommand { get; }

@@ -69,10 +69,30 @@ namespace Barcodes.Core.ViewModels
             get => new ReadOnlyObservableCollection<WorkspaceViewModel>(workspaces);
         }
 
-        public void AddWorkspace(WorkspaceViewModel workspace)
+        private void UpdateMessage(string message)
         {
-            workspace.OnMessageUpdate += message => StatusMessage = message;
-            workspace.OnCounterUpdate += () => RaisePropertyChanged(nameof(BarcodesCount));
+            StatusMessage = message;
+        }
+
+        private void UpdateBarcodesCount()
+        {
+            RaisePropertyChanged(nameof(BarcodesCount));
+        }
+
+        private void RemoveWorkspace(WorkspaceViewModel workspace)
+        {
+            workspace.OnMessageUpdate -= UpdateMessage;
+            workspace.OnCounterUpdate -= UpdateBarcodesCount;
+
+            workspaces.Remove(workspace);
+            UpdateMessage($"Successfully removed \"{workspace.Name}\"");
+            UpdateBarcodesCount();
+        }
+
+        private void AddWorkspace(WorkspaceViewModel workspace)
+        {
+            workspace.OnMessageUpdate += UpdateMessage;
+            workspace.OnCounterUpdate += UpdateBarcodesCount;
 
             workspaces.Add(workspace);
             SelectedWorkspace = workspace;
@@ -184,6 +204,8 @@ namespace Barcodes.Core.ViewModels
 
                     AddWorkspace(workspace);
                 }
+
+                SelectedWorkspace = Workspaces.SingleOrDefault(w => w.Default);
 
                 servicesContainer.AppSettingsService.StoragePath = storagePath;
 
@@ -375,7 +397,7 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public void Delete(BarcodeResultViewModel barcode)
+        public void DeleteBarcode(BarcodeResultViewModel barcode)
         {
             if (barcode == null)
             {
@@ -446,6 +468,14 @@ namespace Barcodes.Core.ViewModels
             {
                 return;
             }
+
+            var workspaceName = servicesContainer.AppWindowsService.ShowWorkspaceNameWindow(string.Empty, WorkspaceValidationRule);
+            if (string.IsNullOrEmpty(workspaceName))
+            {
+                return;
+            }
+
+            SelectedWorkspace.Name = workspaceName;
         }
 
         public void DeleteWorkspace()
@@ -454,6 +484,12 @@ namespace Barcodes.Core.ViewModels
             {
                 return;
             }
+
+            if (!servicesContainer.AppDialogsService.ShowYesNoQuestion($"Do you really want to delete workspace \"{SelectedWorkspace.Name}\"? This will delete all the codes of this workspace"))
+            {
+                return;
+            }
+            RemoveWorkspace(SelectedWorkspace);
         }
 
         public void SetAsDefaultWorkspace()
@@ -462,6 +498,12 @@ namespace Barcodes.Core.ViewModels
             {
                 return;
             }
+
+            foreach (var workspace in Workspaces)
+            {
+                workspace.Default = false;
+            }
+            SelectedWorkspace.Default = true;
         }
 
         public void MoveWorkspaceLeft()
