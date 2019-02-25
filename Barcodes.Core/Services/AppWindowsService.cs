@@ -11,12 +11,10 @@ namespace Barcodes.Core.Services
     public class AppWindowsService : WindowsService, IAppWindowsService
     {
         private readonly IContainerExtension containerExtension;
-        private readonly IAppDialogsService appDialogsService;
 
-        public AppWindowsService(IContainerExtension containerExtension, IAppDialogsService appDialogsService)
+        public AppWindowsService(IContainerExtension containerExtension)
         {
             this.containerExtension = containerExtension;
-            this.appDialogsService = appDialogsService;
         }
 
         public void OpenBarcodeWindow(object barcodeViewModel)
@@ -54,18 +52,13 @@ namespace Barcodes.Core.Services
             return dataContext.Result;
         }
 
-        public string ShowWorkspaceNameWindow(string currentName = "Default workspace")
+        public string ShowWorkspaceNameWindow(string currentName, Func<string, bool> validationRule)
         {
-            return ShowInputWindow("Barcodes - Workspace name", "Enter workspace's name", "Name:", currentName, (value) =>
+            if (string.IsNullOrEmpty(currentName))
             {
-                if (string.IsNullOrEmpty(value))
-                {
-                    appDialogsService.ShowError("Invalid workspace's name");
-                    return false;
-                }
-
-                return true;
-            });
+                currentName = "Default workspace";
+            }
+            return ShowInputWindow("Barcodes - Workspace name", "Enter workspace's name", "Name:", currentName, validationRule);
         }
 
         private string ShowInputWindow(string title, string contentHeader, string label, string inputValue, Func<string, bool> validationRule)

@@ -7,7 +7,7 @@ namespace Barcodes.Core.ViewModels
 {
     public class WorkspaceViewModel : BindableBase
     {
-        private string title;
+        private string name;
         private BarcodeResultViewModel selectedBarcode;
         private ObservableCollection<BarcodeResultViewModel> barcodes;
 
@@ -20,10 +20,10 @@ namespace Barcodes.Core.ViewModels
 
         public Action OnCounterUpdate { get; set; }
 
-        public string Title
+        public string Name
         {
-            get => title;
-            set => SetProperty(ref title, value);
+            get => name;
+            set => SetProperty(ref name, value);
         }
 
         public bool Default { get; set; }

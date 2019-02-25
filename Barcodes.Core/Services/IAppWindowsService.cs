@@ -1,5 +1,6 @@
 ﻿using Barcodes.Core.ViewModels;
 using Barcodes.Services.Generator;
+using System;
 
 namespace Barcodes.Core.Services
 {
@@ -10,6 +11,6 @@ namespace Barcodes.Core.Services
         string OpenEan128ProductWindow(string ean128Data);
         void ShowHelpWindow();
         GenerationViewModelResult ShowGenerationWindow(BarcodeResultViewModel barcode = null);
-        string ShowWorkspaceNameWindow(string currentName = "Default workspace");
+        string ShowWorkspaceNameWindow(string currentName, Func<string, bool> validationRule);
     }
 }

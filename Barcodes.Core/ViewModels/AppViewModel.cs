@@ -26,7 +26,7 @@ namespace Barcodes.Core.ViewModels
         {
             this.servicesContainer = servicesContainer;
 
-            Workspaces = new ObservableCollection<WorkspaceViewModel>();
+            workspaces = new ObservableCollection<WorkspaceViewModel>();
         }
 
         public bool IsBusy { get; set; }
@@ -64,10 +64,9 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref selectedWorkspace, value);
         }
 
-        public ObservableCollection<WorkspaceViewModel> Workspaces
+        public ReadOnlyObservableCollection<WorkspaceViewModel> Workspaces
         {
-            get => workspaces;
-            set => SetProperty(ref workspaces, value);
+            get => new ReadOnlyObservableCollection<WorkspaceViewModel>(workspaces);
         }
 
         public void AddWorkspace(WorkspaceViewModel workspace)
@@ -75,7 +74,7 @@ namespace Barcodes.Core.ViewModels
             workspace.OnMessageUpdate += message => StatusMessage = message;
             workspace.OnCounterUpdate += () => RaisePropertyChanged(nameof(BarcodesCount));
 
-            Workspaces.Add(workspace);
+            workspaces.Add(workspace);
             SelectedWorkspace = workspace;
         }
 
@@ -85,9 +84,36 @@ namespace Barcodes.Core.ViewModels
             RaisePropertyChanged(nameof(BarcodesCount));
         }
 
+        private bool WorkspaceValidationRule(string workspaceName)
+        {
+            if (string.IsNullOrEmpty(workspaceName))
+            {
+                servicesContainer.AppDialogsService.ShowError("Workspace's name can not be empty");
+                return false;
+            }
+
+            if (Workspaces.Any(w => w.Name == workspaceName))
+            {
+                servicesContainer.AppDialogsService.ShowError("The workspace with a given name already exists");
+                return false;
+            }
+
+            return true;
+        }
+
         public void AddNewWorkspace()
         {
-            throw new NotImplementedException();
+            var workspaceName = servicesContainer.AppWindowsService.ShowWorkspaceNameWindow(string.Empty, WorkspaceValidationRule);
+            if (string.IsNullOrEmpty(workspaceName))
+            {
+                return;
+            }
+
+            var newWorkspace = new WorkspaceViewModel
+            {
+                Name = workspaceName
+            };
+            AddWorkspace(newWorkspace);
         }
 
         public void LoadBarcodesFromFile()
@@ -112,14 +138,14 @@ namespace Barcodes.Core.ViewModels
                     return;
                 }
 
-                Workspaces.Clear();
+                workspaces.Clear();
 
                 var invalidCodes = new List<string>();
                 foreach (var storageWorkspace in storageWorkspaces)
                 {
                     var workspace = new WorkspaceViewModel
                     {
-                        Title = storageWorkspace.Title,
+                        Name = storageWorkspace.Title,
                         Default = storageWorkspace.Default
                     };
 
@@ -203,7 +229,7 @@ namespace Barcodes.Core.ViewModels
 
                 var storageWorkspaces = Workspaces.Select(w => new StorageWorkspace
                 {
-                    Title = w.Title,
+                    Title = w.Name,
                     Default = w.Default,
                     Barcodes = w.Barcodes.Select(b => new StorageBarcode
                     {
@@ -308,21 +334,27 @@ namespace Barcodes.Core.ViewModels
 
             if (Workspaces.Count == 0)
             {
-                var workspaceName = servicesContainer.AppWindowsService.ShowWorkspaceNameWindow();
-                if (string.IsNullOrEmpty(workspaceName))
-                {
-                    return;
-                }
-
-                var workspace = new WorkspaceViewModel
-                {
-                    Default = true,
-                    Title = workspaceName
-                };
-                AddWorkspace(workspace);
+                AddInitialWorkspace();
             }
 
             SelectedWorkspace.InsertNewBarcode(result.Barcode);
+        }
+
+        private bool AddInitialWorkspace()
+        {
+            var workspaceName = servicesContainer.AppWindowsService.ShowWorkspaceNameWindow(null, WorkspaceValidationRule);
+            if (string.IsNullOrEmpty(workspaceName))
+            {
+                return false;
+            }
+
+            var workspace = new WorkspaceViewModel
+            {
+                Default = true,
+                Name = workspaceName
+            };
+            AddWorkspace(workspace);
+            return true;
         }
 
         public void EditBarcode(BarcodeResultViewModel barcode)

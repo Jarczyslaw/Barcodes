@@ -25,7 +25,7 @@ namespace Barcodes.Core.ViewModels
             {
                 if (validationRule(InputValue))
                 {
-                    Result = InputValue;
+                    Result = InputValue.Trim();
                     OnClose?.Invoke();
                 }
             });

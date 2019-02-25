@@ -33,8 +33,8 @@
                     <MenuItem Command="{Binding Menu.CloseCommand}" Header="Close" />
                 </MenuItem>
                 <MenuItem Header="Add">
-                    <MenuItem Command="{Binding BarcodeMenu.AddNewBarcodeCommand}" Header="New barcode" />
-                    <MenuItem Command="{Binding Menu.AddNewWorkspaceCommand}" Header="New workspace" />
+                    <MenuItem Command="{Binding BarcodeMenu.AddNewBarcodeCommand}" Header="Barcode" />
+                    <MenuItem Command="{Binding Menu.AddNewWorkspaceCommand}" Header="Workspace" />
                 </MenuItem>
                 <MenuItem Command="{Binding Menu.ExportToPdfCommand}" Header="Export to PDF" />
                 <MenuItem Command="{Binding Menu.ShowHelpCommand}" Header="Help" />
@@ -52,7 +52,7 @@
             <TabControl ItemsSource="{Binding App.Workspaces}" SelectedItem="{Binding App.SelectedWorkspace}">
                 <TabControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Margin="3" Text="{Binding Title}" />
+                        <TextBlock Margin="3" Text="{Binding Name}" />
                     </DataTemplate>
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
