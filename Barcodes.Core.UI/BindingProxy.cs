@@ -16,6 +16,6 @@ namespace Barcodes.Core.UI
         }
 
         public static readonly DependencyProperty ProxyProperty =
-            DependencyProperty.Register("Proxy", typeof(object), typeof(BindingProxy), new UIPropertyMetadata(null));
+            DependencyProperty.Register(nameof(Proxy), typeof(object), typeof(BindingProxy), new UIPropertyMetadata(null));
     }
 }

@@ -388,7 +388,7 @@ namespace Barcodes.Core.ViewModels
             }
             else
             {
-               SelectedWorkspace.ReplaceBarcode(barcode, result.Barcode);
+                SelectedWorkspace.ReplaceBarcode(barcode, result.Barcode);
             }
         }
 
