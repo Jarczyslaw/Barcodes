@@ -263,12 +263,14 @@ namespace Barcodes.Core.ViewModels
             }
 
             Edit = true;
-            Data = barcode.GenerationData.Data;
-            SelectedBarcodeType = BarcodeTypes.FirstOrDefault(b => b.Type == barcode.GenerationData.Type);
+            var generationData = barcode.GenerationData;
+            Data = generationData.Data;
+            SelectedBarcodeType = BarcodeTypes.FirstOrDefault(b => b.Type == generationData.Type);
             Title = barcode.Title;
-            DefaultSize = barcode.GenerationData.DefaultSize;
-            Width = barcode.GenerationData.Width;
-            Height = barcode.GenerationData.Height;
+            DefaultSize = generationData.DefaultSize;
+            Width = generationData.Width;
+            Height = generationData.Height;
+            ValidateCodeText = generationData.ValidateCodeText;
         }
     }
 }

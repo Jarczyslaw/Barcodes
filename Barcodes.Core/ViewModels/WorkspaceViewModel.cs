@@ -43,7 +43,7 @@ namespace Barcodes.Core.ViewModels
         public void InsertNewBarcode(BarcodeResultViewModel barcode)
         {
             Barcodes.Insert(0, barcode);
-            OnMessageUpdate?.Invoke($"Barcode \"{barcode.Title}\" generated successfully!");
+            OnMessageUpdate?.Invoke($"Barcode {barcode.Title} generated successfully!");
             OnCounterUpdate?.Invoke();
         }
 
@@ -52,13 +52,13 @@ namespace Barcodes.Core.ViewModels
             var barcodeIndex = Barcodes.IndexOf(barcode);
             Barcodes.Remove(barcode);
             Barcodes.Insert(barcodeIndex, newBarcode);
-            OnMessageUpdate?.Invoke($"Barcode \"{newBarcode.Title}\" edited successfully!");
+            OnMessageUpdate?.Invoke($"Barcode {newBarcode.Title} edited successfully!");
         }
 
         public void RemoveBarcode(BarcodeResultViewModel barcode)
         {
             Barcodes.Remove(barcode);
-            OnMessageUpdate?.Invoke($"Successfully removed \"{barcode.Title}\"");
+            OnMessageUpdate?.Invoke($"Successfully removed {barcode.Title}");
             OnCounterUpdate?.Invoke();
         }
 

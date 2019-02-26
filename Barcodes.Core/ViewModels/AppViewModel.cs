@@ -85,7 +85,7 @@ namespace Barcodes.Core.ViewModels
             workspace.OnCounterUpdate -= UpdateBarcodesCount;
 
             workspaces.Remove(workspace);
-            UpdateMessage($"Successfully removed \"{workspace.Name}\"");
+            UpdateMessage($"Successfully removed {workspace.Name}");
             UpdateBarcodesCount();
         }
 
@@ -399,7 +399,7 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
-            if (!servicesContainer.AppDialogsService.ShowYesNoQuestion($"Do you really want to delete barcode \"{barcode.Title}?\""))
+            if (!servicesContainer.AppDialogsService.ShowYesNoQuestion($"Do you really want to delete barcode {barcode.Title}?"))
             {
                 return;
             }
@@ -428,7 +428,7 @@ namespace Barcodes.Core.ViewModels
             {
                 var filePath = servicesContainer.AppDialogsService.SavePngFile(barcode.Title);
                 barcode.Barcode.ToPng(filePath);
-                StatusMessage = $"Barcode \"{barcode.Title}\" saved in {Path.GetFileName(filePath)}";
+                StatusMessage = $"Barcode {barcode.Title} saved in {Path.GetFileName(filePath)}";
             }
             catch (Exception exc)
             {
@@ -444,7 +444,7 @@ namespace Barcodes.Core.ViewModels
             }
 
             servicesContainer.SystemService.CopyToClipboard(barcode.Barcode);
-            StatusMessage = $"Barcode \"{barcode.Title}\" copied to clipboard";
+            StatusMessage = $"Barcode {barcode.Title} copied to clipboard";
         }
 
         public void MoveBarcodeDown(BarcodeResultViewModel barcode)
@@ -480,7 +480,7 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
-            if (!servicesContainer.AppDialogsService.ShowYesNoQuestion($"Do you really want to delete workspace \"{SelectedWorkspace.Name}\"? This will delete all the codes of this workspace"))
+            if (!servicesContainer.AppDialogsService.ShowYesNoQuestion($"Do you really want to delete workspace {SelectedWorkspace.Name}? This will delete all the codes of this workspace"))
             {
                 return;
             }

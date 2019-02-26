@@ -11,7 +11,7 @@ namespace Barcodes.Core.ViewModels
         private string contentHeader;
         private string label;
 
-        public BaseInputViewModel(string title, string contentHeader, string label)
+        protected BaseInputViewModel(string title, string contentHeader, string label)
         {
             this.title = title;
             this.contentHeader = contentHeader;
