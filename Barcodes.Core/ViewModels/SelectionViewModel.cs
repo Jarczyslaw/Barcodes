@@ -41,6 +41,7 @@ namespace Barcodes.Core.ViewModels
         protected override void Accept()
         {
             Result = SelectedItem;
+            OnClose?.Invoke();
         }
     }
 }

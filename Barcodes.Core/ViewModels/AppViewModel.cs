@@ -536,12 +536,30 @@ namespace Barcodes.Core.ViewModels
             }
             else if (Workspaces.Count == 2)
             {
-
+                var targetWorkspace = GetWorkspacesWithout(SelectedWorkspace).Single();
+                MoveBarcodeToWorkspace(SelectedWorkspace.SelectedBarcode, SelectedWorkspace, targetWorkspace);
             }
             else
             {
-
+                var availableWorkspaces = GetWorkspacesWithout(SelectedWorkspace);
+                var targetWorkspace = servicesContainer.AppWindowsService.SelectBarcodesWorkspace(availableWorkspaces);
+                if (targetWorkspace == null)
+                {
+                    return;
+                }
+                MoveBarcodeToWorkspace(SelectedWorkspace.SelectedBarcode, SelectedWorkspace, targetWorkspace);
             }
+        }
+
+        private IEnumerable<WorkspaceViewModel> GetWorkspacesWithout(WorkspaceViewModel workspace)
+        {
+            return Workspaces.Where(w => w != workspace);
+        }
+
+        private void MoveBarcodeToWorkspace(BarcodeResultViewModel barcode, WorkspaceViewModel sourceWorkspace, WorkspaceViewModel targetWorkspace)
+        {
+            sourceWorkspace.Barcodes.Remove(barcode);
+            targetWorkspace.Barcodes.Insert(0, barcode);
         }
     }
 }
