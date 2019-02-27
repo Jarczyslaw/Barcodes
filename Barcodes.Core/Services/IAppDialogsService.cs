@@ -8,5 +8,6 @@ namespace Barcodes.Core.Services
         string SaveStorageFile(string currentFilePath);
         string SavePdfFile();
         string SavePngFile(string defaultFileName);
+        PdfExportMode ShowPdfExportQuestion();
     }
 }

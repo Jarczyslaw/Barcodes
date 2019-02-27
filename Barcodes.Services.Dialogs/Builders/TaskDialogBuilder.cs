@@ -87,6 +87,7 @@ namespace Barcodes.Services.Dialogs.Builders
             customButton.Click += handler;
             customButton.Default = setAsDefault;
             dialog.Controls.Add(customButton);
+
             return this;
         }
 
@@ -100,6 +101,7 @@ namespace Barcodes.Services.Dialogs.Builders
             };
             commandLink.Click += handler;
             dialog.Controls.Add(commandLink);
+
             return this;
         }
 

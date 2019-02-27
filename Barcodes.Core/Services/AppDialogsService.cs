@@ -1,4 +1,5 @@
 ﻿using Barcodes.Services.Dialogs;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Barcodes.Core.Services
@@ -38,6 +39,32 @@ namespace Barcodes.Core.Services
                 ExtensionsList = "png"
             };
             return SaveFile("Barcodes image file", null, defaultFileName + ".png", filter);
+        }
+
+        public PdfExportMode ShowPdfExportQuestion()
+        {
+            var buttons = new List<CustomButtonData<PdfExportMode>>
+            {
+                new CustomButtonData<PdfExportMode>
+                {
+                    Name = "AllButton",
+                    Caption = "All",
+                    Value = PdfExportMode.All
+                },
+                new CustomButtonData<PdfExportMode>
+                {
+                    Name = "CurrentWorkspaceButton",
+                    Caption = "Current workspace",
+                    Value = PdfExportMode.CurrentWorkspace
+                },
+                new CustomButtonData<PdfExportMode>
+                {
+                    Name = "CancelButton",
+                    Caption = "Cancel",
+                    Value = PdfExportMode.None
+                }
+            };
+            return ShowCustomButtonsQuestion("Select barcodes source", buttons);
         }
     }
 }

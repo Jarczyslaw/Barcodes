@@ -73,6 +73,29 @@ namespace Barcodes.Services.Dialogs
             return result;
         }
 
+        public T ShowCustomButtonsQuestion<T>(string question, IEnumerable<CustomButtonData<T>> customButtons, IntPtr? owner = null)
+        {
+            var builder = new TaskDialogBuilder()
+                .Initialize(Resources.Resources.Question, question, TaskDialogStandardIcon.Information, Resources.Resources.Question)
+                .SetOwner(GetOwnerHandle(owner));
+
+            var result = default(T);
+            using (var dialog = builder.Build())
+            {
+                foreach (var customButton in customButtons)
+                {
+                    builder.AddCustomButton(customButton.Name, customButton.Caption, (s, e) =>
+                    {
+                        result = customButton.Value;
+                        dialog.Close();
+                    }, customButton.Default);
+                }
+                dialog.Show();
+            }
+
+            return result;
+        }
+
         public void ShowProgressDialog(string caption, string text, string instruction, IntPtr? owner = null)
         {
             var builder = new TaskDialogBuilder()

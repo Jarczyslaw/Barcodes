@@ -51,6 +51,7 @@
     <Compile Include="Builders\CommonOpenDialogBuilder.cs" />
     <Compile Include="Builders\CommonSaveDialogBuilder.cs" />
     <Compile Include="Builders\CommonDialogBuilderBase.cs" />
+    <Compile Include="CustomButtonData.cs" />
     <Compile Include="DialogsService.cs" />
     <Compile Include="DialogFilterPair.cs" />
     <Compile Include="IDialogsService.cs" />
@@ -72,6 +73,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Barcodes.Extensions\Barcodes.Extensions.csproj">
+      <Project>{F2EAF86B-611C-4CD8-964E-8EA3A62B82AC}</Project>
+      <Name>Barcodes.Extensions</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

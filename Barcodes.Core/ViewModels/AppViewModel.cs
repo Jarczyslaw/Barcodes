@@ -274,14 +274,48 @@ namespace Barcodes.Core.ViewModels
             servicesContainer.AppWindowsService.ShowHelpWindow();
         }
 
-        public async void ExportToPdf()
+        public void ExportToPdf()
         {
-            if (BarcodesCount == 0)
+            var mode = servicesContainer.AppDialogsService.ShowPdfExportQuestion();
+            if (mode == PdfExportMode.None)
             {
-                servicesContainer.AppDialogsService.ShowError("Generate barcodes before export");
                 return;
             }
 
+            var barcodesToExport = new List<BarcodeResultViewModel>();
+            if (mode == PdfExportMode.CurrentWorkspace)
+            {
+                if (SelectedWorkspace == null || SelectedWorkspace.Barcodes.Count == 0)
+                {
+                    servicesContainer.AppDialogsService.ShowError("No workspace found or there are no barcodes in active workspace");
+                    return;
+                }
+                else
+                {
+                    barcodesToExport.AddRange(SelectedWorkspace.Barcodes);
+                }
+            }
+            else if (mode == PdfExportMode.All)
+            {
+                if (BarcodesCount == 0)
+                {
+                    servicesContainer.AppDialogsService.ShowError("No barcodes to export");
+                    return;
+                }
+                else
+                {
+                    foreach (var workspace in Workspaces)
+                    {
+                        barcodesToExport.AddRange(workspace.Barcodes);
+                    }
+                }
+            }
+
+            ExecuteExportToPdf(barcodesToExport);
+        }
+
+        private async void ExecuteExportToPdf(IEnumerable<BarcodeResultViewModel> barcodes)
+        {
             try
             {
                 var filePath = servicesContainer.AppDialogsService.SavePdfFile();
@@ -292,7 +326,7 @@ namespace Barcodes.Core.ViewModels
 
                 BusyMessage = "Generating document...";
 
-                var barcodesToExport = SelectedWorkspace.Barcodes.Select(b => new DocBarcodeData
+                var barcodesToExport = barcodes.Select(b => new DocBarcodeData
                 {
                     Title = b.Title,
                     Data = b.GenerationData.Data,
@@ -427,6 +461,11 @@ namespace Barcodes.Core.ViewModels
             try
             {
                 var filePath = servicesContainer.AppDialogsService.SavePngFile(barcode.Title);
+                if (string.IsNullOrEmpty(filePath))
+                {
+                    return;
+                }
+
                 barcode.Barcode.ToPng(filePath);
                 StatusMessage = $"Barcode {barcode.Title} saved in {Path.GetFileName(filePath)}";
             }

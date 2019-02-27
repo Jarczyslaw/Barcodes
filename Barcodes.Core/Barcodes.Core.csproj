@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GenerationViewModelResult.cs" />
+    <Compile Include="PdfExportMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AppDialogsService.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
