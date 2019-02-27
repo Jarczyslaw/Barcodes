@@ -26,7 +26,6 @@ namespace Barcodes.Core.ViewModels
         {
             get => displayName;
             set => SetProperty(ref displayName, value);
-
         }
 
         public string Name
