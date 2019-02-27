@@ -33,7 +33,12 @@ namespace Barcodes.Core.ViewModels
 
         public bool IsEmpty
         {
-            get => workspaces.Count == 0;
+            get => WorkspacesCount == 0;
+        }
+
+        public int WorkspacesCount
+        {
+            get => Workspaces.Count;
         }
 
         public string BusyMessage
@@ -206,7 +211,7 @@ namespace Barcodes.Core.ViewModels
                 var successfullyGenerated = storageWorkspaces.Sum(s => s.Barcodes.Count) - invalidCodes.Count;
                 if (successfullyGenerated > 0)
                 {
-                    UpdateMessage($"Successfully loaded {successfullyGenerated} barcodes from {Path.GetFileName(storagePath)}");
+                    UpdateMessage($"Successfully loaded {WorkspacesCount} workspace and {successfullyGenerated} barcodes from {Path.GetFileName(storagePath)}");
                     UpdateBarcodesCount();
                 }
 
