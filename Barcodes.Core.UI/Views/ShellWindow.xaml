@@ -75,7 +75,7 @@
                 </TabControl.ItemContainerStyle>
                 <TabControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Margin="16,3" Text="{Binding Name}" />
+                        <TextBlock Margin="16,3" Text="{Binding DisplayName, Mode=OneWay}" />
                     </DataTemplate>
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
