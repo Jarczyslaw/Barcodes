@@ -5,32 +5,18 @@ using System.Windows;
 
 namespace Barcodes.Startup
 {
-    public class GlobalExceptionHandler
+    public abstract class GlobalExceptionHandler
     {
-        private readonly IAppDialogsService _dialogsService;
-
-        public GlobalExceptionHandler(IAppDialogsService dialogsService)
+        protected GlobalExceptionHandler()
         {
-            _dialogsService = dialogsService;
+            AppDomain.CurrentDomain.UnhandledException +=
+                (s, e) => HandleException("AppDomain.CurrentDomain.UnhandledException", (Exception)e.ExceptionObject);
+            Application.Current.DispatcherUnhandledException +=
+                (s, e) => e.Handled = HandleException("Application.Current.DispatcherUnhandledException", e.Exception);
+            TaskScheduler.UnobservedTaskException +=
+                (s, e) => HandleException("TaskScheduler.UnobservedTaskException", e.Exception);
         }
 
-        public void RegisterEvents(Application app)
-        {
-            AppDomain.CurrentDomain.UnhandledException += (s, e) => LogUnhandledException((Exception)e.ExceptionObject,
-                "AppDomain.CurrentDomain.UnhandledException");
-            TaskScheduler.UnobservedTaskException += (s, e) => LogUnhandledException(e.Exception,
-                "TaskScheduler.UnobservedTaskException");
-            app.DispatcherUnhandledException += (s, e) =>
-            {
-                e.Handled = true;
-                LogUnhandledException(e.Exception, "Application.Current.DispatcherUnhandledException");
-            };
-        }
-
-        private void LogUnhandledException(Exception exception, string source)
-        {
-            var message = $"Unexpected critical exception - {source}";
-            _dialogsService.ShowCriticalException(message, exception);
-        }
+        public abstract bool HandleException(string source, Exception exception);
     }
 }

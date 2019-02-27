@@ -16,7 +16,7 @@ namespace Barcodes.Startup
 {
     public partial class App : PrismApplication
     {
-        private GlobalExceptionHandler globalExceptionHandler;
+        private AppGlobalExceptionHandler globalExceptionHandler;
 
         protected override Window CreateShell()
         {
@@ -67,8 +67,7 @@ namespace Barcodes.Startup
 
         private void RegisterGlobalExceptionHandler()
         {
-            globalExceptionHandler = Container.Resolve<GlobalExceptionHandler>();
-            globalExceptionHandler.RegisterEvents(this);
+            globalExceptionHandler = Container.Resolve<AppGlobalExceptionHandler>();
         }
     }
 }
