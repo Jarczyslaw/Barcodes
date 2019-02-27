@@ -64,6 +64,7 @@
                                                 <MenuItem Command="{Binding Proxy.WorkspaceMenu.MoveRightCommand, Source={StaticResource Proxy}}" Header="Move right" />
                                             </MenuItem>
                                             <Separator />
+                                            <MenuItem Command="{Binding Proxy.WorkspaceMenu.ClearWorkspaceCommand, Source={StaticResource Proxy}}" Header="Clear" />
                                             <MenuItem Command="{Binding Proxy.WorkspaceMenu.DeleteWorkspaceCommand, Source={StaticResource Proxy}}" Header="Delete" />
                                         </ContextMenu>
                                     </Setter.Value>

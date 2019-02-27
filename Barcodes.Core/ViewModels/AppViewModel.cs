@@ -600,5 +600,22 @@ namespace Barcodes.Core.ViewModels
             sourceWorkspace.Barcodes.Remove(barcode);
             targetWorkspace.Barcodes.Insert(0, barcode);
         }
+
+        public void ClearWorkspace()
+        {
+            if (SelectedWorkspace == null || SelectedWorkspace.Barcodes.Count == 0)
+            {
+                servicesContainer.AppDialogsService.ShowInfo("There is nothing to clear");
+                return;
+            }
+
+            var dialogResult = servicesContainer.AppDialogsService.ShowYesNoQuestion("Do you really want to clear active workspace?");
+            if (!dialogResult)
+            {
+                return;
+            }
+
+            SelectedWorkspace.Barcodes.Clear();
+        }
     }
 }
