@@ -1,6 +1,6 @@
 ﻿using Barcodes.Core.ViewModels;
 
-namespace Barcodes.Core
+namespace Barcodes.Core.ViewModelsResult
 {
     public class GenerationViewModelResult
     {

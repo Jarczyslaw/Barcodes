@@ -1,5 +1,6 @@
 ﻿using Barcodes.Core.Common;
 using Barcodes.Core.Services;
+using Barcodes.Core.ViewModelsResult;
 using Barcodes.Services.Generator;
 using Prism.Commands;
 using Prism.Mvvm;

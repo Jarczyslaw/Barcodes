@@ -3,6 +3,7 @@ using Barcodes.Core.UI.Views.AdditionalInput;
 using Barcodes.Core.ViewModels;
 using Barcodes.Core.ViewModels.AdditionalInput;
 using Barcodes.Core.ViewModelsInput;
+using Barcodes.Core.ViewModelsResult;
 using Barcodes.Services.Windows;
 using Prism.Ioc;
 using System;
