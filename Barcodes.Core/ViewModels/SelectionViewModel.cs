@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using Barcodes.Core.ViewModelsInput;
 using System.Collections.ObjectModel;
 
 namespace Barcodes.Core.ViewModels
@@ -9,13 +9,12 @@ namespace Barcodes.Core.ViewModels
         private T selectedItem;
         private string displayMemberPath;
 
-        public SelectionViewModel(string title, string contentHeader, string label,
-            IEnumerable<T> items, T selectedItem, string displayMemberPath)
-            : base(title, contentHeader, label)
+        public SelectionViewModel(SelectionViewModelInput<T> input)
+            : base(input.Title, input.ContentHeader, input.Label)
         {
-            Items = new ObservableCollection<T>(items);
-            SelectedItem = selectedItem;
-            DisplayMemberPath = displayMemberPath;
+            Items = new ObservableCollection<T>(input.Items);
+            SelectedItem = input.SelectedItem;
+            DisplayMemberPath = input.DisplayMemberPath;
         }
 
         public T Result { get; private set; }

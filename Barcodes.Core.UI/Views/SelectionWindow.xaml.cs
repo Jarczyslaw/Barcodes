@@ -2,7 +2,8 @@
 {
     public partial class SelectionWindow : BaseWindow
     {
-        public SelectionWindow()
+        public SelectionWindow(object dataContext)
+            : base(dataContext)
         {
             InitializeComponent();
         }

@@ -2,6 +2,7 @@
 using Barcodes.Core.UI.Views.AdditionalInput;
 using Barcodes.Core.ViewModels;
 using Barcodes.Core.ViewModels.AdditionalInput;
+using Barcodes.Core.ViewModelsInput;
 using Barcodes.Services.Windows;
 using Prism.Ioc;
 using System;
@@ -21,14 +22,16 @@ namespace Barcodes.Core.Services
 
         public void OpenBarcodeWindow(object barcodeViewModel)
         {
-            Show<BarcodeWindow>(barcodeViewModel, GetActiveWindow());
+            var window = new BarcodeWindow(barcodeViewModel);
+            Show(window, GetActiveWindow());
         }
 
         public string OpenNmvsProductWindow(string nmvsData)
         {
             var dataContext = containerExtension.Resolve<NmvsProductViewModel>();
             dataContext.LoadData(nmvsData);
-            Show<NmvsProductWindow>(dataContext, GetActiveWindow(), true);
+            var window = new NmvsProductWindow(dataContext);
+            ShowDialog(window);
             return dataContext.ResultData;
         }
 
@@ -36,21 +39,23 @@ namespace Barcodes.Core.Services
         {
             var dataContext = containerExtension.Resolve<Ean128ProductViewModel>();
             dataContext.LoadData(ean128Data);
-            Show<Ean128ProductWindow>(dataContext, GetActiveWindow(), true);
+            var window = new Ean128ProductWindow(dataContext);
+            ShowDialog(window);
             return dataContext.ResultData;
         }
 
         public void ShowHelpWindow()
         {
             var window = containerExtension.Resolve<HelpWindow>();
-            Show(window, null, GetActiveWindow(), true);
+            ShowDialog(window);
         }
 
         public GenerationViewModelResult ShowGenerationWindow(BarcodeResultViewModel barcode = null)
         {
             var dataContext = containerExtension.Resolve<GenerationViewModel>();
             dataContext.Load(barcode);
-            Show<GenerationWindow>(dataContext, GetActiveWindow(), true);
+            var window = new GenerationWindow(dataContext);
+            ShowDialog(window);
             return dataContext.Result;
         }
 
@@ -60,21 +65,37 @@ namespace Barcodes.Core.Services
             {
                 currentName = "Default workspace";
             }
-            return ShowInputWindow("Barcodes - Workspace", "Enter workspace's name", "Name:", currentName, validationRule);
-        }
 
-        private string ShowInputWindow(string title, string contentHeader, string label, string inputValue, Func<string, bool> validationRule)
-        {
-            var dataContext = new InputViewModel(title, contentHeader, label, inputValue, validationRule);
-            Show<InputWindow>(dataContext, GetActiveWindow(), true);
+            var input = new InputViewModelInput
+            {
+                Title = "Barcodes - Workspace",
+                ContentHeader = "Enter workspace's name",
+                Label = "Name:",
+                InputValue = currentName,
+                ValidationRule = validationRule
+            };
+
+            var dataContext = new InputViewModel(input);
+            var window = new InputWindow(dataContext);
+            ShowDialog(window);
             return dataContext.Result;
         }
 
         public WorkspaceViewModel SelectBarcodesWorkspace(IEnumerable<WorkspaceViewModel> workspaces)
         {
             var selectedWorkspace = workspaces.First();
-            var dataContext = new SelectionViewModel<WorkspaceViewModel>("Barcodes - Workspaces", "Select desired workspace", "Workspace:", workspaces, selectedWorkspace, "Name");
-            Show<SelectionWindow>(dataContext, GetActiveWindow(), true);
+            var input = new SelectionViewModelInput<WorkspaceViewModel>
+            {
+                Title = "Barcodes - Workspaces",
+                ContentHeader = "Select desired workspace",
+                Label = "Workspace:",
+                Items = workspaces,
+                SelectedItem = selectedWorkspace,
+                DisplayMemberPath = "Name"
+            };
+            var dataContext = new SelectionViewModel<WorkspaceViewModel>(input);
+            var window = new SelectionWindow(dataContext);
+            ShowDialog(window);
             return dataContext.Result;
         }
     }

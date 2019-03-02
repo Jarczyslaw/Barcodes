@@ -5,14 +5,19 @@ namespace Barcodes.Services.Windows
 {
     public class WindowsService : IWindowsService
     {
-        public bool? Show<T>(object dataContext, Window owner = null, bool modal = false)
-            where T : Window, new()
+        public bool? ShowDialog(Window window, object dataContext = null)
         {
-            var window = new T();
-            return Show(window, dataContext, owner, modal);
+            SetupWindow(window, dataContext, GetActiveWindow());
+            return window.ShowDialog();
         }
 
-        public bool? Show(Window window, object dataContext, Window owner = null, bool modal = false)
+        public void Show(Window window, object dataContext = null, Window owner = null)
+        {
+            SetupWindow(window, dataContext, owner);
+            window.Show();
+        }
+
+        private void SetupWindow(Window window, object dataContext, Window owner)
         {
             if (dataContext != null)
             {
@@ -22,16 +27,6 @@ namespace Barcodes.Services.Windows
             if (owner != null)
             {
                 window.Owner = owner;
-            }
-
-            if (modal)
-            {
-                return window.ShowDialog();
-            }
-            else
-            {
-                window.Show();
-                return true;
             }
         }
 

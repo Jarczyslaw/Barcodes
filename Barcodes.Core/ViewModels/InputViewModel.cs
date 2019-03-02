@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Barcodes.Core.ViewModelsInput;
+using System;
 
 namespace Barcodes.Core.ViewModels
 {
@@ -7,11 +8,11 @@ namespace Barcodes.Core.ViewModels
         private readonly Func<string, bool> validationRule;
         private string inputValue;
 
-        public InputViewModel(string title, string contentHeader, string label, string inputValue, Func<string, bool> validationRule)
-            : base(title, contentHeader, label)
+        public InputViewModel(InputViewModelInput input)
+            : base(input.Title, input.ContentHeader, input.Label)
         {
-            this.inputValue = inputValue;
-            this.validationRule = validationRule;
+            inputValue = input.InputValue;
+            validationRule = input.ValidationRule;
         }
 
         public string Result { get; private set; }

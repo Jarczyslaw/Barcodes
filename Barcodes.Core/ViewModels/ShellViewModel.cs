@@ -1,9 +1,8 @@
-﻿using System;
-using Barcodes.Core.Common;
+﻿using Barcodes.Core.Common;
 using Barcodes.Core.Services;
 using Barcodes.Services.AppSettings;
-using Barcodes.Services.Storage;
 using Prism.Mvvm;
+using System;
 using Unity;
 
 namespace Barcodes.Core.ViewModels
@@ -37,7 +36,7 @@ namespace Barcodes.Core.ViewModels
 
         public void OnShow()
         {
-            if (App.IsEmpty)
+            if (App.BarcodesCount == 0)
             {
                 App.AddNewBarcode();
             }
@@ -61,7 +60,6 @@ namespace Barcodes.Core.ViewModels
         private void InitialSequence()
         {
             var appSettingsService = unityContainer.Resolve<IAppSettingsService>();
-
             appSettingsService.Load();
             var storagePath = appSettingsService.StoragePath;
             App.LoadFromFile(storagePath);

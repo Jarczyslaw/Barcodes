@@ -2,7 +2,8 @@
 {
     public partial class Ean128ProductWindow : BaseWindow
     {
-        public Ean128ProductWindow()
+        public Ean128ProductWindow(object dataContext)
+            : base(dataContext)
         {
             InitializeComponent();
         }

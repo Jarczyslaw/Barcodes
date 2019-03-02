@@ -31,11 +31,6 @@ namespace Barcodes.Core.ViewModels
 
         public bool IsBusy { get; set; }
 
-        public bool IsEmpty
-        {
-            get => WorkspacesCount == 0;
-        }
-
         public int WorkspacesCount
         {
             get => Workspaces.Count;

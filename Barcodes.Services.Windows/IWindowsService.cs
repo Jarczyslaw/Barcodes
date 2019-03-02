@@ -4,8 +4,8 @@ namespace Barcodes.Services.Windows
 {
     public interface IWindowsService
     {
-        bool? Show<T>(object dataContext, Window owner = null, bool modal = false) where T : Window, new();
-        bool? Show(Window window, object dataContext, Window owner = null, bool modal = false);
+        bool? ShowDialog(Window window, object dataContext = null);
+        void Show(Window window, object dataContext = null, Window owner = null);
         bool IsWindowOpen<T>() where T : Window;
         void RestoreWindows<T>() where T : Window;
         Window GetActiveWindow();

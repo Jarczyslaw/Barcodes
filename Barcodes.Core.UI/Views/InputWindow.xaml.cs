@@ -2,7 +2,8 @@
 {
     public partial class InputWindow : BaseWindow
     {
-        public InputWindow()
+        public InputWindow(object dataContext)
+            : base(dataContext)
         {
             InitializeComponent();
         }

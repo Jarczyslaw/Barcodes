@@ -2,7 +2,8 @@
 {
     public partial class GenerationWindow : BaseWindow
     {
-        public GenerationWindow()
+        public GenerationWindow(object dataContext)
+            : base(dataContext)
         {
             InitializeComponent();
         }

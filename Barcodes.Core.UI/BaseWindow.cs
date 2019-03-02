@@ -9,6 +9,15 @@ namespace Barcodes.Core.UI
     {
         private bool windowRendered;
 
+        public BaseWindow()
+        {
+        }
+
+        public BaseWindow(object dataContext)
+        {
+            DataContext = dataContext;
+        }
+
         protected override void OnContentRendered(EventArgs e)
         {
             base.OnContentRendered(e);

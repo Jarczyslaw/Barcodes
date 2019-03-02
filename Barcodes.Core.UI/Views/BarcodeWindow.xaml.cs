@@ -5,7 +5,8 @@ namespace Barcodes.Core.UI.Views
 {
     public partial class BarcodeWindow : BaseWindow
     {
-        public BarcodeWindow()
+        public BarcodeWindow(object dataContext)
+            : base(dataContext)
         {
             InitializeComponent();
         }
