@@ -1,5 +1,6 @@
 ﻿using Barcodes.Core.Common;
 using System;
+using System.ComponentModel;
 using System.Windows;
 
 namespace Barcodes.Core.UI
@@ -20,10 +21,18 @@ namespace Barcodes.Core.UI
             OnViewShown();
         }
 
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (DataContext is IClosingDestination closingAware)
+            {
+                e.Cancel = closingAware.OnClosing();
+            }
+        }
+
         private void OnViewShown()
         {
-            (DataContext as IShowAware)?.OnShow();
-            if (DataContext is ICloseAware closeAware)
+            (DataContext as IShowDestination)?.OnShow();
+            if (DataContext is ICloseSource closeAware)
             {
                 closeAware.OnClose += Close;
             }

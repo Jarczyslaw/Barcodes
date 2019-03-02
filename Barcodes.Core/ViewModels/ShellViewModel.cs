@@ -2,18 +2,19 @@
 using Barcodes.Core.Common;
 using Barcodes.Core.Services;
 using Barcodes.Services.AppSettings;
+using Barcodes.Services.Storage;
 using Prism.Mvvm;
 using Unity;
 
 namespace Barcodes.Core.ViewModels
 {
-    public class ShellViewModel : BindableBase, IShowAware, ICloseAware
+    public class ShellViewModel : BindableBase, IShowDestination, ICloseSource, IClosingDestination
     {
-        private readonly IAppSettingsService appSettingsService;
+        private readonly IUnityContainer unityContainer;
 
-        public ShellViewModel(IUnityContainer unityContainer, IAppSettingsService appSettingsService)
+        public ShellViewModel(IUnityContainer unityContainer)
         {
-            this.appSettingsService = appSettingsService;
+            this.unityContainer = unityContainer;
 
             App = unityContainer.Resolve<AppViewModel>();
             Menu = new MenuViewModel(App);
@@ -42,8 +43,25 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
+        public bool OnClosing()
+        {
+            if (App.CheckChanges())
+            {
+                var appDialogService = unityContainer.Resolve<IAppDialogsService>();
+                var dialogResult = appDialogService.ShowYesNoQuestion("Do you want to save current storage's changes?");
+                if (dialogResult)
+                {
+                    App.ExecuteSaveToFile();
+                }
+            }
+
+            return false;
+        }
+
         private void InitialSequence()
         {
+            var appSettingsService = unityContainer.Resolve<IAppSettingsService>();
+
             appSettingsService.Load();
             var storagePath = appSettingsService.StoragePath;
             App.LoadFromFile(storagePath);

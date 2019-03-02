@@ -5,11 +5,14 @@ namespace Barcodes.Services.Storage
 {
     public class StorageService : IStorageService
     {
-        public List<StorageWorkspace> Load(string filePath, bool throwException = false)
+        private Storage loadedStorage = new Storage();
+
+        public Storage Load(string filePath, bool throwException = false)
         {
             try
             {
-                return Serializer.FromFile<List<StorageWorkspace>>(filePath);
+                loadedStorage = Serializer.FromFile<Storage>(filePath);
+                return loadedStorage;
             }
             catch
             {
@@ -22,9 +25,14 @@ namespace Barcodes.Services.Storage
             }
         }
 
-        public void Save(string filePath, List<StorageWorkspace> workspaces)
+        public void Save(string filePath, Storage storage)
         {
-            Serializer.ToFile(workspaces, filePath);
+            Serializer.ToFile(storage, filePath);
+        }
+
+        public bool StorageChanged(Storage currentStorage)
+        {
+            return !ObjectUtils.ObjectEquality(loadedStorage, currentStorage);
         }
     }
 }

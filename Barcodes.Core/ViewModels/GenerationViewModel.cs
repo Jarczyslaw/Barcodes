@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Barcodes.Core.ViewModels
 {
-    public class GenerationViewModel : BindableBase, ICloseAware
+    public class GenerationViewModel : BindableBase, ICloseSource
     {
         private string data = "Barcode Data";
         private string title = "Barcode Title";

@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Storage.cs" />
     <Compile Include="StorageService.cs" />
     <Compile Include="StorageBarcode.cs" />
     <Compile Include="IStorageService.cs" />

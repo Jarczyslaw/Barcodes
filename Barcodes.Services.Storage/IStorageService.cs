@@ -4,7 +4,8 @@ namespace Barcodes.Services.Storage
 {
     public interface IStorageService
     {
-        List<StorageWorkspace> Load(string filePath, bool throwException = false);
-        void Save(string filePath, List<StorageWorkspace> workspaces);
+        Storage Load(string filePath, bool throwException = false);
+        void Save(string filePath, Storage storage);
+        bool StorageChanged(Storage currentStorage);
     }
 }

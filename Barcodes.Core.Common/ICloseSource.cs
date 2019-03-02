@@ -2,7 +2,7 @@
 
 namespace Barcodes.Core.Common
 {
-    public interface ICloseAware
+    public interface ICloseSource
     {
         Action OnClose { get; set; }
     }

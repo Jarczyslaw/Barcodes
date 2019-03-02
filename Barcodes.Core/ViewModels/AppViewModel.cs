@@ -151,8 +151,8 @@ namespace Barcodes.Core.ViewModels
         {
             try
             {
-                var storageWorkspaces = servicesContainer.StorageService.Load(storagePath, false);
-                if (storageWorkspaces == null)
+                var storage = servicesContainer.StorageService.Load(storagePath, false);
+                if (storage == null)
                 {
                     return;
                 }
@@ -160,7 +160,7 @@ namespace Barcodes.Core.ViewModels
                 workspaces.Clear();
 
                 var invalidCodes = new List<string>();
-                foreach (var storageWorkspace in storageWorkspaces)
+                foreach (var storageWorkspace in storage.Content)
                 {
                     var workspace = new WorkspaceViewModel
                     {
@@ -208,7 +208,7 @@ namespace Barcodes.Core.ViewModels
 
                 servicesContainer.AppSettingsService.StoragePath = storagePath;
 
-                var successfullyGenerated = storageWorkspaces.Sum(s => s.Barcodes.Count) - invalidCodes.Count;
+                var successfullyGenerated = storage.Count - invalidCodes.Count;
                 if (successfullyGenerated > 0)
                 {
                     UpdateMessage($"Successfully loaded {WorkspacesCount} workspaces and {successfullyGenerated} barcodes from {Path.GetFileName(storagePath)}");
@@ -240,6 +240,11 @@ namespace Barcodes.Core.ViewModels
                 }
             }
 
+            ExecuteSaveToFile();
+        }
+
+        public void ExecuteSaveToFile()
+        {
             try
             {
                 var filePath = servicesContainer.AppSettingsService.StoragePath;
@@ -249,7 +254,21 @@ namespace Barcodes.Core.ViewModels
                     return;
                 }
 
-                var storageWorkspaces = Workspaces.Select(w => new StorageWorkspace
+                servicesContainer.StorageService.Save(filePath, GetStorage());
+                servicesContainer.AppSettingsService.StoragePath = filePath;
+                StatusMessage = $"Successfully saved {Path.GetFileName(filePath)}";
+            }
+            catch (Exception exc)
+            {
+                servicesContainer.AppDialogsService.ShowException("Error when saving barcodes to file", exc);
+            }
+        }
+
+        public Storage GetStorage()
+        {
+            return new Storage
+            {
+                Content = Workspaces.Select(w => new StorageWorkspace
                 {
                     Title = w.Name,
                     Default = w.Default,
@@ -262,16 +281,8 @@ namespace Barcodes.Core.ViewModels
                         Height = b.GenerationData.Height,
                         DefaultSize = b.GenerationData.DefaultSize
                     }).ToList()
-                }).ToList();
-
-                servicesContainer.StorageService.Save(filePath, storageWorkspaces);
-                servicesContainer.AppSettingsService.StoragePath = filePath;
-                StatusMessage = $"Successfully saved {Path.GetFileName(filePath)}";
-            }
-            catch (Exception exc)
-            {
-                servicesContainer.AppDialogsService.ShowException("Error when saving barcodes to file", exc);
-            }
+                }).ToList()
+            };
         }
 
         public void ShowHelp()
@@ -621,6 +632,12 @@ namespace Barcodes.Core.ViewModels
             }
 
             SelectedWorkspace.Barcodes.Clear();
+        }
+
+        public bool CheckChanges()
+        {
+            var currentStorage = GetStorage();
+            return servicesContainer.StorageService.StorageChanged(currentStorage);
         }
     }
 }

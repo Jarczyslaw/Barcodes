@@ -5,7 +5,7 @@ using System;
 
 namespace Barcodes.Core.ViewModels
 {
-    public abstract class BaseInputViewModel : BindableBase, ICloseAware
+    public abstract class BaseInputViewModel : BindableBase, ICloseSource
     {
         private string title;
         private string contentHeader;
