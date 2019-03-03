@@ -16,7 +16,7 @@ namespace Barcodes.Core.ViewModels
             SetAsDefaultWorkspaceCommand = new DelegateCommand(app.SetAsDefaultWorkspace);
             MoveLeftCommand = new DelegateCommand(app.MoveWorkspaceLeft);
             MoveRightCommand = new DelegateCommand(app.MoveWorkspaceRight);
-            ClearWorkspaceCommand = new DelegateCommand(app.ClearWorkspace);
+            ExportWorkspaceCommand = new DelegateCommand(app.ExportWorkspace);
         }
 
         public DelegateCommand RenameWorkspaceCommand { get; }
@@ -25,5 +25,6 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand MoveLeftCommand { get; }
         public DelegateCommand MoveRightCommand { get; }
         public DelegateCommand ClearWorkspaceCommand { get; }
+        public DelegateCommand ExportWorkspaceCommand { get; }
     }
 }

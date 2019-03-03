@@ -67,6 +67,7 @@
                                                 <MenuItem Command="{Binding Proxy.WorkspaceMenu.MoveLeftCommand, Source={StaticResource Proxy}}" Header="Move left" />
                                                 <MenuItem Command="{Binding Proxy.WorkspaceMenu.MoveRightCommand, Source={StaticResource Proxy}}" Header="Move right" />
                                             </MenuItem>
+                                            <MenuItem Command="{Binding Proxy.WorkspaceMenu.ExportWorkspaceCommand, Source={StaticResource Proxy}}" Header="Export" />
                                             <Separator />
                                             <MenuItem Command="{Binding Proxy.WorkspaceMenu.ClearWorkspaceCommand, Source={StaticResource Proxy}}" Header="Clear" />
                                             <MenuItem Command="{Binding Proxy.WorkspaceMenu.DeleteWorkspaceCommand, Source={StaticResource Proxy}}" Header="Delete" />
@@ -141,6 +142,10 @@
                                             Command="{Binding Proxy.BarcodeMenu.CopyToClipboardCommand, Source={StaticResource Proxy}}"
                                             CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
                                             Header="Copy to clipboard" />
+                                        <MenuItem
+                                            Command="{Binding Proxy.BarcodeMenu.ExportCommand, Source={StaticResource Proxy}}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
+                                            Header="Export" />
                                         <MenuItem Command="{Binding Proxy.BarcodeMenu.ChangeBarcodesWorkspaceCommand, Source={StaticResource Proxy}}" Header="Change workspace" />
                                         <Separator />
                                         <MenuItem

@@ -644,5 +644,15 @@ namespace Barcodes.Core.ViewModels
         {
 
         }
+
+        public void ExportWorkspace()
+        {
+
+        }
+
+        public void ExportBarcode(BarcodeResultViewModel barcode)
+        {
+
+        }
     }
 }
