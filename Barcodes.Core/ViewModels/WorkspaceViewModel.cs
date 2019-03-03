@@ -9,7 +9,6 @@ namespace Barcodes.Core.ViewModels
     {
         private bool defaultWorkspace;
         private string name;
-        private string displayName;
         private BarcodeResultViewModel selectedBarcode;
         private ObservableCollection<BarcodeResultViewModel> barcodes;
 
@@ -24,8 +23,7 @@ namespace Barcodes.Core.ViewModels
 
         public string DisplayName
         {
-            get => displayName;
-            set => SetProperty(ref displayName, value);
+            get => Default ? $"(D) {Name}" : Name;
         }
 
         public string Name
@@ -34,7 +32,7 @@ namespace Barcodes.Core.ViewModels
             set
             {
                 SetProperty(ref name, value);
-                UpdateDisplayName();
+                RaisePropertyChanged(nameof(DisplayName));
             }
         }
 
@@ -44,7 +42,7 @@ namespace Barcodes.Core.ViewModels
             set
             {
                 SetProperty(ref defaultWorkspace, value);
-                UpdateDisplayName();
+                RaisePropertyChanged(nameof(DisplayName));
             }
         }
 
@@ -92,11 +90,6 @@ namespace Barcodes.Core.ViewModels
         {
             var index = Barcodes.IndexOf(barcode);
             Barcodes.ShiftLeft(index);
-        }
-
-        private void UpdateDisplayName()
-        {
-            DisplayName = Default ? $"(D) {Name}" : Name;
         }
     }
 }
