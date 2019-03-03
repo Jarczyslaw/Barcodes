@@ -84,5 +84,31 @@ namespace Barcodes.Core.Services
             };
             return ShowCustomButtonsQuestion("Select barcodes source", buttons);
         }
+
+        public ClosingMode ShowClosingQuestion()
+        {
+            var buttons = new List<CustomButtonData<ClosingMode>>
+            {
+                new CustomButtonData<ClosingMode>
+                {
+                    Name = "SaveChangesButton",
+                    Caption = "Save changes",
+                    Value = ClosingMode.SaveChanges
+                },
+                new CustomButtonData<ClosingMode>
+                {
+                    Name = "DiscardChangesButton",
+                    Caption = "Discard changes",
+                    Value = ClosingMode.DiscardChanges
+                },
+                new CustomButtonData<ClosingMode>
+                {
+                    Name = "CancelButton",
+                    Caption = "Cancel",
+                    Value = ClosingMode.Cancel
+                }
+            };
+            return ShowCustomButtonsQuestion("Do you want to save current storage's changes?", buttons);
+        }
     }
 }

@@ -13,5 +13,6 @@ namespace Barcodes.Core.Services
         string SavePdfFile();
         string SavePngFile(string defaultFileName);
         PdfExportMode ShowPdfExportQuestion();
+        ClosingMode ShowClosingQuestion();
     }
 }

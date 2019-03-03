@@ -47,13 +47,16 @@ namespace Barcodes.Core.ViewModels
             if (App.CheckChanges())
             {
                 var appDialogService = unityContainer.Resolve<IAppDialogsService>();
-                var dialogResult = appDialogService.ShowYesNoQuestion("Do you want to save current storage's changes?");
-                if (dialogResult)
+                var closingMode = appDialogService.ShowClosingQuestion();
+                if (closingMode == ClosingMode.SaveChanges)
                 {
                     App.ExecuteSaveToFile();
                 }
+                else if (closingMode == ClosingMode.Cancel)
+                {
+                    return true;
+                }
             }
-
             return false;
         }
 
