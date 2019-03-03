@@ -24,7 +24,7 @@ namespace Barcodes.Core.Services
         public void OpenBarcodeWindow(object barcodeViewModel)
         {
             var window = new BarcodeWindow(barcodeViewModel);
-            Show(window, GetActiveWindow());
+            Show(window, null, GetActiveWindow());
         }
 
         public string OpenNmvsProductWindow(string nmvsData)
