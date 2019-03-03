@@ -61,16 +61,16 @@
                                 <Setter Property="ContextMenu">
                                     <Setter.Value>
                                         <ContextMenu>
-                                            <MenuItem Command="{Binding Proxy.WorkspaceMenu.RenameWorkspaceCommand, Source={StaticResource Proxy}}" Header="Rename" />
-                                            <MenuItem Command="{Binding Proxy.WorkspaceMenu.SetAsDefaultWorkspaceCommand, Source={StaticResource Proxy}}" Header="Set as default" />
+                                            <MenuItem Command="{Binding Proxy.WorkspaceMenu.RenameCommand, Source={StaticResource Proxy}}" Header="Rename" />
+                                            <MenuItem Command="{Binding Proxy.WorkspaceMenu.SetAsDefaultCommand, Source={StaticResource Proxy}}" Header="Set as default" />
                                             <MenuItem Header="Change order">
                                                 <MenuItem Command="{Binding Proxy.WorkspaceMenu.MoveLeftCommand, Source={StaticResource Proxy}}" Header="Move left" />
                                                 <MenuItem Command="{Binding Proxy.WorkspaceMenu.MoveRightCommand, Source={StaticResource Proxy}}" Header="Move right" />
                                             </MenuItem>
-                                            <MenuItem Command="{Binding Proxy.WorkspaceMenu.ExportWorkspaceCommand, Source={StaticResource Proxy}}" Header="Export" />
+                                            <MenuItem Command="{Binding Proxy.WorkspaceMenu.ExportCommand, Source={StaticResource Proxy}}" Header="Export" />
                                             <Separator />
-                                            <MenuItem Command="{Binding Proxy.WorkspaceMenu.ClearWorkspaceCommand, Source={StaticResource Proxy}}" Header="Clear" />
-                                            <MenuItem Command="{Binding Proxy.WorkspaceMenu.DeleteWorkspaceCommand, Source={StaticResource Proxy}}" Header="Delete" />
+                                            <MenuItem Command="{Binding Proxy.WorkspaceMenu.ClearCommand, Source={StaticResource Proxy}}" Header="Clear" />
+                                            <MenuItem Command="{Binding Proxy.WorkspaceMenu.DeleteCommand, Source={StaticResource Proxy}}" Header="Delete" />
                                         </ContextMenu>
                                     </Setter.Value>
                                 </Setter>
@@ -117,7 +117,7 @@
                                 <ListView.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem
-                                            Command="{Binding Proxy.BarcodeMenu.EditBarcodeCommand, Source={StaticResource Proxy}}"
+                                            Command="{Binding Proxy.BarcodeMenu.EditCommand, Source={StaticResource Proxy}}"
                                             CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
                                             Header="Edit" />
                                         <MenuItem Header="Change order">
@@ -146,7 +146,7 @@
                                             Command="{Binding Proxy.BarcodeMenu.ExportCommand, Source={StaticResource Proxy}}"
                                             CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
                                             Header="Export" />
-                                        <MenuItem Command="{Binding Proxy.BarcodeMenu.ChangeBarcodesWorkspaceCommand, Source={StaticResource Proxy}}" Header="Change workspace" />
+                                        <MenuItem Command="{Binding Proxy.BarcodeMenu.ChangeWorkspaceCommand, Source={StaticResource Proxy}}" Header="Change workspace" />
                                         <Separator />
                                         <MenuItem
                                             Command="{Binding Proxy.BarcodeMenu.DeleteCommand, Source={StaticResource Proxy}}"
