@@ -36,6 +36,10 @@
                     <MenuItem Command="{Binding Menu.AddNewBarcodeCommand}" Header="Barcode" />
                     <MenuItem Command="{Binding Menu.AddNewWorkspaceCommand}" Header="Workspace" />
                 </MenuItem>
+                <MenuItem Header="Import">
+                    <MenuItem Command="{Binding Menu.ImportBarcodeCommand}" Header="Barcode" />
+                    <MenuItem Command="{Binding Menu.ImportWorkspaceCommand}" Header="Workspace" />
+                </MenuItem>
                 <MenuItem Command="{Binding Menu.ExportToPdfCommand}" Header="Export to PDF" />
                 <MenuItem Command="{Binding Menu.ShowHelpCommand}" Header="Help" />
             </Menu>

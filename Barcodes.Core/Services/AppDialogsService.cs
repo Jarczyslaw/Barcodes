@@ -6,38 +6,56 @@ namespace Barcodes.Core.Services
 {
     public class AppDialogsService : DialogsService, IAppDialogsService
     {
-        private readonly DialogFilterPair jsonFilter = new DialogFilterPair { DisplayName = "json", ExtensionsList = "json" };
+        private readonly DialogFilterPair storageFilter = new DialogFilterPair("bcs");
+
+        private readonly DialogFilterPair workspaceFilter = new DialogFilterPair("bcw");
+
+        private readonly DialogFilterPair barcodeFilter = new DialogFilterPair("bcb");
 
         public string OpenStorageFile(string currentFilePath)
         {
             var directoryPath = Path.GetDirectoryName(currentFilePath);
-            return OpenFile("Barcodes storage file", directoryPath, jsonFilter);
+            return OpenFile("Barcodes storage file", directoryPath, storageFilter);
         }
 
         public string SaveStorageFile(string currentFilePath)
         {
             var fileName = Path.GetFileName(currentFilePath);
             var directoryPath = Path.GetDirectoryName(currentFilePath);
-            return SaveFile("Barcodes storage file", directoryPath, fileName, jsonFilter);
+            return SaveFile("Barcodes storage file", directoryPath, fileName, storageFilter);
+        }
+
+        public string ImportWorkspaceFile()
+        {
+            return OpenFile("Workspace file", null, workspaceFilter);
+        }
+
+        public string ExportWorkspaceFile(string workspaceName)
+        {
+            var fileName = $"{workspaceName}.{workspaceFilter.DisplayName}";
+            return SaveFile("Workspace file", null, fileName, workspaceFilter);
+        }
+
+        public string ImportBarcodeFile()
+        {
+            return OpenFile("Barcode file", null, barcodeFilter);
+        }
+
+        public string ExportBarcodeFile(string barcodeTitle)
+        {
+            var fileName = $"{barcodeTitle}.{barcodeFilter.DisplayName}";
+            return SaveFile("Barcode file", null, fileName, barcodeFilter);
         }
 
         public string SavePdfFile()
         {
-            var filter = new DialogFilterPair
-            {
-                DisplayName = "pdf",
-                ExtensionsList = "pdf"
-            };
+            var filter = new DialogFilterPair("pdf");
             return SaveFile("Barcodes PDF file", null, "barcodes.pdf", filter);
         }
 
         public string SavePngFile(string defaultFileName)
         {
-            var filter = new DialogFilterPair
-            {
-                DisplayName = "png",
-                ExtensionsList = "png"
-            };
+            var filter = new DialogFilterPair("png");
             return SaveFile("Barcodes image file", null, defaultFileName + ".png", filter);
         }
 

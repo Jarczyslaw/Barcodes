@@ -634,5 +634,15 @@ namespace Barcodes.Core.ViewModels
             var currentStorage = GetStorage();
             return servicesContainer.StorageService.StorageChanged(currentStorage);
         }
+
+        public void ImportBarcode()
+        {
+
+        }
+
+        public void ImportWorkspace()
+        {
+
+        }
     }
 }

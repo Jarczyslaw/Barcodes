@@ -43,11 +43,14 @@ namespace Barcodes.Services.Storage
 
         public override int GetHashCode()
         {
-            return Title.GetHashCode()
-                + (17 * Data.GetHashCode())
-                + (17 * Width.GetHashCode())
-                + (17 * Height.GetHashCode())
-                + (17 * DefaultSize.GetHashCode());
+            unchecked
+            {
+                return Title.GetHashCode()
+                                + (17 * Data.GetHashCode())
+                                + (17 * Width.GetHashCode())
+                                + (17 * Height.GetHashCode())
+                                + (17 * DefaultSize.GetHashCode());
+            }
         }
     }
 }

@@ -34,7 +34,7 @@
 
             <Label Grid.ColumnSpan="2"
                     FontWeight="Bold"
-                    Content="{Binding Title, Mode=OneWay}"
+                    Content="{Binding Title, Mode=OneWay, FallbackValue=Title}"
                     HorizontalContentAlignment="Center" />
             <Label Grid.Row="1"
                     Content="Type:" />
