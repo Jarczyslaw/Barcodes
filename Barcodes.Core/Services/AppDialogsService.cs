@@ -1,4 +1,5 @@
-﻿using Barcodes.Services.Dialogs;
+﻿using Barcodes.Core.Common;
+using Barcodes.Services.Dialogs;
 using System.Collections.Generic;
 using System.IO;
 
@@ -6,11 +7,15 @@ namespace Barcodes.Core.Services
 {
     public class AppDialogsService : DialogsService, IAppDialogsService
     {
-        private readonly DialogFilterPair storageFilter = new DialogFilterPair("bcs");
+        private readonly DialogFilterPair storageFilter = new DialogFilterPair(FileExtensions.Storage);
 
-        private readonly DialogFilterPair workspaceFilter = new DialogFilterPair("bcw");
+        private readonly DialogFilterPair workspaceFilter = new DialogFilterPair(FileExtensions.Workspace);
 
-        private readonly DialogFilterPair barcodeFilter = new DialogFilterPair("bcb");
+        private readonly DialogFilterPair barcodeFilter = new DialogFilterPair(FileExtensions.Barcode);
+
+        private readonly DialogFilterPair imageFilter = new DialogFilterPair("png");
+
+        private readonly DialogFilterPair docFilter = new DialogFilterPair("pdf");
 
         public string OpenStorageFile(string currentFilePath)
         {
@@ -49,14 +54,12 @@ namespace Barcodes.Core.Services
 
         public string SavePdfFile()
         {
-            var filter = new DialogFilterPair("pdf");
-            return SaveFile("Barcodes PDF file", null, "barcodes.pdf", filter);
+            return SaveFile("Barcodes PDF file", null, $"barcodes.{docFilter.DisplayName}", docFilter);
         }
 
         public string SavePngFile(string defaultFileName)
         {
-            var filter = new DialogFilterPair("png");
-            return SaveFile("Barcodes image file", null, defaultFileName + ".png", filter);
+            return SaveFile("Barcodes image file", null, $"{defaultFileName}.{imageFilter.DisplayName}", imageFilter);
         }
 
         public PdfExportMode ShowPdfExportQuestion()

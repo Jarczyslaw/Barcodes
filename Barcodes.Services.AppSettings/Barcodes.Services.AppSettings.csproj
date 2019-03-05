@@ -47,6 +47,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Barcodes.Core.Common\Barcodes.Core.Common.csproj">
+      <Project>{AEAF919B-70E7-42A2-AB75-8CF9DBAF6EE7}</Project>
+      <Name>Barcodes.Core.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Barcodes.Utils\Barcodes.Utils.csproj">
       <Project>{355F10FD-FE43-432A-A826-23CE5280170E}</Project>
       <Name>Barcodes.Utils</Name>

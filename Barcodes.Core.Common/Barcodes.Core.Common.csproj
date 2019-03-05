@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileExtensions.cs" />
     <Compile Include="ICloseSource.cs" />
     <Compile Include="IClosingDestination.cs" />
     <Compile Include="IShowDestination.cs" />
@@ -72,6 +73,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Barcodes.Services.Dialogs\Barcodes.Services.Dialogs.csproj">
+      <Project>{7519097D-59FF-4717-A043-C083A7AA9A5D}</Project>
+      <Name>Barcodes.Services.Dialogs</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
