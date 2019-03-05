@@ -117,7 +117,7 @@
     <Compile Include="ViewModels\AdditionalInput\BaseInputViewModel.cs" />
     <Compile Include="ViewModels\AdditionalInput\Ean128ProductViewModel.cs" />
     <Compile Include="ViewModels\BarcodeTypeViewModel.cs" />
-    <Compile Include="ViewModels\BarcodeResultViewModel.cs" />
+    <Compile Include="ViewModels\BarcodeViewModel.cs" />
     <Compile Include="ViewModels\AdditionalInput\NmvsProductViewModel.cs" />
     <Compile Include="ViewModels\GenerationViewModel.cs" />
     <Compile Include="ViewModels\SelectionViewModel.cs" />

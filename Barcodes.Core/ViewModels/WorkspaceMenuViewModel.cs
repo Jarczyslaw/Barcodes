@@ -13,7 +13,7 @@ namespace Barcodes.Core.ViewModels
 
             RenameCommand = new DelegateCommand(app.RenameWorkspace);
             DeleteCommand = new DelegateCommand(app.DeleteWorkspace);
-            SetAsDefaultCommand = new DelegateCommand(app.SetAsDefaultWorkspace);
+            SetAsDefaultCommand = new DelegateCommand(app.SetWorkspaceAsDefault);
             MoveLeftCommand = new DelegateCommand(app.MoveWorkspaceLeft);
             MoveRightCommand = new DelegateCommand(app.MoveWorkspaceRight);
             ExportCommand = new DelegateCommand(app.ExportWorkspace);

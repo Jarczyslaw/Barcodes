@@ -1,7 +1,9 @@
 ﻿using Barcodes.Extensions;
+using Barcodes.Services.Storage;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Barcodes.Core.ViewModels
 {
@@ -9,17 +11,15 @@ namespace Barcodes.Core.ViewModels
     {
         private bool defaultWorkspace;
         private string name;
-        private BarcodeResultViewModel selectedBarcode;
-        private ObservableCollection<BarcodeResultViewModel> barcodes;
+        private BarcodeViewModel selectedBarcode;
+        private ObservableCollection<BarcodeViewModel> barcodes;
 
         public WorkspaceViewModel()
         {
-            Barcodes = new ObservableCollection<BarcodeResultViewModel>();
+            Barcodes = new ObservableCollection<BarcodeViewModel>();
         }
 
         public Action<string> OnMessageUpdate { get; set; }
-
-        public Action OnCounterUpdate { get; set; }
 
         public string DisplayName
         {
@@ -46,26 +46,25 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public ObservableCollection<BarcodeResultViewModel> Barcodes
+        public ObservableCollection<BarcodeViewModel> Barcodes
         {
             get => barcodes;
             set => SetProperty(ref barcodes, value);
         }
 
-        public BarcodeResultViewModel SelectedBarcode
+        public BarcodeViewModel SelectedBarcode
         {
             get => selectedBarcode;
             set => SetProperty(ref selectedBarcode, value);
         }
 
-        public void InsertNewBarcode(BarcodeResultViewModel barcode)
+        public void InsertNewBarcode(BarcodeViewModel barcode)
         {
             Barcodes.Insert(0, barcode);
             OnMessageUpdate?.Invoke($"Barcode {barcode.Title} generated successfully!");
-            OnCounterUpdate?.Invoke();
         }
 
-        public void ReplaceBarcode(BarcodeResultViewModel barcode, BarcodeResultViewModel newBarcode)
+        public void ReplaceBarcode(BarcodeViewModel barcode, BarcodeViewModel newBarcode)
         {
             var barcodeIndex = Barcodes.IndexOf(barcode);
             Barcodes.Remove(barcode);
@@ -73,23 +72,32 @@ namespace Barcodes.Core.ViewModels
             OnMessageUpdate?.Invoke($"Barcode {newBarcode.Title} edited successfully!");
         }
 
-        public void RemoveBarcode(BarcodeResultViewModel barcode)
+        public void RemoveBarcode(BarcodeViewModel barcode)
         {
             Barcodes.Remove(barcode);
             OnMessageUpdate?.Invoke($"Successfully removed {barcode.Title}");
-            OnCounterUpdate?.Invoke();
         }
 
-        public void MoveDown(BarcodeResultViewModel barcode)
+        public void MoveDown(BarcodeViewModel barcode)
         {
             var index = Barcodes.IndexOf(barcode);
             Barcodes.ShiftRight(index);
         }
 
-        public void MoveUp(BarcodeResultViewModel barcode)
+        public void MoveUp(BarcodeViewModel barcode)
         {
             var index = Barcodes.IndexOf(barcode);
             Barcodes.ShiftLeft(index);
+        }
+
+        public StorageWorkspace ToStorage()
+        {
+            return new StorageWorkspace
+            {
+                Title = Name,
+                Default = Default,
+                Barcodes = Barcodes.Select(b => b.ToStorage()).ToList()
+            };
         }
     }
 }

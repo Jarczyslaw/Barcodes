@@ -1,15 +1,16 @@
 ﻿using Barcodes.Services.Generator;
+using Barcodes.Services.Storage;
 using Prism.Mvvm;
 using System.Windows.Media.Imaging;
 
 namespace Barcodes.Core.ViewModels
 {
-    public class BarcodeResultViewModel : BindableBase
+    public class BarcodeViewModel : BindableBase
     {
         private string title;
         private BitmapSource barcode;
 
-        public BarcodeResultViewModel(GenerationData generationData)
+        public BarcodeViewModel(GenerationData generationData)
         {
             GenerationData = generationData;
         }
@@ -36,6 +37,19 @@ namespace Barcodes.Core.ViewModels
         {
             get => barcode;
             set => SetProperty(ref barcode, value);
+        }
+
+        public StorageBarcode ToStorage()
+        {
+            return new StorageBarcode
+            {
+                Data = GenerationData.Data,
+                Title = Title,
+                Type = GenerationData.Type,
+                Width = GenerationData.Width,
+                Height = GenerationData.Height,
+                DefaultSize = GenerationData.DefaultSize
+            };
         }
     }
 }

@@ -7,25 +7,25 @@ namespace Barcodes.Core.ViewModels
     {
         public BarcodeMenuViewModel(AppViewModel app)
         {
-            EditCommand = new DelegateCommand<BarcodeResultViewModel>(app.EditBarcode);
-            MoveUpCommand = new DelegateCommand<BarcodeResultViewModel>(app.MoveBarcodeUp);
-            MoveDownCommand = new DelegateCommand<BarcodeResultViewModel>(app.MoveBarcodeDown);
+            EditCommand = new DelegateCommand<BarcodeViewModel>(app.EditBarcode);
+            MoveUpCommand = new DelegateCommand<BarcodeViewModel>(app.MoveBarcodeUp);
+            MoveDownCommand = new DelegateCommand<BarcodeViewModel>(app.MoveBarcodeDown);
             OpenInNewWindowCommand = new DelegateCommand(app.OpenInNewWindow);
-            SaveToImageFileCommand = new DelegateCommand<BarcodeResultViewModel>(app.SaveToImageFile);
-            CopyToClipboardCommand = new DelegateCommand<BarcodeResultViewModel>(app.CopyToClipboard);
-            DeleteCommand = new DelegateCommand<BarcodeResultViewModel>(app.DeleteBarcode);
+            SaveToImageFileCommand = new DelegateCommand<BarcodeViewModel>(app.SaveToImageFile);
+            CopyToClipboardCommand = new DelegateCommand<BarcodeViewModel>(app.CopyToClipboard);
+            DeleteCommand = new DelegateCommand<BarcodeViewModel>(app.DeleteBarcode);
             ChangeWorkspaceCommand = new DelegateCommand(app.ChangeBarcodesWorkspace);
-            ExportCommand = new DelegateCommand<BarcodeResultViewModel>(app.ExportBarcode);
+            ExportCommand = new DelegateCommand<BarcodeViewModel>(app.ExportBarcode);
         }
 
-        public DelegateCommand<BarcodeResultViewModel> EditCommand { get; }
-        public DelegateCommand<BarcodeResultViewModel> MoveUpCommand { get; }
-        public DelegateCommand<BarcodeResultViewModel> MoveDownCommand { get; }
+        public DelegateCommand<BarcodeViewModel> EditCommand { get; }
+        public DelegateCommand<BarcodeViewModel> MoveUpCommand { get; }
+        public DelegateCommand<BarcodeViewModel> MoveDownCommand { get; }
         public DelegateCommand OpenInNewWindowCommand { get; }
-        public DelegateCommand<BarcodeResultViewModel> SaveToImageFileCommand { get; }
-        public DelegateCommand<BarcodeResultViewModel> CopyToClipboardCommand { get; }
-        public DelegateCommand<BarcodeResultViewModel> DeleteCommand { get; }
+        public DelegateCommand<BarcodeViewModel> SaveToImageFileCommand { get; }
+        public DelegateCommand<BarcodeViewModel> CopyToClipboardCommand { get; }
+        public DelegateCommand<BarcodeViewModel> DeleteCommand { get; }
         public DelegateCommand ChangeWorkspaceCommand { get; }
-        public DelegateCommand<BarcodeResultViewModel> ExportCommand { get; }
+        public DelegateCommand<BarcodeViewModel> ExportCommand { get; }
     }
 }

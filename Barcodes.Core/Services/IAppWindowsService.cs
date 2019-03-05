@@ -12,7 +12,7 @@ namespace Barcodes.Core.Services
         string OpenNmvsProductWindow(string nmvsData);
         string OpenEan128ProductWindow(string ean128Data);
         void ShowHelpWindow();
-        GenerationViewModelResult ShowGenerationWindow(BarcodeResultViewModel barcode = null);
+        GenerationViewModelResult ShowGenerationWindow(BarcodeViewModel barcode = null);
         string ShowWorkspaceNameWindow(string currentName, Func<string, bool> validationRule);
         WorkspaceViewModel SelectBarcodesWorkspace(IEnumerable<WorkspaceViewModel> workspaces);
     }

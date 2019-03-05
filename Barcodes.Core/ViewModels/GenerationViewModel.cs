@@ -224,11 +224,11 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        private BarcodeResultViewModel RunGenerator(GenerationData barcodeData, string title)
+        private BarcodeViewModel RunGenerator(GenerationData barcodeData, string title)
         {
             var barcodeBitmap = services.GeneratorService.CreateBarcode(barcodeData);
             barcodeBitmap.Freeze();
-            return new BarcodeResultViewModel(barcodeData)
+            return new BarcodeViewModel(barcodeData)
             {
                 Barcode = barcodeBitmap,
                 Title = title
@@ -256,7 +256,7 @@ namespace Barcodes.Core.ViewModels
             Data = result;
         }
 
-        public void Load(BarcodeResultViewModel barcode)
+        public void Load(BarcodeViewModel barcode)
         {
             if (barcode == null)
             {

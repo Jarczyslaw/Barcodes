@@ -51,7 +51,7 @@ namespace Barcodes.Core.Services
             ShowDialog(window);
         }
 
-        public GenerationViewModelResult ShowGenerationWindow(BarcodeResultViewModel barcode = null)
+        public GenerationViewModelResult ShowGenerationWindow(BarcodeViewModel barcode = null)
         {
             var dataContext = containerExtension.Resolve<GenerationViewModel>();
             dataContext.Load(barcode);
