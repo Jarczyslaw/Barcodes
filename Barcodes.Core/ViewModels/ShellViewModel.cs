@@ -1,23 +1,19 @@
 ﻿using Barcodes.Core.Common;
 using Barcodes.Core.Services;
-using Barcodes.Services.AppSettings;
 using Prism.Mvvm;
 using System;
-using Unity;
 
 namespace Barcodes.Core.ViewModels
 {
-    public class ShellViewModel : BindableBase, IShowDestination, ICloseSource, IClosingDestination
+    public class ShellViewModel : BindableBase, IOnShowAware, ICloseSource, IOnClosingAware
     {
-        private readonly IUnityContainer unityContainer;
-        private readonly IAppDialogsService appDialogsService;
+        private readonly IServicesContainer servicesContainer;
 
-        public ShellViewModel(IUnityContainer unityContainer, IAppDialogsService appDialogsService)
+        public ShellViewModel(IServicesContainer servicesContainer)
         {
-            this.unityContainer = unityContainer;
-            this.appDialogsService = appDialogsService;
+            this.servicesContainer = servicesContainer;
 
-            App = unityContainer.Resolve<AppViewModel>();
+            App = new AppViewModel(servicesContainer);
             Menu = new MenuViewModel(App);
             BarcodeMenu = new BarcodeMenuViewModel(App);
             WorkspaceMenu = new WorkspaceMenuViewModel(App);
@@ -46,9 +42,9 @@ namespace Barcodes.Core.ViewModels
 
         public bool OnClosing()
         {
-            if (App.CheckChanges())
+            if (App.CheckStorageChanges())
             {
-                var closingMode = appDialogsService.ShowClosingQuestion();
+                var closingMode = servicesContainer.AppDialogsService.ShowClosingQuestion();
                 if (closingMode == ClosingMode.SaveChanges)
                 {
                     App.ExecuteSaveToFile();

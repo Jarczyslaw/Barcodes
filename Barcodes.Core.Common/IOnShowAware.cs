@@ -1,6 +1,6 @@
 ﻿namespace Barcodes.Core.Common
 {
-    public interface IShowDestination
+    public interface IOnShowAware
     {
         void OnShow();
     }

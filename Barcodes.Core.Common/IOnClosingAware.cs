@@ -1,6 +1,6 @@
 ﻿namespace Barcodes.Core.Common
 {
-    public interface IClosingDestination
+    public interface IOnClosingAware
     {
         bool OnClosing();
     }

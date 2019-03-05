@@ -609,7 +609,7 @@ namespace Barcodes.Core.ViewModels
             SelectedWorkspace.Barcodes.Clear();
         }
 
-        public bool CheckChanges()
+        public bool CheckStorageChanges()
         {
             var currentStorage = CreateCurrentStorage();
             return servicesContainer.StorageService.StorageChanged(currentStorage);

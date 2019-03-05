@@ -32,7 +32,7 @@ namespace Barcodes.Core.UI
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (DataContext is IClosingDestination closingAware)
+            if (DataContext is IOnClosingAware closingAware)
             {
                 e.Cancel = closingAware.OnClosing();
             }
@@ -40,7 +40,7 @@ namespace Barcodes.Core.UI
 
         private void OnViewShown()
         {
-            (DataContext as IShowDestination)?.OnShow();
+            (DataContext as IOnShowAware)?.OnShow();
             if (DataContext is ICloseSource closeAware)
             {
                 closeAware.OnClose += Close;
