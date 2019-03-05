@@ -217,7 +217,7 @@ namespace Barcodes.Core.ViewModels
         {
             if (BarcodesCount == 0)
             {
-                var dialogResult = servicesContainer.AppDialogsService.ShowYesNoQuestion("You don't have any barcodes to save. Do you want to clear default storage file?");
+                var dialogResult = servicesContainer.AppDialogsService.ShowYesNoQuestion("You don't have any barcodes to save. Do you want to save file without barcodes?");
                 if (!dialogResult)
                 {
                     return;
@@ -701,6 +701,19 @@ namespace Barcodes.Core.ViewModels
             catch (Exception exc)
             {
                 servicesContainer.AppDialogsService.ShowException("Error when exporting barcode", exc);
+            }
+        }
+
+        public void InitialSequence()
+        {
+            try
+            {
+                servicesContainer.AppSettingsService.Load(true);
+                LoadFromFile(servicesContainer.AppSettingsService.StoragePath);
+            }
+            catch (Exception exc)
+            {
+                servicesContainer.AppDialogsService.ShowException("Error while loading storage from file", exc);
             }
         }
     }

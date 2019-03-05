@@ -11,20 +11,18 @@ namespace Barcodes.Core.ViewModels
     {
         private readonly IUnityContainer unityContainer;
         private readonly IAppDialogsService appDialogsService;
-        private readonly IAppSettingsService appSettingsService;
 
-        public ShellViewModel(IUnityContainer unityContainer, IAppDialogsService appDialogsService, IAppSettingsService appSettingsService)
+        public ShellViewModel(IUnityContainer unityContainer, IAppDialogsService appDialogsService)
         {
             this.unityContainer = unityContainer;
             this.appDialogsService = appDialogsService;
-            this.appSettingsService = appSettingsService;
 
             App = unityContainer.Resolve<AppViewModel>();
             Menu = new MenuViewModel(App);
             BarcodeMenu = new BarcodeMenuViewModel(App);
             WorkspaceMenu = new WorkspaceMenuViewModel(App);
 
-            InitialSequence();
+            App.InitialSequence();
         }
 
         public AppViewModel App { get; }
@@ -61,12 +59,6 @@ namespace Barcodes.Core.ViewModels
                 }
             }
             return false;
-        }
-
-        private void InitialSequence()
-        {
-            appSettingsService.Load();
-            App.LoadFromFile(appSettingsService.StoragePath);
         }
     }
 }
