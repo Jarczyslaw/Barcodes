@@ -143,7 +143,7 @@ namespace Barcodes.Core.ViewModels
                     return;
                 }
 
-                if (storage.Count == 0)
+                if (storage.WorkspacesCount == 0)
                 {
                     servicesContainer.AppDialogsService.ShowError("Selected file has no workspaces");
                 }

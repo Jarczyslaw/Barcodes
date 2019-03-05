@@ -10,10 +10,14 @@ namespace Barcodes.Core.ViewModels
     public class ShellViewModel : BindableBase, IShowDestination, ICloseSource, IClosingDestination
     {
         private readonly IUnityContainer unityContainer;
+        private readonly IAppDialogsService appDialogsService;
+        private readonly IAppSettingsService appSettingsService;
 
-        public ShellViewModel(IUnityContainer unityContainer)
+        public ShellViewModel(IUnityContainer unityContainer, IAppDialogsService appDialogsService, IAppSettingsService appSettingsService)
         {
             this.unityContainer = unityContainer;
+            this.appDialogsService = appDialogsService;
+            this.appSettingsService = appSettingsService;
 
             App = unityContainer.Resolve<AppViewModel>();
             Menu = new MenuViewModel(App);
@@ -46,8 +50,7 @@ namespace Barcodes.Core.ViewModels
         {
             if (App.CheckChanges())
             {
-                var appDialogService = unityContainer.Resolve<IAppDialogsService>();
-                var closingMode = appDialogService.ShowClosingQuestion();
+                var closingMode = appDialogsService.ShowClosingQuestion();
                 if (closingMode == ClosingMode.SaveChanges)
                 {
                     App.ExecuteSaveToFile();
@@ -62,10 +65,8 @@ namespace Barcodes.Core.ViewModels
 
         private void InitialSequence()
         {
-            var appSettingsService = unityContainer.Resolve<IAppSettingsService>();
             appSettingsService.Load();
-            var storagePath = appSettingsService.StoragePath;
-            App.LoadFromFile(storagePath);
+            App.LoadFromFile(appSettingsService.StoragePath);
         }
     }
 }

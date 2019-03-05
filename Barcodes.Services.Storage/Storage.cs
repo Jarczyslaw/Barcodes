@@ -8,9 +8,14 @@ namespace Barcodes.Services.Storage
     {
         public List<StorageWorkspace> Content { get; set; } = new List<StorageWorkspace>();
 
-        public int Count
+        public int BarcodesCount
         {
             get => Content.Sum(c => c.Barcodes.Count);
+        }
+
+        public int WorkspacesCount
+        {
+            get => Content.Count;
         }
 
         public override bool Equals(object obj)
