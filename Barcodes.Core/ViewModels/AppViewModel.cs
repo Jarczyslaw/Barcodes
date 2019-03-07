@@ -695,7 +695,7 @@ namespace Barcodes.Core.ViewModels
 
         public void ExportBarcode(BarcodeViewModel barcode)
         {
-            var barcodeFile = servicesContainer.AppDialogsService.ExportWorkspaceFile(barcode.Title);
+            var barcodeFile = servicesContainer.AppDialogsService.ExportBarcodeFile(barcode.Title);
             if (string.IsNullOrEmpty(barcodeFile))
             {
                 return;
