@@ -116,7 +116,8 @@ namespace Barcodes.Core.ViewModels
 
             var newWorkspace = new WorkspaceViewModel
             {
-                Name = workspaceName
+                Name = workspaceName,
+                Default = !Workspaces.Any(w => w.Default)
             };
             AddWorkspace(newWorkspace);
         }
@@ -130,10 +131,10 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
-            LoadFromFile(filePath);
+            LoadFromFile(filePath, true);
         }
 
-        public void LoadFromFile(string storagePath)
+        private void LoadFromFile(string storagePath, bool storageValidation)
         {
             try
             {
@@ -143,9 +144,10 @@ namespace Barcodes.Core.ViewModels
                     return;
                 }
 
-                if (storage.WorkspacesCount == 0)
+                if (storageValidation && storage.WorkspacesCount == 0)
                 {
                     servicesContainer.AppDialogsService.ShowError("Selected file has no workspaces");
+                    return;
                 }
 
                 var newWorkspaces = new List<WorkspaceViewModel>();
@@ -162,8 +164,14 @@ namespace Barcodes.Core.ViewModels
                 }
 
                 SelectedWorkspace = Workspaces.SingleOrDefault(w => w.Default);
-                UpdateMessage($"Successfully loaded {WorkspacesCount} workspaces and {BarcodesCount} barcodes from {Path.GetFileName(storagePath)}");
-
+                if (WorkspacesCount != 0 || BarcodesCount != 0)
+                {
+                    UpdateMessage($"Successfully loaded {WorkspacesCount} workspaces and {BarcodesCount} barcodes from {Path.GetFileName(storagePath)}");
+                }
+                else
+                {
+                    UpdateMessage($"File {Path.GetFileName(storagePath)} loaded");
+                }
                 servicesContainer.AppSettingsService.StoragePath = storagePath;
             }
             catch (Exception exc)
@@ -709,7 +717,7 @@ namespace Barcodes.Core.ViewModels
             try
             {
                 servicesContainer.AppSettingsService.Load(true);
-                LoadFromFile(servicesContainer.AppSettingsService.StoragePath);
+                LoadFromFile(servicesContainer.AppSettingsService.StoragePath, false);
             }
             catch (Exception exc)
             {
