@@ -1,4 +1,5 @@
-﻿using Barcodes.Utils;
+﻿using Barcodes.Core.Common;
+using Barcodes.Utils;
 using System;
 using System.IO;
 
@@ -16,7 +17,7 @@ namespace Barcodes.Services.AppSettings
             }
         }
 
-        public string AppSettingsPath { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appSettings.json");
+        public string AppSettingsPath { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"appSettings.{FileExtensions.Settings}");
 
         public AppSettings AppSettings { get; private set; } = new AppSettings();
 
