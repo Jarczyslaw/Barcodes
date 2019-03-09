@@ -4,7 +4,7 @@
     {
         public BarcodeType Type { get; set; }
         public bool DefaultSize { get; set; } = true;
-        public int MinWidth { get; } = 150;
+        public int MinWidth { get; } = 100;
         public int Width { get; set; }
         public int Height { get; set; }
         public string Data { get; set; }

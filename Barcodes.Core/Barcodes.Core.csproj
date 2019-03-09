@@ -91,6 +91,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClosingMode.cs" />
+    <Compile Include="Extensions\StorageBarcodeExtensions.cs" />
+    <Compile Include="Extensions\StorageWorkspaceExtensions.cs" />
     <Compile Include="ViewModelsResult\GenerationViewModelResult.cs" />
     <Compile Include="PdfExportMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
