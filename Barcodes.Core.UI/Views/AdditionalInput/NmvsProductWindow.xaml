@@ -73,8 +73,14 @@
             </Grid>
         </GroupBox>
         <UniformGrid Columns="2">
-            <Button Command="{Binding AcceptCommand}" Content="Accept" />
-            <Button Command="{Binding CloseCommand}" Content="Close" />
+            <Button
+                Command="{Binding AcceptCommand}"
+                Content="Accept"
+                IsDefault="True" />
+            <Button
+                Command="{Binding CloseCommand}"
+                Content="Close"
+                IsCancel="True" />
         </UniformGrid>
     </StackPanel>
 </ui:BaseWindow>
