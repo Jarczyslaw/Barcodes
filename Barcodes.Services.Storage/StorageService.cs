@@ -5,7 +5,7 @@ namespace Barcodes.Services.Storage
 {
     public class StorageService : IStorageService
     {
-        private Storage loadedStorage = new Storage();
+        private Storage currentStorage = new Storage();
 
         public Storage Load(string filePath, bool throwException = false)
         {
@@ -14,13 +14,14 @@ namespace Barcodes.Services.Storage
                 return null;
             }
 
-            loadedStorage = Serializer.FromFile<Storage>(filePath);
-            return loadedStorage;
+            currentStorage = Serializer.FromFile<Storage>(filePath);
+            return currentStorage;
         }
 
         public void Save(string filePath, Storage storage)
         {
             Serializer.ToFile(storage, filePath);
+            currentStorage = storage;
         }
 
         public StorageWorkspace ImportWorkspace(string filePath)
@@ -45,7 +46,7 @@ namespace Barcodes.Services.Storage
 
         public bool StorageChanged(Storage currentStorage)
         {
-            return !ObjectUtils.ObjectEquality(loadedStorage, currentStorage);
+            return !ObjectUtils.ObjectEquality(this.currentStorage, currentStorage);
         }
     }
 }

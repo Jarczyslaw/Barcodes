@@ -221,9 +221,9 @@ namespace Barcodes.Core.ViewModels
             };
         }
 
-        public void SaveToFile()
+        public void SaveToFile(bool validateBarcodesCount)
         {
-            if (BarcodesCount == 0)
+            if (validateBarcodesCount && BarcodesCount == 0)
             {
                 var dialogResult = servicesContainer.AppDialogsService.ShowYesNoQuestion("You don't have any barcodes to save. Do you want to save file without barcodes?");
                 if (!dialogResult)
@@ -232,15 +232,10 @@ namespace Barcodes.Core.ViewModels
                 }
             }
 
-            ExecuteSaveToFile();
-        }
-
-        public void ExecuteSaveToFile()
-        {
             try
             {
                 var filePath = servicesContainer.AppSettingsService.StoragePath;
-                servicesContainer.AppDialogsService.SaveStorageFile(filePath);
+                filePath = servicesContainer.AppDialogsService.SaveStorageFile(filePath);
                 if (string.IsNullOrEmpty(filePath))
                 {
                     return;
