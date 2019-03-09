@@ -149,7 +149,10 @@
                                             Command="{Binding ExportCommand}"
                                             CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
                                             Header="Export" />
-                                        <MenuItem Command="{Binding ChangeWorkspaceCommand}" Header="Change workspace" />
+                                        <MenuItem
+                                            Command="{Binding ChangeWorkspaceCommand}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
+                                            Header="Change workspace" />
                                         <Separator />
                                         <MenuItem
                                             Command="{Binding DeleteCommand}"

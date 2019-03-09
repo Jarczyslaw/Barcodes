@@ -562,12 +562,9 @@ namespace Barcodes.Core.ViewModels
             workspaces.ShiftRight(index);
         }
 
-        public void ChangeBarcodesWorkspace()
+        public void ChangeBarcodesWorkspace(BarcodeViewModel barcode)
         {
-            if (SelectedWorkspace == null || SelectedWorkspace.SelectedBarcode == null)
-            {
-                return;
-            }
+            var barcodesWorkspace = Workspaces.Single(w => w.Barcodes.Contains(barcode));
 
             if (Workspaces.Count() == 1)
             {
@@ -575,18 +572,18 @@ namespace Barcodes.Core.ViewModels
             }
             else if (Workspaces.Count == 2)
             {
-                var targetWorkspace = GetWorkspacesWithout(SelectedWorkspace).Single();
-                MoveBarcodeToWorkspace(SelectedWorkspace.SelectedBarcode, SelectedWorkspace, targetWorkspace);
+                var targetWorkspace = GetWorkspacesWithout(barcodesWorkspace).Single();
+                MoveBarcodeToWorkspace(barcode, barcodesWorkspace, targetWorkspace);
             }
             else
             {
-                var availableWorkspaces = GetWorkspacesWithout(SelectedWorkspace);
+                var availableWorkspaces = GetWorkspacesWithout(barcodesWorkspace);
                 var targetWorkspace = servicesContainer.AppWindowsService.SelectBarcodesWorkspace(availableWorkspaces);
                 if (targetWorkspace == null)
                 {
                     return;
                 }
-                MoveBarcodeToWorkspace(SelectedWorkspace.SelectedBarcode, SelectedWorkspace, targetWorkspace);
+                MoveBarcodeToWorkspace(barcode, barcodesWorkspace, targetWorkspace);
             }
         }
 
