@@ -2,7 +2,6 @@
 using Barcodes.Core.Services;
 using Barcodes.Extensions;
 using Barcodes.Services.DocExport;
-using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
 using Prism.Mvvm;
 using System;

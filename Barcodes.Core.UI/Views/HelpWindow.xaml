@@ -110,7 +110,8 @@
                 <Button
                     Grid.Column="1"
                     Click="Button_Click"
-                    Content="Close" />
+                    Content="Close"
+                    IsCancel="True" />
             </Grid>
         </StackPanel>
     </StackPanel>
