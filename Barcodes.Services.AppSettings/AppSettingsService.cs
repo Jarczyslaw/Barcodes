@@ -17,6 +17,16 @@ namespace Barcodes.Services.AppSettings
             }
         }
 
+        public bool BarcodesVisible
+        {
+            get => AppSettings.BarcodesVisible;
+            set
+            {
+                AppSettings.BarcodesVisible = value;
+                Save();
+            }
+        }
+
         public string AppSettingsPath { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"appSettings.{FileExtensions.Settings}");
 
         public AppSettings AppSettings { get; private set; } = new AppSettings();

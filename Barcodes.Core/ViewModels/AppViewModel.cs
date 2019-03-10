@@ -1,6 +1,7 @@
 ﻿using Barcodes.Core.Extensions;
 using Barcodes.Core.Services;
 using Barcodes.Extensions;
+using Barcodes.Services.AppSettings;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Storage;
 using Prism.Mvvm;
@@ -19,6 +20,7 @@ namespace Barcodes.Core.ViewModels
         private WorkspaceViewModel selectedWorkspace;
         private readonly ObservableCollection<WorkspaceViewModel> workspaces;
         private string busyMessage = string.Empty;
+        private bool barcodesVisible;
 
         private readonly IServicesContainer servicesContainer;
 
@@ -27,6 +29,16 @@ namespace Barcodes.Core.ViewModels
             this.servicesContainer = servicesContainer;
 
             workspaces = new ObservableCollection<WorkspaceViewModel>();
+        }
+
+        public bool BarcodesVisible
+        {
+            get => barcodesVisible;
+            set
+            {
+                SetProperty(ref barcodesVisible, value);
+                servicesContainer.AppSettingsService.BarcodesVisible = value;
+            }
         }
 
         public bool IsBusy { get; set; }
@@ -618,12 +630,18 @@ namespace Barcodes.Core.ViewModels
             try
             {
                 servicesContainer.AppSettingsService.Load(true);
-                LoadFromFile(servicesContainer.AppSettingsService.StoragePath, false);
+                ApplySettings(servicesContainer.AppSettingsService.AppSettings);
             }
             catch (Exception exc)
             {
                 servicesContainer.AppDialogsService.ShowException("Error while loading storage from file", exc);
             }
+        }
+
+        private void ApplySettings(AppSettings appSettings)
+        {
+            BarcodesVisible = appSettings.BarcodesVisible;
+            LoadFromFile(appSettings.StoragePath, false);
         }
     }
 }

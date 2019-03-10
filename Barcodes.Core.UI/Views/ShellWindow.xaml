@@ -116,6 +116,11 @@
     <toolkit:BusyIndicator BusyContent="{Binding App.BusyMessage}" IsBusy="{Binding App.IsBusy}">
         <DockPanel LastChildFill="True">
             <Menu DataContext="{Binding Menu}" DockPanel.Dock="Top">
+                <Menu.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <DockPanel HorizontalAlignment="Stretch" />
+                    </ItemsPanelTemplate>
+                </Menu.ItemsPanel>
                 <MenuItem Header="_File">
                     <MenuItem
                         Command="{Binding LoadFromFileCommand}"
@@ -142,6 +147,11 @@
                 </MenuItem>
                 <MenuItem Command="{Binding ExportToPdfCommand}" Header="_Export to PDF" />
                 <MenuItem Command="{Binding ShowHelpCommand}" Header="_Help" />
+                <MenuItem
+                    HorizontalAlignment="Right"
+                    Header="Barcodes visible"
+                    IsCheckable="True"
+                    IsChecked="{Binding Proxy.App.BarcodesVisible, Source={StaticResource Proxy}}" />
             </Menu>
 
             <StatusBar DataContext="{Binding App}" DockPanel.Dock="Bottom">
@@ -194,7 +204,7 @@
                                 </ListView.ItemsPanel>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <controls:BarcodeView ContextMenu="{StaticResource BarcodesContextMenu}">
+                                        <controls:BarcodeView BarcodeVisible="{Binding Proxy.App.BarcodesVisible, Source={StaticResource Proxy}, Mode=OneWay}" ContextMenu="{StaticResource BarcodesContextMenu}">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseDoubleClick">
                                                     <prism:InvokeCommandAction Command="{Binding Proxy.BarcodeMenu.OpenInNewWindowCommand, Source={StaticResource Proxy}}" CommandParameter="{Binding}" />

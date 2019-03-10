@@ -1,15 +1,17 @@
-﻿<UserControl x:Class="Barcodes.Core.UI.Controls.BarcodeView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Barcodes.Core.UI.Controls"
-             mc:Ignorable="d">
-    <Border BorderThickness="1"
-            BorderBrush="{StaticResource DarkGreyBrush}"
-            Background="{StaticResource LightGreyBrush}"
-            Padding="5"
-            Margin="5">
+﻿<UserControl
+    x:Class="Barcodes.Core.UI.Controls.BarcodeView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Barcodes.Core.UI.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Border
+        Margin="5"
+        Padding="5"
+        Background="{StaticResource LightGreyBrush}"
+        BorderBrush="{StaticResource DarkGreyBrush}"
+        BorderThickness="1">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -32,26 +34,29 @@
                 </Style>
             </Grid.Resources>
 
-            <Label Grid.ColumnSpan="2"
-                    FontWeight="Bold"
-                    Content="{Binding Title, Mode=OneWay, FallbackValue=Title}"
-                    HorizontalContentAlignment="Center" />
-            <Label Grid.Row="1"
-                    Content="Type:" />
-            <TextBox Grid.Row="1"
-                    Grid.Column="1"
-                    Text="{Binding TypeTitle, Mode=OneWay}" />
-            <Label Grid.Row="2"
-                    Content="Data:" />
-            <TextBox Grid.Row="2"
-                    Grid.Column="1"
-                    Text="{Binding GenerationData.Data, Mode=OneWay}" />
-            <Image Grid.Row="3"
-                    Grid.ColumnSpan="2"
-                    Margin="40 5"
-                    Source="{Binding Barcode, Mode=OneWay}"
-                    Width="{Binding Barcode.Width, Mode=OneWay}"
-                   Height="{Binding Barcode.Height, Mode=OneWay}" />
+            <Label
+                Grid.ColumnSpan="2"
+                HorizontalContentAlignment="Center"
+                Content="{Binding Title, Mode=OneWay, FallbackValue=Title}"
+                FontWeight="Bold" />
+            <Label Grid.Row="1" Content="Type:" />
+            <TextBox
+                Grid.Row="1"
+                Grid.Column="1"
+                Text="{Binding TypeTitle, Mode=OneWay}" />
+            <Label Grid.Row="2" Content="Data:" />
+            <TextBox
+                Grid.Row="2"
+                Grid.Column="1"
+                Text="{Binding GenerationData.Data, Mode=OneWay}" />
+            <Image
+                x:Name="barcodeImage"
+                Grid.Row="3"
+                Grid.ColumnSpan="2"
+                Width="{Binding Barcode.Width, Mode=OneWay}"
+                Height="{Binding Barcode.Height, Mode=OneWay}"
+                Margin="40,5"
+                Source="{Binding Barcode, Mode=OneWay}" />
         </Grid>
     </Border>
 </UserControl>
