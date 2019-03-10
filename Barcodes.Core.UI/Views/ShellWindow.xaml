@@ -22,26 +22,50 @@
         <ui:BindingProxy x:Key="Proxy" Proxy="{Binding}" />
     </ui:BaseWindow.Resources>
 
+    <Window.InputBindings>
+        <KeyBinding
+            Key="L"
+            Command="{Binding Proxy.Menu.LoadFromFileCommand, Source={StaticResource Proxy}}"
+            Modifiers="Control" />
+        <KeyBinding
+            Key="S"
+            Command="{Binding Proxy.Menu.SaveToFileCommand, Source={StaticResource Proxy}}"
+            Modifiers="Control" />
+        <KeyBinding
+            Key="O"
+            Command="{Binding Proxy.Menu.OpenStorageLocationCommand, Source={StaticResource Proxy}}"
+            Modifiers="Control" />
+    </Window.InputBindings>
+
     <toolkit:BusyIndicator BusyContent="{Binding App.BusyMessage}" IsBusy="{Binding App.IsBusy}">
         <DockPanel LastChildFill="True">
             <Menu DataContext="{Binding Menu}" DockPanel.Dock="Top">
-                <MenuItem Header="File">
-                    <MenuItem Command="{Binding LoadFromFileCommand}" Header="Load from file" />
-                    <MenuItem Command="{Binding SaveToFileCommand}" Header="Save to file" />
-                    <MenuItem Command="{Binding OpenStorageLocationCommand}" Header="Open storage location" />
+                <MenuItem Header="_File">
+                    <MenuItem
+                        Command="{Binding LoadFromFileCommand}"
+                        Header="_Load from file"
+                        InputGestureText="Ctrl+L" />
+                    <MenuItem
+                        Command="{Binding SaveToFileCommand}"
+                        Header="_Save to file"
+                        InputGestureText="Ctrl+S" />
+                    <MenuItem
+                        Command="{Binding OpenStorageLocationCommand}"
+                        Header="_Open storage location"
+                        InputGestureText="Ctrl+O" />
                     <Separator />
-                    <MenuItem Command="{Binding CloseCommand}" Header="Close" />
+                    <MenuItem Command="{Binding CloseCommand}" Header="_Close" />
                 </MenuItem>
-                <MenuItem Header="Add">
-                    <MenuItem Command="{Binding AddNewBarcodeCommand}" Header="Barcode" />
-                    <MenuItem Command="{Binding AddNewWorkspaceCommand}" Header="Workspace" />
+                <MenuItem Header="_Add">
+                    <MenuItem Command="{Binding AddNewBarcodeCommand}" Header="_Barcode" />
+                    <MenuItem Command="{Binding AddNewWorkspaceCommand}" Header="_Workspace" />
                 </MenuItem>
-                <MenuItem Header="Import">
-                    <MenuItem Command="{Binding ImportBarcodeCommand}" Header="Barcode" />
-                    <MenuItem Command="{Binding ImportWorkspaceCommand}" Header="Workspace" />
+                <MenuItem Header="_Import">
+                    <MenuItem Command="{Binding ImportBarcodeCommand}" Header="_Barcode" />
+                    <MenuItem Command="{Binding ImportWorkspaceCommand}" Header="_Workspace" />
                 </MenuItem>
-                <MenuItem Command="{Binding ExportToPdfCommand}" Header="Export to PDF" />
-                <MenuItem Command="{Binding ShowHelpCommand}" Header="Help" />
+                <MenuItem Command="{Binding ExportToPdfCommand}" Header="_Export to PDF" />
+                <MenuItem Command="{Binding ShowHelpCommand}" Header="_Help" />
             </Menu>
 
             <StatusBar DataContext="{Binding App}" DockPanel.Dock="Bottom">
