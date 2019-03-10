@@ -11,21 +11,21 @@ namespace Barcodes.Core.ViewModels
         {
             this.app = app;
 
-            RenameCommand = new DelegateCommand(app.RenameWorkspace);
-            DeleteCommand = new DelegateCommand(app.DeleteWorkspace);
-            SetAsDefaultCommand = new DelegateCommand(app.SetWorkspaceAsDefault);
-            MoveLeftCommand = new DelegateCommand(app.MoveWorkspaceLeft);
-            MoveRightCommand = new DelegateCommand(app.MoveWorkspaceRight);
-            ExportCommand = new DelegateCommand(app.ExportWorkspace);
-            ClearCommand = new DelegateCommand(app.ClearWorkspace);
+            RenameCommand = new DelegateCommand<WorkspaceViewModel>(w => app.RenameWorkspace(w));
+            DeleteCommand = new DelegateCommand<WorkspaceViewModel>(app.DeleteWorkspace);
+            SetAsDefaultCommand = new DelegateCommand<WorkspaceViewModel>(app.SetWorkspaceAsDefault);
+            MoveLeftCommand = new DelegateCommand<WorkspaceViewModel>(app.MoveWorkspaceLeft);
+            MoveRightCommand = new DelegateCommand<WorkspaceViewModel>(app.MoveWorkspaceRight);
+            ExportCommand = new DelegateCommand<WorkspaceViewModel>(app.ExportWorkspace);
+            ClearCommand = new DelegateCommand<WorkspaceViewModel>(app.ClearWorkspace);
         }
 
-        public DelegateCommand RenameCommand { get; }
-        public DelegateCommand DeleteCommand { get; }
-        public DelegateCommand SetAsDefaultCommand { get; }
-        public DelegateCommand MoveLeftCommand { get; }
-        public DelegateCommand MoveRightCommand { get; }
-        public DelegateCommand ClearCommand { get; }
-        public DelegateCommand ExportCommand { get; }
+        public DelegateCommand<WorkspaceViewModel> RenameCommand { get; }
+        public DelegateCommand<WorkspaceViewModel> DeleteCommand { get; }
+        public DelegateCommand<WorkspaceViewModel> SetAsDefaultCommand { get; }
+        public DelegateCommand<WorkspaceViewModel> MoveLeftCommand { get; }
+        public DelegateCommand<WorkspaceViewModel> MoveRightCommand { get; }
+        public DelegateCommand<WorkspaceViewModel> ClearCommand { get; }
+        public DelegateCommand<WorkspaceViewModel> ExportCommand { get; }
     }
 }

@@ -20,6 +20,82 @@
 
     <ui:BaseWindow.Resources>
         <ui:BindingProxy x:Key="Proxy" Proxy="{Binding}" />
+
+        <ContextMenu x:Key="WorkspacesContextMenu">
+            <MenuItem
+                Command="{Binding Proxy.WorkspaceMenu.RenameCommand, Source={StaticResource Proxy}}"
+                CommandParameter="{Binding}"
+                Header="Rename" />
+            <MenuItem
+                Command="{Binding Proxy.WorkspaceMenu.SetAsDefaultCommand, Source={StaticResource Proxy}}"
+                CommandParameter="{Binding}"
+                Header="Set as default" />
+            <MenuItem Header="Change order">
+                <MenuItem
+                    Command="{Binding Proxy.WorkspaceMenu.MoveLeftCommand, Source={StaticResource Proxy}}"
+                    CommandParameter="{Binding}"
+                    Header="Move left" />
+                <MenuItem
+                    Command="{Binding Proxy.WorkspaceMenu.MoveRightCommand, Source={StaticResource Proxy}}"
+                    CommandParameter="{Binding}"
+                    Header="Move right" />
+            </MenuItem>
+            <MenuItem
+                Command="{Binding Proxy.WorkspaceMenu.ExportCommand, Source={StaticResource Proxy}}"
+                CommandParameter="{Binding}"
+                Header="Export" />
+            <Separator />
+            <MenuItem
+                Command="{Binding Proxy.WorkspaceMenu.ClearCommand, Source={StaticResource Proxy}}"
+                CommandParameter="{Binding}"
+                Header="Clear" />
+            <MenuItem
+                Command="{Binding Proxy.WorkspaceMenu.DeleteCommand, Source={StaticResource Proxy}}"
+                CommandParameter="{Binding}"
+                Header="Delete" />
+        </ContextMenu>
+
+        <ContextMenu x:Key="BarcodesContextMenu">
+            <MenuItem
+                Command="{Binding Proxy.BarcodeMenu.EditCommand, Source={StaticResource Proxy}}"
+                CommandParameter="{Binding}"
+                Header="Edit" />
+            <MenuItem Header="Change order">
+                <MenuItem
+                    Command="{Binding Proxy.BarcodeMenu.MoveUpCommand, Source={StaticResource Proxy}}"
+                    CommandParameter="{Binding}"
+                    Header="Move up" />
+                <MenuItem
+                    Command="{Binding Proxy.BarcodeMenu.MoveDownCommand, Source={StaticResource Proxy}}"
+                    CommandParameter="{Binding}"
+                    Header="Move down" />
+            </MenuItem>
+            <MenuItem
+                Command="{Binding Proxy.BarcodeMenu.OpenInNewWindowCommand, Source={StaticResource Proxy}}"
+                CommandParameter="{Binding}"
+                Header="Open in new window" />
+            <MenuItem
+                Command="{Binding Proxy.BarcodeMenu.SaveToImageFileCommand, Source={StaticResource Proxy}}"
+                CommandParameter="{Binding}"
+                Header="Save to image file" />
+            <MenuItem
+                Command="{Binding Proxy.BarcodeMenu.CopyToClipboardCommand, Source={StaticResource Proxy}}"
+                CommandParameter="{Binding}"
+                Header="Copy to clipboard" />
+            <MenuItem
+                Command="{Binding Proxy.BarcodeMenu.ExportCommand, Source={StaticResource Proxy}}"
+                CommandParameter="{Binding}"
+                Header="Export" />
+            <MenuItem
+                Command="{Binding Proxy.BarcodeMenu.ChangeWorkspaceCommand, Source={StaticResource Proxy}}"
+                CommandParameter="{Binding}"
+                Header="Change workspace" />
+            <Separator />
+            <MenuItem
+                Command="{Binding Proxy.BarcodeMenu.DeleteCommand, Source={StaticResource Proxy}}"
+                CommandParameter="{Binding}"
+                Header="Delete" />
+        </ContextMenu>
     </ui:BaseWindow.Resources>
 
     <Window.InputBindings>
@@ -85,22 +161,7 @@
                     <Style TargetType="{x:Type TabItem}">
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="ContextMenu">
-                                    <Setter.Value>
-                                        <ContextMenu DataContext="{Binding Proxy.WorkspaceMenu, Source={StaticResource Proxy}}">
-                                            <MenuItem Command="{Binding RenameCommand}" Header="Rename" />
-                                            <MenuItem Command="{Binding SetAsDefaultCommand}" Header="Set as default" />
-                                            <MenuItem Header="Change order">
-                                                <MenuItem Command="{Binding MoveLeftCommand}" Header="Move left" />
-                                                <MenuItem Command="{Binding MoveRightCommand}" Header="Move right" />
-                                            </MenuItem>
-                                            <MenuItem Command="{Binding ExportCommand}" Header="Export" />
-                                            <Separator />
-                                            <MenuItem Command="{Binding ClearCommand}" Header="Clear" />
-                                            <MenuItem Command="{Binding DeleteCommand}" Header="Delete" />
-                                        </ContextMenu>
-                                    </Setter.Value>
-                                </Setter>
+                                <Setter Property="ContextMenu" Value="{StaticResource WorkspacesContextMenu}" />
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -122,11 +183,6 @@
                                 ItemsSource="{Binding Barcodes}"
                                 SelectedItem="{Binding SelectedBarcode}"
                                 SelectionMode="Single">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="MouseDoubleClick">
-                                        <prism:InvokeCommandAction Command="{Binding Proxy.BarcodeMenu.OpenInNewWindowCommand, Source={StaticResource Proxy}}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
                                 <ListView.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <WrapPanel
@@ -138,50 +194,12 @@
                                 </ListView.ItemsPanel>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <controls:BarcodeView>
-                                            <controls:BarcodeView.ContextMenu>
-                                                <ContextMenu>
-                                                    <MenuItem
-                                                        Command="{Binding Proxy.BarcodeMenu.EditCommand, Source={StaticResource Proxy}}"
-                                                        CommandParameter="{Binding}"
-                                                        Header="Edit" />
-                                                    <MenuItem Header="Change order">
-                                                        <MenuItem
-                                                            Command="{Binding Proxy.BarcodeMenu.MoveUpCommand, Source={StaticResource Proxy}}"
-                                                            CommandParameter="{Binding}"
-                                                            Header="Move up" />
-                                                        <MenuItem
-                                                            Command="{Binding Proxy.BarcodeMenu.MoveDownCommand, Source={StaticResource Proxy}}"
-                                                            CommandParameter="{Binding}"
-                                                            Header="Move down" />
-                                                    </MenuItem>
-                                                    <MenuItem
-                                                        Command="{Binding Proxy.BarcodeMenu.OpenInNewWindowCommand, Source={StaticResource Proxy}}"
-                                                        CommandParameter="{Binding}"
-                                                        Header="Open in new window" />
-                                                    <MenuItem
-                                                        Command="{Binding Proxy.BarcodeMenu.SaveToImageFileCommand, Source={StaticResource Proxy}}"
-                                                        CommandParameter="{Binding}"
-                                                        Header="Save to image file" />
-                                                    <MenuItem
-                                                        Command="{Binding Proxy.BarcodeMenu.CopyToClipboardCommand, Source={StaticResource Proxy}}"
-                                                        CommandParameter="{Binding}"
-                                                        Header="Copy to clipboard" />
-                                                    <MenuItem
-                                                        Command="{Binding Proxy.BarcodeMenu.ExportCommand, Source={StaticResource Proxy}}"
-                                                        CommandParameter="{Binding}"
-                                                        Header="Export" />
-                                                    <MenuItem
-                                                        Command="{Binding Proxy.BarcodeMenu.ChangeWorkspaceCommand, Source={StaticResource Proxy}}"
-                                                        CommandParameter="{Binding}"
-                                                        Header="Change workspace" />
-                                                    <Separator />
-                                                    <MenuItem
-                                                        Command="{Binding Proxy.BarcodeMenu.DeleteCommand, Source={StaticResource Proxy}}"
-                                                        CommandParameter="{Binding}"
-                                                        Header="Delete" />
-                                                </ContextMenu>
-                                            </controls:BarcodeView.ContextMenu>
+                                        <controls:BarcodeView ContextMenu="{StaticResource BarcodesContextMenu}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseDoubleClick">
+                                                    <prism:InvokeCommandAction Command="{Binding Proxy.BarcodeMenu.OpenInNewWindowCommand, Source={StaticResource Proxy}}" CommandParameter="{Binding}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                         </controls:BarcodeView>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>

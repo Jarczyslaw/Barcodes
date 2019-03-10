@@ -94,7 +94,7 @@ namespace Barcodes.Core.ViewModels
             SelectedWorkspace = workspace;
         }
 
-        private bool WorkspaceValidationRule(string workspaceName)
+        private bool WorkspaceNameValidation(string workspaceName)
         {
             if (string.IsNullOrEmpty(workspaceName))
             {
@@ -107,7 +107,7 @@ namespace Barcodes.Core.ViewModels
 
         public void AddNewWorkspace()
         {
-            var workspaceName = servicesContainer.AppWindowsService.ShowWorkspaceNameWindow(string.Empty, WorkspaceValidationRule);
+            var workspaceName = servicesContainer.AppWindowsService.ShowWorkspaceNameWindow(string.Empty, WorkspaceNameValidation);
             if (string.IsNullOrEmpty(workspaceName))
             {
                 return;
@@ -346,7 +346,7 @@ namespace Barcodes.Core.ViewModels
                 return true;
             }
 
-            var workspaceName = servicesContainer.AppWindowsService.ShowWorkspaceNameWindow(null, WorkspaceValidationRule);
+            var workspaceName = servicesContainer.AppWindowsService.ShowWorkspaceNameWindow(null, WorkspaceNameValidation);
             if (string.IsNullOrEmpty(workspaceName))
             {
                 return false;
@@ -381,11 +381,6 @@ namespace Barcodes.Core.ViewModels
 
         public void DeleteBarcode(BarcodeViewModel barcode)
         {
-            if (barcode == null)
-            {
-                return;
-            }
-
             if (!servicesContainer.AppDialogsService.ShowYesNoQuestion($"Do you really want to delete barcode {barcode.Title}?"))
             {
                 return;
@@ -394,23 +389,13 @@ namespace Barcodes.Core.ViewModels
             SelectedWorkspace.RemoveBarcode(barcode);
         }
 
-        public void OpenInNewWindow()
+        public void OpenInNewWindow(BarcodeViewModel barcode)
         {
-            if (SelectedBarcode == null)
-            {
-                return;
-            }
-
-            servicesContainer.AppWindowsService.OpenBarcodeWindow(SelectedBarcode);
+            servicesContainer.AppWindowsService.OpenBarcodeWindow(barcode);
         }
 
         public void SaveToImageFile(BarcodeViewModel barcode)
         {
-            if (barcode == null)
-            {
-                return;
-            }
-
             try
             {
                 var filePath = servicesContainer.AppDialogsService.SavePngFile(barcode.Title);
@@ -430,11 +415,6 @@ namespace Barcodes.Core.ViewModels
 
         public void CopyToClipboard(BarcodeViewModel barcode)
         {
-            if (barcode == null)
-            {
-                return;
-            }
-
             servicesContainer.SystemService.CopyToClipboard(barcode.Barcode);
             StatusMessage = $"Barcode {barcode.Title} copied to clipboard";
         }
@@ -449,19 +429,9 @@ namespace Barcodes.Core.ViewModels
             SelectedWorkspace.MoveUp(barcode);
         }
 
-        public void RenameWorkspace()
+        public bool RenameWorkspace(WorkspaceViewModel workspace)
         {
-            if (SelectedWorkspace == null)
-            {
-                return;
-            }
-
-            RenameWorkspace(SelectedWorkspace);
-        }
-
-        private bool RenameWorkspace(WorkspaceViewModel workspace)
-        {
-            var workspaceName = servicesContainer.AppWindowsService.ShowWorkspaceNameWindow(workspace.Name, WorkspaceValidationRule);
+            var workspaceName = servicesContainer.AppWindowsService.ShowWorkspaceNameWindow(workspace.Name, WorkspaceNameValidation);
             if (string.IsNullOrEmpty(workspaceName))
             {
                 return false;
@@ -471,53 +441,33 @@ namespace Barcodes.Core.ViewModels
             return true;
         }
 
-        public void DeleteWorkspace()
+        public void DeleteWorkspace(WorkspaceViewModel workspace)
         {
-            if (SelectedWorkspace == null)
+            if (!servicesContainer.AppDialogsService.ShowYesNoQuestion($"Do you really want to delete workspace {workspace.Name}? This will delete all the codes of this workspace"))
             {
                 return;
             }
-
-            if (!servicesContainer.AppDialogsService.ShowYesNoQuestion($"Do you really want to delete workspace {SelectedWorkspace.Name}? This will delete all the codes of this workspace"))
-            {
-                return;
-            }
-            RemoveWorkspace(SelectedWorkspace);
+            RemoveWorkspace(workspace);
         }
 
-        public void SetWorkspaceAsDefault()
+        public void SetWorkspaceAsDefault(WorkspaceViewModel workspace)
         {
-            if (SelectedWorkspace == null)
+            foreach (var w in Workspaces)
             {
-                return;
+                w.Default = false;
             }
-
-            foreach (var workspace in Workspaces)
-            {
-                workspace.Default = false;
-            }
-            SelectedWorkspace.Default = true;
+            workspace.Default = true;
         }
 
-        public void MoveWorkspaceLeft()
+        public void MoveWorkspaceLeft(WorkspaceViewModel workspace)
         {
-            if (SelectedWorkspace == null)
-            {
-                return;
-            }
-
-            var index = workspaces.IndexOf(SelectedWorkspace);
+            var index = workspaces.IndexOf(workspace);
             workspaces.ShiftLeft(index);
         }
 
-        public void MoveWorkspaceRight()
+        public void MoveWorkspaceRight(WorkspaceViewModel workspace)
         {
-            if (SelectedWorkspace == null)
-            {
-                return;
-            }
-
-            var index = workspaces.IndexOf(SelectedWorkspace);
+            var index = workspaces.IndexOf(workspace);
             workspaces.ShiftRight(index);
         }
 
@@ -557,20 +507,15 @@ namespace Barcodes.Core.ViewModels
             targetWorkspace.Barcodes.Insert(0, barcode);
         }
 
-        public void ClearWorkspace()
+        public void ClearWorkspace(WorkspaceViewModel workspace)
         {
-            if (SelectedWorkspace == null || SelectedWorkspace.Barcodes.Count == 0)
-            {
-                return;
-            }
-
             var dialogResult = servicesContainer.AppDialogsService.ShowYesNoQuestion("Do you really want to clear active workspace?");
             if (!dialogResult)
             {
                 return;
             }
 
-            SelectedWorkspace.Barcodes.Clear();
+            workspace.Barcodes.Clear();
         }
 
         public bool CheckStorageChanges()
@@ -630,9 +575,9 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public void ExportWorkspace()
+        public void ExportWorkspace(WorkspaceViewModel workspace)
         {
-            var workspaceFile = servicesContainer.AppDialogsService.ExportWorkspaceFile(SelectedWorkspace.Name);
+            var workspaceFile = servicesContainer.AppDialogsService.ExportWorkspaceFile(workspace.Name);
             if (string.IsNullOrEmpty(workspaceFile))
             {
                 return;
@@ -640,8 +585,8 @@ namespace Barcodes.Core.ViewModels
 
             try
             {
-                servicesContainer.StorageService.ExportWorkspace(workspaceFile, SelectedWorkspace.ToStorage());
-                StatusMessage = $"{SelectedWorkspace.Name} exported successfully";
+                servicesContainer.StorageService.ExportWorkspace(workspaceFile, workspace.ToStorage());
+                StatusMessage = $"{workspace.Name} exported successfully";
             }
             catch (Exception exc)
             {
