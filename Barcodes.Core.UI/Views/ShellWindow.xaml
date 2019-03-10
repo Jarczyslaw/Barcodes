@@ -138,52 +138,53 @@
                                 </ListView.ItemsPanel>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <controls:BarcodeView />
+                                        <controls:BarcodeView>
+                                            <controls:BarcodeView.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem
+                                                        Command="{Binding Proxy.BarcodeMenu.EditCommand, Source={StaticResource Proxy}}"
+                                                        CommandParameter="{Binding}"
+                                                        Header="Edit" />
+                                                    <MenuItem Header="Change order">
+                                                        <MenuItem
+                                                            Command="{Binding Proxy.BarcodeMenu.MoveUpCommand, Source={StaticResource Proxy}}"
+                                                            CommandParameter="{Binding}"
+                                                            Header="Move up" />
+                                                        <MenuItem
+                                                            Command="{Binding Proxy.BarcodeMenu.MoveDownCommand, Source={StaticResource Proxy}}"
+                                                            CommandParameter="{Binding}"
+                                                            Header="Move down" />
+                                                    </MenuItem>
+                                                    <MenuItem
+                                                        Command="{Binding Proxy.BarcodeMenu.OpenInNewWindowCommand, Source={StaticResource Proxy}}"
+                                                        CommandParameter="{Binding}"
+                                                        Header="Open in new window" />
+                                                    <MenuItem
+                                                        Command="{Binding Proxy.BarcodeMenu.SaveToImageFileCommand, Source={StaticResource Proxy}}"
+                                                        CommandParameter="{Binding}"
+                                                        Header="Save to image file" />
+                                                    <MenuItem
+                                                        Command="{Binding Proxy.BarcodeMenu.CopyToClipboardCommand, Source={StaticResource Proxy}}"
+                                                        CommandParameter="{Binding}"
+                                                        Header="Copy to clipboard" />
+                                                    <MenuItem
+                                                        Command="{Binding Proxy.BarcodeMenu.ExportCommand, Source={StaticResource Proxy}}"
+                                                        CommandParameter="{Binding}"
+                                                        Header="Export" />
+                                                    <MenuItem
+                                                        Command="{Binding Proxy.BarcodeMenu.ChangeWorkspaceCommand, Source={StaticResource Proxy}}"
+                                                        CommandParameter="{Binding}"
+                                                        Header="Change workspace" />
+                                                    <Separator />
+                                                    <MenuItem
+                                                        Command="{Binding Proxy.BarcodeMenu.DeleteCommand, Source={StaticResource Proxy}}"
+                                                        CommandParameter="{Binding}"
+                                                        Header="Delete" />
+                                                </ContextMenu>
+                                            </controls:BarcodeView.ContextMenu>
+                                        </controls:BarcodeView>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
-                                <ListView.ContextMenu>
-                                    <ContextMenu DataContext="{Binding Proxy.BarcodeMenu, Source={StaticResource Proxy}}">
-                                        <MenuItem
-                                            Command="{Binding EditCommand}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
-                                            Header="Edit" />
-                                        <MenuItem Header="Change order">
-                                            <MenuItem
-                                                Command="{Binding MoveUpCommand}"
-                                                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
-                                                Header="Move up" />
-                                            <MenuItem
-                                                Command="{Binding MoveDownCommand}"
-                                                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
-                                                Header="Move down" />
-                                        </MenuItem>
-                                        <MenuItem
-                                            Command="{Binding OpenInNewWindowCommand}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
-                                            Header="Open in new window" />
-                                        <MenuItem
-                                            Command="{Binding SaveToImageFileCommand}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
-                                            Header="Save to image file" />
-                                        <MenuItem
-                                            Command="{Binding CopyToClipboardCommand}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
-                                            Header="Copy to clipboard" />
-                                        <MenuItem
-                                            Command="{Binding ExportCommand}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
-                                            Header="Export" />
-                                        <MenuItem
-                                            Command="{Binding ChangeWorkspaceCommand}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
-                                            Header="Change workspace" />
-                                        <Separator />
-                                        <MenuItem
-                                            Command="{Binding DeleteCommand}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
-                                            Header="Delete" />
-                                    </ContextMenu>
-                                </ListView.ContextMenu>
                             </ListView>
                         </GroupBox>
                     </DataTemplate>
