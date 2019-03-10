@@ -45,11 +45,7 @@ namespace Barcodes.Services.Storage
         {
             unchecked
             {
-                return Title.GetHashCode()
-                                + (17 * Data.GetHashCode())
-                                + (17 * Width.GetHashCode())
-                                + (17 * Height.GetHashCode())
-                                + (17 * DefaultSize.GetHashCode());
+                return (17 * Title.GetHashCode()) + Data.GetHashCode() + Width.GetHashCode() + Height.GetHashCode() + DefaultSize.GetHashCode();
             }
         }
     }

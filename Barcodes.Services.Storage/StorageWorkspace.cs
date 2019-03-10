@@ -31,11 +31,10 @@ namespace Barcodes.Services.Storage
         {
             unchecked
             {
-                int hash = Title.GetHashCode();
-                hash += 17 * Default.GetHashCode();
+                int hash = (17 * Title.GetHashCode()) + Default.GetHashCode();
                 foreach (var barcode in Barcodes)
                 {
-                    hash = (hash * 17) + barcode.GetHashCode();
+                    hash += barcode.GetHashCode();
                 }
                 return hash;
             }
