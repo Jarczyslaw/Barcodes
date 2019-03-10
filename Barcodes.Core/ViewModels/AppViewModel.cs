@@ -64,6 +64,11 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref selectedWorkspace, value);
         }
 
+        public BarcodeViewModel SelectedBarcode
+        {
+            get => SelectedWorkspace?.SelectedBarcode;
+        }
+
         public ReadOnlyObservableCollection<WorkspaceViewModel> Workspaces
         {
             get => new ReadOnlyObservableCollection<WorkspaceViewModel>(workspaces);
@@ -391,12 +396,12 @@ namespace Barcodes.Core.ViewModels
 
         public void OpenInNewWindow()
         {
-            if (SelectedWorkspace.SelectedBarcode == null)
+            if (SelectedBarcode == null)
             {
                 return;
             }
 
-            servicesContainer.AppWindowsService.OpenBarcodeWindow(SelectedWorkspace.SelectedBarcode);
+            servicesContainer.AppWindowsService.OpenBarcodeWindow(SelectedBarcode);
         }
 
         public void SaveToImageFile(BarcodeViewModel barcode)
