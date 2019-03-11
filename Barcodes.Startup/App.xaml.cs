@@ -10,13 +10,22 @@ using Barcodes.Services.Windows;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Unity;
+using System.Globalization;
+using System.Threading;
 using System.Windows;
+using System.Windows.Markup;
 
 namespace Barcodes.Startup
 {
     public partial class App : PrismApplication
     {
         private AppGlobalExceptionHandler globalExceptionHandler;
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            SetCulture();
+            base.OnStartup(e);
+        }
 
         protected override Window CreateShell()
         {
@@ -68,6 +77,15 @@ namespace Barcodes.Startup
         private void RegisterGlobalExceptionHandler()
         {
             globalExceptionHandler = Container.Resolve<AppGlobalExceptionHandler>();
+        }
+
+        private void SetCulture()
+        {
+            var cultureInfo = new CultureInfo("en-EN");
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
         }
     }
 }
