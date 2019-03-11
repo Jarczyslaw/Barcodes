@@ -629,7 +629,7 @@ namespace Barcodes.Core.ViewModels
         {
             try
             {
-                servicesContainer.AppSettingsService.Load(true);
+                servicesContainer.AppSettingsService.Load(false);
                 ApplySettings(servicesContainer.AppSettingsService.AppSettings);
             }
             catch (Exception exc)
