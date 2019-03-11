@@ -10,5 +10,11 @@ namespace Barcodes.Core.UI.Views
         {
             InitializeComponent();
         }
+
+        protected override void OnViewShown()
+        {
+            base.OnViewShown();
+            Activate();
+        }
     }
 }

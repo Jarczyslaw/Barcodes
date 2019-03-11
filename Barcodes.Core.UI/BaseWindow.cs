@@ -38,7 +38,7 @@ namespace Barcodes.Core.UI
             }
         }
 
-        private void OnViewShown()
+        protected virtual void OnViewShown()
         {
             (DataContext as IOnShowAware)?.OnShow();
             if (DataContext is ICloseSource closeAware)
