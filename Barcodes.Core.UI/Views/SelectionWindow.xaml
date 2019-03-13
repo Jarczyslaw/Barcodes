@@ -23,6 +23,7 @@
                 </Grid.RowDefinitions>
                 <Label Content="{Binding Label, FallbackValue=Label:}" />
                 <ComboBox
+                    x:Name="cbSelectedItem"
                     Grid.Column="1"
                     DisplayMemberPath="{Binding DisplayMemberPath}"
                     ItemsSource="{Binding Items}"

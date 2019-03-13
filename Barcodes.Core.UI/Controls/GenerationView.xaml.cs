@@ -2,9 +2,6 @@
 
 namespace Barcodes.Core.UI.Controls
 {
-    /// <summary>
-    /// Interaction logic for GenerationView.xaml
-    /// </summary>
     public partial class GenerationView : UserControl
     {
         public GenerationView()

@@ -85,6 +85,7 @@
     <Compile Include="Controls\BarcodeView.xaml.cs">
       <DependentUpon>BarcodeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CustomTextBox.cs" />
     <Compile Include="Controls\GenerationView.xaml.cs">
       <DependentUpon>GenerationView.xaml</DependentUpon>
     </Compile>

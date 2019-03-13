@@ -13,6 +13,6 @@
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
     <Grid>
-        <controls:GenerationView />
+        <controls:GenerationView x:Name="generationView" />
     </Grid>
 </ui:BaseWindow>
