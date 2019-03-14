@@ -174,7 +174,10 @@
                         InputGestureText="Ctrl+Shift+W" />
                 </MenuItem>
                 <MenuItem Command="{Binding ExportToPdfCommand}" Header="_Export to PDF" />
-                <MenuItem Command="{Binding ShowHelpCommand}" Header="_Help" />
+                <MenuItem Header="_Help">
+                    <MenuItem Command="{Binding ShowExamplesCommand}" Header="_Examples" />
+                    <MenuItem Command="{Binding ShowAboutCommand}" Header="_About" />
+                </MenuItem>
                 <MenuItem
                     HorizontalAlignment="Right"
                     Header="Barcodes visible"
@@ -218,21 +221,16 @@
                             <ListView
                                 Background="Transparent"
                                 BorderThickness="0"
+                                ItemsPanel="{StaticResource TileListViewTemplate}"
                                 ItemsSource="{Binding Barcodes}"
                                 SelectedItem="{Binding SelectedBarcode}"
                                 SelectionMode="Single">
-                                <ListView.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel
-                                            Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
-                                            MinWidth="{Binding ItemWidth, RelativeSource={RelativeSource Self}}"
-                                            ItemHeight="{Binding (ListView.View).ItemHeight, RelativeSource={RelativeSource AncestorType=ListView}}"
-                                            ItemWidth="{Binding (ListView.View).ItemWidth, RelativeSource={RelativeSource AncestorType=ListView}}" />
-                                    </ItemsPanelTemplate>
-                                </ListView.ItemsPanel>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <controls:BarcodeView BarcodeVisible="{Binding Proxy.App.BarcodesVisible, Source={StaticResource Proxy}, Mode=OneWay}" ContextMenu="{StaticResource BarcodesContextMenu}">
+                                        <controls:BarcodeView
+                                            BarcodeVisible="{Binding Proxy.App.BarcodesVisible, Source={StaticResource Proxy}, Mode=OneWay}"
+                                            ContextMenu="{StaticResource BarcodesContextMenu}"
+                                            DescriptionVisible="False">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseDoubleClick">
                                                     <prism:InvokeCommandAction Command="{Binding Proxy.BarcodeMenu.OpenInNewWindowCommand, Source={StaticResource Proxy}}" CommandParameter="{Binding}" />

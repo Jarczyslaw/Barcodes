@@ -19,11 +19,26 @@ namespace Barcodes.Core.UI.Controls
             set => SetValue(BarcodeVisibleProperty, value);
         }
 
+        public bool DescriptionVisible
+        {
+            set
+            {
+                var visibility = GetVisibility(value);
+                lblDescription.Visibility = visibility;
+                tbDescription.Visibility = visibility;
+            }
+        }
+
         private static void OnBarcodeVisiblePropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
             var barcodeView = source as BarcodeView;
             var barcodeVisible = (bool)e.NewValue;
-            barcodeView.barcodeImage.Visibility = barcodeVisible ? Visibility.Visible : Visibility.Collapsed;
+            barcodeView.barcodeImage.Visibility = GetVisibility(barcodeVisible);
+        }
+
+        private static Visibility GetVisibility(bool value)
+        {
+            return value ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

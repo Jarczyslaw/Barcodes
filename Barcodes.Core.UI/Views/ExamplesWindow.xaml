@@ -1,0 +1,32 @@
+﻿<ui:BaseWindow
+    x:Class="Barcodes.Core.UI.Views.ExamplesWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Barcodes.Core.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:Barcodes.Core.UI"
+    Title="Barcodes - Examples"
+    Width="400"
+    Icon="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
+    ResizeMode="CanMinimize"
+    SizeToContent="Height"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+    <Grid>
+        <GroupBox Padding="0" Header="Barcodes">
+            <ListView
+                Background="Transparent"
+                BorderThickness="0"
+                ItemsPanel="{StaticResource TileListViewTemplate}"
+                ItemsSource="{Binding Barcodes}"
+                SelectionMode="Extended">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <controls:BarcodeView BarcodeVisible="true" DescriptionVisible="True" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </GroupBox>
+    </Grid>
+</ui:BaseWindow>

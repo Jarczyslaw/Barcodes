@@ -8,11 +8,11 @@ using System.Windows.Input;
 
 namespace Barcodes.Core.UI.Views
 {
-    public partial class HelpWindow : BaseWindow
+    public partial class AboutWindow : BaseWindow
     {
         private readonly IGeneratorService barcodesGenerator;
 
-        public HelpWindow(IGeneratorService barcodesGenerator)
+        public AboutWindow(IGeneratorService barcodesGenerator)
         {
             this.barcodesGenerator = barcodesGenerator;
 
@@ -20,9 +20,9 @@ namespace Barcodes.Core.UI.Views
             ShowVersion();
         }
 
-        private void HelpWindow_Loaded(object sender, RoutedEventArgs e)
+        private void AboutWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            KeyDown += HelpWindow_KeyDown;
+            KeyDown += AboutWindow_KeyDown;
             GenerateRandomBarcode();
         }
 
@@ -47,7 +47,7 @@ namespace Barcodes.Core.UI.Views
             catch { }
         }
 
-        private void HelpWindow_KeyDown(object sender, KeyEventArgs e)
+        private void AboutWindow_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.F5)
             {

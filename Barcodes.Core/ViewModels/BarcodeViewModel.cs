@@ -8,6 +8,7 @@ namespace Barcodes.Core.ViewModels
     public class BarcodeViewModel : BindableBase
     {
         private string title;
+        private string description;
         private BitmapSource barcode;
 
         public BarcodeViewModel(GenerationData generationData)
@@ -26,6 +27,12 @@ namespace Barcodes.Core.ViewModels
         {
             get => title;
             set => SetProperty(ref title, value);
+        }
+
+        public string Description
+        {
+            get => description;
+            set => SetProperty(ref description, value);
         }
 
         public string TypeTitle

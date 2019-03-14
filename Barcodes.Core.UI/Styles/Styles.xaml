@@ -29,6 +29,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Margin" Value="{StaticResource DefaultMargin}" />
     </Style>
+
     <Style TargetType="MenuItem">
         <Setter Property="Padding" Value="5" />
     </Style>

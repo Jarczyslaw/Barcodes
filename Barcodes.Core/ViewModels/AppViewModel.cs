@@ -229,9 +229,14 @@ namespace Barcodes.Core.ViewModels
             };
         }
 
-        public void ShowHelp()
+        public void ShowAbout()
         {
-            servicesContainer.AppWindowsService.ShowHelpWindow();
+            servicesContainer.AppWindowsService.ShowAboutWindow();
+        }
+
+        public void ShowExamples()
+        {
+            servicesContainer.AppWindowsService.ShowExamplesWindow();
         }
 
         public void ExportToPdf()

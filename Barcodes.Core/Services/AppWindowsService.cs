@@ -45,9 +45,15 @@ namespace Barcodes.Core.Services
             return dataContext.ResultData;
         }
 
-        public void ShowHelpWindow()
+        public void ShowAboutWindow()
         {
-            var window = containerExtension.Resolve<HelpWindow>();
+            var window = containerExtension.Resolve<AboutWindow>();
+            ShowDialog(window);
+        }
+
+        public void ShowExamplesWindow()
+        {
+            var window = containerExtension.Resolve<ExamplesWindow>();
             ShowDialog(window);
         }
 

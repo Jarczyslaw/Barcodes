@@ -11,7 +11,8 @@ namespace Barcodes.Core.Services
         void OpenBarcodeWindow(object barcodeViewModel);
         string OpenNmvsProductWindow(string nmvsData);
         string OpenEan128ProductWindow(string ean128Data);
-        void ShowHelpWindow();
+        void ShowAboutWindow();
+        void ShowExamplesWindow();
         GenerationViewModelResult ShowGenerationWindow(BarcodeViewModel barcode = null);
         string ShowWorkspaceNameWindow(string currentName, Func<string, bool> validationRule);
         WorkspaceViewModel SelectBarcodesWorkspace(IEnumerable<WorkspaceViewModel> workspaces);

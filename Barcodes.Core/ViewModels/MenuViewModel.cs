@@ -13,7 +13,8 @@ namespace Barcodes.Core.ViewModels
             OpenStorageLocationCommand = new DelegateCommand(app.OpenStorageLocation);
             CloseCommand = new DelegateCommand(() => OnClose?.Invoke());
             ExportToPdfCommand = new DelegateCommand(app.ExportToPdf);
-            ShowHelpCommand = new DelegateCommand(app.ShowHelp);
+            ShowAboutCommand = new DelegateCommand(app.ShowAbout);
+            ShowExamplesCommand = new DelegateCommand(app.ShowExamples);
             AddNewWorkspaceCommand = new DelegateCommand(app.AddNewWorkspace);
             AddNewBarcodeCommand = new DelegateCommand(app.AddNewBarcode);
             ImportBarcodeCommand = new DelegateCommand(app.ImportBarcode);
@@ -25,7 +26,8 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand OpenStorageLocationCommand { get; }
         public DelegateCommand CloseCommand { get; }
         public DelegateCommand ExportToPdfCommand { get; }
-        public DelegateCommand ShowHelpCommand { get; }
+        public DelegateCommand ShowAboutCommand { get; }
+        public DelegateCommand ShowExamplesCommand { get; }
         public DelegateCommand AddNewWorkspaceCommand { get; }
         public DelegateCommand AddNewBarcodeCommand { get; }
         public DelegateCommand ImportBarcodeCommand { get; }

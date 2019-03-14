@@ -107,6 +107,7 @@
     <Compile Include="Services\IAppWindowsService.cs" />
     <Compile Include="Services\IServicesContainer.cs" />
     <Compile Include="ViewModels\BaseInputViewModel.cs" />
+    <Compile Include="ViewModels\ExamplesViewModel.cs" />
     <Compile Include="ViewModels\InputViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="Services\ServicesContainer.cs" />

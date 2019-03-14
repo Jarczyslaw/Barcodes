@@ -1,14 +1,16 @@
-﻿<prism:PrismApplication x:Class="Barcodes.Startup.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"
-             xmlns:converters="clr-namespace:Barcodes.Core.UI.Converters;assembly=Barcodes.Core.UI">
+﻿<prism:PrismApplication
+    x:Class="Barcodes.Startup.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Barcodes.Core.UI.Converters;assembly=Barcodes.Core.UI"
+    xmlns:prism="http://prismlibrary.com/">
     <prism:PrismApplication.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Barcodes.Core.UI;component/Styles/Values.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Barcodes.Core.UI;component/Styles/Colors.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Barcodes.Core.UI;component/Styles/Styles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Barcodes.Core.UI;component/Styles/Templates.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
