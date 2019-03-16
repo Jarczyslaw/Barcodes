@@ -8,23 +8,15 @@ namespace Barcodes.Core.ViewModels
     {
         private ObservableCollection<BarcodeViewModel> barcodes;
 
-        private readonly IGeneratorService generatorService;
-
         public ExamplesViewModel(IGeneratorService generatorService)
         {
-            this.generatorService = generatorService;
-            CreateExamples();
+            Barcodes = BarcodeExamples.CreateExamples(generatorService);
         }
 
         public ObservableCollection<BarcodeViewModel> Barcodes
         {
             get => barcodes;
             set => SetProperty(ref barcodes, value);
-        }
-
-        private void CreateExamples()
-        {
-
         }
     }
 }

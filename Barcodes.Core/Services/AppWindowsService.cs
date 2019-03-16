@@ -54,7 +54,8 @@ namespace Barcodes.Core.Services
         public void ShowExamplesWindow()
         {
             var window = containerExtension.Resolve<ExamplesWindow>();
-            ShowDialog(window);
+            var dataContext = containerExtension.Resolve<ExamplesViewModel>();
+            ShowDialog(window, dataContext);
         }
 
         public GenerationViewModelResult ShowGenerationWindow(BarcodeViewModel barcode = null)
