@@ -203,6 +203,14 @@
       <Project>{F2EAF86B-611C-4CD8-964E-8EA3A62B82AC}</Project>
       <Name>Barcodes.Extensions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Barcodes.Services.AppSettings\Barcodes.Services.AppSettings.csproj">
+      <Project>{EEB99D9E-5B41-4CD2-8426-C875BC8D2B08}</Project>
+      <Name>Barcodes.Services.AppSettings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Barcodes.Services.Dialogs\Barcodes.Services.Dialogs.csproj">
+      <Project>{7519097D-59FF-4717-A043-C083A7AA9A5D}</Project>
+      <Name>Barcodes.Services.Dialogs</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Barcodes.Services.Generator\Barcodes.Services.Generator.csproj">
       <Project>{D4D91166-8BF2-4E82-825A-BD1F46B05B48}</Project>
       <Name>Barcodes.Services.Generator</Name>

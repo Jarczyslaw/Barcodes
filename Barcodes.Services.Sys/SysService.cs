@@ -2,18 +2,24 @@
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace Barcodes.Services.System
+namespace Barcodes.Services.Sys
 {
-    public class SystemService : ISystemService
+    public class SysService : ISysService
     {
         public void CopyToClipboard(BitmapSource bitmapSource)
         {
             Clipboard.SetImage(bitmapSource);
         }
 
-        public void OpenLocation(string location)
+        public void OpenAppLocation()
         {
-            string argument = "/select, \"" + location + "\"";
+            var appLocation = System.AppDomain.CurrentDomain.BaseDirectory;
+            StartProcess(appLocation);
+        }
+
+        public void OpenFileLocation(string filePath)
+        {
+            var argument = "/select, \"" + filePath + "\"";
             StartProcess("explorer.exe", argument);
         }
 

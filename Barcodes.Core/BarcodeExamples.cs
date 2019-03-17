@@ -24,14 +24,14 @@ namespace Barcodes.Core
         {
             var data = new GenerationData
             {
-                Data = "1234567890123",
+                Data = "5909991107123",
                 ValidateCodeText = false,
                 Type = BarcodeType.Ean13
             };
 
             return new BarcodeViewModel(data)
             {
-                Title = "Short product",
+                Title = "Kod produktu",
                 Barcode = generatorService.CreateBarcode(data),
                 Description = "Apap - 53627"
             };
@@ -48,9 +48,9 @@ namespace Barcodes.Core
 
             return new BarcodeViewModel(data)
             {
-                Title = "Location",
+                Title = "Lokalizacja",
                 Barcode = generatorService.CreateBarcode(data),
-                Description = "LK<10Digits>"
+                Description = "LK + 10 cyfr"
             };
         }
 
@@ -65,9 +65,9 @@ namespace Barcodes.Core
 
             return new BarcodeViewModel(data)
             {
-                Title = "Order",
+                Title = "Zlecenie",
                 Barcode = generatorService.CreateBarcode(data),
-                Description = "DZ<TODO>"
+                Description = "DZ + numer zlecenia"
             };
         }
 
@@ -82,9 +82,9 @@ namespace Barcodes.Core
 
             return new BarcodeViewModel(data)
             {
-                Title = "External release",
+                Title = "WZka",
                 Barcode = generatorService.CreateBarcode(data),
-                Description = "WZ<TODO>"
+                Description = "WZ + numer WZki"
             };
         }
 
@@ -99,9 +99,9 @@ namespace Barcodes.Core
 
             return new BarcodeViewModel(data)
             {
-                Title = "Container",
+                Title = "Pojemnik",
                 Barcode = generatorService.CreateBarcode(data),
-                Description = "PJ<7digits>"
+                Description = "PJ + numer pojemnika (7 cyfr)"
             };
         }
 
@@ -116,9 +116,9 @@ namespace Barcodes.Core
 
             return new BarcodeViewModel(data)
             {
-                Title = "User",
+                Title = "Użytkownik",
                 Barcode = generatorService.CreateBarcode(data),
-                Description = "PR<5digits>"
+                Description = "PR + numer użytkownika (5 cyfr)"
             };
         }
 
@@ -133,9 +133,9 @@ namespace Barcodes.Core
 
             return new BarcodeViewModel(data)
             {
-                Title = "Long product",
+                Title = "Długi kod produktu",
                 Barcode = generatorService.CreateBarcode(data),
-                Description = "(02)<>(17)<>(21)<>"
+                Description = "(02) + 0 + EAN13 + (17) + data ważności (6 cyfr) + (21) + nr serii"
             };
         }
     }

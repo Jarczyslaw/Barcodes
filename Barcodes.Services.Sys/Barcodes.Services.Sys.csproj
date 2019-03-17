@@ -7,8 +7,8 @@
     <ProjectGuid>{DD4DA36D-8F15-433C-814D-C3DF0EFBB6A4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Barcodes.Services.System</RootNamespace>
-    <AssemblyName>Barcodes.Services.System</AssemblyName>
+    <RootNamespace>Barcodes.Services.Sys</RootNamespace>
+    <AssemblyName>Barcodes.Services.Sys</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -42,8 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ISystemService.cs" />
-    <Compile Include="SystemService.cs" />
+    <Compile Include="ISysService.cs" />
+    <Compile Include="SysService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -320,6 +320,18 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
+        public void OpenAppLocation()
+        {
+            try
+            {
+                servicesContainer.SystemService.OpenAppLocation();
+            }
+            catch (Exception exc)
+            {
+                servicesContainer.AppDialogsService.ShowException("Can not open app location", exc);
+            }
+        }
+
         public void OpenStorageLocation()
         {
             const string openErrorMessage = "Can not open storage file location";
@@ -332,7 +344,7 @@ namespace Barcodes.Core.ViewModels
                 }
 
                 var storagePath = servicesContainer.AppSettingsService.StoragePath;
-                servicesContainer.SystemService.OpenLocation(storagePath);
+                servicesContainer.SystemService.OpenFileLocation(storagePath);
             }
             catch (Exception exc)
             {

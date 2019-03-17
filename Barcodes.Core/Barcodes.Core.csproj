@@ -170,9 +170,9 @@
       <Project>{804A49A8-76BB-4EE0-83B2-6E2EC77AF5D0}</Project>
       <Name>Barcodes.Services.Storage</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Barcodes.Services.System\Barcodes.Services.System.csproj">
+    <ProjectReference Include="..\Barcodes.Services.Sys\Barcodes.Services.Sys.csproj">
       <Project>{DD4DA36D-8F15-433C-814D-C3DF0EFBB6A4}</Project>
-      <Name>Barcodes.Services.System</Name>
+      <Name>Barcodes.Services.Sys</Name>
     </ProjectReference>
     <ProjectReference Include="..\Barcodes.Services.Windows\Barcodes.Services.Windows.csproj">
       <Project>{44ce1158-08ab-452e-abcd-c6e305e1a01a}</Project>

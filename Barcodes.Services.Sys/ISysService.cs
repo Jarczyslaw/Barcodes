@@ -1,11 +1,12 @@
 ﻿using System.Windows.Media.Imaging;
 
-namespace Barcodes.Services.System
+namespace Barcodes.Services.Sys
 {
-    public interface ISystemService
+    public interface ISysService
     {
         void CopyToClipboard(BitmapSource bitmapSource);
-        void OpenLocation(string location);
+        void OpenAppLocation();
+        void OpenFileLocation(string filePath);
         void StartProcess(string process, string arguments = null);
     }
 }

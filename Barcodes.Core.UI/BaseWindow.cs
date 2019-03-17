@@ -1,7 +1,11 @@
 ﻿using Barcodes.Core.Common;
+using Barcodes.Services.AppSettings;
+using Barcodes.Services.Dialogs;
+using CommonServiceLocator;
 using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Barcodes.Core.UI
 {
@@ -9,11 +13,19 @@ namespace Barcodes.Core.UI
     {
         private bool windowRendered;
 
+        private readonly IAppSettingsService appSettingsService;
+        private readonly IDialogsService dialogsService;
+
         public BaseWindow()
         {
+            appSettingsService = ServiceLocator.Current.TryResolve<IAppSettingsService>();
+            dialogsService = ServiceLocator.Current.TryResolve<IDialogsService>();
+
+            KeyDown += BaseWindow_KeyDown;
         }
 
         public BaseWindow(object dataContext)
+            : this()
         {
             DataContext = dataContext;
         }
@@ -44,6 +56,14 @@ namespace Barcodes.Core.UI
             if (DataContext is ICloseSource closeAware)
             {
                 closeAware.OnClose += Close;
+            }
+        }
+
+        private void BaseWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F5 && appSettingsService?.AppSettings.F5Protection == true && dialogsService != null)
+            {
+                dialogsService.ShowWarning("Unwanted F5 detected!");
             }
         }
     }

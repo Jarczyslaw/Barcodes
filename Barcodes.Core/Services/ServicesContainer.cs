@@ -3,7 +3,7 @@ using Barcodes.Services.AppSettings;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
-using Barcodes.Services.System;
+using Barcodes.Services.Sys;
 using Prism.Events;
 
 namespace Barcodes.Core.Services
@@ -14,14 +14,14 @@ namespace Barcodes.Core.Services
         public IGeneratorService GeneratorService { get; }
         public IAppDialogsService AppDialogsService { get; }
         public IAppWindowsService AppWindowsService { get; }
-        public ISystemService SystemService { get; }
+        public ISysService SystemService { get; }
         public IAppSettingsService AppSettingsService { get; }
         public IStorageService StorageService { get; }
         public IDocExportService DocExportService { get; }
         public IStateSaverService StateSaverService { get; }
 
         public ServicesContainer(IEventAggregator eventAggregator, IGeneratorService generatorService, IAppDialogsService appDialogsService,
-            IAppWindowsService appWindowsService, ISystemService systemService, IAppSettingsService appSettingsService,
+            IAppWindowsService appWindowsService, ISysService systemService, IAppSettingsService appSettingsService,
             IStorageService storageService, IDocExportService docExportService, IStateSaverService stateSaverService)
         {
             EventAggregator = eventAggregator;

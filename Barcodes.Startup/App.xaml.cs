@@ -2,10 +2,11 @@
 using Barcodes.Core.Services.StateSaver;
 using Barcodes.Core.UI.Views;
 using Barcodes.Services.AppSettings;
+using Barcodes.Services.Dialogs;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
-using Barcodes.Services.System;
+using Barcodes.Services.Sys;
 using Barcodes.Services.Windows;
 using Prism.Ioc;
 using Prism.Mvvm;
@@ -43,8 +44,10 @@ namespace Barcodes.Startup
             base.RegisterRequiredTypes(containerRegistry);
 
             containerRegistry.RegisterSingleton<IAppSettingsService, AppSettingsService>();
-            containerRegistry.RegisterSingleton<IAppDialogsService, AppDialogsService>();
-            containerRegistry.RegisterSingleton<ISystemService, SystemService>();
+            var appDialogsService = new AppDialogsService();
+            containerRegistry.RegisterInstance<IDialogsService>(appDialogsService);
+            containerRegistry.RegisterInstance<IAppDialogsService>(appDialogsService);
+            containerRegistry.RegisterSingleton<ISysService, SysService>();
             containerRegistry.RegisterSingleton<IGeneratorService, GeneratorService>();
             containerRegistry.RegisterSingleton<IWindowsService, WindowsService>();
             containerRegistry.RegisterSingleton<IAppWindowsService, AppWindowsService>();
@@ -52,7 +55,6 @@ namespace Barcodes.Startup
             containerRegistry.RegisterSingleton<IDocExportService, DocExportService>();
             containerRegistry.RegisterSingleton<IServicesContainer, ServicesContainer>();
             containerRegistry.RegisterSingleton<IStateSaverService, StateSaverService>();
-
             RegisterGlobalExceptionHandler();
         }
 

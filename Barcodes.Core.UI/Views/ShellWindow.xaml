@@ -108,6 +108,10 @@
             Command="{Binding Proxy.Menu.SaveToFileCommand, Source={StaticResource Proxy}}"
             Modifiers="Control" />
         <KeyBinding
+            Key="P"
+            Command="{Binding Proxy.Menu.OpenAppLocationCommand, Source={StaticResource Proxy}}"
+            Modifiers="Control" />
+        <KeyBinding
             Key="O"
             Command="{Binding Proxy.Menu.OpenStorageLocationCommand, Source={StaticResource Proxy}}"
             Modifiers="Control" />
@@ -146,9 +150,14 @@
                         Command="{Binding SaveToFileCommand}"
                         Header="_Save to file"
                         InputGestureText="Ctrl+S" />
+                    <Separator />
+                    <MenuItem
+                        Command="{Binding OpenAppLocationCommand}"
+                        Header="_Open app location"
+                        InputGestureText="Ctrl+P" />
                     <MenuItem
                         Command="{Binding OpenStorageLocationCommand}"
-                        Header="_Open storage location"
+                        Header="O_pen storage location"
                         InputGestureText="Ctrl+O" />
                     <Separator />
                     <MenuItem Command="{Binding CloseCommand}" Header="_Close" />

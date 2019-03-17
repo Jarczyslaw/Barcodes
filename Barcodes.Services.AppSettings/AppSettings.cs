@@ -8,5 +8,6 @@ namespace Barcodes.Services.AppSettings
     {
         public string StoragePath { get; set; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"storage.{FileExtensions.Storage}");
         public bool BarcodesVisible { get; set; } = true;
+        public bool F5Protection { get; set; } = true;
     }
 }

@@ -3,7 +3,7 @@ using Barcodes.Services.AppSettings;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
-using Barcodes.Services.System;
+using Barcodes.Services.Sys;
 using Prism.Events;
 
 namespace Barcodes.Core.Services
@@ -14,7 +14,7 @@ namespace Barcodes.Core.Services
         IGeneratorService GeneratorService { get; }
         IAppDialogsService AppDialogsService { get; }
         IAppWindowsService AppWindowsService { get; }
-        ISystemService SystemService { get; }
+        ISysService SystemService { get; }
         IAppSettingsService AppSettingsService { get; }
         IStorageService StorageService { get; }
         IDocExportService DocExportService { get; }
