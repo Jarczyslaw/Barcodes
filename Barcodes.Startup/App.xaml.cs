@@ -24,7 +24,7 @@ namespace Barcodes.Startup
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            SetCulture();
+            TrySetCulture();
             base.OnStartup(e);
         }
 
@@ -81,13 +81,17 @@ namespace Barcodes.Startup
             globalExceptionHandler = Container.Resolve<AppGlobalExceptionHandler>();
         }
 
-        private void SetCulture()
+        private void TrySetCulture()
         {
-            var cultureInfo = new CultureInfo("en-EN");
-            Thread.CurrentThread.CurrentCulture = cultureInfo;
-            Thread.CurrentThread.CurrentUICulture = cultureInfo;
-            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
-                new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+            try
+            {
+                var cultureInfo = new CultureInfo("en-EN");
+                Thread.CurrentThread.CurrentCulture = cultureInfo;
+                Thread.CurrentThread.CurrentUICulture = cultureInfo;
+                FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
+                    new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+            }
+            catch { }
         }
     }
 }
