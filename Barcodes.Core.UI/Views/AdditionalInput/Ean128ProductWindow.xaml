@@ -32,13 +32,13 @@
                     Grid.Column="1"
                     Text="{Binding ProductCode, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Grid.Row="1" Content="Serial number:" />
+                <Label Grid.Row="1" Content="Batch ID:" />
                 <controls:CustomTextBox
                     Grid.Row="1"
                     Grid.Column="1"
-                    Text="{Binding SerialNumber, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding BatchId, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Grid.Row="2" Content="Expiration date:" />
+                <Label Grid.Row="2" Content="Batch expire date:" />
                 <toolkit:DateTimePicker
                     Grid.Row="2"
                     Grid.Column="1"

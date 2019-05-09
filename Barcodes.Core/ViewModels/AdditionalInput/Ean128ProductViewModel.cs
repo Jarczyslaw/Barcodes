@@ -7,7 +7,7 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
     public class Ean128ProductViewModel : BaseInputViewModel
     {
         private string productCode = string.Empty;
-        private string serialNumber = string.Empty;
+        private string batchId = string.Empty;
         private DateTime expireDate = DateTime.Now;
 
         public Ean128ProductViewModel(IAppDialogsService dialogsService)
@@ -21,10 +21,10 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
             set => SetProperty(ref expireDate, value);
         }
 
-        public string SerialNumber
+        public string BatchId
         {
-            get => serialNumber;
-            set => SetProperty(ref serialNumber, value);
+            get => batchId;
+            set => SetProperty(ref batchId, value);
         }
 
         public string ProductCode
@@ -35,7 +35,7 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
 
         private Ean128Code GetEan128Code()
         {
-            return new Ean128Code(ProductCode.Trim(), SerialNumber.Trim(), ExpireDate);
+            return new Ean128Code(ProductCode.Trim(), BatchId.Trim(), ExpireDate);
         }
 
         public void LoadData(string ean128Data)
@@ -48,7 +48,7 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
             if (Ean128Code.TryParse(ean128Data, out Ean128Code ean128Code))
             {
                 ExpireDate = ean128Code.ExpireDate;
-                SerialNumber = ean128Code.BatchId;
+                BatchId = ean128Code.BatchId;
                 ProductCode = ean128Code.ProductCode;
             }
         }
