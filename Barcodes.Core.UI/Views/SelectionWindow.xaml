@@ -27,7 +27,7 @@
                     Grid.Column="1"
                     DisplayMemberPath="{Binding DisplayMemberPath}"
                     ItemsSource="{Binding Items}"
-                    SelectedItem="{Binding SelectedItem}" />
+                    SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
         </GroupBox>
         <UniformGrid Columns="2">

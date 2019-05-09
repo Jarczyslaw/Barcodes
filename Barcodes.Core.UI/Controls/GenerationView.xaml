@@ -31,7 +31,7 @@
                 <controls:CustomTextBox
                     x:Name="tbTitle"
                     Grid.Column="1"
-                    Text="{Binding Title}" />
+                    Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="1" Content="Type:" />
                 <ComboBox
@@ -41,7 +41,7 @@
                     HorizontalAlignment="Left"
                     DisplayMemberPath="TypeTitle"
                     ItemsSource="{Binding BarcodeTypes}"
-                    SelectedItem="{Binding SelectedBarcodeType}" />
+                    SelectedItem="{Binding SelectedBarcodeType, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="2" Content="Data:" />
                 <controls:CustomTextBox
@@ -52,7 +52,7 @@
                     VerticalContentAlignment="Top"
                     AcceptsReturn="True"
                     HorizontalScrollBarVisibility="Disabled"
-                    Text="{Binding Data}"
+                    Text="{Binding Data, UpdateSourceTrigger=PropertyChanged}"
                     TextWrapping="Wrap"
                     VerticalScrollBarVisibility="Auto" />
 
@@ -61,7 +61,7 @@
                     Grid.Column="1"
                     VerticalContentAlignment="Center"
                     Content="Validate data"
-                    IsChecked="{Binding ValidateCodeText}" />
+                    IsChecked="{Binding ValidateCodeText, UpdateSourceTrigger=PropertyChanged}" />
 
                 <StackPanel
                     Grid.Row="4"
@@ -72,7 +72,7 @@
                         HorizontalAlignment="Left"
                         DisplayMemberPath="Title"
                         ItemsSource="{Binding AdditionalInputs}"
-                        SelectedItem="{Binding SelectedAdditionalInput}" />
+                        SelectedItem="{Binding SelectedAdditionalInput, UpdateSourceTrigger=PropertyChanged}" />
                     <Button
                         Width="80"
                         Command="{Binding AdditionalInputCommand}"
@@ -96,7 +96,7 @@
                     IsReadOnly="{Binding DefaultSize}"
                     Minimum="100"
                     TextAlignment="Left"
-                    Value="{Binding Width}" />
+                    Value="{Binding Width, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="7" Content="Height: " />
                 <toolkit:IntegerUpDown
@@ -108,7 +108,7 @@
                     IsReadOnly="{Binding DefaultSize}"
                     Minimum="100"
                     TextAlignment="Left"
-                    Value="{Binding Height}" />
+                    Value="{Binding Height, UpdateSourceTrigger=PropertyChanged}" />
 
             </Grid>
         </GroupBox>

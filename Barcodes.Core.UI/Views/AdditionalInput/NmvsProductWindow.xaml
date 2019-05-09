@@ -30,13 +30,13 @@
                 <controls:CustomTextBox
                     x:Name="tbProductCode"
                     Grid.Column="1"
-                    Text="{Binding ProductCode}" />
+                    Text="{Binding ProductCode, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="1" Content="Batch ID:" />
                 <controls:CustomTextBox
                     Grid.Row="1"
                     Grid.Column="1"
-                    Text="{Binding BatchId}" />
+                    Text="{Binding BatchId, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="2" Content="Batch exp. date (yyMMdd / yyMM00):" />
                 <controls:CustomTextBox
@@ -44,14 +44,14 @@
                     Grid.Column="1"
                     Margin="3"
                     MaxLength="6"
-                    Text="{Binding BatchExpDate}"
+                    Text="{Binding BatchExpDate, UpdateSourceTrigger=PropertyChanged}"
                     TextAlignment="Left" />
 
                 <Label Grid.Row="3" Content="Serial no.:" />
                 <controls:CustomTextBox
                     Grid.Row="3"
                     Grid.Column="1"
-                    Text="{Binding SerialNo}" />
+                    Text="{Binding SerialNo, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
         </GroupBox>
         <UniformGrid Columns="2">

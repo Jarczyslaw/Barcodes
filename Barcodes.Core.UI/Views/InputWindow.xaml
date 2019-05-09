@@ -26,7 +26,7 @@
                 <controls:CustomTextBox
                     x:Name="tbInputValue"
                     Grid.Column="1"
-                    Text="{Binding InputValue}" />
+                    Text="{Binding InputValue, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
         </GroupBox>
         <UniformGrid Columns="2">
