@@ -33,6 +33,7 @@ namespace Barcodes.Core.ViewModels
 
             InitializeBarcodeTypes();
             InitializeAdditionalInputs();
+            LoadSettings();
 
             AddNewCommand = new DelegateCommand(() => GenerateBarcode(true));
             EditCommand = new DelegateCommand(() => GenerateBarcode(false), () => Edit);
@@ -170,7 +171,6 @@ namespace Barcodes.Core.ViewModels
                 new BarcodeTypeViewModel(BarcodeType.DataMatrix),
                 new BarcodeTypeViewModel(BarcodeType.QRCode),
             };
-            SelectedBarcodeType = BarcodeTypes.First(t => t.Type == BarcodeType.DataMatrix);
         }
 
         private bool GenerateValidation()
@@ -272,6 +272,16 @@ namespace Barcodes.Core.ViewModels
             Width = generationData.Width;
             Height = generationData.Height;
             ValidateCodeText = generationData.ValidateCodeText;
+        }
+
+        private void LoadSettings()
+        {
+            var generationSettings = services.AppSettingsService.AppSettings.GenerationSettings;
+            SelectedBarcodeType = BarcodeTypes.FirstOrDefault(b => b.Type == generationSettings.Type);
+            DefaultSize = generationSettings.DefaultSize;
+            Height = generationSettings.Height;
+            Width = generationSettings.Width;
+            ValidateCodeText = generationSettings.ValidateCodeText;
         }
     }
 }

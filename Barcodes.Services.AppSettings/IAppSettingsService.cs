@@ -7,7 +7,9 @@
 
         AppSettings AppSettings { get; }
         string AppSettingsPath { get; }
+
         void Load(bool throwException = false);
+
         void Save();
     }
 }
