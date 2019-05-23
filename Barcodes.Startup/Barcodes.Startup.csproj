@@ -105,9 +105,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AppConfig.cs" />
     <Compile Include="AppGlobalExceptionHandler.cs" />
     <Compile Include="GlobalExceptionHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SingleInstanceCheck.cs" />
     <Compile Include="ViewModelResolver.cs" />
   </ItemGroup>
   <ItemGroup>

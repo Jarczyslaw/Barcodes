@@ -24,8 +24,16 @@ namespace Barcodes.Startup
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            TrySetCulture();
-            base.OnStartup(e);
+            if (!AppConfig.MultiInst && !SingleInstanceCheck.Check())
+            {
+                MessageBox.Show("App is currently running", "Barcodes", MessageBoxButton.OK, MessageBoxImage.Stop);
+                Shutdown();
+            }
+            else
+            {
+                TrySetCulture();
+                base.OnStartup(e);
+            }
         }
 
         protected override Window CreateShell()
