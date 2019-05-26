@@ -72,7 +72,9 @@ namespace Barcodes.Startup
             Container.Resolve<IAppSettingsService>().Load(false);
         }
 
-        protected override void RegisterTypes(IContainerRegistry containerRegistry) { }
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+        }
 
         protected override void ConfigureViewModelLocator()
         {
@@ -87,6 +89,7 @@ namespace Barcodes.Startup
         private void RegisterGlobalExceptionHandler()
         {
             globalExceptionHandler = Container.Resolve<AppGlobalExceptionHandler>();
+            globalExceptionHandler.Register();
         }
 
         private void TrySetCulture()

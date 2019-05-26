@@ -7,7 +7,7 @@ namespace Barcodes.Startup
 {
     public abstract class GlobalExceptionHandler
     {
-        protected GlobalExceptionHandler()
+        public void Register()
         {
             AppDomain.CurrentDomain.UnhandledException +=
                 (s, e) => HandleException("AppDomain.CurrentDomain.UnhandledException", (Exception)e.ExceptionObject);
