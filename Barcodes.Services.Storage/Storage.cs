@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,11 +9,13 @@ namespace Barcodes.Services.Storage
     {
         public List<StorageWorkspace> Content { get; set; } = new List<StorageWorkspace>();
 
+        [JsonIgnore]
         public int BarcodesCount
         {
             get => Content.Sum(c => c.Barcodes.Count);
         }
 
+        [JsonIgnore]
         public int WorkspacesCount
         {
             get => Content.Count;
