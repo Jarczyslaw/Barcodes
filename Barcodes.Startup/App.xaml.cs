@@ -8,9 +8,11 @@ using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
 using Barcodes.Services.Sys;
 using Barcodes.Services.Windows;
+using Barcodes.SingleInstance;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Unity;
+using System;
 using System.Globalization;
 using System.Threading;
 using System.Windows;
@@ -21,18 +23,29 @@ namespace Barcodes.Startup
     public partial class App : PrismApplication
     {
         private AppGlobalExceptionHandler globalExceptionHandler;
+        private SingleInstanceManager singleInstanceManager;
+        private readonly string appKey = "d78ce89b-fec3-4fb7-9f9e-43e16791c130";
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            if (!AppConfig.MultiInst && !SingleInstanceCheck.Check())
+            try
             {
-                MessageBox.Show("App is currently running", "Barcodes", MessageBoxButton.OK, MessageBoxImage.Stop);
-                Shutdown();
+                singleInstanceManager = new SingleInstanceManager(appKey, TimeSpan.Zero);
+                if (!AppConfig.MultiInst && !singleInstanceManager.FirstInstance)
+                {
+                    MessageBox.Show("App is currently running", "Barcodes", MessageBoxButton.OK, MessageBoxImage.Stop);
+                    singleInstanceManager.SendNofitication();
+                    Shutdown();
+                }
+                else
+                {
+                    TrySetCulture();
+                    base.OnStartup(e);
+                }
             }
-            else
+            catch (Exception exc)
             {
-                TrySetCulture();
-                base.OnStartup(e);
+                MessageBox.Show($"Exception on startup occured: {exc.Message}", "Barcodes", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -51,6 +64,7 @@ namespace Barcodes.Startup
         {
             base.RegisterRequiredTypes(containerRegistry);
 
+            containerRegistry.RegisterInstance(singleInstanceManager);
             containerRegistry.RegisterSingleton<IAppSettingsService, AppSettingsService>();
             var appDialogsService = new AppDialogsService();
             containerRegistry.RegisterInstance<IDialogsService>(appDialogsService);
@@ -84,6 +98,12 @@ namespace Barcodes.Startup
                 var viewModelResolver = new ViewModelResolver();
                 return viewModelResolver.Resolve(viewType);
             });
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+            singleInstanceManager.Release();
         }
 
         private void RegisterGlobalExceptionHandler()

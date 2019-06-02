@@ -66,5 +66,23 @@ namespace Barcodes.Core.UI
                 dialogsService.ShowWarning("Unwanted F5 detected!");
             }
         }
+
+        protected void BringToFront()
+        {
+            if (!IsVisible)
+            {
+                Show();
+            }
+
+            if (WindowState == WindowState.Minimized)
+            {
+                WindowState = WindowState.Normal;
+            }
+
+            Activate();
+            Topmost = true;
+            Topmost = false;
+            Focus();
+        }
     }
 }

@@ -109,7 +109,6 @@
     <Compile Include="AppGlobalExceptionHandler.cs" />
     <Compile Include="GlobalExceptionHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SingleInstanceCheck.cs" />
     <Compile Include="ViewModelResolver.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +182,10 @@
     <ProjectReference Include="..\Barcodes.Services.Windows\Barcodes.Services.Windows.csproj">
       <Project>{44ce1158-08ab-452e-abcd-c6e305e1a01a}</Project>
       <Name>Barcodes.Services.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Barcodes.SingleInstance\Barcodes.SingleInstance.csproj">
+      <Project>{3e40a410-eee1-43ac-b383-caa9fb3c9213}</Project>
+      <Name>Barcodes.SingleInstance</Name>
     </ProjectReference>
     <ProjectReference Include="..\Barcodes.Utils\Barcodes.Utils.csproj">
       <Project>{355f10fd-fe43-432a-a826-23ce5280170e}</Project>

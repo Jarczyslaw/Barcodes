@@ -215,6 +215,10 @@
       <Project>{D4D91166-8BF2-4E82-825A-BD1F46B05B48}</Project>
       <Name>Barcodes.Services.Generator</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Barcodes.SingleInstance\Barcodes.SingleInstance.csproj">
+      <Project>{3E40A410-EEE1-43AC-B383-CAA9FB3C9213}</Project>
+      <Name>Barcodes.SingleInstance</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Barcodes.Utils\Barcodes.Utils.csproj">
       <Project>{355F10FD-FE43-432A-A826-23CE5280170E}</Project>
       <Name>Barcodes.Utils</Name>
