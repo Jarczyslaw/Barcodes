@@ -38,7 +38,8 @@ namespace Barcodes.Services.Storage
                 && Data == other.Data
                 && Width == other.Width
                 && Height == other.Height
-                && DefaultSize == other.DefaultSize;
+                && DefaultSize == other.DefaultSize
+                && Type == other.Type;
         }
 
         public override int GetHashCode()

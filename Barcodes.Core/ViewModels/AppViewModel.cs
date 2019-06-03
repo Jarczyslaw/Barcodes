@@ -172,7 +172,6 @@ namespace Barcodes.Core.ViewModels
         {
             try
             {
-                StoragePath = storagePath;
                 var storage = servicesContainer.StorageService.Load(storagePath, true);
                 if (storage == null)
                 {
@@ -207,7 +206,9 @@ namespace Barcodes.Core.ViewModels
                 {
                     UpdateMessage($"File {Path.GetFileName(storagePath)} loaded");
                 }
+
                 servicesContainer.AppSettingsService.StoragePath = storagePath;
+                StoragePath = storagePath;
             }
             catch (Exception exc)
             {
