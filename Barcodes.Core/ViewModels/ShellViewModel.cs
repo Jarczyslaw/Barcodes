@@ -47,7 +47,7 @@ namespace Barcodes.Core.ViewModels
                 var closingMode = servicesContainer.AppDialogsService.ShowClosingQuestion();
                 if (closingMode == ClosingMode.SaveChanges)
                 {
-                    App.SaveToFile(false);
+                    App.Save(false, true);
                 }
                 else if (closingMode == ClosingMode.Cancel)
                 {

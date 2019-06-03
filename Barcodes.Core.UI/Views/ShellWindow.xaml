@@ -9,7 +9,7 @@
     xmlns:prism="http://prismlibrary.com/"
     xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:ui="clr-namespace:Barcodes.Core.UI"
-    Title="Barcodes"
+    Title="{Binding App.Title}"
     Width="{StaticResource ShellWidth}"
     Height="{StaticResource ShellHeight}"
     MinWidth="{StaticResource ShellWidth}"
@@ -105,8 +105,12 @@
             Modifiers="Control" />
         <KeyBinding
             Key="S"
-            Command="{Binding Proxy.Menu.SaveToFileCommand, Source={StaticResource Proxy}}"
+            Command="{Binding Proxy.Menu.SaveCommand, Source={StaticResource Proxy}}"
             Modifiers="Control" />
+        <KeyBinding
+            Key="S"
+            Command="{Binding Proxy.Menu.SaveAsCommand, Source={StaticResource Proxy}}"
+            Modifiers="Control+Alt" />
         <KeyBinding
             Key="P"
             Command="{Binding Proxy.Menu.OpenAppLocationCommand, Source={StaticResource Proxy}}"
@@ -144,12 +148,16 @@
                 <MenuItem Header="_File">
                     <MenuItem
                         Command="{Binding LoadFromFileCommand}"
-                        Header="_Load from file"
+                        Header="_Load"
                         InputGestureText="Ctrl+L" />
                     <MenuItem
-                        Command="{Binding SaveToFileCommand}"
-                        Header="_Save to file"
+                        Command="{Binding SaveCommand}"
+                        Header="_Save"
                         InputGestureText="Ctrl+S" />
+                    <MenuItem
+                        Command="{Binding SaveAsCommand}"
+                        Header="S_ave as"
+                        InputGestureText="Ctrl+Alt+S" />
                     <Separator />
                     <MenuItem
                         Command="{Binding OpenAppLocationCommand}"

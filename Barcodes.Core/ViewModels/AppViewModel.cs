@@ -21,6 +21,8 @@ namespace Barcodes.Core.ViewModels
         private readonly ObservableCollection<WorkspaceViewModel> workspaces;
         private string busyMessage = string.Empty;
         private bool barcodesVisible;
+        private string title = string.Empty;
+        private string storagePath = string.Empty;
 
         private readonly IServicesContainer servicesContainer;
 
@@ -29,6 +31,7 @@ namespace Barcodes.Core.ViewModels
             this.servicesContainer = servicesContainer;
 
             workspaces = new ObservableCollection<WorkspaceViewModel>();
+            StoragePath = string.Empty;
         }
 
         public bool BarcodesVisible
@@ -38,6 +41,26 @@ namespace Barcodes.Core.ViewModels
             {
                 SetProperty(ref barcodesVisible, value);
                 servicesContainer.AppSettingsService.BarcodesVisible = value;
+            }
+        }
+
+        public string Title
+        {
+            get => title;
+            set => SetProperty(ref title, value);
+        }
+
+        public string StoragePath
+        {
+            get => storagePath;
+            set
+            {
+                SetProperty(ref storagePath, value);
+                Title = "Barcodes";
+                if (!string.IsNullOrEmpty(value))
+                {
+                    Title += $" [{value}]";
+                }
             }
         }
 
@@ -149,6 +172,7 @@ namespace Barcodes.Core.ViewModels
         {
             try
             {
+                StoragePath = storagePath;
                 var storage = servicesContainer.StorageService.Load(storagePath, true);
                 if (storage == null)
                 {
@@ -191,7 +215,7 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public void SaveToFile(bool validateBarcodesCount)
+        public void Save(bool validateBarcodesCount, bool useCurrentPath)
         {
             if (validateBarcodesCount && BarcodesCount == 0)
             {
@@ -205,14 +229,18 @@ namespace Barcodes.Core.ViewModels
             try
             {
                 var filePath = servicesContainer.AppSettingsService.StoragePath;
-                filePath = servicesContainer.AppDialogsService.SaveStorageFile(filePath);
-                if (string.IsNullOrEmpty(filePath))
+                if (!useCurrentPath)
                 {
-                    return;
+                    filePath = servicesContainer.AppDialogsService.SaveStorageFile(filePath);
+                    if (string.IsNullOrEmpty(filePath))
+                    {
+                        return;
+                    }
                 }
 
                 servicesContainer.StorageService.Save(filePath, CreateCurrentStorage());
                 servicesContainer.AppSettingsService.StoragePath = filePath;
+                StoragePath = filePath;
                 StatusMessage = $"Successfully saved {Path.GetFileName(filePath)}";
             }
             catch (Exception exc)

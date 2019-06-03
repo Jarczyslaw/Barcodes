@@ -8,7 +8,8 @@ namespace Barcodes.Core.ViewModels
     {
         public MenuViewModel(AppViewModel app)
         {
-            SaveToFileCommand = new DelegateCommand(() => app.SaveToFile(true));
+            SaveCommand = new DelegateCommand(() => app.Save(true, true));
+            SaveAsCommand = new DelegateCommand(() => app.Save(true, false));
             LoadFromFileCommand = new DelegateCommand(app.LoadBarcodesFromFile);
             OpenAppLocationCommand = new DelegateCommand(app.OpenAppLocation);
             OpenStorageLocationCommand = new DelegateCommand(app.OpenStorageLocation);
@@ -22,7 +23,8 @@ namespace Barcodes.Core.ViewModels
             ImportWorkspaceCommand = new DelegateCommand(app.ImportWorkspace);
         }
 
-        public DelegateCommand SaveToFileCommand { get; }
+        public DelegateCommand SaveCommand { get; }
+        public DelegateCommand SaveAsCommand { get; }
         public DelegateCommand LoadFromFileCommand { get; }
         public DelegateCommand OpenAppLocationCommand { get; }
         public DelegateCommand OpenStorageLocationCommand { get; }
