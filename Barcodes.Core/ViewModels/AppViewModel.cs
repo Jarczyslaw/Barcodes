@@ -216,7 +216,7 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public void Save(bool validateBarcodesCount, bool useCurrentPath)
+        public void Save(bool validateBarcodesCount, bool promptForPath)
         {
             if (validateBarcodesCount && BarcodesCount == 0)
             {
@@ -230,7 +230,7 @@ namespace Barcodes.Core.ViewModels
             try
             {
                 var filePath = servicesContainer.AppSettingsService.StoragePath;
-                if (!useCurrentPath)
+                if (promptForPath || string.IsNullOrEmpty(filePath))
                 {
                     filePath = servicesContainer.AppDialogsService.SaveStorageFile(filePath);
                     if (string.IsNullOrEmpty(filePath))

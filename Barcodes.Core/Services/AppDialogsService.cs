@@ -26,7 +26,11 @@ namespace Barcodes.Core.Services
         public string SaveStorageFile(string currentFilePath)
         {
             var fileName = Path.GetFileName(currentFilePath);
-            var directoryPath = Path.GetDirectoryName(currentFilePath);
+            var directoryPath = string.Empty;
+            if (!string.IsNullOrEmpty(currentFilePath))
+            {
+                directoryPath = Path.GetDirectoryName(currentFilePath);
+            }
             return SaveFile("Barcodes storage file", directoryPath, fileName, storageFilter);
         }
 
