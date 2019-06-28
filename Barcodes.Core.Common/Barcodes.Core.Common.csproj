@@ -61,12 +61,14 @@
     <Reference Include="Unity.Container, Version=5.8.13.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.Container.5.8.13\lib\net46\Unity.Container.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileExtensions.cs" />
     <Compile Include="ICloseSource.cs" />
     <Compile Include="IOnClosingAware.cs" />
     <Compile Include="IOnShowAware.cs" />
+    <Compile Include="KeyParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

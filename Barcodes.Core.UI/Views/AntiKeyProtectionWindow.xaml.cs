@@ -1,23 +1,25 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 
 namespace Barcodes.Core.UI.Views
 {
-    public partial class F5ProtectionWindow : BaseWindow
+    public partial class AntiKeyProtectionWindow : BaseWindow
     {
-        public F5ProtectionWindow()
+        public AntiKeyProtectionWindow()
             : base(null)
         {
             InitializeComponent();
             keyDownHandlerEnabled = false;
         }
 
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        public void ShowWarning(Window owner)
+        public void ShowWarning(Window owner, Key key)
         {
+            tbKeyWarning.Text = $"{key} key detected!";
             Owner = owner;
             ShowDialog();
         }

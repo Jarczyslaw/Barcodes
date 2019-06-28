@@ -99,8 +99,8 @@
     <Compile Include="Views\ExamplesWindow.xaml.cs">
       <DependentUpon>ExamplesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\F5ProtectionWindow.xaml.cs">
-      <DependentUpon>F5ProtectionWindow.xaml</DependentUpon>
+    <Compile Include="Views\AntiKeyProtectionWindow.xaml.cs">
+      <DependentUpon>AntiKeyProtectionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SelectionWindow.xaml.cs">
       <DependentUpon>SelectionWindow.xaml</DependentUpon>
@@ -158,7 +158,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\F5ProtectionWindow.xaml">
+    <Page Include="Views\AntiKeyProtectionWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

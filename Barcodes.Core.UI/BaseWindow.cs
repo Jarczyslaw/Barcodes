@@ -60,10 +60,12 @@ namespace Barcodes.Core.UI
 
         private void BaseWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (keyDownHandlerEnabled && e.Key == Key.F5
-                && appSettingsService?.AppSettings.F5Protection == true)
+            if (keyDownHandlerEnabled && appSettingsService != null)
             {
-                new F5ProtectionWindow().ShowWarning(this);
+                if (KeyParser.Check(appSettingsService.AppSettings.AntiKeyProtection, e.Key))
+                {
+                    new AntiKeyProtectionWindow().ShowWarning(this, e.Key);
+                }
             }
         }
 
