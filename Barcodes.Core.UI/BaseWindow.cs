@@ -1,6 +1,6 @@
 ﻿using Barcodes.Core.Common;
+using Barcodes.Core.UI.Views;
 using Barcodes.Services.AppSettings;
-using Barcodes.Services.Dialogs;
 using CommonServiceLocator;
 using System;
 using System.ComponentModel;
@@ -14,12 +14,11 @@ namespace Barcodes.Core.UI
         private bool windowRendered;
 
         private readonly IAppSettingsService appSettingsService;
-        private readonly IDialogsService dialogsService;
+        protected bool keyDownHandlerEnabled = true;
 
         public BaseWindow()
         {
             appSettingsService = ServiceLocator.Current.TryResolve<IAppSettingsService>();
-            dialogsService = ServiceLocator.Current.TryResolve<IDialogsService>();
 
             KeyDown += BaseWindow_KeyDown;
         }
@@ -61,13 +60,14 @@ namespace Barcodes.Core.UI
 
         private void BaseWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.F5 && appSettingsService?.AppSettings.F5Protection == true && dialogsService != null)
+            if (keyDownHandlerEnabled && e.Key == Key.F5
+                && appSettingsService?.AppSettings.F5Protection == true)
             {
-                dialogsService.ShowWarning("Unwanted F5 detected!");
+                new F5ProtectionWindow().ShowWarning(this);
             }
         }
 
-        protected void BringToFront()
+        public void BringToFront()
         {
             if (!IsVisible)
             {

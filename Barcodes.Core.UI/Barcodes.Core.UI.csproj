@@ -99,6 +99,9 @@
     <Compile Include="Views\ExamplesWindow.xaml.cs">
       <DependentUpon>ExamplesWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\F5ProtectionWindow.xaml.cs">
+      <DependentUpon>F5ProtectionWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SelectionWindow.xaml.cs">
       <DependentUpon>SelectionWindow.xaml</DependentUpon>
     </Compile>
@@ -152,6 +155,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ExamplesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\F5ProtectionWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
