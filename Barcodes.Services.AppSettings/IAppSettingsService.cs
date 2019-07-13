@@ -11,5 +11,7 @@
         void Load(bool throwException = false);
 
         void Save();
+
+        void Save(string settings);
     }
 }

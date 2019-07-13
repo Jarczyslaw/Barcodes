@@ -21,7 +21,7 @@ namespace Barcodes.Core.Services
             this.containerExtension = containerExtension;
         }
 
-        public void OpenBarcodeWindow(object barcodeViewModel)
+        public void OpenBarcodeWindow(BarcodeViewModel barcodeViewModel)
         {
             var window = new BarcodeWindow(barcodeViewModel);
             Show(window);
@@ -105,6 +105,13 @@ namespace Barcodes.Core.Services
             var window = new SelectionWindow(dataContext);
             ShowDialog(window);
             return dataContext.Result;
+        }
+
+        public bool ShowSettingsWindow()
+        {
+            var dataContext = containerExtension.Resolve<SettingsViewModel>();
+            ShowDialog(new SettingsWindow(dataContext));
+            return dataContext.SettingsSaved;
         }
     }
 }

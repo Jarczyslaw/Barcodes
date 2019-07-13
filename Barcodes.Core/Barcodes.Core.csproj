@@ -125,6 +125,7 @@
     <Compile Include="ViewModels\AdditionalInput\NmvsProductViewModel.cs" />
     <Compile Include="ViewModels\GenerationViewModel.cs" />
     <Compile Include="ViewModels\SelectionViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\WorkspaceMenuViewModel.cs" />
     <Compile Include="ViewModels\WorkspaceViewModel.cs" />

@@ -50,5 +50,11 @@ namespace Barcodes.Services.AppSettings
         {
             Serializer.ToFile(AppSettings, AppSettingsPath);
         }
+
+        public void Save(string settings)
+        {
+            AppSettings = Serializer.FromString<AppSettings>(settings);
+            Save();
+        }
     }
 }

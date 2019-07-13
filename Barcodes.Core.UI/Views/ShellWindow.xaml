@@ -191,6 +191,7 @@
                         InputGestureText="Ctrl+Shift+W" />
                 </MenuItem>
                 <MenuItem Command="{Binding ExportToPdfCommand}" Header="_Export to PDF" />
+                <MenuItem Command="{Binding ShowSettingsCommand}" Header="_Settings" />
                 <MenuItem Header="_Help">
                     <MenuItem Command="{Binding ShowExamplesCommand}" Header="_Examples" />
                     <MenuItem Command="{Binding ShowAboutCommand}" Header="_About" />

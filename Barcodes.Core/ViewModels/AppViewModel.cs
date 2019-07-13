@@ -268,6 +268,14 @@ namespace Barcodes.Core.ViewModels
             servicesContainer.AppWindowsService.ShowExamplesWindow();
         }
 
+        public void ShowSettings()
+        {
+            if (servicesContainer.AppWindowsService.ShowSettingsWindow())
+            {
+                StoragePath = servicesContainer.AppSettingsService.StoragePath;
+            }
+        }
+
         public void ExportToPdf()
         {
             var mode = servicesContainer.AppDialogsService.ShowPdfExportQuestion();
@@ -687,6 +695,7 @@ namespace Barcodes.Core.ViewModels
         private void ApplySettings(AppSettings appSettings)
         {
             BarcodesVisible = appSettings.BarcodesVisible;
+            StoragePath = appSettings.StoragePath;
             LoadFromFile(appSettings.StoragePath, false);
         }
     }

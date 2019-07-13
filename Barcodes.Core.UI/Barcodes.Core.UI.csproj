@@ -102,6 +102,9 @@
     <Compile Include="Views\AntiKeyProtectionWindow.xaml.cs">
       <DependentUpon>AntiKeyProtectionWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SelectionWindow.xaml.cs">
       <DependentUpon>SelectionWindow.xaml</DependentUpon>
     </Compile>
@@ -159,6 +162,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\AntiKeyProtectionWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SettingsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
