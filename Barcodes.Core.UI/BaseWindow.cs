@@ -12,6 +12,7 @@ namespace Barcodes.Core.UI
     public class BaseWindow : Window
     {
         private bool windowRendered;
+        private bool windowInitialized;
 
         private readonly IAppSettingsService appSettingsService;
         protected bool keyDownHandlerEnabled = true;
@@ -27,6 +28,18 @@ namespace Barcodes.Core.UI
             : this()
         {
             DataContext = dataContext;
+        }
+
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+            if (windowInitialized)
+            {
+                return;
+            }
+
+            windowInitialized = true;
+            OnViewInitialized();
         }
 
         protected override void OnContentRendered(EventArgs e)
@@ -49,13 +62,17 @@ namespace Barcodes.Core.UI
             }
         }
 
-        protected virtual void OnViewShown()
+        protected virtual void OnViewInitialized()
         {
-            (DataContext as IOnShowAware)?.OnShow();
             if (DataContext is ICloseSource closeAware)
             {
                 closeAware.OnClose += Close;
             }
+        }
+
+        protected virtual void OnViewShown()
+        {
+            (DataContext as IOnShowAware)?.OnShow();
         }
 
         private void BaseWindow_KeyDown(object sender, KeyEventArgs e)
