@@ -126,7 +126,7 @@ namespace Barcodes.Core
         {
             var data = new GenerationData
             {
-                Data = "(02)05909991107123(17)200229(21)U1702011",
+                Data = "(02)05909991107123(17)200229(10)U1702011",
                 ValidateCodeText = false,
                 Type = BarcodeType.Ean128
             };
@@ -135,7 +135,7 @@ namespace Barcodes.Core
             {
                 Title = "Długi kod produktu",
                 Barcode = generatorService.CreateBarcode(data),
-                Description = "(02) + 0 + EAN13 + (17) + data ważności (6 cyfr) + (21) + nr serii"
+                Description = "(02) + 0 + EAN13 + (17) + data ważności (6 cyfr) + (10) + nr serii"
             };
         }
     }
