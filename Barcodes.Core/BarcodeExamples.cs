@@ -1,4 +1,5 @@
 ﻿using Barcodes.Core.ViewModels;
+using Barcodes.Services.AppSettings;
 using Barcodes.Services.Generator;
 using System.Collections.ObjectModel;
 
@@ -6,28 +7,37 @@ namespace Barcodes.Core
 {
     public static class BarcodeExamples
     {
-        public static ObservableCollection<BarcodeViewModel> CreateExamples(IGeneratorService generatorService)
+        private static GenerationData GetBaseGenerationData(GenerationSettings generationSettings)
         {
-            return new ObservableCollection<BarcodeViewModel>
+            return new GenerationData
             {
-                CreateProductBarcode(generatorService),
-                CreateLocationBarcode(generatorService),
-                CreateOrderBarcode(generatorService),
-                CreateExternalReleaseBarcode(generatorService),
-                CreateContainerBarcode(generatorService),
-                CreateUserBarcode(generatorService),
-                CreateLongProductBarcode(generatorService)
+                Width = generationSettings.Width,
+                DefaultSize = generationSettings.DefaultSize,
+                Height = generationSettings.Height,
             };
         }
 
-        private static BarcodeViewModel CreateProductBarcode(IGeneratorService generatorService)
+        public static ObservableCollection<BarcodeViewModel> CreateExamples(IGeneratorService generatorService, GenerationSettings generationSettings)
         {
-            var data = new GenerationData
+            return new ObservableCollection<BarcodeViewModel>
             {
-                Data = "5909991107123",
-                ValidateCodeText = false,
-                Type = BarcodeType.Ean13
+                CreateProductBarcode(generatorService, generationSettings),
+                CreateLocationBarcode(generatorService, generationSettings),
+                CreateOrderBarcode(generatorService, generationSettings),
+                CreateExternalReleaseBarcode(generatorService, generationSettings),
+                CreateContainerBarcode(generatorService, generationSettings),
+                CreateUserBarcode(generatorService, generationSettings),
+                CreateLongProductBarcode(generatorService, generationSettings)
             };
+        }
+
+        private static BarcodeViewModel CreateProductBarcode(IGeneratorService generatorService, GenerationSettings generationSettings)
+        {
+            var data = GetBaseGenerationData(generationSettings);
+
+            data.Data = "5909991107123";
+            data.ValidateCodeText = false;
+            data.Type = BarcodeType.Ean13;
 
             return new BarcodeViewModel(data)
             {
@@ -37,14 +47,13 @@ namespace Barcodes.Core
             };
         }
 
-        private static BarcodeViewModel CreateLocationBarcode(IGeneratorService generatorService)
+        private static BarcodeViewModel CreateLocationBarcode(IGeneratorService generatorService, GenerationSettings generationSettings)
         {
-            var data = new GenerationData
-            {
-                Data = "LK1234567890",
-                ValidateCodeText = false,
-                Type = BarcodeType.Code128
-            };
+            var data = GetBaseGenerationData(generationSettings);
+
+            data.Data = "LK1234567890";
+            data.ValidateCodeText = false;
+            data.Type = BarcodeType.Code128;
 
             return new BarcodeViewModel(data)
             {
@@ -54,14 +63,13 @@ namespace Barcodes.Core
             };
         }
 
-        private static BarcodeViewModel CreateOrderBarcode(IGeneratorService generatorService)
+        private static BarcodeViewModel CreateOrderBarcode(IGeneratorService generatorService, GenerationSettings generationSettings)
         {
-            var data = new GenerationData
-            {
-                Data = "DZ0000001230012718",
-                ValidateCodeText = false,
-                Type = BarcodeType.Code128
-            };
+            var data = GetBaseGenerationData(generationSettings);
+
+            data.Data = "DZ0000001230012718";
+            data.ValidateCodeText = false;
+            data.Type = BarcodeType.Code128;
 
             return new BarcodeViewModel(data)
             {
@@ -71,14 +79,13 @@ namespace Barcodes.Core
             };
         }
 
-        private static BarcodeViewModel CreateExternalReleaseBarcode(IGeneratorService generatorService)
+        private static BarcodeViewModel CreateExternalReleaseBarcode(IGeneratorService generatorService, GenerationSettings generationSettings)
         {
-            var data = new GenerationData
-            {
-                Data = "WZ27922220010117",
-                ValidateCodeText = false,
-                Type = BarcodeType.Code128
-            };
+            var data = GetBaseGenerationData(generationSettings);
+
+            data.Data = "WZ27922220010117";
+            data.ValidateCodeText = false;
+            data.Type = BarcodeType.Code128;
 
             return new BarcodeViewModel(data)
             {
@@ -88,14 +95,13 @@ namespace Barcodes.Core
             };
         }
 
-        private static BarcodeViewModel CreateContainerBarcode(IGeneratorService generatorService)
+        private static BarcodeViewModel CreateContainerBarcode(IGeneratorService generatorService, GenerationSettings generationSettings)
         {
-            var data = new GenerationData
-            {
-                Data = "PJ0002345",
-                ValidateCodeText = false,
-                Type = BarcodeType.Code128
-            };
+            var data = GetBaseGenerationData(generationSettings);
+
+            data.Data = "PJ0002345";
+            data.ValidateCodeText = false;
+            data.Type = BarcodeType.Code128;
 
             return new BarcodeViewModel(data)
             {
@@ -105,14 +111,13 @@ namespace Barcodes.Core
             };
         }
 
-        private static BarcodeViewModel CreateUserBarcode(IGeneratorService generatorService)
+        private static BarcodeViewModel CreateUserBarcode(IGeneratorService generatorService, GenerationSettings generationSettings)
         {
-            var data = new GenerationData
-            {
-                Data = "PR09001",
-                ValidateCodeText = false,
-                Type = BarcodeType.Code128
-            };
+            var data = GetBaseGenerationData(generationSettings);
+
+            data.Data = "PR09001";
+            data.ValidateCodeText = false;
+            data.Type = BarcodeType.Code128;
 
             return new BarcodeViewModel(data)
             {
@@ -122,14 +127,13 @@ namespace Barcodes.Core
             };
         }
 
-        private static BarcodeViewModel CreateLongProductBarcode(IGeneratorService generatorService)
+        private static BarcodeViewModel CreateLongProductBarcode(IGeneratorService generatorService, GenerationSettings generationSettings)
         {
-            var data = new GenerationData
-            {
-                Data = "(02)05909991107123(17)200229(10)U1702011",
-                ValidateCodeText = false,
-                Type = BarcodeType.Ean128
-            };
+            var data = GetBaseGenerationData(generationSettings);
+
+            data.Data = "(02)05909991107123(17)200229(10)U1702011";
+            data.ValidateCodeText = false;
+            data.Type = BarcodeType.Ean128;
 
             return new BarcodeViewModel(data)
             {

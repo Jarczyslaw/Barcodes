@@ -4,6 +4,7 @@ using Barcodes.Core.ViewModels;
 using Barcodes.Core.ViewModels.AdditionalInput;
 using Barcodes.Core.ViewModelsInput;
 using Barcodes.Core.ViewModelsResult;
+using Barcodes.Services.Generator;
 using Barcodes.Services.Windows;
 using Prism.Ioc;
 using System;
@@ -51,17 +52,18 @@ namespace Barcodes.Core.Services
             ShowDialog(window);
         }
 
-        public void ShowExamplesWindow()
+        public BarcodeViewModel ShowExamplesWindow()
         {
-            var window = containerExtension.Resolve<ExamplesWindow>();
             var dataContext = containerExtension.Resolve<ExamplesViewModel>();
-            Show(window, dataContext);
+            var window = new ExamplesWindow(dataContext);
+            ShowDialog(window, dataContext);
+            return dataContext.ResultBarcode;
         }
 
-        public GenerationViewModelResult ShowGenerationWindow(BarcodeViewModel barcode = null)
+        public GenerationViewModelResult ShowGenerationWindow(BarcodeViewModel barcode, bool edit)
         {
             var dataContext = containerExtension.Resolve<GenerationViewModel>();
-            dataContext.Load(barcode);
+            dataContext.Load(barcode, edit);
             var window = new GenerationWindow(dataContext);
             ShowDialog(window);
             return dataContext.Result;

@@ -18,7 +18,7 @@ namespace Barcodes.Core.ViewModels
             ShowAboutCommand = new DelegateCommand(app.ShowAbout);
             ShowExamplesCommand = new DelegateCommand(app.ShowExamples);
             AddNewWorkspaceCommand = new DelegateCommand(app.AddNewWorkspace);
-            AddNewBarcodeCommand = new DelegateCommand(app.AddNewBarcode);
+            AddNewBarcodeCommand = new DelegateCommand(() => app.AddNewBarcode(null, false));
             ImportBarcodeCommand = new DelegateCommand(app.ImportBarcode);
             ImportWorkspaceCommand = new DelegateCommand(app.ImportWorkspace);
             ShowSettingsCommand = new DelegateCommand(app.ShowSettings);

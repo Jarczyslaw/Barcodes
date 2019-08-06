@@ -36,7 +36,7 @@ namespace Barcodes.Core.ViewModels
         {
             if (App.BarcodesCount == 0)
             {
-                App.AddNewBarcode();
+                App.AddNewBarcode(null, false);
             }
         }
 

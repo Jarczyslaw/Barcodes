@@ -265,7 +265,11 @@ namespace Barcodes.Core.ViewModels
 
         public void ShowExamples()
         {
-            servicesContainer.AppWindowsService.ShowExamplesWindow();
+            var barcode = servicesContainer.AppWindowsService.ShowExamplesWindow();
+            if (barcode != null)
+            {
+                AddNewBarcode(barcode, false);
+            }
         }
 
         public void ShowSettings()
@@ -389,9 +393,9 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public void AddNewBarcode()
+        public void AddNewBarcode(BarcodeViewModel barcode, bool edit)
         {
-            var result = servicesContainer.AppWindowsService.ShowGenerationWindow();
+            var result = servicesContainer.AppWindowsService.ShowGenerationWindow(barcode, edit);
             if (result == null)
             {
                 return;
@@ -429,7 +433,7 @@ namespace Barcodes.Core.ViewModels
 
         public void EditBarcode(BarcodeViewModel barcode)
         {
-            var result = servicesContainer.AppWindowsService.ShowGenerationWindow(barcode);
+            var result = servicesContainer.AppWindowsService.ShowGenerationWindow(barcode, true);
             if (result == null)
             {
                 return;

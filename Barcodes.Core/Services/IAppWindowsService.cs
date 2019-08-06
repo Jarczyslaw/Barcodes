@@ -1,5 +1,6 @@
 ﻿using Barcodes.Core.ViewModels;
 using Barcodes.Core.ViewModelsResult;
+using Barcodes.Services.Generator;
 using System;
 using System.Collections.Generic;
 
@@ -15,9 +16,9 @@ namespace Barcodes.Core.Services
 
         void ShowAboutWindow();
 
-        void ShowExamplesWindow();
+        BarcodeViewModel ShowExamplesWindow();
 
-        GenerationViewModelResult ShowGenerationWindow(BarcodeViewModel barcode = null);
+        GenerationViewModelResult ShowGenerationWindow(BarcodeViewModel barcode, bool edit);
 
         string ShowWorkspaceNameWindow(string currentName, Func<string, bool> validationRule);
 

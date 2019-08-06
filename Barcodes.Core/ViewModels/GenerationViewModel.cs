@@ -256,14 +256,14 @@ namespace Barcodes.Core.ViewModels
             Data = result;
         }
 
-        public void Load(BarcodeViewModel barcode)
+        public void Load(BarcodeViewModel barcode, bool edit)
         {
             if (barcode == null)
             {
                 return;
             }
 
-            Edit = true;
+            Edit = edit;
             var generationData = barcode.GenerationData;
             Data = generationData.Data;
             SelectedBarcodeType = BarcodeTypes.FirstOrDefault(b => b.Type == generationData.Type);
