@@ -129,6 +129,14 @@ namespace Barcodes.Core.ViewModels
             SelectedWorkspace = workspace;
         }
 
+        private void AddWorkspaces(List<WorkspaceViewModel> workspaces)
+        {
+            foreach (var workspace in workspaces)
+            {
+                AddWorkspace(workspace);
+            }
+        }
+
         private bool WorkspaceNameValidation(string workspaceName)
         {
             if (string.IsNullOrEmpty(workspaceName))
@@ -594,54 +602,64 @@ namespace Barcodes.Core.ViewModels
             return servicesContainer.StorageService.StorageChanged(currentStorage);
         }
 
-        public void ImportBarcode()
+        public void ImportBarcodes()
         {
-            var barcodeFile = servicesContainer.AppDialogsService.ImportBarcodeFile();
-            if (string.IsNullOrEmpty(barcodeFile))
+            var barcodeFiles = servicesContainer.AppDialogsService.ImportBarcodeFiles();
+            if (barcodeFiles?.Count > 0)
             {
-                return;
-            }
-
-            try
-            {
-                var storageBarcode = servicesContainer.StorageService.ImportBarcode(barcodeFile);
-                var newBarcode = storageBarcode.ToBarcode(servicesContainer.GeneratorService);
+                barcodeFiles.Reverse();
+                var barcodes = new List<BarcodeViewModel>();
+                foreach (var barcodeFile in barcodeFiles)
+                {
+                    try
+                    {
+                        var storageBarcode = servicesContainer.StorageService.ImportBarcode(barcodeFile);
+                        barcodes.Add(storageBarcode.ToBarcode(servicesContainer.GeneratorService));
+                    }
+                    catch (Exception exc)
+                    {
+                        servicesContainer.AppDialogsService.ShowException("Error when importing barcode", exc);
+                        return;
+                    }
+                }
 
                 if (!TryAddInitialWorkspace())
                 {
                     return;
                 }
 
-                SelectedWorkspace.InsertNewBarcode(newBarcode);
-                UpdateMessage($"Successfully imported {newBarcode.Title}");
-            }
-            catch (Exception exc)
-            {
-                servicesContainer.AppDialogsService.ShowException("Error when importing barcode", exc);
+                SelectedWorkspace.InsertNewBarcodes(barcodes);
+                UpdateMessage($"Successfully imported {barcodes.Count} barcodes");
             }
         }
 
-        public void ImportWorkspace()
+        public void ImportWorkspaces()
         {
-            var workspaceFile = servicesContainer.AppDialogsService.ImportWorkspaceFile();
-            if (string.IsNullOrEmpty(workspaceFile))
+            var workspaceFiles = servicesContainer.AppDialogsService.ImportWorkspaceFiles();
+            if (workspaceFiles?.Count > 0)
             {
-                return;
-            }
+                var workspaces = new List<WorkspaceViewModel>();
+                foreach (var workspace in workspaceFiles)
+                {
+                    try
+                    {
+                        var storageWorkspace = servicesContainer.StorageService.ImportWorkspace(workspace);
+                        workspaces.Add(storageWorkspace.ToWorkspace(servicesContainer.GeneratorService));
+                    }
+                    catch (Exception exc)
+                    {
+                        servicesContainer.AppDialogsService.ShowException("Error when importing workspace", exc);
+                        return;
+                    }
+                }
 
-            try
-            {
-                var storageWorkspace = servicesContainer.StorageService.ImportWorkspace(workspaceFile);
-                var importedWorkspace = storageWorkspace.ToWorkspace(servicesContainer.GeneratorService);
-                importedWorkspace.Default = !Workspaces.Any(w => w.Default);
-
-                AddWorkspace(importedWorkspace);
-                SelectedWorkspace = importedWorkspace;
-                UpdateMessage($"Successfully imported {importedWorkspace.Name}");
-            }
-            catch (Exception exc)
-            {
-                servicesContainer.AppDialogsService.ShowException("Error when importing workspace", exc);
+                AddWorkspaces(workspaces);
+                SelectedWorkspace = workspaces.Last();
+                if (!Workspaces.Any(w => w.Default))
+                {
+                    workspaces.Last().Default = true;
+                }
+                UpdateMessage($"Successfully imported {workspaces.Count} workspaces");
             }
         }
 

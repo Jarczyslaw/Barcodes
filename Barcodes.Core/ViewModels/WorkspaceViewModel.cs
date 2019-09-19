@@ -2,6 +2,7 @@
 using Barcodes.Services.Storage;
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -58,10 +59,26 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref selectedBarcode, value);
         }
 
-        public void InsertNewBarcode(BarcodeViewModel barcode)
+        public void InsertNewBarcode(BarcodeViewModel barcode, bool updateMessage = true)
         {
             Barcodes.Insert(0, barcode);
-            OnMessageUpdate?.Invoke($"Barcode {barcode.Title} generated successfully!");
+            if (updateMessage)
+            {
+                OnMessageUpdate?.Invoke($"Barcode {barcode.Title} generated successfully!");
+            }
+        }
+
+        public void InsertNewBarcodes(List<BarcodeViewModel> barcodes, bool updateMessage = true)
+        {
+            foreach (var barcode in barcodes)
+            {
+                Barcodes.Insert(0, barcode);
+            }
+
+            if (updateMessage)
+            {
+                OnMessageUpdate?.Invoke($"{barcodes.Count} barcodes generated successfully!");
+            }
         }
 
         public void ReplaceBarcode(BarcodeViewModel barcode, BarcodeViewModel newBarcode)

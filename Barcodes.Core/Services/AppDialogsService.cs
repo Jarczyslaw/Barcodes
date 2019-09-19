@@ -44,6 +44,11 @@ namespace Barcodes.Core.Services
             return OpenFile("Workspace file", null, workspaceFilter);
         }
 
+        public List<string> ImportWorkspaceFiles()
+        {
+            return OpenFiles("Workspace file", null, workspaceFilter);
+        }
+
         public string ExportWorkspaceFile(string workspaceName)
         {
             var fileName = $"{workspaceName}.{workspaceFilter.DisplayName}";
@@ -53,6 +58,11 @@ namespace Barcodes.Core.Services
         public string ImportBarcodeFile()
         {
             return OpenFile("Barcode file", null, barcodeFilter);
+        }
+
+        public List<string> ImportBarcodeFiles()
+        {
+            return OpenFiles("Barcode file", null, barcodeFilter);
         }
 
         public string ExportBarcodeFile(string barcodeTitle)

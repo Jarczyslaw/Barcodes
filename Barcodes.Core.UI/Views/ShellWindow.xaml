@@ -129,11 +129,11 @@
             Modifiers="Control" />
         <KeyBinding
             Key="B"
-            Command="{Binding Proxy.Menu.ImportBarcodeCommand, Source={StaticResource Proxy}}"
+            Command="{Binding Proxy.Menu.ImportBarcodesCommand, Source={StaticResource Proxy}}"
             Modifiers="Control+Shift" />
         <KeyBinding
             Key="W"
-            Command="{Binding Proxy.Menu.ImportWorkspaceCommand, Source={StaticResource Proxy}}"
+            Command="{Binding Proxy.Menu.ImportWorkspacesCommand, Source={StaticResource Proxy}}"
             Modifiers="Control+Shift" />
     </Window.InputBindings>
 
@@ -182,12 +182,12 @@
                 </MenuItem>
                 <MenuItem Header="_Import">
                     <MenuItem
-                        Command="{Binding ImportBarcodeCommand}"
-                        Header="_Barcode"
+                        Command="{Binding ImportBarcodesCommand}"
+                        Header="_Barcodes"
                         InputGestureText="Ctrl+Shift+B" />
                     <MenuItem
-                        Command="{Binding ImportWorkspaceCommand}"
-                        Header="_Workspace"
+                        Command="{Binding ImportWorkspacesCommand}"
+                        Header="_Workspaces"
                         InputGestureText="Ctrl+Shift+W" />
                 </MenuItem>
                 <MenuItem Command="{Binding ExportToPdfCommand}" Header="_Export to PDF" />
