@@ -27,7 +27,8 @@ namespace Barcodes.Core
                 CreateExternalReleaseBarcode(generatorService, generationSettings),
                 CreateContainerBarcode(generatorService, generationSettings),
                 CreateUserBarcode(generatorService, generationSettings),
-                CreateLongProductBarcode(generatorService, generationSettings)
+                CreateLongProductBarcode(generatorService, generationSettings),
+                CreateStationBarcode(generatorService, generationSettings)
             };
         }
 
@@ -140,6 +141,22 @@ namespace Barcodes.Core
                 Title = "Długi kod produktu",
                 Barcode = generatorService.CreateBarcode(data),
                 Description = "(02) + 0 + EAN13 + (17) + data ważności (6 cyfr) + (10) + nr serii"
+            };
+        }
+
+        private static BarcodeViewModel CreateStationBarcode(IGeneratorService generatorService, GenerationSettings generationSettings)
+        {
+            var data = GetBaseGenerationData(generationSettings);
+
+            data.Data = "ST0101";
+            data.ValidateCodeText = false;
+            data.Type = BarcodeType.Code128;
+
+            return new BarcodeViewModel(data)
+            {
+                Title = "Stacja (z magazynem)",
+                Barcode = generatorService.CreateBarcode(data),
+                Description = "ST + numer magazynu (2 cyfry) + numer stacji (2 cyfry, 00 - bez stacji)"
             };
         }
     }
