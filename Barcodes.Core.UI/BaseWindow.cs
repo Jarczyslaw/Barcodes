@@ -15,12 +15,10 @@ namespace Barcodes.Core.UI
         private bool windowInitialized;
 
         private readonly IAppSettingsService appSettingsService;
-        protected bool keyDownHandlerEnabled = true;
 
         public BaseWindow()
         {
             appSettingsService = ServiceLocator.Current.TryResolve<IAppSettingsService>();
-
             KeyDown += BaseWindow_KeyDown;
         }
 
@@ -29,6 +27,8 @@ namespace Barcodes.Core.UI
         {
             DataContext = dataContext;
         }
+
+        public bool KeyDownHandlerEnabled { get; set; }
 
         protected override void OnInitialized(EventArgs e)
         {
@@ -77,9 +77,15 @@ namespace Barcodes.Core.UI
 
         private void BaseWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (keyDownHandlerEnabled && appSettingsService != null)
+            if (KeyDownHandlerEnabled)
             {
-                if (KeyParser.Check(appSettingsService.AppSettings.AntiKeyProtection, e.Key))
+                var handled = false;
+                if (DataContext is IOnKeyDownAware keyDownAware)
+                {
+                    handled = keyDownAware.OnKeyDown(e);
+                }
+
+                if (!handled && appSettingsService != null && KeyParser.Check(appSettingsService.AppSettings.AntiKeyProtection, e.Key))
                 {
                     new AntiKeyProtectionWindow().ShowWarning(this, e.Key);
                 }

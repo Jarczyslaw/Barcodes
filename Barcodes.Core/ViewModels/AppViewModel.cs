@@ -457,6 +457,14 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
+        public void TryDeleteSelectedBarcode()
+        {
+            if (SelectedBarcode != null)
+            {
+                DeleteBarcode(SelectedBarcode);
+            }
+        }
+
         public void DeleteBarcode(BarcodeViewModel barcode)
         {
             if (!servicesContainer.AppDialogsService.ShowYesNoQuestion($"Do you really want to delete barcode {barcode.Title}?"))

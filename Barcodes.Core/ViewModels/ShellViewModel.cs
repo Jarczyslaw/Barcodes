@@ -2,10 +2,11 @@
 using Barcodes.Core.Services;
 using Prism.Mvvm;
 using System;
+using System.Windows.Input;
 
 namespace Barcodes.Core.ViewModels
 {
-    public class ShellViewModel : BindableBase, IOnShowAware, ICloseSource, IOnClosingAware
+    public class ShellViewModel : BindableBase, IOnShowAware, ICloseSource, IOnClosingAware, IOnKeyDownAware
     {
         private readonly IServicesContainer servicesContainer;
 
@@ -53,6 +54,16 @@ namespace Barcodes.Core.ViewModels
                 {
                     return true;
                 }
+            }
+            return false;
+        }
+
+        public bool OnKeyDown(KeyEventArgs keyEventArgs)
+        {
+            if (keyEventArgs.Key == Key.Delete)
+            {
+                App.TryDeleteSelectedBarcode();
+                return true;
             }
             return false;
         }

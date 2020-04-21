@@ -148,15 +148,15 @@
                 <MenuItem Header="_File">
                     <MenuItem
                         Command="{Binding LoadFromFileCommand}"
-                        Header="_Load"
+                        Header="_Load storage"
                         InputGestureText="Ctrl+L" />
                     <MenuItem
                         Command="{Binding SaveCommand}"
-                        Header="_Save"
+                        Header="_Save storage"
                         InputGestureText="Ctrl+S" />
                     <MenuItem
                         Command="{Binding SaveAsCommand}"
-                        Header="S_ave as"
+                        Header="S_ave storage as"
                         InputGestureText="Ctrl+Alt+S" />
                     <Separator />
                     <MenuItem

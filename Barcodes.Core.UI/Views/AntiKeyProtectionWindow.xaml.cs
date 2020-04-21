@@ -9,7 +9,6 @@ namespace Barcodes.Core.UI.Views
             : base(null)
         {
             InitializeComponent();
-            keyDownHandlerEnabled = false;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

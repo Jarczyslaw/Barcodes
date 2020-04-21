@@ -34,6 +34,7 @@
     <Reference Include="CommonServiceLocator, Version=2.0.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.5\lib\net46\CommonServiceLocator.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="Prism, Version=7.2.0.1422, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.7.2.0.1422\lib\net45\Prism.dll</HintPath>
     </Reference>
@@ -76,6 +77,7 @@
     <Compile Include="FileExtensions.cs" />
     <Compile Include="ICloseSource.cs" />
     <Compile Include="IOnClosingAware.cs" />
+    <Compile Include="IOnKeyDownAware.cs" />
     <Compile Include="IOnShowAware.cs" />
     <Compile Include="KeyParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

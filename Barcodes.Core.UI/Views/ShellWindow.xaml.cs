@@ -9,6 +9,7 @@ namespace Barcodes.Core.UI.Views
         public ShellWindow(SingleInstanceManager singleInstanceManager)
         {
             InitializeComponent();
+            KeyDownHandlerEnabled = true;
             singleInstanceManager.OnNewInstance += SingleInstanceManager_OnNewInstance;
         }
 
