@@ -66,6 +66,7 @@ namespace Barcodes.Core.ViewModels
             {
                 OnMessageUpdate?.Invoke($"Barcode {barcode.Title} generated successfully!");
             }
+            SelectedBarcode = barcode;
         }
 
         public void InsertNewBarcodes(List<BarcodeViewModel> barcodes, bool updateMessage = true)
@@ -87,6 +88,7 @@ namespace Barcodes.Core.ViewModels
             Barcodes.Remove(barcode);
             Barcodes.Insert(barcodeIndex, newBarcode);
             OnMessageUpdate?.Invoke($"Barcode {newBarcode.Title} edited successfully!");
+            SelectedBarcode = newBarcode;
         }
 
         public void RemoveBarcode(BarcodeViewModel barcode)
