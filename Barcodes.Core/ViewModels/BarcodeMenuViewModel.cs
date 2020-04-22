@@ -16,6 +16,8 @@ namespace Barcodes.Core.ViewModels
             DeleteCommand = new DelegateCommand<BarcodeViewModel>(app.DeleteBarcode);
             ChangeWorkspaceCommand = new DelegateCommand<BarcodeViewModel>(app.ChangeBarcodesWorkspace);
             ExportCommand = new DelegateCommand<BarcodeViewModel>(app.ExportBarcode);
+            SetAsFirstCommand = new DelegateCommand<BarcodeViewModel>(app.SetBarcodeAsFirst);
+            SetAsLastCommand = new DelegateCommand<BarcodeViewModel>(app.SetBarcodeAsLast);
         }
 
         public DelegateCommand<BarcodeViewModel> EditCommand { get; }
@@ -27,5 +29,7 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand<BarcodeViewModel> DeleteCommand { get; }
         public DelegateCommand<BarcodeViewModel> ChangeWorkspaceCommand { get; }
         public DelegateCommand<BarcodeViewModel> ExportCommand { get; }
+        public DelegateCommand<BarcodeViewModel> SetAsFirstCommand { get; }
+        public DelegateCommand<BarcodeViewModel> SetAsLastCommand { get; }
     }
 }

@@ -32,6 +32,10 @@
                 Header="Set as default" />
             <MenuItem Header="Change order">
                 <MenuItem
+                    Command="{Binding Proxy.WorkspaceMenu.SetAsFirstCommand, Source={StaticResource Proxy}}"
+                    CommandParameter="{Binding}"
+                    Header="Set as first" />
+                <MenuItem
                     Command="{Binding Proxy.WorkspaceMenu.MoveLeftCommand, Source={StaticResource Proxy}}"
                     CommandParameter="{Binding}"
                     Header="Move left" />
@@ -39,6 +43,10 @@
                     Command="{Binding Proxy.WorkspaceMenu.MoveRightCommand, Source={StaticResource Proxy}}"
                     CommandParameter="{Binding}"
                     Header="Move right" />
+                <MenuItem
+                    Command="{Binding Proxy.WorkspaceMenu.SetAsLastCommand, Source={StaticResource Proxy}}"
+                    CommandParameter="{Binding}"
+                    Header="Set as last" />
             </MenuItem>
             <MenuItem
                 Command="{Binding Proxy.WorkspaceMenu.ExportCommand, Source={StaticResource Proxy}}"
@@ -62,6 +70,10 @@
                 Header="Edit" />
             <MenuItem Header="Change order">
                 <MenuItem
+                    Command="{Binding Proxy.BarcodeMenu.SetAsFirstCommand, Source={StaticResource Proxy}}"
+                    CommandParameter="{Binding}"
+                    Header="Set as first" />
+                <MenuItem
                     Command="{Binding Proxy.BarcodeMenu.MoveUpCommand, Source={StaticResource Proxy}}"
                     CommandParameter="{Binding}"
                     Header="Move up" />
@@ -69,6 +81,10 @@
                     Command="{Binding Proxy.BarcodeMenu.MoveDownCommand, Source={StaticResource Proxy}}"
                     CommandParameter="{Binding}"
                     Header="Move down" />
+                <MenuItem
+                    Command="{Binding Proxy.BarcodeMenu.SetAsLastCommand, Source={StaticResource Proxy}}"
+                    CommandParameter="{Binding}"
+                    Header="Set as last" />
             </MenuItem>
             <MenuItem
                 Command="{Binding Proxy.BarcodeMenu.OpenInNewWindowCommand, Source={StaticResource Proxy}}"

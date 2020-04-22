@@ -18,7 +18,7 @@ namespace Barcodes.Core.ViewModels
     {
         private string statusMessage = string.Empty;
         private WorkspaceViewModel selectedWorkspace;
-        private readonly ObservableCollection<WorkspaceViewModel> workspaces;
+        private ObservableCollection<WorkspaceViewModel> workspaces;
         private string busyMessage = string.Empty;
         private bool barcodesVisible;
         private string title = string.Empty;
@@ -104,9 +104,10 @@ namespace Barcodes.Core.ViewModels
             get => SelectedWorkspace?.SelectedBarcode;
         }
 
-        public ReadOnlyObservableCollection<WorkspaceViewModel> Workspaces
+        public ObservableCollection<WorkspaceViewModel> Workspaces
         {
-            get => new ReadOnlyObservableCollection<WorkspaceViewModel>(workspaces);
+            get => workspaces;
+            set => SetProperty(ref workspaces, value);
         }
 
         private void UpdateMessage(string message)
@@ -549,12 +550,14 @@ namespace Barcodes.Core.ViewModels
         {
             var index = workspaces.IndexOf(workspace);
             workspaces.ShiftLeft(index);
+            SelectedWorkspace = workspace;
         }
 
         public void MoveWorkspaceRight(WorkspaceViewModel workspace)
         {
             var index = workspaces.IndexOf(workspace);
             workspaces.ShiftRight(index);
+            SelectedWorkspace = workspace;
         }
 
         public void ChangeBarcodesWorkspace(BarcodeViewModel barcode)
@@ -727,6 +730,35 @@ namespace Barcodes.Core.ViewModels
             BarcodesVisible = appSettings.BarcodesVisible;
             StoragePath = appSettings.StoragePath;
             LoadFromFile(appSettings.StoragePath, false);
+        }
+
+        public void SetWorkspaceAsFirst(WorkspaceViewModel workspace)
+        {
+            if (Workspaces.IndexOf(workspace) > 0)
+            {
+                Workspaces.Remove(workspace);
+                Workspaces.Insert(0, workspace);
+                SelectedWorkspace = workspace;
+            }
+        }
+
+        public void SetWorkspaceAsLast(WorkspaceViewModel workspace)
+        {
+            if (Workspaces.IndexOf(workspace) < Workspaces.Count - 1)
+            {
+                Workspaces.Remove(workspace);
+                Workspaces.Add(workspace);
+                SelectedWorkspace = workspace;
+            }
+        }
+        public void SetBarcodeAsFirst(BarcodeViewModel barcode)
+        {
+            SelectedWorkspace.SetBarcodeAsFirst(barcode);
+        }
+
+        public void SetBarcodeAsLast(BarcodeViewModel barcode)
+        {
+            SelectedWorkspace.SetBarcodeAsLast(barcode);
         }
     }
 }

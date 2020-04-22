@@ -18,6 +18,8 @@ namespace Barcodes.Core.ViewModels
             MoveRightCommand = new DelegateCommand<WorkspaceViewModel>(app.MoveWorkspaceRight);
             ExportCommand = new DelegateCommand<WorkspaceViewModel>(app.ExportWorkspace);
             ClearCommand = new DelegateCommand<WorkspaceViewModel>(app.ClearWorkspace);
+            SetAsFirstCommand = new DelegateCommand<WorkspaceViewModel>(app.SetWorkspaceAsFirst);
+            SetAsLastCommand = new DelegateCommand<WorkspaceViewModel>(app.SetWorkspaceAsLast);
         }
 
         public DelegateCommand<WorkspaceViewModel> RenameCommand { get; }
@@ -27,5 +29,7 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand<WorkspaceViewModel> MoveRightCommand { get; }
         public DelegateCommand<WorkspaceViewModel> ClearCommand { get; }
         public DelegateCommand<WorkspaceViewModel> ExportCommand { get; }
+        public DelegateCommand<WorkspaceViewModel> SetAsFirstCommand { get; }
+        public DelegateCommand<WorkspaceViewModel> SetAsLastCommand { get; }
     }
 }

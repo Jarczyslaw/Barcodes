@@ -10,4 +10,5 @@ dodać konwertery jako dodatkowa opcja pod prawoklikiem na kodzie żeby można b
 //skrót klawiaturowy delete na kodzie - usuwanie kodu za potwierdzeniem
 przycisk na górnej belce który chowa wszystkie wyciągnięte okna
 rozbudować kopiowanie kodu do schowka - obrazek lub dane
+zrobić prawoklik na tabie, który jest nieaktywny (aktywacja + otwarcie menu)
 zrobić drag and dropa na na zakładkach i na kodach (docelowo dragablz)

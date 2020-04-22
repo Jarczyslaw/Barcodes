@@ -109,6 +109,26 @@ namespace Barcodes.Core.ViewModels
             Barcodes.ShiftLeft(index);
         }
 
+        public void SetBarcodeAsFirst(BarcodeViewModel barcode)
+        {
+            if (Barcodes.IndexOf(barcode) > 0)
+            {
+                Barcodes.Remove(barcode);
+                Barcodes.Insert(0, barcode);
+                SelectedBarcode = barcode;
+            }
+        }
+
+        public void SetBarcodeAsLast(BarcodeViewModel barcode)
+        {
+            if (Barcodes.IndexOf(barcode) < Barcodes.Count - 1)
+            {
+                Barcodes.Remove(barcode);
+                Barcodes.Add(barcode);
+                SelectedBarcode = barcode;
+            }
+        }
+
         public StorageWorkspace ToStorage()
         {
             return new StorageWorkspace
