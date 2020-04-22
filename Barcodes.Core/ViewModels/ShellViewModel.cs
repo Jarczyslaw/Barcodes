@@ -43,19 +43,7 @@ namespace Barcodes.Core.ViewModels
 
         public bool OnClosing()
         {
-            if (App.CheckStorageChanges())
-            {
-                var closingMode = servicesContainer.AppDialogsService.ShowClosingQuestion();
-                if (closingMode == ClosingMode.SaveChanges)
-                {
-                    App.Save(false, false);
-                }
-                else if (closingMode == ClosingMode.Cancel)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return App.CheckStorageSave();
         }
 
         public bool OnKeyDown(KeyEventArgs keyEventArgs)

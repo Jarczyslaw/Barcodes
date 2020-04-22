@@ -176,16 +176,36 @@ namespace Barcodes.Core.ViewModels
             AddWorkspace(newWorkspace, servicesContainer.AppSettingsService.WorkspaceAddMode);
         }
 
+        public bool CheckStorageSave()
+        {
+            if (CheckStorageChanges())
+            {
+                var closingMode = servicesContainer.AppDialogsService.ShowSavingQuestion();
+                if (closingMode == SavingMode.SaveChanges)
+                {
+                    Save(false, false);
+                }
+                else if (closingMode == SavingMode.Cancel)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void LoadBarcodesFromFile()
         {
-            var storagePath = servicesContainer.AppSettingsService.StoragePath;
-            var filePath = servicesContainer.AppDialogsService.OpenStorageFile(storagePath);
-            if (string.IsNullOrEmpty(filePath))
+            if (!CheckStorageSave())
             {
-                return;
-            }
+                var storagePath = servicesContainer.AppSettingsService.StoragePath;
+                var filePath = servicesContainer.AppDialogsService.OpenStorageFile(storagePath);
+                if (string.IsNullOrEmpty(filePath))
+                {
+                    return;
+                }
 
-            LoadFromFile(filePath, true);
+                LoadFromFile(filePath, true);
+            }
         }
 
         private void LoadFromFile(string storagePath, bool storageValidation)

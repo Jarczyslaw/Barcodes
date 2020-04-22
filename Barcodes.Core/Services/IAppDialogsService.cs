@@ -27,6 +27,6 @@ namespace Barcodes.Core.Services
 
         PdfExportMode ShowPdfExportQuestion();
 
-        ClosingMode ShowClosingQuestion();
+        SavingMode ShowSavingQuestion();
     }
 }

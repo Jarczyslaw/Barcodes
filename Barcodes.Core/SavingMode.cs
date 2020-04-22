@@ -1,6 +1,6 @@
 ﻿namespace Barcodes.Core
 {
-    public enum ClosingMode
+    public enum SavingMode
     {
         Cancel,
         SaveChanges,

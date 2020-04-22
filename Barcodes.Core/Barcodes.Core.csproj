@@ -100,7 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BarcodeExamples.cs" />
-    <Compile Include="ClosingMode.cs" />
+    <Compile Include="SavingMode.cs" />
     <Compile Include="Extensions\StorageBarcodeExtensions.cs" />
     <Compile Include="Extensions\StorageWorkspaceExtensions.cs" />
     <Compile Include="ViewModelsResult\GenerationViewModelResult.cs" />
