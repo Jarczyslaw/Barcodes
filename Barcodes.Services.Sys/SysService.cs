@@ -11,6 +11,11 @@ namespace Barcodes.Services.Sys
             Clipboard.SetImage(bitmapSource);
         }
 
+        public void CopyToClipboard(string data)
+        {
+            Clipboard.SetText(data);
+        }
+
         public void OpenAppLocation()
         {
             var appLocation = System.AppDomain.CurrentDomain.BaseDirectory;

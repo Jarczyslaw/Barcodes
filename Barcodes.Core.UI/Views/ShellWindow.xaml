@@ -94,10 +94,16 @@
                 Command="{Binding Proxy.BarcodeMenu.SaveToImageFileCommand, Source={StaticResource Proxy}}"
                 CommandParameter="{Binding}"
                 Header="Save to image file" />
-            <MenuItem
-                Command="{Binding Proxy.BarcodeMenu.CopyToClipboardCommand, Source={StaticResource Proxy}}"
-                CommandParameter="{Binding}"
-                Header="Copy to clipboard" />
+            <MenuItem Header="Copy to clipboard">
+                <MenuItem
+                    Command="{Binding Proxy.BarcodeMenu.CopyImageToClipboardCommand, Source={StaticResource Proxy}}"
+                    CommandParameter="{Binding}"
+                    Header="Image" />
+                <MenuItem
+                    Command="{Binding Proxy.BarcodeMenu.CopyDataToClipboardCommand, Source={StaticResource Proxy}}"
+                    CommandParameter="{Binding}"
+                    Header="Data" />
+            </MenuItem>
             <MenuItem
                 Command="{Binding Proxy.BarcodeMenu.ExportCommand, Source={StaticResource Proxy}}"
                 CommandParameter="{Binding}"

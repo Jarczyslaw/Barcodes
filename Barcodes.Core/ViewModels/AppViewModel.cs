@@ -511,10 +511,16 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public void CopyToClipboard(BarcodeViewModel barcode)
+        public void CopyImageToClipboard(BarcodeViewModel barcode)
         {
             servicesContainer.SystemService.CopyToClipboard(barcode.Barcode);
-            StatusMessage = $"Barcode {barcode.Title} copied to clipboard";
+            StatusMessage = $"Barcode image from {barcode.Title} copied to clipboard";
+        }
+
+        public void CopyDataToClipboard(BarcodeViewModel barcode)
+        {
+            servicesContainer.SystemService.CopyToClipboard(barcode.GenerationData.Data);
+            StatusMessage = $"Barcode data from {barcode.Title} copied to clipboard";
         }
 
         public void MoveBarcodeDown(BarcodeViewModel barcode)
