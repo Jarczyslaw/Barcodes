@@ -27,6 +27,26 @@ namespace Barcodes.Services.AppSettings
             }
         }
 
+        public AddMode BarcodeAddMode
+        {
+            get => AppSettings.BarcodeAddMode;
+            set
+            {
+                AppSettings.BarcodeAddMode = value;
+                Save();
+            }
+        }
+
+        public AddMode WorkspaceAddMode
+        {
+            get => AppSettings.WorkspaceAddMode;
+            set
+            {
+                AppSettings.WorkspaceAddMode = value;
+                Save();
+            }
+        }
+
         public string AppSettingsPath { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"appSettings.{FileExtensions.Settings}");
 
         public AppSettings AppSettings { get; private set; } = new AppSettings();
@@ -37,12 +57,8 @@ namespace Barcodes.Services.AppSettings
             {
                 AppSettings = Serializer.FromFile<AppSettings>(AppSettingsPath);
             }
-            catch
+            catch when (!throwException)
             {
-                if (throwException)
-                {
-                    throw;
-                }
             }
         }
 

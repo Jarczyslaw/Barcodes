@@ -4,6 +4,8 @@
     {
         string StoragePath { get; set; }
         bool BarcodesVisible { get; set; }
+        AddMode BarcodeAddMode { get; set; }
+        AddMode WorkspaceAddMode { get; set; }
 
         AppSettings AppSettings { get; }
         string AppSettingsPath { get; }

@@ -1,4 +1,5 @@
 ﻿using Barcodes.Extensions;
+using Barcodes.Services.AppSettings;
 using Barcodes.Services.Storage;
 using Prism.Mvvm;
 using System;
@@ -59,9 +60,21 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref selectedBarcode, value);
         }
 
-        public void InsertNewBarcode(BarcodeViewModel barcode, bool updateMessage = true)
+        private void AddToBarcodes(BarcodeViewModel barcode, AddMode addMode)
         {
-            Barcodes.Insert(0, barcode);
+            if (addMode == AddMode.AsFirst)
+            {
+                Barcodes.Insert(0, barcode);
+            }
+            else
+            {
+                Barcodes.Add(barcode);
+            }
+        }
+
+        public void InsertNewBarcode(BarcodeViewModel barcode, AddMode addMode = AddMode.AsFirst, bool updateMessage = true)
+        {
+            AddToBarcodes(barcode, addMode);
             if (updateMessage)
             {
                 OnMessageUpdate?.Invoke($"Barcode {barcode.Title} generated successfully!");
@@ -69,11 +82,16 @@ namespace Barcodes.Core.ViewModels
             SelectedBarcode = barcode;
         }
 
-        public void InsertNewBarcodes(List<BarcodeViewModel> barcodes, bool updateMessage = true)
+        public void InsertNewBarcodes(List<BarcodeViewModel> barcodes, AddMode addMode = AddMode.AsFirst, bool updateMessage = true)
         {
+            if (addMode == AddMode.AsFirst)
+            {
+                barcodes.Reverse();
+            }
+
             foreach (var barcode in barcodes)
             {
-                Barcodes.Insert(0, barcode);
+                AddToBarcodes(barcode, addMode);
             }
 
             if (updateMessage)
