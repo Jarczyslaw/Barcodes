@@ -235,11 +235,14 @@
             </StatusBar>
 
             <TabControl
+                x:Name="tabControl"
                 DataContext="{Binding App}"
                 ItemsSource="{Binding Workspaces}"
                 SelectedItem="{Binding SelectedWorkspace}">
                 <TabControl.ItemContainerStyle>
                     <Style TargetType="{x:Type TabItem}">
+                        <EventSetter Event="MouseRightButtonDown" Handler="TabItem_MouseRightButtonDown" />
+                        <EventSetter Event="ContextMenuOpening" Handler="TabItem_ContextMenuOpening" />
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter Property="ContextMenu" Value="{StaticResource WorkspacesContextMenu}" />

@@ -1,5 +1,6 @@
 ﻿using Barcodes.SingleInstance;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace Barcodes.Core.UI.Views
@@ -16,6 +17,15 @@ namespace Barcodes.Core.UI.Views
         private void SingleInstanceManager_OnNewInstance()
         {
             Application.Current?.Dispatcher.Invoke(BringToFront, DispatcherPriority.Background);
+        }
+
+        private void TabItem_MouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ((TabItem)sender).IsSelected = true;
+        }
+
+        private void TabItem_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
         }
     }
 }
