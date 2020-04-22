@@ -10,7 +10,6 @@
     Icon="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
     ResizeMode="CanMinimize"
     SizeToContent="WidthAndHeight"
-    WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
     <Grid>
         <controls:BarcodeView DescriptionVisible="False" />

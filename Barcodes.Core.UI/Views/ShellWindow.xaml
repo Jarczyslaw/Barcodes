@@ -164,10 +164,22 @@
             <Menu DataContext="{Binding Menu}" DockPanel.Dock="Top">
                 <Menu.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <DockPanel HorizontalAlignment="Stretch" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
                     </ItemsPanelTemplate>
                 </Menu.ItemsPanel>
-                <MenuItem Header="_File">
+                <MenuItem Grid.Column="0" Header="_File">
                     <MenuItem
                         Command="{Binding LoadFromFileCommand}"
                         Header="_Load storage"
@@ -192,7 +204,7 @@
                     <Separator />
                     <MenuItem Command="{Binding CloseCommand}" Header="_Close" />
                 </MenuItem>
-                <MenuItem Header="_Add">
+                <MenuItem Grid.Column="1" Header="_Add">
                     <MenuItem
                         Command="{Binding AddNewBarcodeCommand}"
                         Header="_Barcode"
@@ -202,7 +214,7 @@
                         Header="_Workspace"
                         InputGestureText="Ctrl+W" />
                 </MenuItem>
-                <MenuItem Header="_Import">
+                <MenuItem Grid.Column="2" Header="_Import">
                     <MenuItem
                         Command="{Binding ImportBarcodesCommand}"
                         Header="_Barcodes"
@@ -212,17 +224,28 @@
                         Header="_Workspaces"
                         InputGestureText="Ctrl+Shift+W" />
                 </MenuItem>
-                <MenuItem Command="{Binding ExportToPdfCommand}" Header="_Export to PDF" />
-                <MenuItem Command="{Binding ShowSettingsCommand}" Header="_Settings" />
-                <MenuItem Header="_Help">
+                <MenuItem
+                    Grid.Column="3"
+                    Command="{Binding ExportToPdfCommand}"
+                    Header="_Export to PDF" />
+                <MenuItem
+                    Grid.Column="4"
+                    Command="{Binding ShowSettingsCommand}"
+                    Header="_Settings" />
+                <MenuItem Grid.Column="5" Header="_Help">
                     <MenuItem Command="{Binding ShowExamplesCommand}" Header="_Examples" />
                     <MenuItem Command="{Binding ShowAboutCommand}" Header="_About" />
                 </MenuItem>
                 <MenuItem
-                    HorizontalAlignment="Right"
+                    Grid.Column="7"
+                    Command="{Binding CloseAllWindows}"
+                    Header="Close all windows" />
+                <MenuItem
+                    Grid.Column="8"
                     Header="Barcodes visible"
                     IsCheckable="True"
                     IsChecked="{Binding Proxy.App.BarcodesVisible, Source={StaticResource Proxy}}" />
+
             </Menu>
 
             <StatusBar DataContext="{Binding App}" DockPanel.Dock="Bottom">

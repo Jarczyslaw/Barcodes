@@ -798,5 +798,17 @@ namespace Barcodes.Core.ViewModels
         {
             SelectedWorkspace.SetBarcodeAsLast(barcode);
         }
+
+        public void CloseAllWindows()
+        {
+            if (servicesContainer.AppWindowsService.WindowsCount > 0)
+            {
+                var result = servicesContainer.AppDialogsService.ShowYesNoQuestion("Do you really want to close all barcodes and workspaces windows?");
+                if (result)
+                {
+                    servicesContainer.AppWindowsService.CloseBarcodesAndWorkspacesWindows();
+                }
+            }
+        }
     }
 }

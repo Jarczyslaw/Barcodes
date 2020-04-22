@@ -4,7 +4,6 @@ using Barcodes.Core.ViewModels;
 using Barcodes.Core.ViewModels.AdditionalInput;
 using Barcodes.Core.ViewModelsInput;
 using Barcodes.Core.ViewModelsResult;
-using Barcodes.Services.Generator;
 using Barcodes.Services.Windows;
 using Prism.Ioc;
 using System;
@@ -16,15 +15,26 @@ namespace Barcodes.Core.Services
     public class AppWindowsService : WindowsService, IAppWindowsService
     {
         private readonly IContainerExtension containerExtension;
+        private readonly WindowManager barcodesWindowsManager = new WindowManager();
+        private readonly WindowManager workspacesWindowsManager = new WindowManager();
 
         public AppWindowsService(IContainerExtension containerExtension)
         {
             this.containerExtension = containerExtension;
         }
 
+        public int WindowsCount => barcodesWindowsManager.WindowsCount + workspacesWindowsManager.WindowsCount;
+
+        public void CloseBarcodesAndWorkspacesWindows()
+        {
+            barcodesWindowsManager.CloseAll();
+            workspacesWindowsManager.CloseAll();
+        }
+
         public void OpenBarcodeWindow(BarcodeViewModel barcodeViewModel)
         {
             var window = new BarcodeWindow(barcodeViewModel);
+            barcodesWindowsManager.RegisterWindow(window);
             Show(window);
         }
 

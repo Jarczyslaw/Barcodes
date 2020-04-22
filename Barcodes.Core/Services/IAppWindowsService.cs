@@ -1,6 +1,5 @@
 ﻿using Barcodes.Core.ViewModels;
 using Barcodes.Core.ViewModelsResult;
-using Barcodes.Services.Generator;
 using System;
 using System.Collections.Generic;
 
@@ -8,6 +7,10 @@ namespace Barcodes.Core.Services
 {
     public interface IAppWindowsService
     {
+        int WindowsCount { get; }
+
+        void CloseBarcodesAndWorkspacesWindows();
+
         void OpenBarcodeWindow(BarcodeViewModel barcodeViewModel);
 
         string OpenNmvsProductWindow(string nmvsData);

@@ -103,6 +103,7 @@
     <Compile Include="SavingMode.cs" />
     <Compile Include="Extensions\StorageBarcodeExtensions.cs" />
     <Compile Include="Extensions\StorageWorkspaceExtensions.cs" />
+    <Compile Include="Services\WindowManager.cs" />
     <Compile Include="ViewModelsResult\GenerationViewModelResult.cs" />
     <Compile Include="PdfExportMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
