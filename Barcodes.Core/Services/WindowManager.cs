@@ -57,7 +57,7 @@ namespace Barcodes.Core.Services
         {
             if (currentActiveWindow != null)
             {
-                window.Top = currentActiveWindow.Top;
+                window.Top = currentActiveWindow.Top + SystemParameters.WindowCaptionHeight;
                 window.Left = currentActiveWindow.Left;
             }
         }
