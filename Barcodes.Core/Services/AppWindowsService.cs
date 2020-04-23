@@ -38,6 +38,14 @@ namespace Barcodes.Core.Services
             Show(window);
         }
 
+        public void OpenWorkspaceWindow(WorkspaceViewModel workspaceViewModel)
+        {
+            var dataContext = new WorkspaceWindowViewModel(workspaceViewModel, this);
+            var window = new WorkspaceWindow();
+            workspacesWindowsManager.RegisterWindow(window, true);
+            Show(window, dataContext);
+        }
+
         public string OpenNmvsProductWindow(string nmvsData)
         {
             var dataContext = containerExtension.Resolve<NmvsProductViewModel>();

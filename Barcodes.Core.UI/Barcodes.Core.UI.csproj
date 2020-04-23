@@ -105,6 +105,9 @@
     <Compile Include="Views\AdditionalInput\Ean128ProductWindow.xaml.cs">
       <DependentUpon>Ean128ProductWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WorkspaceWindow.xaml.cs">
+      <DependentUpon>WorkspaceWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ExamplesWindow.xaml.cs">
       <DependentUpon>ExamplesWindow.xaml</DependentUpon>
     </Compile>
@@ -163,6 +166,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AdditionalInput\Ean128ProductWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WorkspaceWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

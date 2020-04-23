@@ -27,5 +27,9 @@ namespace Barcodes.Core.UI.Views
         private void TabItem_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
         }
+
+        private void TabItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+        }
     }
 }

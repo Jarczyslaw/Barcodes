@@ -20,7 +20,7 @@ namespace Barcodes.Core.ViewModels
 
         public string HeaderTitle
         {
-            get { return $"Barcodes - {Title}"; }
+            get { return $"Barcode - {Title}"; }
         }
 
         public string Title

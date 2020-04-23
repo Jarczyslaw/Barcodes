@@ -507,7 +507,7 @@ namespace Barcodes.Core.ViewModels
             SelectedWorkspace.RemoveBarcode(barcode);
         }
 
-        public void OpenInNewWindow(BarcodeViewModel barcode)
+        public void OpenBarcodeInNewWindow(BarcodeViewModel barcode)
         {
             servicesContainer.AppWindowsService.OpenBarcodeWindow(barcode);
         }
@@ -809,6 +809,11 @@ namespace Barcodes.Core.ViewModels
                     servicesContainer.AppWindowsService.CloseBarcodesAndWorkspacesWindows();
                 }
             }
+        }
+
+        public void OpenWorkspaceInNewWindowCommand(WorkspaceViewModel workspaceViewModel)
+        {
+            servicesContainer.AppWindowsService.OpenWorkspaceWindow(workspaceViewModel);
         }
     }
 }

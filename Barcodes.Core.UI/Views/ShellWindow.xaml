@@ -49,6 +49,10 @@
                     Header="Set as last" />
             </MenuItem>
             <MenuItem
+                Command="{Binding Proxy.WorkspaceMenu.OpenInNewWindowCommand, Source={StaticResource Proxy}}"
+                CommandParameter="{Binding}"
+                Header="Open in new window" />
+            <MenuItem
                 Command="{Binding Proxy.WorkspaceMenu.ExportCommand, Source={StaticResource Proxy}}"
                 CommandParameter="{Binding}"
                 Header="Export" />
@@ -266,6 +270,7 @@
                     <Style TargetType="{x:Type TabItem}">
                         <EventSetter Event="MouseRightButtonDown" Handler="TabItem_MouseRightButtonDown" />
                         <EventSetter Event="ContextMenuOpening" Handler="TabItem_ContextMenuOpening" />
+                        <EventSetter Event="MouseDoubleClick" Handler="TabItem_MouseDoubleClick" />
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter Property="ContextMenu" Value="{StaticResource WorkspacesContextMenu}" />

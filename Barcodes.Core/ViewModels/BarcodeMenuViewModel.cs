@@ -10,7 +10,7 @@ namespace Barcodes.Core.ViewModels
             EditCommand = new DelegateCommand<BarcodeViewModel>(app.EditBarcode);
             MoveUpCommand = new DelegateCommand<BarcodeViewModel>(app.MoveBarcodeUp);
             MoveDownCommand = new DelegateCommand<BarcodeViewModel>(app.MoveBarcodeDown);
-            OpenInNewWindowCommand = new DelegateCommand<BarcodeViewModel>(app.OpenInNewWindow);
+            OpenInNewWindowCommand = new DelegateCommand<BarcodeViewModel>(app.OpenBarcodeInNewWindow);
             SaveToImageFileCommand = new DelegateCommand<BarcodeViewModel>(app.SaveToImageFile);
             CopyImageToClipboardCommand = new DelegateCommand<BarcodeViewModel>(app.CopyImageToClipboard);
             CopyDataToClipboardCommand = new DelegateCommand<BarcodeViewModel>(app.CopyDataToClipboard);

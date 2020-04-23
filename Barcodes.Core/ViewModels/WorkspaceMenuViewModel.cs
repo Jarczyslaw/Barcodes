@@ -20,6 +20,7 @@ namespace Barcodes.Core.ViewModels
             ClearCommand = new DelegateCommand<WorkspaceViewModel>(app.ClearWorkspace);
             SetAsFirstCommand = new DelegateCommand<WorkspaceViewModel>(app.SetWorkspaceAsFirst);
             SetAsLastCommand = new DelegateCommand<WorkspaceViewModel>(app.SetWorkspaceAsLast);
+            OpenInNewWindowCommand = new DelegateCommand<WorkspaceViewModel>(app.OpenWorkspaceInNewWindowCommand);
         }
 
         public DelegateCommand<WorkspaceViewModel> RenameCommand { get; }
@@ -31,5 +32,6 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand<WorkspaceViewModel> ExportCommand { get; }
         public DelegateCommand<WorkspaceViewModel> SetAsFirstCommand { get; }
         public DelegateCommand<WorkspaceViewModel> SetAsLastCommand { get; }
+        public DelegateCommand<WorkspaceViewModel> OpenInNewWindowCommand { get; }
     }
 }
