@@ -1,11 +1,10 @@
 ﻿using Barcodes.Codes;
 using Barcodes.Core.Abstraction;
-using Barcodes.Core.Services;
 using System;
 
-namespace Barcodes.Core.ViewModels.AdditionalInput
+namespace Barcodes.Core.ViewModels.Templates
 {
-    public class NmvsProductViewModel : BaseInputViewModel
+    public class NmvsProductViewModel : BaseTemplateViewModel
     {
         private string productCode = string.Empty;
         private string batchId = string.Empty;

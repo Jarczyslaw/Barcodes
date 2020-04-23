@@ -105,7 +105,7 @@
     <Compile Include="Services\AppDialogsService.cs" />
     <Compile Include="Services\AppWindowsService.cs" />
     <Compile Include="Services\WindowManager.cs" />
-    <Compile Include="Views\AdditionalInput\Ean128ProductWindow.xaml.cs">
+    <Compile Include="Views\Templates\Ean128ProductWindow.xaml.cs">
       <DependentUpon>Ean128ProductWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WorkspaceWindow.xaml.cs">
@@ -126,7 +126,7 @@
     <Compile Include="Views\InputWindow.xaml.cs">
       <DependentUpon>InputWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\AdditionalInput\NmvsProductWindow.xaml.cs">
+    <Compile Include="Views\Templates\NmvsProductWindow.xaml.cs">
       <DependentUpon>NmvsProductWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="BaseWindow.cs" />
@@ -168,7 +168,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AdditionalInput\Ean128ProductWindow.xaml">
+    <Page Include="Views\Templates\Ean128ProductWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -196,7 +196,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\AdditionalInput\NmvsProductWindow.xaml">
+    <Page Include="Views\Templates\NmvsProductWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

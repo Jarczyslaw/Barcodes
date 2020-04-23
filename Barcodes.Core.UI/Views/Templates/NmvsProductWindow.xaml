@@ -1,5 +1,5 @@
 ﻿<ui:BaseWindow
-    x:Class="Barcodes.Core.UI.Views.AdditionalInput.NmvsProductWindow"
+    x:Class="Barcodes.Core.UI.Views.Templates.NmvsProductWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Barcodes.Core.UI.Controls"

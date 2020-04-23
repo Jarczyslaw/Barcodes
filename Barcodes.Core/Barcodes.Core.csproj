@@ -125,11 +125,11 @@
     <Compile Include="Services\StateSaver\States\NmvsProductViewModelState.cs" />
     <Compile Include="Services\StateSaver\StateSaverService.cs" />
     <Compile Include="ViewModels\AdditionalInputViewModel.cs" />
-    <Compile Include="ViewModels\AdditionalInput\BaseInputViewModel.cs" />
-    <Compile Include="ViewModels\AdditionalInput\Ean128ProductViewModel.cs" />
+    <Compile Include="ViewModels\Templates\BaseTemplateViewModel.cs" />
+    <Compile Include="ViewModels\Templates\Ean128ProductViewModel.cs" />
     <Compile Include="ViewModels\BarcodeTypeViewModel.cs" />
     <Compile Include="ViewModels\BarcodeViewModel.cs" />
-    <Compile Include="ViewModels\AdditionalInput\NmvsProductViewModel.cs" />
+    <Compile Include="ViewModels\Templates\NmvsProductViewModel.cs" />
     <Compile Include="ViewModels\GenerationViewModel.cs" />
     <Compile Include="ViewModels\SelectionViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />

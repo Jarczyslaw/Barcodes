@@ -1,4 +1,4 @@
-﻿namespace Barcodes.Core.UI.Views.AdditionalInput
+﻿namespace Barcodes.Core.UI.Views.Templates
 {
     public partial class NmvsProductWindow : BaseWindow
     {

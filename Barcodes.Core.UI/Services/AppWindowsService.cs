@@ -1,8 +1,8 @@
 ﻿using Barcodes.Core.Abstraction;
 using Barcodes.Core.UI.Views;
-using Barcodes.Core.UI.Views.AdditionalInput;
+using Barcodes.Core.UI.Views.Templates;
 using Barcodes.Core.ViewModels;
-using Barcodes.Core.ViewModels.AdditionalInput;
+using Barcodes.Core.ViewModels.Templates;
 using Barcodes.Core.ViewModelsInput;
 using Barcodes.Core.ViewModelsResult;
 using Barcodes.Services.Windows;

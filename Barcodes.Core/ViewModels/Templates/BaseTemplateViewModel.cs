@@ -4,13 +4,13 @@ using Prism.Commands;
 using Prism.Mvvm;
 using System;
 
-namespace Barcodes.Core.ViewModels.AdditionalInput
+namespace Barcodes.Core.ViewModels.Templates
 {
-    public abstract class BaseInputViewModel : BindableBase, ICloseSource
+    public abstract class BaseTemplateViewModel : BindableBase, ICloseSource
     {
         protected readonly IAppDialogsService dialogsService;
 
-        protected BaseInputViewModel(IAppDialogsService dialogsService)
+        protected BaseTemplateViewModel(IAppDialogsService dialogsService)
         {
             this.dialogsService = dialogsService;
 
