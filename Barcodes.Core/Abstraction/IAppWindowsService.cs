@@ -15,9 +15,7 @@ namespace Barcodes.Core.Abstraction
 
         void OpenWorkspaceWindow(WorkspaceViewModel workspaceViewModel);
 
-        string OpenNmvsProductWindow(string nmvsData);
-
-        string OpenEan128ProductWindow(string ean128Data);
+        TemplateResult OpenTemplateWindow<TViewModel>(string data);
 
         void ShowAboutWindow();
 

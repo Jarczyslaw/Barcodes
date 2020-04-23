@@ -105,6 +105,7 @@
     <Compile Include="Extensions\StorageWorkspaceExtensions.cs" />
     <Compile Include="Models\GenerationResult.cs" />
     <Compile Include="Models\PdfExportMode.cs" />
+    <Compile Include="Models\TemplateResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\BaseInput.cs" />
     <Compile Include="Models\ValueInput.cs" />
@@ -124,7 +125,7 @@
     <Compile Include="Abstraction\IStateSaverService.cs" />
     <Compile Include="Services\StateSaver\States\NmvsProductViewModelState.cs" />
     <Compile Include="Services\StateSaver\StateSaverService.cs" />
-    <Compile Include="ViewModels\AdditionalInputViewModel.cs" />
+    <Compile Include="ViewModels\TemplateViewModel.cs" />
     <Compile Include="ViewModels\Templates\BaseTemplateViewModel.cs" />
     <Compile Include="ViewModels\Templates\Ean128ProductViewModel.cs" />
     <Compile Include="ViewModels\BarcodeTypeViewModel.cs" />

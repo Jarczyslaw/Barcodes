@@ -1,5 +1,6 @@
 ﻿using Barcodes.Codes;
 using Barcodes.Core.Abstraction;
+using Barcodes.Core.Models;
 using System;
 
 namespace Barcodes.Core.ViewModels.Templates
@@ -45,7 +46,7 @@ namespace Barcodes.Core.ViewModels.Templates
             return new NmvsCode(ProductCode.Trim(), SerialNo.Trim(), BatchId.Trim(), BatchExpDate.Trim());
         }
 
-        public void LoadData(string nmvsData)
+        public override void LoadData(string nmvsData)
         {
             if (string.IsNullOrEmpty(nmvsData))
             {
@@ -61,9 +62,13 @@ namespace Barcodes.Core.ViewModels.Templates
             }
         }
 
-        protected override string GetResultData()
+        protected override TemplateResult GetResultData()
         {
-            return GetNmvsCode().ToString();
+            return new TemplateResult
+            {
+                BarcodeType = Barcodes.Services.Generator.BarcodeType.DataMatrix,
+                Data = GetNmvsCode().ToString()
+            };
         }
 
         protected override bool Validate()

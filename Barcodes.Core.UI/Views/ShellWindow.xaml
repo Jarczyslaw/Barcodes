@@ -242,14 +242,13 @@
                 </MenuItem>
                 <MenuItem
                     Grid.Column="7"
-                    Command="{Binding CloseAllWindows}"
-                    Header="Close all windows" />
-                <MenuItem
-                    Grid.Column="8"
                     Header="Barcodes visible"
                     IsCheckable="True"
                     IsChecked="{Binding Proxy.App.BarcodesVisible, Source={StaticResource Proxy}}" />
-
+                <MenuItem
+                    Grid.Column="8"
+                    Command="{Binding CloseAllWindows}"
+                    Header="Close all windows" />
             </Menu>
 
             <StatusBar DataContext="{Binding App}" DockPanel.Dock="Bottom">

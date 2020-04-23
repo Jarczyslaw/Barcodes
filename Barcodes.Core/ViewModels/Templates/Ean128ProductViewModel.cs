@@ -1,5 +1,7 @@
 ﻿using Barcodes.Codes;
 using Barcodes.Core.Abstraction;
+using Barcodes.Core.Models;
+using Barcodes.Services.Generator;
 using System;
 
 namespace Barcodes.Core.ViewModels.Templates
@@ -38,7 +40,7 @@ namespace Barcodes.Core.ViewModels.Templates
             return new Ean128Code(ProductCode.Trim(), BatchId.Trim(), ExpireDate);
         }
 
-        public void LoadData(string ean128Data)
+        public override void LoadData(string ean128Data)
         {
             if (string.IsNullOrEmpty(ean128Data))
             {
@@ -53,9 +55,13 @@ namespace Barcodes.Core.ViewModels.Templates
             }
         }
 
-        protected override string GetResultData()
+        protected override TemplateResult GetResultData()
         {
-            return GetEan128Code().ToString();
+            return new TemplateResult
+            {
+                Data = GetEan128Code().ToString(),
+                BarcodeType = BarcodeType.Ean128
+            };
         }
 
         protected override bool Validate()

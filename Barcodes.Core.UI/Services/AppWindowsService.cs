@@ -9,6 +9,8 @@ using Prism.Ioc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Windows;
 
 namespace Barcodes.Core.UI.Services
 {
@@ -17,6 +19,12 @@ namespace Barcodes.Core.UI.Services
         private readonly IContainerExtension containerExtension;
         private readonly WindowManager barcodesWindowsManager = new WindowManager();
         private readonly WindowManager workspacesWindowsManager = new WindowManager();
+
+        private readonly Dictionary<Type, Type> templateMapping = new Dictionary<Type, Type>
+        {
+            { typeof(NmvsProductViewModel), typeof(NmvsProductWindow) },
+            { typeof(Ean128ProductViewModel), typeof(Ean128ProductWindow) },
+        };
 
         public AppWindowsService(IContainerExtension containerExtension)
         {
@@ -46,20 +54,26 @@ namespace Barcodes.Core.UI.Services
             Show(window, dataContext);
         }
 
-        public string OpenNmvsProductWindow(string nmvsData)
+        public TemplateResult OpenTemplateWindow<TViewModel>(string data)
         {
-            var dataContext = containerExtension.Resolve<NmvsProductViewModel>();
-            dataContext.LoadData(nmvsData);
-            var window = new NmvsProductWindow(dataContext);
-            ShowDialog(window);
-            return dataContext.ResultData;
+            var viewModelType = typeof(TViewModel);
+            return OpenTemplateWindow(viewModelType, templateMapping[viewModelType], data);
         }
 
-        public string OpenEan128ProductWindow(string ean128Data)
+        private TemplateResult OpenTemplateWindow(Type viewModelType, Type viewType, string data)
         {
-            var dataContext = containerExtension.Resolve<Ean128ProductViewModel>();
-            dataContext.LoadData(ean128Data);
-            var window = new Ean128ProductWindow(dataContext);
+            var method = typeof(AppWindowsService).GetMethod(nameof(GenericOpenTemplateWindow), BindingFlags.NonPublic | BindingFlags.Instance);
+            var generic = method.MakeGenericMethod(viewModelType, viewType);
+            return (TemplateResult)generic.Invoke(this, new object[] { data });
+        }
+
+        private TemplateResult GenericOpenTemplateWindow<TViewModel, TWindow>(string data)
+            where TViewModel : BaseTemplateViewModel
+            where TWindow : Window
+        {
+            var dataContext = containerExtension.Resolve<TViewModel>();
+            dataContext.LoadData(data);
+            var window = containerExtension.Resolve<TWindow>((typeof(object), dataContext));
             ShowDialog(window);
             return dataContext.ResultData;
         }

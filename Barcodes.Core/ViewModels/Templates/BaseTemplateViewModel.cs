@@ -1,5 +1,6 @@
 ﻿using Barcodes.Core.Abstraction;
 using Barcodes.Core.Common;
+using Barcodes.Core.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
@@ -28,13 +29,17 @@ namespace Barcodes.Core.ViewModels.Templates
         }
 
         public Action OnClose { get; set; }
-        public string ResultData { get; private set; }
+        public TemplateResult ResultData { get; private set; }
 
         public DelegateCommand AcceptCommand { get; }
         public DelegateCommand CloseCommand { get; }
 
         protected abstract bool Validate();
 
-        protected abstract string GetResultData();
+        protected abstract TemplateResult GetResultData();
+
+        public virtual void LoadData(string data)
+        {
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Barcodes.Core.Abstraction;
 using Barcodes.Core.Common;
 using Barcodes.Core.Models;
+using Barcodes.Core.ViewModels.Templates;
 using Barcodes.Services.Generator;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -22,8 +23,8 @@ namespace Barcodes.Core.ViewModels
 
         private BarcodeTypeViewModel selectedBarcodeType;
         private ObservableCollection<BarcodeTypeViewModel> barcodeTypes;
-        private AdditionalInputViewModel selectedAdditionalInput;
-        private ObservableCollection<AdditionalInputViewModel> additionalInputs;
+        private TemplateViewModel selectedTemplate;
+        private ObservableCollection<TemplateViewModel> templates;
 
         private readonly IServicesContainer services;
 
@@ -38,13 +39,13 @@ namespace Barcodes.Core.ViewModels
             AddNewCommand = new DelegateCommand(() => GenerateBarcode(true));
             EditCommand = new DelegateCommand(() => GenerateBarcode(false), () => Edit);
             CancelCommand = new DelegateCommand(() => OnClose?.Invoke());
-            AdditionalInputCommand = new DelegateCommand(AdditionalInput, () => AdditionalInputEnabled);
+            UseTemplateCommand = new DelegateCommand(AdditionalInput, () => TemplatesEnabled);
         }
 
         public DelegateCommand AddNewCommand { get; }
         public DelegateCommand EditCommand { get; }
         public DelegateCommand CancelCommand { get; }
-        public DelegateCommand AdditionalInputCommand { get; }
+        public DelegateCommand UseTemplateCommand { get; }
 
         public GenerationResult Result { get; private set; }
 
@@ -96,7 +97,7 @@ namespace Barcodes.Core.ViewModels
             set
             {
                 SetProperty(ref selectedBarcodeType, value);
-                AdditionalInputCommand?.RaiseCanExecuteChanged();
+                UseTemplateCommand?.RaiseCanExecuteChanged();
             }
         }
 
@@ -106,59 +107,47 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref barcodeTypes, value);
         }
 
-        public AdditionalInputViewModel SelectedAdditionalInput
+        public TemplateViewModel SelectedTemplate
         {
-            get => selectedAdditionalInput;
+            get => selectedTemplate;
             set
             {
-                SetProperty(ref selectedAdditionalInput, value);
-                AdditionalInputEnabled = value.Handler != null;
-                AdditionalInputCommand?.RaiseCanExecuteChanged();
+                SetProperty(ref selectedTemplate, value);
+                TemplatesEnabled = value.Handler != null;
+                UseTemplateCommand?.RaiseCanExecuteChanged();
             }
         }
 
-        public bool AdditionalInputEnabled { get; set; }
+        public bool TemplatesEnabled { get; set; }
 
-        public int SelectedAdditionalInputIndex
+        public ObservableCollection<TemplateViewModel> Templates
         {
-            get => AdditionalInputs.IndexOf(SelectedAdditionalInput);
-            set
-            {
-                if (value != -1)
-                {
-                    SelectedAdditionalInput = AdditionalInputs[value];
-                }
-            }
-        }
-
-        public ObservableCollection<AdditionalInputViewModel> AdditionalInputs
-        {
-            get => additionalInputs;
-            set => SetProperty(ref additionalInputs, value);
+            get => templates;
+            set => SetProperty(ref templates, value);
         }
 
         public Action OnClose { get; set; }
 
         private void InitializeAdditionalInputs()
         {
-            AdditionalInputs = new ObservableCollection<AdditionalInputViewModel>
+            Templates = new ObservableCollection<TemplateViewModel>
             {
-                new AdditionalInputViewModel
+                new TemplateViewModel
                 {
-                    Title = "Select additional input"
+                    Title = "Select barcode template"
                 },
-                new AdditionalInputViewModel
+                new TemplateViewModel
                 {
-                    Title = "EAN128 - Product code",
-                    Handler = services.AppWindowsService.OpenEan128ProductWindow
+                    Title = "EAN128 - Long product code",
+                    Handler = services.AppWindowsService.OpenTemplateWindow<Ean128ProductViewModel>
                 },
-                new AdditionalInputViewModel
+                new TemplateViewModel
                 {
-                    Title = "DataMatrix - NMVS",
-                    Handler = services.AppWindowsService.OpenNmvsProductWindow
+                    Title = "DataMatrix - NMVS product code",
+                    Handler = services.AppWindowsService.OpenTemplateWindow<NmvsProductViewModel>
                 }
             };
-            SelectedAdditionalInput = AdditionalInputs.First();
+            SelectedTemplate = Templates.First();
         }
 
         private void InitializeBarcodeTypes()
@@ -237,23 +226,20 @@ namespace Barcodes.Core.ViewModels
 
         private void AdditionalInput()
         {
-            if (SelectedAdditionalInput == null)
+            if (SelectedTemplate == null || SelectedTemplate.Handler == null)
             {
                 return;
             }
 
-            if (SelectedAdditionalInput.Handler == null)
+            var result = SelectedTemplate.Handler(Data);
+            if (result != null)
             {
-                return;
+                Data = result.Data;
+                if (result.BarcodeType.HasValue)
+                {
+                    SelectedBarcodeType = BarcodeTypes.FirstOrDefault(b => b.Type == result.BarcodeType.Value);
+                }
             }
-
-            var result = SelectedAdditionalInput.Handler(Data);
-            if (string.IsNullOrEmpty(result))
-            {
-                return;
-            }
-
-            Data = result;
         }
 
         public void Load(BarcodeViewModel barcode, bool edit)
