@@ -1,5 +1,6 @@
 ﻿using Barcodes.Core.Abstraction;
 using Barcodes.Core.Common;
+using Barcodes.Core.Models;
 using Barcodes.Services.Dialogs;
 using System.Collections.Generic;
 using System.IO;

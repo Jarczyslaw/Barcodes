@@ -1,4 +1,4 @@
-﻿namespace Barcodes.Core
+﻿namespace Barcodes.Core.Models
 {
     public enum SavingMode
     {

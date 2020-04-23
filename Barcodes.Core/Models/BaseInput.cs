@@ -1,6 +1,6 @@
-﻿namespace Barcodes.Core.ViewModelsInput
+﻿namespace Barcodes.Core.Models
 {
-    public class BaseInputViewModelInput
+    public class BaseInput
     {
         public string Title { get; set; }
         public string ContentHeader { get; set; }

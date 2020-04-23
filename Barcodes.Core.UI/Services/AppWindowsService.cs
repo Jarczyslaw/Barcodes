@@ -1,10 +1,9 @@
 ﻿using Barcodes.Core.Abstraction;
+using Barcodes.Core.Models;
 using Barcodes.Core.UI.Views;
 using Barcodes.Core.UI.Views.Templates;
 using Barcodes.Core.ViewModels;
 using Barcodes.Core.ViewModels.Templates;
-using Barcodes.Core.ViewModelsInput;
-using Barcodes.Core.ViewModelsResult;
 using Barcodes.Services.Windows;
 using Prism.Ioc;
 using System;
@@ -79,7 +78,7 @@ namespace Barcodes.Core.UI.Services
             return dataContext.ResultBarcode;
         }
 
-        public GenerationViewModelResult ShowGenerationWindow(BarcodeViewModel barcode, bool edit)
+        public GenerationResult ShowGenerationWindow(BarcodeViewModel barcode, bool edit)
         {
             var dataContext = containerExtension.Resolve<GenerationViewModel>();
             dataContext.Load(barcode, edit);
@@ -95,7 +94,7 @@ namespace Barcodes.Core.UI.Services
                 currentName = "Default workspace";
             }
 
-            var input = new InputViewModelInput
+            var input = new ValueInput
             {
                 Title = "Barcodes - Workspace",
                 ContentHeader = "Enter workspace's name",
@@ -113,7 +112,7 @@ namespace Barcodes.Core.UI.Services
         public WorkspaceViewModel SelectBarcodesWorkspace(IEnumerable<WorkspaceViewModel> workspaces)
         {
             var selectedWorkspace = workspaces.First();
-            var input = new SelectionViewModelInput<WorkspaceViewModel>
+            var input = new SelectionInput<WorkspaceViewModel>
             {
                 Title = "Barcodes - Workspaces",
                 ContentHeader = "Select desired workspace",

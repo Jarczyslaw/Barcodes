@@ -1,6 +1,6 @@
 ﻿using Barcodes.Core.Abstraction;
 using Barcodes.Core.Common;
-using Barcodes.Core.ViewModelsResult;
+using Barcodes.Core.Models;
 using Barcodes.Services.Generator;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -46,7 +46,7 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand CancelCommand { get; }
         public DelegateCommand AdditionalInputCommand { get; }
 
-        public GenerationViewModelResult Result { get; private set; }
+        public GenerationResult Result { get; private set; }
 
         public bool Edit
         {
@@ -211,7 +211,7 @@ namespace Barcodes.Core.ViewModels
 
             try
             {
-                Result = new GenerationViewModelResult
+                Result = new GenerationResult
                 {
                     Barcode = RunGenerator(barcodeData, Title.Trim()),
                     AddNew = addAsNew

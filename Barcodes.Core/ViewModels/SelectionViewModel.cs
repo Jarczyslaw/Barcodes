@@ -1,5 +1,5 @@
-﻿using Barcodes.Core.ViewModelsInput;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using Barcodes.Core.Models;
 
 namespace Barcodes.Core.ViewModels
 {
@@ -9,7 +9,7 @@ namespace Barcodes.Core.ViewModels
         private T selectedItem;
         private string displayMemberPath;
 
-        public SelectionViewModel(SelectionViewModelInput<T> input)
+        public SelectionViewModel(SelectionInput<T> input)
             : base(input.Title, input.ContentHeader, input.Label)
         {
             Items = new ObservableCollection<T>(input.Items);

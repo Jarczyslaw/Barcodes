@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Barcodes.Core.ViewModelsInput
+namespace Barcodes.Core.Models
 {
-    public class SelectionViewModelInput<T> : BaseInputViewModelInput
+    public class SelectionInput<T> : BaseInput
     {
         public IEnumerable<T> Items { get; set; }
         public T SelectedItem { get; set; }

@@ -1,4 +1,5 @@
-﻿using Barcodes.Services.Dialogs;
+﻿using Barcodes.Core.Models;
+using Barcodes.Services.Dialogs;
 using System.Collections.Generic;
 
 namespace Barcodes.Core.Abstraction
