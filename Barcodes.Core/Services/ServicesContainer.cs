@@ -1,4 +1,5 @@
-﻿using Barcodes.Core.Services.StateSaver;
+﻿using Barcodes.Core.Abstraction;
+using Barcodes.Core.Services.StateSaver;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;

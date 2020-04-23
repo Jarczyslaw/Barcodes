@@ -1,7 +1,7 @@
 ﻿using Barcodes.Services.Dialogs;
 using System.Collections.Generic;
 
-namespace Barcodes.Core.Services
+namespace Barcodes.Core.Abstraction
 {
     public interface IAppDialogsService : IDialogsService
     {

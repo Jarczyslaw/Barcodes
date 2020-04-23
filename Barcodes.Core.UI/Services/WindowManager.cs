@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
-namespace Barcodes.Core.Services
+namespace Barcodes.Core.UI.Services
 {
     public class WindowManager
     {

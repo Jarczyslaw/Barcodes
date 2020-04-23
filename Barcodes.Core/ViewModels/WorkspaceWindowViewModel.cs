@@ -1,4 +1,5 @@
-﻿using Barcodes.Core.Services;
+﻿using Barcodes.Core.Abstraction;
+using Barcodes.Core.Services;
 using Prism.Commands;
 using Prism.Mvvm;
 using System.Collections.ObjectModel;

@@ -1,4 +1,5 @@
-﻿using Barcodes.Core.UI.Views;
+﻿using Barcodes.Core.Abstraction;
+using Barcodes.Core.UI.Views;
 using Barcodes.Core.UI.Views.AdditionalInput;
 using Barcodes.Core.ViewModels;
 using Barcodes.Core.ViewModels.AdditionalInput;
@@ -10,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Barcodes.Core.Services
+namespace Barcodes.Core.UI.Services
 {
     public class AppWindowsService : WindowsService, IAppWindowsService
     {

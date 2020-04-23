@@ -1,5 +1,5 @@
-﻿using Barcodes.Core.Common;
-using Barcodes.Core.Services;
+﻿using Barcodes.Core.Abstraction;
+using Barcodes.Core.Common;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
@@ -34,6 +34,7 @@ namespace Barcodes.Core.ViewModels.AdditionalInput
         public DelegateCommand CloseCommand { get; }
 
         protected abstract bool Validate();
+
         protected abstract string GetResultData();
     }
 }

@@ -1,4 +1,5 @@
-﻿using Barcodes.SingleInstance;
+﻿using Barcodes.Core.ViewModels;
+using Barcodes.SingleInstance;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -30,6 +31,11 @@ namespace Barcodes.Core.UI.Views
 
         private void TabItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            if (DataContext is ShellViewModel shellViewModel)
+            {
+                var workspaceViewModel = (sender as TabItem).DataContext as WorkspaceViewModel;
+                shellViewModel.WorkspaceMenu.OpenInNewWindowCommand.Execute(workspaceViewModel);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Barcodes.Core.Extensions;
+﻿using Barcodes.Core.Abstraction;
+using Barcodes.Core.Extensions;
 using Barcodes.Core.Services;
 using Barcodes.Extensions;
 using Barcodes.Services.AppSettings;

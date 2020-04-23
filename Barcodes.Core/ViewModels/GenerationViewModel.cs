@@ -1,5 +1,5 @@
-﻿using Barcodes.Core.Common;
-using Barcodes.Core.Services;
+﻿using Barcodes.Core.Abstraction;
+using Barcodes.Core.Common;
 using Barcodes.Core.ViewModelsResult;
 using Barcodes.Services.Generator;
 using Prism.Commands;

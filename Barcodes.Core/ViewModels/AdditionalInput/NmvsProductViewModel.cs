@@ -1,4 +1,5 @@
 ﻿using Barcodes.Codes;
+using Barcodes.Core.Abstraction;
 using Barcodes.Core.Services;
 using System;
 

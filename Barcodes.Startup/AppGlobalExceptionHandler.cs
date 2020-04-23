@@ -1,5 +1,5 @@
-﻿using System;
-using Barcodes.Core.Services;
+﻿using Barcodes.Core.Abstraction;
+using System;
 
 namespace Barcodes.Startup
 {

@@ -1,4 +1,5 @@
-﻿using Barcodes.Core.Common;
+﻿using Barcodes.Core.Abstraction;
+using Barcodes.Core.Common;
 using Barcodes.Core.Services;
 using Barcodes.Services.AppSettings;
 using Prism.Commands;

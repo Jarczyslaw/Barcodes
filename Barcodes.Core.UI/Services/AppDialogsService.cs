@@ -1,9 +1,10 @@
-﻿using Barcodes.Core.Common;
+﻿using Barcodes.Core.Abstraction;
+using Barcodes.Core.Common;
 using Barcodes.Services.Dialogs;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Barcodes.Core.Services
+namespace Barcodes.Core.UI.Services
 {
     public class AppDialogsService : DialogsService, IAppDialogsService
     {

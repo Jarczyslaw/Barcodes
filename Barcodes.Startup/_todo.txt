@@ -1,8 +1,8 @@
 ﻿zmienić input method na templaty dla kodów + okna do nich (zgodnie z tym co jest w examplach)
 //przy wyciąganiu pojedynczych kodów zapamiętywać pozycje ostatniego okna
 //przy ładowaniu nowego pliku z kodami zapytać o zapis aktualnego (tego chyba nie ma na ten moment)
-dorobić wyciąganie okna ze wszystkimi kodami w workspace (okno z małym min sizem i skrolami)
-dwuklik na tabie powinien otwierać w nowym oknie kody z workspace
+//dorobić wyciąganie okna ze wszystkimi kodami w workspace (okno z małym min sizem i skrolami)
+//dwuklik na tabie powinien otwierać w nowym oknie kody z workspace
 //na oknie z przykładami dorobić dwuklik pod przycisk Generate
 //po edycji kodu i dodaniu nowego na liście zaznaczony jest nadal stary kod a nie nowy
 //obok opcji move up i move down dorobić opcje przesuwania na początek i koniec listy (dla workspaców też)

@@ -51,12 +51,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Barcodes.Core.UI\Barcodes.Core.UI.csproj">
-      <Project>{930f2b1e-8fea-48bc-86cb-d8bcdab039f5}</Project>
-      <Name>Barcodes.Core.UI</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

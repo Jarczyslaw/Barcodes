@@ -1,5 +1,5 @@
-﻿using Barcodes.Core.Common;
-using Barcodes.Core.Services;
+﻿using Barcodes.Core.Abstraction;
+using Barcodes.Core.Common;
 using Prism.Mvvm;
 using System;
 using System.Windows.Input;
@@ -8,12 +8,8 @@ namespace Barcodes.Core.ViewModels
 {
     public class ShellViewModel : BindableBase, IOnShowAware, ICloseSource, IOnClosingAware, IOnKeyDownAware
     {
-        private readonly IServicesContainer servicesContainer;
-
         public ShellViewModel(IServicesContainer servicesContainer)
         {
-            this.servicesContainer = servicesContainer;
-
             App = new AppViewModel(servicesContainer);
             Menu = new MenuViewModel(App);
             BarcodeMenu = new BarcodeMenuViewModel(App);

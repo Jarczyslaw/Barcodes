@@ -1,6 +1,7 @@
 ﻿using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
+using Barcodes.Core.Abstraction;
 
 namespace Barcodes.Core.Services.StateSaver
 {

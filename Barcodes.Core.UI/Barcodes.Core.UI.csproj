@@ -102,6 +102,9 @@
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AppDialogsService.cs" />
+    <Compile Include="Services\AppWindowsService.cs" />
+    <Compile Include="Services\WindowManager.cs" />
     <Compile Include="Views\AdditionalInput\Ean128ProductWindow.xaml.cs">
       <DependentUpon>Ean128ProductWindow.xaml</DependentUpon>
     </Compile>
@@ -229,6 +232,10 @@
       <Project>{aeaf919b-70e7-42a2-ab75-8cf9dbaf6ee7}</Project>
       <Name>Barcodes.Core.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Barcodes.Core\Barcodes.Core.csproj">
+      <Project>{2d1f00e3-840a-4394-bea7-e67d6c081283}</Project>
+      <Name>Barcodes.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Barcodes.Extensions\Barcodes.Extensions.csproj">
       <Project>{F2EAF86B-611C-4CD8-964E-8EA3A62B82AC}</Project>
       <Name>Barcodes.Extensions</Name>
@@ -244,6 +251,10 @@
     <ProjectReference Include="..\Barcodes.Services.Generator\Barcodes.Services.Generator.csproj">
       <Project>{D4D91166-8BF2-4E82-825A-BD1F46B05B48}</Project>
       <Name>Barcodes.Services.Generator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Barcodes.Services.Windows\Barcodes.Services.Windows.csproj">
+      <Project>{44CE1158-08AB-452E-ABCD-C6E305E1A01A}</Project>
+      <Name>Barcodes.Services.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\Barcodes.SingleInstance\Barcodes.SingleInstance.csproj">
       <Project>{3E40A410-EEE1-43AC-B383-CAA9FB3C9213}</Project>

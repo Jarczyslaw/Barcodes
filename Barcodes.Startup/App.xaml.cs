@@ -1,5 +1,7 @@
-﻿using Barcodes.Core.Services;
+﻿using Barcodes.Core.Abstraction;
+using Barcodes.Core.Services;
 using Barcodes.Core.Services.StateSaver;
+using Barcodes.Core.UI.Services;
 using Barcodes.Core.UI.Views;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.Dialogs;

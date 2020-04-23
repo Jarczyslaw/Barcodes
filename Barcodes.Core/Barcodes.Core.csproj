@@ -103,20 +103,17 @@
     <Compile Include="SavingMode.cs" />
     <Compile Include="Extensions\StorageBarcodeExtensions.cs" />
     <Compile Include="Extensions\StorageWorkspaceExtensions.cs" />
-    <Compile Include="Services\WindowManager.cs" />
     <Compile Include="ViewModelsResult\GenerationViewModelResult.cs" />
     <Compile Include="PdfExportMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\AppDialogsService.cs" />
     <Compile Include="ViewModelsInput\BaseInputViewModelInput.cs" />
     <Compile Include="ViewModelsInput\InputViewModelInput.cs" />
     <Compile Include="ViewModelsInput\SelectionViewModelInput.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
-    <Compile Include="Services\AppWindowsService.cs" />
     <Compile Include="ViewModels\BarcodeMenuViewModel.cs" />
-    <Compile Include="Services\IAppDialogsService.cs" />
-    <Compile Include="Services\IAppWindowsService.cs" />
-    <Compile Include="Services\IServicesContainer.cs" />
+    <Compile Include="Abstraction\IAppDialogsService.cs" />
+    <Compile Include="Abstraction\IAppWindowsService.cs" />
+    <Compile Include="Abstraction\IServicesContainer.cs" />
     <Compile Include="ViewModels\BaseInputViewModel.cs" />
     <Compile Include="ViewModels\ExamplesViewModel.cs" />
     <Compile Include="ViewModels\InputViewModel.cs" />
@@ -124,7 +121,7 @@
     <Compile Include="Services\ServicesContainer.cs" />
     <Compile Include="Services\StateSaver\States\Ean128ProductViewModelState.cs" />
     <Compile Include="Services\StateSaver\States\GenerationViewModelState.cs" />
-    <Compile Include="Services\StateSaver\IStateSaverService.cs" />
+    <Compile Include="Abstraction\IStateSaverService.cs" />
     <Compile Include="Services\StateSaver\States\NmvsProductViewModelState.cs" />
     <Compile Include="Services\StateSaver\StateSaverService.cs" />
     <Compile Include="ViewModels\AdditionalInputViewModel.cs" />
@@ -153,10 +150,6 @@
     <ProjectReference Include="..\Barcodes.Core.Common\Barcodes.Core.Common.csproj">
       <Project>{aeaf919b-70e7-42a2-ab75-8cf9dbaf6ee7}</Project>
       <Name>Barcodes.Core.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Barcodes.Core.UI\Barcodes.Core.UI.csproj">
-      <Project>{930f2b1e-8fea-48bc-86cb-d8bcdab039f5}</Project>
-      <Name>Barcodes.Core.UI</Name>
     </ProjectReference>
     <ProjectReference Include="..\Barcodes.Extensions\Barcodes.Extensions.csproj">
       <Project>{F2EAF86B-611C-4CD8-964E-8EA3A62B82AC}</Project>
