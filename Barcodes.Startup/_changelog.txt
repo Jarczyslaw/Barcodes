@@ -1,0 +1,13 @@
+﻿1.3.0
+	przy wyciąganiu pojedynczych kodów zapamiętywać pozycje ostatniego okna
+	przy ładowaniu nowego pliku z kodami zapytać o zapis aktualnego (tego chyba nie ma na ten moment)
+	dorobić wyciąganie okna ze wszystkimi kodami w workspace (okno z małym min sizem i skrolami)
+	dwuklik na tabie powinien otwierać w nowym oknie kody z workspace
+	na oknie z przykładami dorobić dwuklik pod przycisk Generate
+	po edycji kodu i dodaniu nowego na liście zaznaczony jest nadal stary kod a nie nowy
+	obok opcji move up i move down dorobić opcje przesuwania na początek i koniec listy (dla workspaców też)
+	w settingsach dodać możliwość definiowania czy nowe kody mają pojawiać się na początku czy końcu listy
+	skrót klawiaturowy delete na kodzie - usuwanie kodu za potwierdzeniem
+	przycisk na górnej belce który chowa wszystkie wyciągnięte okna
+	rozbudować kopiowanie kodu do schowka - obrazek lub dane
+	zrobić prawoklik na tabie, który jest nieaktywny (aktywacja + otwarcie menu)
