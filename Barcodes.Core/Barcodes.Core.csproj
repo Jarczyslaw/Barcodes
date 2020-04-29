@@ -125,6 +125,7 @@
     <Compile Include="Abstraction\IStateSaverService.cs" />
     <Compile Include="Services\StateSaver\States\NmvsProductViewModelState.cs" />
     <Compile Include="Services\StateSaver\StateSaverService.cs" />
+    <Compile Include="ViewModels\Templates\ProductViewModel.cs" />
     <Compile Include="ViewModels\TemplateViewModel.cs" />
     <Compile Include="ViewModels\Templates\BaseTemplateViewModel.cs" />
     <Compile Include="ViewModels\Templates\Ean128ProductViewModel.cs" />

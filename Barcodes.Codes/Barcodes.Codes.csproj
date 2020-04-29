@@ -44,6 +44,7 @@
     <Compile Include="Ean128Code.cs" />
     <Compile Include="NmvsCode.cs" />
     <Compile Include="NmvsDate.cs" />
+    <Compile Include="ProductCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

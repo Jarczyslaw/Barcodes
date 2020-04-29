@@ -138,6 +138,11 @@ namespace Barcodes.Core.ViewModels
                 },
                 new TemplateViewModel
                 {
+                    Title = "EAN13 - Product code",
+                    Handler = services.AppWindowsService.OpenTemplateWindow<ProductViewModel>
+                },
+                new TemplateViewModel
+                {
                     Title = "EAN128 - Long product code",
                     Handler = services.AppWindowsService.OpenTemplateWindow<Ean128ProductViewModel>
                 },
@@ -145,7 +150,7 @@ namespace Barcodes.Core.ViewModels
                 {
                     Title = "DataMatrix - NMVS product code",
                     Handler = services.AppWindowsService.OpenTemplateWindow<NmvsProductViewModel>
-                }
+                },
             };
             SelectedTemplate = Templates.First();
         }

@@ -6,8 +6,8 @@ namespace Barcodes.Codes
 {
     public class NmvsCode : IEquatable<NmvsCode>
     {
-        public NmvsCode(string codeString)
-            : this(Parse(codeString))
+        public NmvsCode(string nmvsCode)
+            : this(Parse(nmvsCode))
         {
         }
 

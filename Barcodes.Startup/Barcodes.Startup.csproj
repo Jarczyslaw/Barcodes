@@ -207,6 +207,9 @@
   <ItemGroup>
     <Resource Include="_todo.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="_changelog.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>powershell -ExecutionPolicy ByPass -File  $(ProjectDir)BuildScripts\InjectGitVersion.ps1 $(ProjectDir)</PreBuildEvent>
