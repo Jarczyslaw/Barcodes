@@ -39,7 +39,7 @@ namespace Barcodes.Core.ViewModels
             AddNewCommand = new DelegateCommand(() => GenerateBarcode(true));
             EditCommand = new DelegateCommand(() => GenerateBarcode(false), () => Edit);
             CancelCommand = new DelegateCommand(() => OnClose?.Invoke());
-            UseTemplateCommand = new DelegateCommand(AdditionalInput, () => TemplatesEnabled);
+            UseTemplateCommand = new DelegateCommand(UseTemplate, () => TemplatesEnabled);
         }
 
         public DelegateCommand AddNewCommand { get; }
@@ -138,16 +138,19 @@ namespace Barcodes.Core.ViewModels
                 },
                 new TemplateViewModel
                 {
+                    Template = Template.Product,
                     Title = "EAN13 - Product code",
                     Handler = services.AppWindowsService.OpenTemplateWindow<ProductViewModel>
                 },
                 new TemplateViewModel
                 {
+                    Template = Template.LongProduct,
                     Title = "EAN128 - Long product code",
                     Handler = services.AppWindowsService.OpenTemplateWindow<Ean128ProductViewModel>
                 },
                 new TemplateViewModel
                 {
+                    Template = Template.NmvsProduct,
                     Title = "DataMatrix - NMVS product code",
                     Handler = services.AppWindowsService.OpenTemplateWindow<NmvsProductViewModel>
                 },
@@ -229,7 +232,7 @@ namespace Barcodes.Core.ViewModels
             };
         }
 
-        private void AdditionalInput()
+        private void UseTemplate()
         {
             if (SelectedTemplate == null || SelectedTemplate.Handler == null)
             {
@@ -247,22 +250,28 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public void Load(BarcodeViewModel barcode, bool edit)
+        public void Load(BarcodeViewModel barcode, bool edit, Template? template)
         {
-            if (barcode == null)
+            if (barcode != null)
             {
-                return;
+                var generationData = barcode.GenerationData;
+                Data = generationData.Data;
+                SelectedBarcodeType = BarcodeTypes.FirstOrDefault(b => b.Type == generationData.Type);
+                Title = barcode.Title;
+                DefaultSize = generationData.DefaultSize;
+                Width = generationData.Width;
+                Height = generationData.Height;
+                ValidateCodeText = generationData.ValidateCodeText;
             }
 
             Edit = edit;
-            var generationData = barcode.GenerationData;
-            Data = generationData.Data;
-            SelectedBarcodeType = BarcodeTypes.FirstOrDefault(b => b.Type == generationData.Type);
-            Title = barcode.Title;
-            DefaultSize = generationData.DefaultSize;
-            Width = generationData.Width;
-            Height = generationData.Height;
-            ValidateCodeText = generationData.ValidateCodeText;
+
+            var initialTemplate = Templates.SingleOrDefault(t => t.Template == template);
+            if (initialTemplate != null)
+            {
+                SelectedTemplate = initialTemplate;
+                UseTemplate();
+            }
         }
 
         private void LoadSettings()

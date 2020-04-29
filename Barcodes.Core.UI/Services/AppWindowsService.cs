@@ -93,10 +93,10 @@ namespace Barcodes.Core.UI.Services
             return dataContext.ResultBarcode;
         }
 
-        public GenerationResult ShowGenerationWindow(BarcodeViewModel barcode, bool edit)
+        public GenerationResult ShowGenerationWindow(BarcodeViewModel barcode, bool edit, Template? template = null)
         {
             var dataContext = containerExtension.Resolve<GenerationViewModel>();
-            dataContext.Load(barcode, edit);
+            dataContext.Load(barcode, edit, template);
             var window = new GenerationWindow(dataContext);
             ShowDialog(window);
             return dataContext.Result;

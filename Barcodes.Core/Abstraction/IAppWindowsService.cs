@@ -21,7 +21,7 @@ namespace Barcodes.Core.Abstraction
 
         BarcodeViewModel ShowExamplesWindow();
 
-        GenerationResult ShowGenerationWindow(BarcodeViewModel barcode, bool edit);
+        GenerationResult ShowGenerationWindow(BarcodeViewModel barcode, bool edit, Template? template = null);
 
         string ShowWorkspaceNameWindow(string currentName, Func<string, bool> validationRule);
 
