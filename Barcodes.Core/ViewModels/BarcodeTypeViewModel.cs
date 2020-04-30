@@ -1,4 +1,5 @@
-﻿using Barcodes.Services.Generator;
+﻿using Barcodes.Codes;
+using Barcodes.Services.Generator;
 using Prism.Mvvm;
 using System;
 

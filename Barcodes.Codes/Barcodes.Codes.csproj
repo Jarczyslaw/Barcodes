@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BarcodeType.cs" />
     <Compile Include="Ean128Code.cs" />
     <Compile Include="NmvsCode.cs" />
     <Compile Include="NmvsDate.cs" />
+    <Compile Include="LocationCode.cs" />
     <Compile Include="ProductCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

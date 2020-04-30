@@ -49,12 +49,15 @@
   <ItemGroup>
     <Compile Include="GenerationData.cs" />
     <Compile Include="GeneratorService.cs" />
-    <Compile Include="BarcodeType.cs" />
     <Compile Include="BarcodeTypeExtensions.cs" />
     <Compile Include="IGeneratorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Barcodes.Codes\Barcodes.Codes.csproj">
+      <Project>{ae51d926-bfb4-4b5e-9c5a-d26025ab5ab0}</Project>
+      <Name>Barcodes.Codes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Barcodes.Extensions\Barcodes.Extensions.csproj">
       <Project>{F2EAF86B-611C-4CD8-964E-8EA3A62B82AC}</Project>
       <Name>Barcodes.Extensions</Name>

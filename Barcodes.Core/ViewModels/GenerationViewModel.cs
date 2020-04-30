@@ -1,4 +1,5 @@
-﻿using Barcodes.Core.Abstraction;
+﻿using Barcodes.Codes;
+using Barcodes.Core.Abstraction;
 using Barcodes.Core.Common;
 using Barcodes.Core.Models;
 using Barcodes.Core.ViewModels.Templates;

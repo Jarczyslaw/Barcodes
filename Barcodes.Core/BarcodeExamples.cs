@@ -1,4 +1,5 @@
-﻿using Barcodes.Core.ViewModels;
+﻿using Barcodes.Codes;
+using Barcodes.Core.ViewModels;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.Generator;
 using System.Collections.ObjectModel;

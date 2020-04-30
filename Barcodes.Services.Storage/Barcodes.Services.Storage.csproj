@@ -52,6 +52,10 @@
     <Compile Include="StorageWorkspace.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Barcodes.Codes\Barcodes.Codes.csproj">
+      <Project>{AE51D926-BFB4-4B5E-9C5A-D26025AB5AB0}</Project>
+      <Name>Barcodes.Codes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Barcodes.Extensions\Barcodes.Extensions.csproj">
       <Project>{F2EAF86B-611C-4CD8-964E-8EA3A62B82AC}</Project>
       <Name>Barcodes.Extensions</Name>

@@ -66,7 +66,7 @@ namespace Barcodes.Core.ViewModels.Templates
         {
             return new TemplateResult
             {
-                BarcodeType = Barcodes.Services.Generator.BarcodeType.DataMatrix,
+                BarcodeType = BarcodeType.DataMatrix,
                 Data = GetNmvsCode().ToString()
             };
         }

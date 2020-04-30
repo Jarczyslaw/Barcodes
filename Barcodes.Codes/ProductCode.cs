@@ -41,5 +41,10 @@ namespace Barcodes.Codes
                 return false;
             }
         }
+
+        public override string ToString()
+        {
+            return Code;
+        }
     }
 }

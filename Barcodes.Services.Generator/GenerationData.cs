@@ -1,4 +1,6 @@
-﻿namespace Barcodes.Services.Generator
+﻿using Barcodes.Codes;
+
+namespace Barcodes.Services.Generator
 {
     public class GenerationData
     {

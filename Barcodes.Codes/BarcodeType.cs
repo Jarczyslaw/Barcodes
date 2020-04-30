@@ -1,4 +1,4 @@
-﻿namespace Barcodes.Services.Generator
+﻿namespace Barcodes.Codes
 {
     public enum BarcodeType
     {
