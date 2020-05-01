@@ -51,6 +51,7 @@
     <Compile Include="ProductCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserCode.cs" />
+    <Compile Include="WarehouseAndStationCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Barcodes.Extensions\Barcodes.Extensions.csproj">

@@ -2,9 +2,9 @@
 {
     public class LocationCode : BasePrefixCode
     {
-        public LocationCode(string code)
+        public LocationCode(string codeOrAddress)
         {
-            Parse(code);
+            Parse(codeOrAddress);
         }
 
         public LocationCode(LocationCode locationCode)
@@ -25,6 +25,10 @@
 
         public void Parse(string code)
         {
+            if (code?.StartsWith(Prefix) == false)
+            {
+                code = Prefix + code;
+            }
             CheckCode(code);
             Address = GetCodeBody(code);
         }
