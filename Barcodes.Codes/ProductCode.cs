@@ -3,9 +3,11 @@ using System.Text.RegularExpressions;
 
 namespace Barcodes.Codes
 {
-    public class ProductCode
+    public class ProductCode : BaseCode
     {
-        public string Code { get; private set; }
+        public override string Code => Product;
+
+        public string Product { get; private set; }
 
         public ProductCode(string code)
         {
@@ -14,7 +16,8 @@ namespace Barcodes.Codes
 
         public ProductCode(ProductCode productCode)
         {
-            Code = productCode.Code;
+            Type = BarcodeType.Ean13;
+            Product = productCode.Product;
         }
 
         public void Parse(string code)
@@ -22,10 +25,10 @@ namespace Barcodes.Codes
             var match = Regex.Match(code, "^[0-9]{13}$");
             if (!match.Success)
             {
-                throw new ArgumentException("Invalid code string format");
+                throw new ArgumentException("Invalid product code");
             }
 
-            Code = code;
+            Product = code;
         }
 
         public static bool TryParse(string code, out ProductCode productCode)
@@ -40,11 +43,6 @@ namespace Barcodes.Codes
             {
                 return false;
             }
-        }
-
-        public override string ToString()
-        {
-            return Code;
         }
     }
 }
