@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace Barcodes.Codes
 {
@@ -8,8 +7,6 @@ namespace Barcodes.Codes
         public string Prefix { get; protected set; }
         public int PrefixLength => Prefix.Length;
         public int BodyLength { get; protected set; }
-
-        protected abstract void Initialize();
 
         protected void CheckCode(string code)
         {
@@ -32,14 +29,6 @@ namespace Barcodes.Codes
         protected string GetCodeBody(string code)
         {
             return code.Substring(Prefix.Length, BodyLength);
-        }
-
-        protected void CheckCodeOnlyDigits(string codeBody)
-        {
-            if (codeBody.Any(c => !char.IsDigit(c)))
-            {
-                throw new ArgumentException("Code must contain only digits");
-            }
         }
     }
 }

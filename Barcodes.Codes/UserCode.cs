@@ -1,24 +1,38 @@
-﻿namespace Barcodes.Codes
+﻿using System;
+
+namespace Barcodes.Codes
 {
     public class UserCode : BasePrefixCode
     {
         public UserCode(string code)
         {
-            Initialize();
             Parse(code);
+        }
+
+        public UserCode(int user)
+        {
+            CheckUser(user);
+            User = user;
         }
 
         public UserCode(UserCode code)
         {
-            Initialize();
             User = code.User;
         }
 
-        public override string Code => Prefix + User.ToString().PadLeft(5, '0');
+        public override string Code => Prefix + User.ToString().PadLeft(BodyLength, '0');
 
         public int User { get; private set; }
 
-        private void Parse(string code)
+        private void CheckUser(int user)
+        {
+            if (user < 0 || user > MaxValue(BodyLength))
+            {
+                throw new ArgumentException("Invalid user number");
+            }
+        }
+
+        public void Parse(string code)
         {
             CheckCode(code);
             var body = GetCodeBody(code);

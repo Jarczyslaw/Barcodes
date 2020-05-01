@@ -5,10 +5,6 @@ namespace Barcodes.Codes
 {
     public class ProductCode : BaseCode
     {
-        public override string Code => Product;
-
-        public string Product { get; private set; }
-
         public ProductCode(string code)
         {
             Parse(code);
@@ -16,9 +12,12 @@ namespace Barcodes.Codes
 
         public ProductCode(ProductCode productCode)
         {
-            Type = BarcodeType.Ean13;
             Product = productCode.Product;
         }
+
+        public override string Code => Product;
+
+        public string Product { get; private set; }
 
         public void Parse(string code)
         {
@@ -43,6 +42,11 @@ namespace Barcodes.Codes
             {
                 return false;
             }
+        }
+
+        protected override void Initialize()
+        {
+            Type = BarcodeType.Ean13;
         }
     }
 }

@@ -4,13 +4,11 @@
     {
         public LocationCode(string code)
         {
-            Initialize();
             Parse(code);
         }
 
         public LocationCode(LocationCode locationCode)
         {
-            Initialize();
             Address = locationCode.Address;
         }
 
@@ -28,9 +26,7 @@
         public void Parse(string code)
         {
             CheckCode(code);
-            var codeBody = GetCodeBody(code);
-            CheckCodeOnlyDigits(codeBody);
-            Address = codeBody;
+            Address = GetCodeBody(code);
         }
 
         public static bool TryParse(string code, out LocationCode locationCode)
