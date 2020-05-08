@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="BarcodeType.cs" />
     <Compile Include="BaseCode.cs" />
-    <Compile Include="BasePrefixCode.cs" />
     <Compile Include="Ean128Code.cs" />
     <Compile Include="NmvsCode.cs" />
     <Compile Include="NmvsDate.cs" />

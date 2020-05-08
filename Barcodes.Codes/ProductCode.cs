@@ -15,9 +15,13 @@ namespace Barcodes.Codes
             Product = productCode.Product;
         }
 
+        public string Product { get; private set; }
+
         public override string Code => Product;
 
-        public string Product { get; private set; }
+        public override BarcodeType Type => BarcodeType.Ean13;
+
+        public override int Length => 13;
 
         public void Parse(string code)
         {
@@ -42,11 +46,6 @@ namespace Barcodes.Codes
             {
                 return false;
             }
-        }
-
-        protected override void Initialize()
-        {
-            Type = BarcodeType.Ean13;
         }
     }
 }

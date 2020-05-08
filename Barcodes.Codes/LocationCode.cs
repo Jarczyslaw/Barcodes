@@ -1,6 +1,6 @@
 ﻿namespace Barcodes.Codes
 {
-    public class LocationCode : BasePrefixCode
+    public class LocationCode : BaseCode
     {
         public LocationCode(string codeOrAddress)
         {
@@ -16,12 +16,9 @@
 
         public override string Code => Prefix + Address;
 
-        protected override void Initialize()
-        {
-            Type = BarcodeType.Code128;
-            Prefix = "LK";
-            BodyLength = 10;
-        }
+        public override BarcodeType Type => BarcodeType.Code128;
+        public override int Length => 12;
+        public override string Prefix => "LK";
 
         public void Parse(string code)
         {

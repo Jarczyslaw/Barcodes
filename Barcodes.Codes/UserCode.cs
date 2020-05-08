@@ -2,7 +2,7 @@
 
 namespace Barcodes.Codes
 {
-    public class UserCode : BasePrefixCode
+    public class UserCode : BaseCode
     {
         public UserCode(string code)
         {
@@ -20,9 +20,15 @@ namespace Barcodes.Codes
             User = code.User;
         }
 
+        public int User { get; private set; }
+
         public override string Code => Prefix + User.ToString().PadLeft(BodyLength, '0');
 
-        public int User { get; private set; }
+        public override BarcodeType Type => BarcodeType.Code128;
+        public override int Length => 7;
+        public override string Prefix => "PR";
+
+        private int BodyLength => Length - PrefixLength;
 
         private void CheckUser(int user)
         {
@@ -38,13 +44,6 @@ namespace Barcodes.Codes
             var body = GetCodeBody(code);
             CheckCodeOnlyDigits(body);
             User = int.Parse(body);
-        }
-
-        protected override void Initialize()
-        {
-            Type = BarcodeType.Code128;
-            Prefix = "PR";
-            BodyLength = 5;
         }
 
         public static bool TryParse(string code, out UserCode userCode)
