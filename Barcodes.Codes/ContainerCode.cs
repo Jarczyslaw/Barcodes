@@ -25,7 +25,7 @@ namespace Barcodes.Codes
         public override string Code => Prefix + ContainerNumber.ToString().PadLeft(BodyLength, '0');
 
         public override BarcodeType Type => BarcodeType.Code128;
-        public override int Length => 7;
+        public override int Length => 9;
         public override string Prefix => "PJ";
 
         private int BodyLength => Length - PrefixLength;
