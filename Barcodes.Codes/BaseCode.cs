@@ -39,12 +39,20 @@ namespace Barcodes.Codes
 
         protected string GetCodeBody(string code)
         {
-            return code.Substring(PrefixLength, code.Length - PrefixLength);
+            return code.Substring(PrefixLength);
         }
 
         protected int MaxValue(int digits)
         {
             return (int)Math.Pow(10, digits) - 1;
+        }
+
+        protected void CheckMaxValue(int value, int digits, string name)
+        {
+            if (value > MaxValue(digits))
+            {
+                throw new ArgumentException($"Invalid value of {name}");
+            }
         }
     }
 }
