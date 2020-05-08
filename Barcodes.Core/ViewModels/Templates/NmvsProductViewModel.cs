@@ -43,7 +43,7 @@ namespace Barcodes.Core.ViewModels.Templates
 
         public NmvsCode GetNmvsCode()
         {
-            return new NmvsCode(ProductCode.Trim(), SerialNo.Trim(), BatchId.Trim(), BatchExpDate.Trim());
+            return new NmvsCode(ProductCode.Trim(), SerialNo.Trim(), BatchId.Trim(), new NmvsDate(BatchExpDate.Trim()));
         }
 
         public override void LoadData(string nmvsData)

@@ -5,8 +5,8 @@ namespace Barcodes.Codes
     public class NmvsDate : IEquatable<NmvsDate>
     {
         public NmvsDate(string value)
-            : this(Parse(value))
         {
+            Parse(value);
         }
 
         public NmvsDate(int year, int month, int day)
@@ -29,28 +29,42 @@ namespace Barcodes.Codes
             Day = nmvsDate.Day;
         }
 
-        public int Year { get; }
-        public int Month { get; }
-        public int Day { get; }
+        public int Year { get; private set; }
+        public int Month { get; private set; }
+        public int Day { get; private set; }
 
-        public static NmvsDate Parse(string value)
+        public void Parse(string value)
         {
             if (string.IsNullOrEmpty(value) || value.Length != 6)
             {
-                throw new ArgumentException("Invalid nmvs date value");
+                throw new ArgumentException("Invalid value length");
             }
 
             var yearValue = value.Substring(0, 2);
             var monthValue = value.Substring(2, 2);
             var dayValue = value.Substring(4, 2);
 
-            int year = int.Parse(yearValue);
-            year += DateTime.Now.Year - (DateTime.Now.Year % 100);
-            int month = int.Parse(monthValue);
-            int day = int.Parse(dayValue);
+            if (!int.TryParse(yearValue, out int year))
+            {
+                throw new ArgumentException("Invalid year value");
+            }
+            year = DateTime.Now.Year / 100 + year;
+
+            if (!int.TryParse(monthValue, out int month))
+            {
+                throw new ArgumentException("Invalid month value");
+            }
+
+            if (!int.TryParse(dayValue, out int day))
+            {
+                throw new ArgumentException("Invalid day value");
+            }
 
             CheckValues(year, month, day);
-            return new NmvsDate(year, month, day);
+
+            Year = year;
+            Month = month;
+            Day = day;
         }
 
         public static bool TryParse(string value, out NmvsDate nmvsDate)
@@ -58,7 +72,7 @@ namespace Barcodes.Codes
             nmvsDate = null;
             try
             {
-                nmvsDate = Parse(value);
+                nmvsDate = new NmvsDate(value);
                 return true;
             }
             catch
@@ -77,18 +91,26 @@ namespace Barcodes.Codes
             return new DateTime(Year, Month, Day == 0 ? DateTime.DaysInMonth(Year, Month) : Day);
         }
 
+        private void CheckValues(int year, int month, int day)
+        {
+            try
+            {
+                var nmvsDay = day;
+                if (day == 0)
+                {
+                    nmvsDay = DateTime.DaysInMonth(year, month);
+                }
+                new DateTime(year, month, nmvsDay);
+            }
+            catch
+            {
+                throw new ArgumentException("Invalid date values");
+            }
+        }
+
         public override string ToString()
         {
             return $"{Year % 100:00}{Month:00}{Day:00}";
-        }
-
-        private static void CheckValues(int year, int month, int day)
-        {
-            if (day == 0)
-            {
-                day = DateTime.DaysInMonth(year, month);
-            }
-            new DateTime(year, month, day);
         }
     }
 }

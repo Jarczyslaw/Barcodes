@@ -4,16 +4,11 @@ using System.Text.RegularExpressions;
 
 namespace Barcodes.Codes
 {
-    public class NmvsCode : IEquatable<NmvsCode>
+    public class NmvsCode : BaseCode
     {
         public NmvsCode(string nmvsCode)
-            : this(Parse(nmvsCode))
         {
-        }
-
-        public NmvsCode(string productCode, string serialNo, string batchId, string expireDate)
-            : this(productCode, serialNo, batchId, NmvsDate.Parse(expireDate))
-        {
+            Parse(nmvsCode);
         }
 
         public NmvsCode(string productCode, string serialNo, string batchId, NmvsDate expireDate)
@@ -35,12 +30,16 @@ namespace Barcodes.Codes
 
         public static string GroupSeparator { get; } = "\u001D";
 
-        public string ProductCode { get; }
-        public string SerialNo { get; }
-        public string BatchId { get; }
-        public NmvsDate ExpireDate { get; }
+        public string ProductCode { get; private set; }
+        public string SerialNo { get; private set; }
+        public string BatchId { get; private set; }
+        public NmvsDate ExpireDate { get; private set; }
 
-        public static NmvsCode Parse(string codeString)
+        public override string Code => $"01{ProductCode}17{ExpireDate}21{SerialNo}{GroupSeparator}10{BatchId}";
+
+        public override BarcodeType Type => BarcodeType.DataMatrix;
+
+        public void Parse(string codeString)
         {
             codeString = codeString.Replace(GroupSeparator, string.Empty);
             var match = Regex.Match(codeString, @"01(\d{14})17(\d{6})21(.{1,20})10(.+)");
@@ -49,12 +48,10 @@ namespace Barcodes.Codes
                 throw new ArgumentException("Invalid code string format");
             }
 
-            var productCode = match.Groups[1].Value;
-            var expireDate = match.Groups[2].Value;
-            var serialNo = match.Groups[3].Value;
-            var batchId = match.Groups[4].Value;
-
-            return new NmvsCode(productCode, serialNo, batchId, new NmvsDate(expireDate));
+            ProductCode = match.Groups[1].Value;
+            ExpireDate = new NmvsDate(match.Groups[2].Value);
+            SerialNo = match.Groups[3].Value;
+            BatchId = match.Groups[4].Value;
         }
 
         public static bool TryParse(string codeString, out NmvsCode nmvsCode)
@@ -62,7 +59,7 @@ namespace Barcodes.Codes
             nmvsCode = null;
             try
             {
-                nmvsCode = Parse(codeString);
+                nmvsCode = new NmvsCode(codeString);
                 return true;
             }
             catch
@@ -102,18 +99,6 @@ namespace Barcodes.Codes
         public static bool ValidateBatchId(string batchId)
         {
             return !string.IsNullOrEmpty(batchId);
-        }
-
-        public override string ToString()
-        {
-            return string.Format("01{0}17{1}21{2}{3}10{4}",
-                ProductCode, ExpireDate.ToString(), SerialNo, GroupSeparator, BatchId);
-        }
-
-        public bool Equals(NmvsCode other)
-        {
-            return ProductCode == other.ProductCode && SerialNo == other.SerialNo 
-                && BatchId == other.BatchId && ExpireDate.Equals(other.ExpireDate);
         }
     }
 }
