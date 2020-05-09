@@ -24,7 +24,8 @@ namespace Barcodes.Core.UI.Services
         {
             { typeof(NmvsProductViewModel), typeof(NmvsProductWindow) },
             { typeof(Ean128ProductViewModel), typeof(Ean128ProductWindow) },
-            { typeof(ProductViewModel), typeof(ProductWindow) }
+            { typeof(ProductViewModel), typeof(ProductWindow) },
+            { typeof(ContainerViewModel), typeof(ContainerWindow) },
         };
 
         public AppWindowsService(IContainerExtension containerExtension)

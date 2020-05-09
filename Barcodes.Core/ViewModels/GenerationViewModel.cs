@@ -155,6 +155,12 @@ namespace Barcodes.Core.ViewModels
                     Title = "DataMatrix - NMVS product code",
                     Handler = services.AppWindowsService.OpenTemplateWindow<NmvsProductViewModel>
                 },
+                new TemplateViewModel
+                {
+                    Template = Template.Container,
+                    Title = "Code128 - Container",
+                    Handler = services.AppWindowsService.OpenTemplateWindow<ContainerViewModel>
+                },
             };
             SelectedTemplate = Templates.First();
         }

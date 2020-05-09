@@ -5,5 +5,6 @@
         Product,
         LongProduct,
         NmvsProduct,
+        Container,
     }
 }
