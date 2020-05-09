@@ -48,26 +48,25 @@ namespace Barcodes.Core.ViewModels.Templates
 
         public override void LoadData(string nmvsData)
         {
-            if (string.IsNullOrEmpty(nmvsData))
+            if (!string.IsNullOrEmpty(nmvsData))
             {
-                return;
-            }
-
-            if (NmvsCode.TryParse(nmvsData, out NmvsCode nmvsCode))
-            {
-                ProductCode = nmvsCode.ProductCode;
-                BatchId = nmvsCode.BatchId;
-                SerialNo = nmvsCode.SerialNo;
-                BatchExpDate = nmvsCode.ExpireDate.ToString();
+                if (NmvsCode.TryParse(nmvsData, out NmvsCode nmvsCode))
+                {
+                    ProductCode = nmvsCode.ProductCode;
+                    BatchId = nmvsCode.BatchId;
+                    SerialNo = nmvsCode.SerialNo;
+                    BatchExpDate = nmvsCode.ExpireDate.ToString();
+                }
             }
         }
 
         protected override TemplateResult GetResultData()
         {
+            var code = GetNmvsCode();
             return new TemplateResult
             {
-                BarcodeType = BarcodeType.DataMatrix,
-                Data = GetNmvsCode().ToString()
+                BarcodeType = code.Type,
+                Data = code.Code
             };
         }
 
@@ -75,7 +74,7 @@ namespace Barcodes.Core.ViewModels.Templates
         {
             try
             {
-                var nmvsCode = GetNmvsCode();
+                GetNmvsCode();
                 return true;
             }
             catch (Exception exc)

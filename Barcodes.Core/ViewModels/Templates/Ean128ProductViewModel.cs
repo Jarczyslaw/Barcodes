@@ -1,7 +1,6 @@
 ﻿using Barcodes.Codes;
 using Barcodes.Core.Abstraction;
 using Barcodes.Core.Models;
-using Barcodes.Services.Generator;
 using System;
 
 namespace Barcodes.Core.ViewModels.Templates
@@ -44,23 +43,22 @@ namespace Barcodes.Core.ViewModels.Templates
         {
             if (string.IsNullOrEmpty(ean128Data))
             {
-                return;
-            }
-
-            if (Ean128Code.TryParse(ean128Data, out Ean128Code ean128Code))
-            {
-                ExpireDate = ean128Code.ExpireDate;
-                BatchId = ean128Code.BatchId;
-                ProductCode = ean128Code.ProductCode;
+                if (Ean128Code.TryParse(ean128Data, out Ean128Code ean128Code))
+                {
+                    ExpireDate = ean128Code.ExpireDate;
+                    BatchId = ean128Code.BatchId;
+                    ProductCode = ean128Code.ProductCode;
+                }
             }
         }
 
         protected override TemplateResult GetResultData()
         {
+            var code = GetEan128Code();
             return new TemplateResult
             {
-                Data = GetEan128Code().ToString(),
-                BarcodeType = BarcodeType.Ean128
+                Data = code.Code,
+                BarcodeType = code.Type
             };
         }
 
@@ -68,7 +66,7 @@ namespace Barcodes.Core.ViewModels.Templates
         {
             try
             {
-                var ean128Code = GetEan128Code();
+                GetEan128Code();
                 return true;
             }
             catch (Exception exc)

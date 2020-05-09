@@ -1,7 +1,6 @@
 ﻿using Barcodes.Codes;
 using Barcodes.Core.Abstraction;
 using Barcodes.Core.Models;
-using Barcodes.Services.Generator;
 using System;
 
 namespace Barcodes.Core.ViewModels.Templates
@@ -23,10 +22,11 @@ namespace Barcodes.Core.ViewModels.Templates
 
         protected override TemplateResult GetResultData()
         {
+            var code = new ProductCode(productCode);
             return new TemplateResult
             {
-                BarcodeType = BarcodeType.Ean13,
-                Data = ProductCode.Trim()
+                BarcodeType = code.Type,
+                Data = code.Code
             };
         }
 
