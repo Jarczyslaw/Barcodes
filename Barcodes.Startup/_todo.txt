@@ -1,3 +1,7 @@
 ﻿zmienić input method na templaty dla kodów + okna do nich (zgodnie z tym co jest w examplach)
 dodać konwertery jako dodatkowa opcja pod prawoklikiem na kodzie żeby można było szybko przerobić ean13/128 na datamatrix i odwrotnie
+dodać możliwość czyszczenia storage'a
+dodać możliwość tworzenia nowego storage'a
+okienko do ustawień
+
 zrobić drag and dropa na na zakładkach i na kodach (docelowo dragablz)

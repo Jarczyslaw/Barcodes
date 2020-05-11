@@ -105,6 +105,9 @@
     <Compile Include="Services\AppDialogsService.cs" />
     <Compile Include="Services\AppWindowsService.cs" />
     <Compile Include="Services\WindowManager.cs" />
+    <Compile Include="Views\Templates\LocationWindow.xaml.cs">
+      <DependentUpon>LocationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Templates\Ean128ProductWindow.xaml.cs">
       <DependentUpon>Ean128ProductWindow.xaml</DependentUpon>
     </Compile>
@@ -173,6 +176,10 @@
     <Page Include="Styles\Values.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Templates\LocationWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Templates\Ean128ProductWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

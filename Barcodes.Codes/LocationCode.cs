@@ -17,17 +17,25 @@
         public override string Code => Prefix + Address;
 
         public override BarcodeType Type => BarcodeType.Code128;
-        public override int Length => 12;
+        public override int Length => Prefix.Length + BodyLength;
         public override string Prefix => "LK";
 
+        public int BodyLength => 10;
+
         public void Parse(string code)
+        {
+            code = PrepareCode(code);
+            CheckCode(code);
+            Address = GetCodeBody(code);
+        }
+
+        private string PrepareCode(string code)
         {
             if (code?.StartsWith(Prefix) == false)
             {
                 code = Prefix + code;
             }
-            CheckCode(code);
-            Address = GetCodeBody(code);
+            return code;
         }
 
         public static bool TryParse(string code, out LocationCode locationCode)

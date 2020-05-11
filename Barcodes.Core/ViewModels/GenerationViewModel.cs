@@ -161,6 +161,12 @@ namespace Barcodes.Core.ViewModels
                     Title = "Code128 - Container",
                     Handler = services.AppWindowsService.OpenTemplateWindow<ContainerViewModel>
                 },
+                new TemplateViewModel
+                {
+                    Template = Template.Location,
+                    Title = "Code128 - Location",
+                    Handler = services.AppWindowsService.OpenTemplateWindow<LocationViewModel>
+                },
             };
             SelectedTemplate = Templates.First();
         }

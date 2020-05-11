@@ -1,10 +1,10 @@
 ﻿using Barcodes.Core.Abstraction;
 using Barcodes.Core.Models;
 using Barcodes.Core.UI.Views;
-using Barcodes.Core.UI.Views.Templates;
 using Barcodes.Core.ViewModels;
 using Barcodes.Core.ViewModels.Templates;
 using Barcodes.Services.Windows;
+using Barcodes.Utils;
 using Prism.Ioc;
 using System;
 using System.Collections.Generic;
@@ -20,20 +20,38 @@ namespace Barcodes.Core.UI.Services
         private readonly WindowManager barcodesWindowsManager = new WindowManager();
         private readonly WindowManager workspacesWindowsManager = new WindowManager();
 
-        private readonly Dictionary<Type, Type> templateMapping = new Dictionary<Type, Type>
-        {
-            { typeof(NmvsProductViewModel), typeof(NmvsProductWindow) },
-            { typeof(Ean128ProductViewModel), typeof(Ean128ProductWindow) },
-            { typeof(ProductViewModel), typeof(ProductWindow) },
-            { typeof(ContainerViewModel), typeof(ContainerWindow) },
-        };
+        private readonly Dictionary<Type, Type> templateMapping = new Dictionary<Type, Type>();
 
         public AppWindowsService(IContainerExtension containerExtension)
         {
             this.containerExtension = containerExtension;
+            CreateTemplatesMapping();
         }
 
         public int WindowsCount => barcodesWindowsManager.WindowsCount + workspacesWindowsManager.WindowsCount;
+
+        private void CreateTemplatesMapping()
+        {
+            var windows = GetAllWindows();
+            foreach (var viewModel in GetViewModels())
+            {
+                var mapping = windows.Find(w => w.Name == viewModel.Name.Replace("ViewModel", "Window"));
+                if (mapping != null)
+                {
+                    templateMapping.Add(viewModel, mapping);
+                }
+            }
+        }
+
+        private List<Type> GetViewModels()
+        {
+            return Assembly.GetAssembly(typeof(BaseTemplateViewModel)).GetDerivedTypes(typeof(BaseTemplateViewModel));
+        }
+
+        private List<Type> GetAllWindows()
+        {
+            return Assembly.GetExecutingAssembly().GetDerivedTypes(typeof(Window));
+        }
 
         public void CloseBarcodesAndWorkspacesWindows()
         {
