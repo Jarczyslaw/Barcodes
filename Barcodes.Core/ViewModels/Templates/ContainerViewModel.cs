@@ -30,7 +30,7 @@ namespace Barcodes.Core.ViewModels.Templates
 
         protected override TemplateResult GetResultData()
         {
-            var code = new ContainerCode(ContainerNumber);
+            var code = new ContainerCode(containerNumber);
             return new TemplateResult(code);
         }
 
@@ -38,7 +38,7 @@ namespace Barcodes.Core.ViewModels.Templates
         {
             try
             {
-                new ContainerCode(ContainerNumber);
+                new ContainerCode(containerNumber);
                 return true;
             }
             catch (Exception exc)

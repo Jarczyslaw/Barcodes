@@ -105,18 +105,20 @@
     <Compile Include="Services\AppDialogsService.cs" />
     <Compile Include="Services\AppWindowsService.cs" />
     <Compile Include="Services\WindowManager.cs" />
+    <Compile Include="Views\Templates\BaseNumericWindow.xaml.cs">
+      <DependentUpon>BaseNumericWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Templates\ContainerWindow.cs" />
+    <Compile Include="Views\Templates\BaseTextWindow.xaml.cs">
+      <DependentUpon>BaseTextWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Templates\LocationWindow.xaml.cs">
       <DependentUpon>LocationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Templates\Ean128ProductWindow.xaml.cs">
       <DependentUpon>Ean128ProductWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Templates\ContainerWindow.xaml.cs">
-      <DependentUpon>ContainerWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\ProductWindow.xaml.cs">
-      <DependentUpon>ProductWindow.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Views\Templates\ProductWindow.cs" />
     <Compile Include="Views\WorkspaceWindow.xaml.cs">
       <DependentUpon>WorkspaceWindow.xaml</DependentUpon>
     </Compile>
@@ -177,19 +179,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Templates\BaseNumericWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Templates\BaseTextWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Templates\LocationWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Templates\Ean128ProductWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Templates\ContainerWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Templates\ProductWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

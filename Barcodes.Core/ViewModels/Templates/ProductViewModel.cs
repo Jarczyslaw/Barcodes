@@ -7,22 +7,30 @@ namespace Barcodes.Core.ViewModels.Templates
 {
     public class ProductViewModel : BaseTemplateViewModel
     {
-        private string productCode = string.Empty;
+        private string product = string.Empty;
 
         public ProductViewModel(IAppDialogsService dialogsService)
             : base(dialogsService)
         {
         }
 
-        public string ProductCode
+        public string Product
         {
-            get => productCode;
-            set => SetProperty(ref productCode, value);
+            get => product;
+            set => SetProperty(ref product, value);
+        }
+
+        public override void LoadData(string data)
+        {
+            if (ProductCode.TryParse(data, out ProductCode productCode))
+            {
+                Product = productCode.Product;
+            }
         }
 
         protected override TemplateResult GetResultData()
         {
-            var code = new ProductCode(productCode);
+            var code = new ProductCode(product);
             return new TemplateResult(code);
         }
 
@@ -30,7 +38,7 @@ namespace Barcodes.Core.ViewModels.Templates
         {
             try
             {
-                new ProductCode(ProductCode);
+                new ProductCode(Product);
                 return true;
             }
             catch (Exception exc)
