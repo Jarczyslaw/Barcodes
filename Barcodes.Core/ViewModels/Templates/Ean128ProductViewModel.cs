@@ -54,12 +54,7 @@ namespace Barcodes.Core.ViewModels.Templates
 
         protected override TemplateResult GetResultData()
         {
-            var code = GetEan128Code();
-            return new TemplateResult
-            {
-                Data = code.Code,
-                BarcodeType = code.Type
-            };
+            return new TemplateResult(GetEan128Code());
         }
 
         protected override bool Validate()

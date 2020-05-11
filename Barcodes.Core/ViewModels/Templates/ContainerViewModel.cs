@@ -31,11 +31,7 @@ namespace Barcodes.Core.ViewModels.Templates
         protected override TemplateResult GetResultData()
         {
             var code = new ContainerCode(ContainerNumber);
-            return new TemplateResult
-            {
-                BarcodeType = code.Type,
-                Data = code.Code
-            };
+            return new TemplateResult(code);
         }
 
         protected override bool Validate()

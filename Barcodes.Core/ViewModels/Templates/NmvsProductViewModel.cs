@@ -62,12 +62,7 @@ namespace Barcodes.Core.ViewModels.Templates
 
         protected override TemplateResult GetResultData()
         {
-            var code = GetNmvsCode();
-            return new TemplateResult
-            {
-                BarcodeType = code.Type,
-                Data = code.Code
-            };
+            return new TemplateResult(GetNmvsCode());
         }
 
         protected override bool Validate()

@@ -23,11 +23,7 @@ namespace Barcodes.Core.ViewModels.Templates
         protected override TemplateResult GetResultData()
         {
             var code = new ProductCode(productCode);
-            return new TemplateResult
-            {
-                BarcodeType = code.Type,
-                Data = code.Code
-            };
+            return new TemplateResult(code);
         }
 
         protected override bool Validate()
