@@ -5,12 +5,12 @@ namespace Barcodes.Codes
 {
     public abstract class BaseOrderCode : BaseCode
     {
-        public BaseOrderCode(string code)
+        protected BaseOrderCode(string code)
         {
             Parse(code);
         }
 
-        public BaseOrderCode(int orderId, int containerNumber, int divisionNumber, int year)
+        protected BaseOrderCode(int orderId, int containerNumber, int divisionNumber, int year)
         {
             CheckMaxValue(orderId, OrderIdLength, "order number");
             CheckMaxValue(containerNumber, ContainerNumber, "container number");
@@ -23,7 +23,7 @@ namespace Barcodes.Codes
             Year = year;
         }
 
-        public BaseOrderCode(BaseOrderCode orderCode)
+        protected BaseOrderCode(BaseOrderCode orderCode)
         {
             OrderId = orderCode.OrderId;
             ContainerNumber = orderCode.ContainerNumber;
@@ -45,7 +45,10 @@ namespace Barcodes.Codes
 
         public override int Length => PrefixLength + OrderIdLength + ContainerNumberLength + DivisionNumberLength + YearLength;
 
-        public override string Code => $"{Prefix}{OrderId}{ContainerNumber}{DivisionNumber}{Year}";
+        public override string Code => Prefix + Pad(OrderId, OrderIdLength)
+            + Pad(ContainerNumber, ContainerNumberLength)
+            + Pad(DivisionNumber, DivisionNumberLength)
+            + Pad(Year, YearLength);
 
         public override BarcodeType Type => BarcodeType.Code128;
 
@@ -61,6 +64,11 @@ namespace Barcodes.Codes
             ContainerNumber = int.Parse(match.Groups[2].Value);
             DivisionNumber = int.Parse(match.Groups[3].Value);
             Year = int.Parse(match.Groups[4].Value);
+        }
+
+        private string Pad(int value, int length)
+        {
+            return value.ToString().PadLeft(length, '0');
         }
     }
 }

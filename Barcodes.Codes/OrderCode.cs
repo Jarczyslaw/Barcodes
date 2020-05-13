@@ -12,7 +12,7 @@
         {
         }
 
-        public OrderCode(BaseOrderCode orderCode)
+        public OrderCode(OrderCode orderCode)
             : base(orderCode)
         {
         }

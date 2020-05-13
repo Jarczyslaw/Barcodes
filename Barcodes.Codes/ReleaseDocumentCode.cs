@@ -12,7 +12,7 @@
         {
         }
 
-        public ReleaseDocumentCode(BaseOrderCode orderCode)
+        public ReleaseDocumentCode(ReleaseDocumentCode orderCode)
             : base(orderCode)
         {
         }
