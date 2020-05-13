@@ -6,6 +6,8 @@
         LongProduct,
         NmvsProduct,
         Container,
-        Location
+        Location,
+        Order,
+        ReleaseDocument
     }
 }

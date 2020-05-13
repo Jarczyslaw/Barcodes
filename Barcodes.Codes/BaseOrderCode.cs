@@ -15,7 +15,6 @@ namespace Barcodes.Codes
             CheckMaxValue(orderId, OrderIdLength, "order number");
             CheckMaxValue(containerNumber, ContainerNumber, "container number");
             CheckMaxValue(divisionNumber, DivisionNumberLength, "division number");
-            CheckMaxValue(year, YearLength, "year");
 
             OrderId = orderId;
             ContainerNumber = containerNumber;
@@ -48,7 +47,7 @@ namespace Barcodes.Codes
         public override string Code => Prefix + Pad(OrderId, OrderIdLength)
             + Pad(ContainerNumber, ContainerNumberLength)
             + Pad(DivisionNumber, DivisionNumberLength)
-            + Pad(Year, YearLength);
+            + Pad(Year % 100, YearLength);
 
         public override BarcodeType Type => BarcodeType.Code128;
 
@@ -63,7 +62,7 @@ namespace Barcodes.Codes
             OrderId = int.Parse(match.Groups[1].Value);
             ContainerNumber = int.Parse(match.Groups[2].Value);
             DivisionNumber = int.Parse(match.Groups[3].Value);
-            Year = int.Parse(match.Groups[4].Value);
+            Year = DateTime.Now.Year / 100 + int.Parse(match.Groups[4].Value);
         }
 
         private string Pad(int value, int length)

@@ -5,23 +5,23 @@ using System;
 
 namespace Barcodes.Core.ViewModels.Templates
 {
-    public class OrderViewModel : BaseOrderViewModel
+    public class ReleaseDocumentViewModel : BaseOrderViewModel
     {
-        public OrderViewModel(IAppDialogsService dialogsService)
+        protected ReleaseDocumentViewModel(IAppDialogsService dialogsService)
             : base(dialogsService)
         {
         }
 
-        protected OrderCode GetCode => new OrderCode(orderId, containerNumber, divisionNumber, year);
+        protected ReleaseDocumentCode GetCode => new ReleaseDocumentCode(orderId, containerNumber, divisionNumber, year);
 
         public override void LoadData(string data)
         {
-            if (OrderCode.TryParse(data, out OrderCode orderCode))
+            if (ReleaseDocumentCode.TryParse(data, out ReleaseDocumentCode releaseDocumentCode))
             {
-                OrderId = orderCode.OrderId;
-                ContainerNumber = orderCode.ContainerNumber;
-                DivisionNumber = orderCode.DivisionNumber;
-                Year = orderCode.Year;
+                OrderId = releaseDocumentCode.OrderId;
+                ContainerNumber = releaseDocumentCode.ContainerNumber;
+                DivisionNumber = releaseDocumentCode.DivisionNumber;
+                Year = releaseDocumentCode.Year;
             }
         }
 
@@ -34,7 +34,7 @@ namespace Barcodes.Core.ViewModels.Templates
         {
             try
             {
-                new OrderCode(GetCode);
+                new ReleaseDocumentCode(GetCode);
                 return true;
             }
             catch (Exception exc)

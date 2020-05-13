@@ -119,6 +119,7 @@
     <Compile Include="Views\Templates\BaseOrderWindow.xaml.cs">
       <DependentUpon>BaseOrderWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Templates\ReleaseDocumentWindow.cs" />
     <Compile Include="Views\Templates\OrderWindow.cs" />
     <Compile Include="Views\Templates\ProductWindow.cs" />
     <Compile Include="Views\WorkspaceWindow.xaml.cs">

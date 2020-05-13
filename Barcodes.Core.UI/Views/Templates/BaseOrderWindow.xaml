@@ -41,18 +41,22 @@
                     Margin="{StaticResource DefaultMargin}"
                     Value="{Binding OrderId, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Grid.Row="1" Content="Container number:" />
+                <Label Grid.Row="1" Content="Container number (1-999):" />
                 <toolkit:IntegerUpDown
                     Grid.Row="1"
                     Grid.Column="1"
                     Margin="{StaticResource DefaultMargin}"
+                    Maximum="999"
+                    Minimum="1"
                     Value="{Binding ContainerNumber, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Grid.Row="2" Content="Division number:" />
+                <Label Grid.Row="2" Content="Division number (1-99):" />
                 <toolkit:IntegerUpDown
                     Grid.Row="2"
                     Grid.Column="1"
                     Margin="{StaticResource DefaultMargin}"
+                    Maximum="99"
+                    Minimum="1"
                     Value="{Binding DivisionNumber, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="3" Content="Year:" />
