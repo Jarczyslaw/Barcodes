@@ -47,11 +47,12 @@ namespace Barcodes.Codes
             return (int)Math.Pow(10, digits) - 1;
         }
 
-        protected void CheckMaxValue(int value, int digits, string name)
+        protected void CheckValue(int value, int digits, string name)
         {
-            if (value > MaxValue(digits))
+            var maxValue = MaxValue(digits);
+            if (value < 0 || value > maxValue)
             {
-                throw new ArgumentException($"Invalid value of {name}");
+                throw new ArgumentException($"Invalid value of {name} which is out of range [{0}, {maxValue}]");
             }
         }
     }

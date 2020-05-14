@@ -7,12 +7,12 @@ namespace Barcodes.Core.ViewModels.Templates
 {
     public class ReleaseDocumentViewModel : BaseOrderViewModel
     {
-        protected ReleaseDocumentViewModel(IAppDialogsService dialogsService)
+        public ReleaseDocumentViewModel(IAppDialogsService dialogsService)
             : base(dialogsService)
         {
         }
 
-        protected ReleaseDocumentCode GetCode => new ReleaseDocumentCode(orderId, containerNumber, divisionNumber, year);
+        protected ReleaseDocumentCode GetCode() => new ReleaseDocumentCode(orderId, containerNumber, divisionNumber, year);
 
         public override void LoadData(string data)
         {
@@ -27,14 +27,14 @@ namespace Barcodes.Core.ViewModels.Templates
 
         protected override TemplateResult GetResultData()
         {
-            return new TemplateResult(GetCode);
+            return new TemplateResult(GetCode());
         }
 
         protected override bool Validate()
         {
             try
             {
-                new ReleaseDocumentCode(GetCode);
+                GetCode();
                 return true;
             }
             catch (Exception exc)

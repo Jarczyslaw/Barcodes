@@ -12,9 +12,9 @@ namespace Barcodes.Codes
 
         protected BaseOrderCode(int orderId, int containerNumber, int divisionNumber, int year)
         {
-            CheckMaxValue(orderId, OrderIdLength, "order number");
-            CheckMaxValue(containerNumber, ContainerNumber, "container number");
-            CheckMaxValue(divisionNumber, DivisionNumberLength, "division number");
+            CheckValue(orderId, OrderIdLength, "order number");
+            CheckValue(containerNumber, ContainerNumberLength, "container number");
+            CheckValue(divisionNumber, DivisionNumberLength, "division number");
 
             OrderId = orderId;
             ContainerNumber = containerNumber;
@@ -53,7 +53,7 @@ namespace Barcodes.Codes
 
         public void Parse(string code)
         {
-            var match = Regex.Match(code, $@"{Prefix}(\d{OrderIdLength})(\d{ContainerNumberLength})(\d{DivisionNumberLength})(\d{YearLength})");
+            var match = Regex.Match(code, $@"{Prefix}(\d{{{OrderIdLength}}})(\d{{{ContainerNumberLength}}})(\d{{{DivisionNumberLength}}})(\d{{{YearLength}}})");
             if (!match.Success)
             {
                 throw new ArgumentException("Invalid order code format");
@@ -62,7 +62,7 @@ namespace Barcodes.Codes
             OrderId = int.Parse(match.Groups[1].Value);
             ContainerNumber = int.Parse(match.Groups[2].Value);
             DivisionNumber = int.Parse(match.Groups[3].Value);
-            Year = DateTime.Now.Year / 100 + int.Parse(match.Groups[4].Value);
+            Year = DateTime.Now.Year / 100 * 100 + int.Parse(match.Groups[4].Value);
         }
 
         private string Pad(int value, int length)

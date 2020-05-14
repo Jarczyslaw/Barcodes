@@ -12,7 +12,7 @@ namespace Barcodes.Core.ViewModels.Templates
         {
         }
 
-        protected OrderCode GetCode => new OrderCode(orderId, containerNumber, divisionNumber, year);
+        protected OrderCode GetCode() => new OrderCode(orderId, containerNumber, divisionNumber, year);
 
         public override void LoadData(string data)
         {
@@ -27,14 +27,14 @@ namespace Barcodes.Core.ViewModels.Templates
 
         protected override TemplateResult GetResultData()
         {
-            return new TemplateResult(GetCode);
+            return new TemplateResult(GetCode());
         }
 
         protected override bool Validate()
         {
             try
             {
-                new OrderCode(GetCode);
+                GetCode();
                 return true;
             }
             catch (Exception exc)

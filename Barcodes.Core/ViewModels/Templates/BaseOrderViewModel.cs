@@ -1,13 +1,14 @@
 ﻿using Barcodes.Core.Abstraction;
+using System;
 
 namespace Barcodes.Core.ViewModels.Templates
 {
     public abstract class BaseOrderViewModel : BaseTemplateViewModel
     {
-        protected int orderId;
-        protected int containerNumber;
-        protected int divisionNumber;
-        protected int year;
+        protected int orderId = 1;
+        protected int containerNumber = 1;
+        protected int divisionNumber = 1;
+        protected int year = DateTime.Now.Year;
 
         protected BaseOrderViewModel(IAppDialogsService dialogsService)
             : base(dialogsService)
