@@ -20,7 +20,7 @@ namespace Barcodes.Codes
             ContainerNumber = code.ContainerNumber;
         }
 
-        public int ContainerNumber { get; private set; }
+        public int ContainerNumber { get; private set; } = 1;
 
         public override string Code => Prefix + ContainerNumber.ToString().PadLeft(BodyLength, '0');
 

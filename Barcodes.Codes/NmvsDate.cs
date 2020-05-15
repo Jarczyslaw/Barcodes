@@ -29,9 +29,9 @@ namespace Barcodes.Codes
             Day = nmvsDate.Day;
         }
 
-        public int Year { get; private set; }
-        public int Month { get; private set; }
-        public int Day { get; private set; }
+        public int Year { get; private set; } = 1;
+        public int Month { get; private set; } = 1;
+        public int Day { get; private set; } = 1;
 
         public void Parse(string value)
         {

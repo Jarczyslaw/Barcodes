@@ -13,6 +13,9 @@ namespace Barcodes.Codes
         {
             CheckWarehouse(warehouse);
             CheckStation(station);
+
+            Warehouse = warehouse;
+            Station = station;
         }
 
         public WarehouseAndStationCode(WarehouseAndStationCode code)
@@ -21,10 +24,8 @@ namespace Barcodes.Codes
             Station = code.Station;
         }
 
-        public int Warehouse { get; private set; }
-        public string Station { get; private set; }
-
-        public bool NoStation => Station == "00";
+        public int Warehouse { get; private set; } = 1;
+        public string Station { get; private set; } = string.Empty;
 
         public override string Code => Prefix + Warehouse.ToString().PadLeft(2, '0') + Station.PadLeft(2, '0');
 

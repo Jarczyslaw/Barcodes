@@ -15,7 +15,7 @@ namespace Barcodes.Codes
             Product = productCode.Product;
         }
 
-        public string Product { get; private set; }
+        public string Product { get; private set; } = string.Empty;
 
         public override string Code => Product;
 

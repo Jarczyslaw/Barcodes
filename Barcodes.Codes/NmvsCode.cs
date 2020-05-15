@@ -30,9 +30,9 @@ namespace Barcodes.Codes
 
         public static string GroupSeparator { get; } = "\u001D";
 
-        public string ProductCode { get; private set; }
-        public string SerialNo { get; private set; }
-        public string BatchId { get; private set; }
+        public string ProductCode { get; private set; } = string.Empty;
+        public string SerialNo { get; private set; } = string.Empty;
+        public string BatchId { get; private set; } = string.Empty;
         public NmvsDate ExpireDate { get; private set; }
 
         public override string Code => $"01{ProductCode}17{ExpireDate}21{SerialNo}{GroupSeparator}10{BatchId}";

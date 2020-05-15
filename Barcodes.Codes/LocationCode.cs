@@ -12,7 +12,7 @@
             Address = locationCode.Address;
         }
 
-        public string Address { get; private set; }
+        public string Address { get; private set; } = string.Empty;
 
         public override string Code => Prefix + Address;
 

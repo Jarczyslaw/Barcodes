@@ -27,8 +27,8 @@ namespace Barcodes.Codes
             ExpireDate = ean128Code.ExpireDate;
         }
 
-        public string ProductCode { get; private set; }
-        public string BatchId { get; private set; }
+        public string ProductCode { get; private set; } = string.Empty;
+        public string BatchId { get; private set; } = string.Empty;
         public DateTime ExpireDate { get; private set; }
 
         public override string Code => $"(02){ProductCode}(17){ExpireDate.ToExpireDate(false)}(10){BatchId}";
