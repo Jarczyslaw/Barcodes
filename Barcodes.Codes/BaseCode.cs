@@ -49,10 +49,11 @@ namespace Barcodes.Codes
 
         protected void CheckValue(int value, int digits, string name)
         {
+            var minValue = 1;
             var maxValue = MaxValue(digits);
-            if (value < 0 || value > maxValue)
+            if (value < minValue || value > maxValue)
             {
-                throw new ArgumentException($"Invalid value of {name} which is out of range [{0}, {maxValue}]");
+                throw new ArgumentException($"Invalid value of {name} which is out of range [{minValue}, {maxValue}]");
             }
         }
     }

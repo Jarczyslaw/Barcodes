@@ -32,7 +32,7 @@ namespace Barcodes.Codes
 
         private void CheckContainer(int user)
         {
-            if (user < 0 || user > MaxValue(BodyLength))
+            if (user < 1 || user > MaxValue(BodyLength))
             {
                 throw new ArgumentException("Invalid container number");
             }

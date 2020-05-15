@@ -43,7 +43,7 @@ namespace Barcodes.Codes
 
         private void CheckWarehouse(int warehouse)
         {
-            if (warehouse < 0 || warehouse > 99)
+            if (warehouse < 1 || warehouse > 99)
             {
                 throw new ArgumentException("Invalid warehouse number");
             }

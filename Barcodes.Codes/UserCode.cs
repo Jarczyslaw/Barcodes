@@ -32,7 +32,7 @@ namespace Barcodes.Codes
 
         private void CheckUser(int number)
         {
-            if (number < 0 || number > MaxValue(BodyLength))
+            if (number < 1 || number > MaxValue(BodyLength))
             {
                 throw new ArgumentException("Invalid user number");
             }
