@@ -115,6 +115,7 @@
     <Compile Include="Views\Templates\Ean128ProductWindow.xaml.cs">
       <DependentUpon>Ean128ProductWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Templates\UserWindow.cs" />
     <Compile Include="Views\Templates\LocationWindow.cs" />
     <Compile Include="Views\Templates\BaseOrderWindow.xaml.cs">
       <DependentUpon>BaseOrderWindow.xaml</DependentUpon>

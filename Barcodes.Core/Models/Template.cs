@@ -8,6 +8,7 @@
         Container,
         Location,
         Order,
-        ReleaseDocument
+        ReleaseDocument,
+        User
     }
 }

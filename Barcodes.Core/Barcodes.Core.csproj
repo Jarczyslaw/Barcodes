@@ -107,6 +107,7 @@
     <Compile Include="Models\PdfExportMode.cs" />
     <Compile Include="Models\TemplateResult.cs" />
     <Compile Include="Models\Template.cs" />
+    <Compile Include="Models\TemplatesFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\BaseInput.cs" />
     <Compile Include="Models\ValueInput.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Abstraction\IStateSaverService.cs" />
     <Compile Include="Services\StateSaver\States\NmvsProductViewModelState.cs" />
     <Compile Include="Services\StateSaver\StateSaverService.cs" />
+    <Compile Include="ViewModels\Templates\UserViewModel.cs" />
     <Compile Include="ViewModels\Templates\LocationViewModel.cs" />
     <Compile Include="ViewModels\Templates\ContainerViewModel.cs" />
     <Compile Include="ViewModels\Templates\BaseOrderViewModel.cs" />

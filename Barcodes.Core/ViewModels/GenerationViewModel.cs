@@ -2,7 +2,6 @@
 using Barcodes.Core.Abstraction;
 using Barcodes.Core.Common;
 using Barcodes.Core.Models;
-using Barcodes.Core.ViewModels.Templates;
 using Barcodes.Services.Generator;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -34,7 +33,7 @@ namespace Barcodes.Core.ViewModels
             this.services = services;
 
             InitializeBarcodeTypes();
-            InitializeAdditionalInputs();
+            InitializeTemplates();
             LoadSettings();
 
             AddNewCommand = new DelegateCommand(() => GenerateBarcode(true));
@@ -129,57 +128,10 @@ namespace Barcodes.Core.ViewModels
 
         public Action OnClose { get; set; }
 
-        private void InitializeAdditionalInputs()
+        private void InitializeTemplates()
         {
-            Templates = new ObservableCollection<TemplateViewModel>
-            {
-                new TemplateViewModel
-                {
-                    Title = "Select barcode template"
-                },
-                new TemplateViewModel
-                {
-                    Template = Template.Product,
-                    Title = "EAN13 - Product code",
-                    Handler = services.AppWindowsService.OpenTemplateWindow<ProductViewModel>
-                },
-                new TemplateViewModel
-                {
-                    Template = Template.LongProduct,
-                    Title = "EAN128 - Long product code",
-                    Handler = services.AppWindowsService.OpenTemplateWindow<Ean128ProductViewModel>
-                },
-                new TemplateViewModel
-                {
-                    Template = Template.NmvsProduct,
-                    Title = "DataMatrix - NMVS product code",
-                    Handler = services.AppWindowsService.OpenTemplateWindow<NmvsProductViewModel>
-                },
-                new TemplateViewModel
-                {
-                    Template = Template.Container,
-                    Title = "Code128 - Container",
-                    Handler = services.AppWindowsService.OpenTemplateWindow<ContainerViewModel>
-                },
-                new TemplateViewModel
-                {
-                    Template = Template.Location,
-                    Title = "Code128 - Location",
-                    Handler = services.AppWindowsService.OpenTemplateWindow<LocationViewModel>
-                },
-                new TemplateViewModel
-                {
-                    Template = Template.Order,
-                    Title = "Code128 - Order (DZ)",
-                    Handler = services.AppWindowsService.OpenTemplateWindow<OrderViewModel>
-                },
-                new TemplateViewModel
-                {
-                    Template = Template.ReleaseDocument,
-                    Title = "Code128 - Release document (WZ)",
-                    Handler = services.AppWindowsService.OpenTemplateWindow<ReleaseDocumentViewModel>
-                },
-            };
+            var factory = new TemplatesFactory();
+            Templates = factory.GetAllTemplates(services.AppWindowsService);
             SelectedTemplate = Templates.First();
         }
 

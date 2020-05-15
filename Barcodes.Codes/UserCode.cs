@@ -9,20 +9,20 @@ namespace Barcodes.Codes
             Parse(code);
         }
 
-        public UserCode(int user)
+        public UserCode(int number)
         {
-            CheckUser(user);
-            User = user;
+            CheckUser(number);
+            Number = number;
         }
 
         public UserCode(UserCode code)
         {
-            User = code.User;
+            Number = code.Number;
         }
 
-        public int User { get; private set; }
+        public int Number { get; private set; }
 
-        public override string Code => Prefix + User.ToString().PadLeft(BodyLength, '0');
+        public override string Code => Prefix + Number.ToString().PadLeft(BodyLength, '0');
 
         public override BarcodeType Type => BarcodeType.Code128;
         public override int Length => 7;
@@ -30,9 +30,9 @@ namespace Barcodes.Codes
 
         private int BodyLength => Length - PrefixLength;
 
-        private void CheckUser(int user)
+        private void CheckUser(int number)
         {
-            if (user < 0 || user > MaxValue(BodyLength))
+            if (number < 0 || number > MaxValue(BodyLength))
             {
                 throw new ArgumentException("Invalid user number");
             }
@@ -43,7 +43,7 @@ namespace Barcodes.Codes
             CheckCode(code);
             var body = GetCodeBody(code);
             CheckCodeOnlyDigits(body);
-            User = int.Parse(body);
+            Number = int.Parse(body);
         }
 
         public static bool TryParse(string code, out UserCode userCode)
