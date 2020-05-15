@@ -3,5 +3,6 @@ dodać konwertery jako dodatkowa opcja pod prawoklikiem na kodzie żeby można b
 dodać możliwość czyszczenia storage'a
 dodać możliwość tworzenia nowego storage'a
 okienko do ustawień
+przy minimalizowaniu generationWindow nie minimalizuje się cała aplikacja (owner?)
 
 zrobić drag and dropa na na zakładkach i na kodach (docelowo dragablz)

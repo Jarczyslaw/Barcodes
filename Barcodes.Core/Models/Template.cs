@@ -9,6 +9,7 @@
         Location,
         Order,
         ReleaseDocument,
-        User
+        User,
+        WarehouseAndStation
     }
 }

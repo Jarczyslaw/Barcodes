@@ -112,6 +112,9 @@
     <Compile Include="Views\Templates\BaseTextWindow.xaml.cs">
       <DependentUpon>BaseTextWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Templates\WarehouseAndStationWindow.xaml.cs">
+      <DependentUpon>WarehouseAndStationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Templates\Ean128ProductWindow.xaml.cs">
       <DependentUpon>Ean128ProductWindow.xaml</DependentUpon>
     </Compile>
@@ -188,6 +191,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Templates\BaseTextWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Templates\WarehouseAndStationWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

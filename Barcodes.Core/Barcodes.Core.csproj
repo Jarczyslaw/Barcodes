@@ -127,6 +127,7 @@
     <Compile Include="Abstraction\IStateSaverService.cs" />
     <Compile Include="Services\StateSaver\States\NmvsProductViewModelState.cs" />
     <Compile Include="Services\StateSaver\StateSaverService.cs" />
+    <Compile Include="ViewModels\Templates\WarehouseAndStationViewModel.cs" />
     <Compile Include="ViewModels\Templates\UserViewModel.cs" />
     <Compile Include="ViewModels\Templates\LocationViewModel.cs" />
     <Compile Include="ViewModels\Templates\ContainerViewModel.cs" />

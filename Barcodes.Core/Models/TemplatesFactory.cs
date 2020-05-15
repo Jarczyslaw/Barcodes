@@ -18,50 +18,56 @@ namespace Barcodes.Core.Models
                 new TemplateViewModel
                 {
                     Template = Template.Product,
-                    Title = "EAN13 - Product code",
+                    Title = "Product code - EAN13",
                     Handler = appWindowsService.OpenTemplateWindow<ProductViewModel>
                 },
                 new TemplateViewModel
                 {
                     Template = Template.LongProduct,
-                    Title = "EAN128 - Long product code",
+                    Title = "Long product code - EAN128",
                     Handler = appWindowsService.OpenTemplateWindow<Ean128ProductViewModel>
                 },
                 new TemplateViewModel
                 {
                     Template = Template.NmvsProduct,
-                    Title = "DataMatrix - NMVS product code",
+                    Title = "NMVS product code - DataMatrix",
                     Handler = appWindowsService.OpenTemplateWindow<NmvsProductViewModel>
                 },
                 new TemplateViewModel
                 {
                     Template = Template.Container,
-                    Title = "Code128 - Container",
+                    Title = "Container - Code128",
                     Handler = appWindowsService.OpenTemplateWindow<ContainerViewModel>
                 },
                 new TemplateViewModel
                 {
                     Template = Template.Location,
-                    Title = "Code128 - Location",
+                    Title = "Location - Code128 ",
                     Handler = appWindowsService.OpenTemplateWindow<LocationViewModel>
                 },
                 new TemplateViewModel
                 {
                     Template = Template.Order,
-                    Title = "Code128 - Order (DZ)",
+                    Title = "Order (DZ) - Code128",
                     Handler = appWindowsService.OpenTemplateWindow<OrderViewModel>
                 },
                 new TemplateViewModel
                 {
                     Template = Template.ReleaseDocument,
-                    Title = "Code128 - Release document (WZ)",
+                    Title = "Release document (WZ) - Code128",
                     Handler = appWindowsService.OpenTemplateWindow<ReleaseDocumentViewModel>
                 },
                 new TemplateViewModel
                 {
                     Template = Template.User,
-                    Title = "Code128 - User",
+                    Title = "User - Code128",
                     Handler = appWindowsService.OpenTemplateWindow<UserViewModel>
+                },
+                new TemplateViewModel
+                {
+                    Template = Template.WarehouseAndStation,
+                    Title = "Warehouse and station - Code128",
+                    Handler = appWindowsService.OpenTemplateWindow<WarehouseAndStationViewModel>
                 },
             };
         }
