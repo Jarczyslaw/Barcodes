@@ -1,0 +1,50 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+
+namespace Barcodes.Codes.Tests
+{
+    [TestClass]
+    public class Ean128Tests
+    {
+        [TestMethod]
+        public void ValidFromString()
+        {
+            var codeString = "(02)12345678901234(17)200517(10)batchId";
+            var code = new Ean128Code(codeString);
+            Assert.AreEqual("12345678901234", code.ProductCode);
+            Assert.AreEqual("batchId", code.BatchId);
+            Assert.AreEqual(new DateTime(2020, 5, 17), code.ExpireDate);
+            Assert.AreEqual(codeString, code.Code);
+        }
+
+        [TestMethod]
+        public void ValidFromData()
+        {
+            var productCode = "12345678901234";
+            var batchId = "batchId";
+            var expireDate = new DateTime(2020, 5, 17);
+            var code = new Ean128Code(productCode, batchId, expireDate);
+            Assert.AreEqual("(02)12345678901234(17)200517(10)batchId", code.Code);
+        }
+
+        [TestMethod]
+        public void InvalidCodes()
+        {
+            var invalidCodes = new List<string>
+            {
+                "(01)12345678901234(17)200517(10)batchId", // invalid first ZZ
+                "(02)12345678901234(17)200517(10)", // no batchId
+                "(02)1234567890123(17)200517(10)batchId", // invalid productCode
+                "(02)A2345678901234(17)200517(10)batchId", // invalid productCode
+                "(02)12345678901234(17)201317(10)batchId", // invalid date
+                "(02)12345678901234(17)2017(10)batchId", // invalid date
+                "(02)12345678901234(17)200517batchId", // no third ZZ
+            };
+            foreach (var invalidCode in invalidCodes)
+            {
+                Assert.ThrowsException<ArgumentException>(() => new Ean128Code(invalidCode));
+            }
+        }
+    }
+}
