@@ -40,5 +40,18 @@ namespace Barcodes.Codes.Tests
                 Assert.ThrowsException<ArgumentException>(() => new ContainerCode(invalidCode));
             }
         }
+
+        [TestMethod]
+        public void InvalidValues()
+        {
+            var values = new List<int>
+            {
+                -1, 0, 99999999
+            };
+            foreach (var value in values)
+            {
+                Assert.ThrowsException<ArgumentException>(() => new ContainerCode(value));
+            }
+        }
     }
 }

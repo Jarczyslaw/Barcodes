@@ -56,5 +56,13 @@ namespace Barcodes.Codes
                 throw new ArgumentException($"Invalid value of {name} which is out of range [{minValue}, {maxValue}]");
             }
         }
+
+        protected void CheckMinValue(int value, int min, string name)
+        {
+            if (value < min)
+            {
+                throw new ArgumentException($"Invalid value of {name} which is lower than {min}");
+            }
+        }
     }
 }

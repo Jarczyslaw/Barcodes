@@ -38,5 +38,19 @@ namespace Barcodes.Codes.Tests
                 Assert.ThrowsException<ArgumentException>(() => new LocationCode(invalidCode));
             }
         }
+
+        [TestMethod]
+        public void InvalidValues()
+        {
+            var values = new List<string>
+            {
+                "00000123456",
+                "000001234"
+            };
+            foreach (var value in values)
+            {
+                Assert.ThrowsException<ArgumentException>(() => new LocationCode(value));
+            }
+        }
     }
 }

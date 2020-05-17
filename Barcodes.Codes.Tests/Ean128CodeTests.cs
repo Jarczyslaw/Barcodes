@@ -7,6 +7,20 @@ namespace Barcodes.Codes.Tests
     [TestClass]
     public class Ean128Tests
     {
+        private class CodeValues
+        {
+            public CodeValues(string productCode, string batchId, DateTime expireDate)
+            {
+                ProductCode = productCode;
+                BatchId = batchId;
+                ExpireDate = expireDate;
+            }
+
+            public string ProductCode { get; set; }
+            public string BatchId { get; set; }
+            public DateTime ExpireDate { get; set; }
+        }
+
         [TestMethod]
         public void ValidFromString()
         {
@@ -44,6 +58,20 @@ namespace Barcodes.Codes.Tests
             foreach (var invalidCode in invalidCodes)
             {
                 Assert.ThrowsException<ArgumentException>(() => new Ean128Code(invalidCode));
+            }
+        }
+
+        [TestMethod]
+        public void InvalidValues()
+        {
+            var values = new List<CodeValues>
+            {
+                new CodeValues("1234567890123A", "batchId", new DateTime(2020, 5, 17)), // invalid product code
+                new CodeValues("12345678901234", "", new DateTime(2020, 5, 17)), // invalid batch id
+            };
+            foreach (var value in values)
+            {
+                Assert.ThrowsException<ArgumentException>(() => new Ean128Code(value.ProductCode, value.BatchId, value.ExpireDate));
             }
         }
     }

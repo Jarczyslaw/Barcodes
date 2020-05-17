@@ -7,6 +7,22 @@ namespace Barcodes.Codes.Tests
     [TestClass]
     public class OrderCodeTests
     {
+        private class CodeValues
+        {
+            public CodeValues(int orderId, int containerNumber, int divisionNumber, int year)
+            {
+                OrderId = orderId;
+                ContainerNumber = containerNumber;
+                DivisionNumber = divisionNumber;
+                Year = year;
+            }
+
+            public int OrderId { get; set; }
+            public int ContainerNumber { get; set; }
+            public int DivisionNumber { get; set; }
+            public int Year { get; set; }
+        }
+
         [TestMethod]
         public void ValidFromString()
         {
@@ -43,6 +59,25 @@ namespace Barcodes.Codes.Tests
             foreach (var invalidCode in invalidCodes)
             {
                 Assert.ThrowsException<ArgumentException>(() => new OrderCode(invalidCode));
+            }
+        }
+
+        [TestMethod]
+        public void InvalidValues()
+        {
+            var values = new List<CodeValues>
+            {
+                new CodeValues(1234567890, 1, 2, 2023),
+                new CodeValues(0, 1, 2, 2023),
+                new CodeValues(12345, 9999, 2, 2023),
+                new CodeValues(12345, 0, 2, 2023),
+                new CodeValues(12345, 1, 999, 2023),
+                new CodeValues(12345, 1, 0, 2023),
+                new CodeValues(12345, 1, 2, 0),
+            };
+            foreach (var value in values)
+            {
+                Assert.ThrowsException<ArgumentException>(() => new OrderCode(value.OrderId, value.ContainerNumber, value.DivisionNumber, value.Year));
             }
         }
     }

@@ -7,6 +7,18 @@ namespace Barcodes.Codes.Tests
     [TestClass]
     public class WarehouseAndStationCodeTests
     {
+        private class CodeValues
+        {
+            public CodeValues(int warehouse, string station)
+            {
+                Warehouse = warehouse;
+                Station = station;
+            }
+
+            public int Warehouse { get; set; }
+            public string Station { get; set; }
+        }
+
         [TestMethod]
         public void ValidFromString()
         {
@@ -39,6 +51,22 @@ namespace Barcodes.Codes.Tests
             foreach (var invalidCode in invalidCodes)
             {
                 Assert.ThrowsException<ArgumentException>(() => new WarehouseAndStationCode(invalidCode));
+            }
+        }
+
+        [TestMethod]
+        public void InvalidValues()
+        {
+            var values = new List<CodeValues>
+            {
+                new CodeValues(999, "01"),
+                new CodeValues(99, "010"),
+                new CodeValues(0, "01"),
+                new CodeValues(1, ""),
+            };
+            foreach (var value in values)
+            {
+                Assert.ThrowsException<ArgumentException>(() => new WarehouseAndStationCode(value.Warehouse, value.Station));
             }
         }
     }

@@ -15,6 +15,7 @@ namespace Barcodes.Codes
             CheckValue(orderId, OrderIdLength, "order number");
             CheckValue(containerNumber, ContainerNumberLength, "container number");
             CheckValue(divisionNumber, DivisionNumberLength, "division number");
+            CheckMinValue(year, 1, "year");
 
             OrderId = orderId;
             ContainerNumber = containerNumber;

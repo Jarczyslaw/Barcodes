@@ -7,6 +7,22 @@ namespace Barcodes.Codes.Tests
     [TestClass]
     public class NmvsCodeTests
     {
+        private class CodeValues
+        {
+            public CodeValues(string productCode, string batchId, string serialNo, NmvsDate expireDate)
+            {
+                ProductCode = productCode;
+                BatchId = batchId;
+                SerialNo = serialNo;
+                ExpireDate = expireDate;
+            }
+
+            public string ProductCode { get; set; }
+            public string BatchId { get; set; }
+            public string SerialNo { get; set; }
+            public NmvsDate ExpireDate { get; set; }
+        }
+
         [TestMethod]
         public void ValidFromString()
         {
@@ -43,6 +59,21 @@ namespace Barcodes.Codes.Tests
             foreach (var invalidCode in invalidCodes)
             {
                 Assert.ThrowsException<ArgumentException>(() => new NmvsCode(invalidCode));
+            }
+        }
+
+        [TestMethod]
+        public void InvalidValues()
+        {
+            var values = new List<CodeValues>
+            {
+                new CodeValues("1234567890123A", "batchId", "serialNo", new NmvsDate(2023, 1, 2)),
+                new CodeValues("12345678901234", "", "serialNo", new NmvsDate(2023, 1, 2)),
+                new CodeValues("12345678901234", "batchId", "", new NmvsDate(2023, 1, 2)),
+            };
+            foreach (var value in values)
+            {
+                Assert.ThrowsException<ArgumentException>(() => new NmvsCode(value.ProductCode, value.BatchId, value.SerialNo, value.ExpireDate));
             }
         }
     }
