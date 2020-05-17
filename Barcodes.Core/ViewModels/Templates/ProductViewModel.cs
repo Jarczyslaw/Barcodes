@@ -30,7 +30,7 @@ namespace Barcodes.Core.ViewModels.Templates
 
         protected override TemplateResult GetResultData()
         {
-            var code = new ProductCode(product);
+            var code = new ProductCode(product.Trim());
             return new TemplateResult(code);
         }
 
@@ -38,7 +38,7 @@ namespace Barcodes.Core.ViewModels.Templates
         {
             try
             {
-                new ProductCode(Product);
+                new ProductCode(Product.Trim());
                 return true;
             }
             catch (Exception exc)

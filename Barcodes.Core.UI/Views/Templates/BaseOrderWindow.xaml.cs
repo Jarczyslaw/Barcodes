@@ -20,6 +20,16 @@
             set => gbHeader.Header = value;
         }
 
+        public int OrderIdMinimum
+        {
+            set => iudOrderId.Minimum = value;
+        }
+
+        public int OrderIdMaximum
+        {
+            set => iudOrderId.Maximum = value;
+        }
+
         protected override void OnViewShown()
         {
             base.OnViewShown();

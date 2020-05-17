@@ -39,9 +39,10 @@
                     x:Name="iudOrderId"
                     Grid.Column="1"
                     Margin="{StaticResource DefaultMargin}"
+                    Minimum="1"
                     Value="{Binding OrderId, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Grid.Row="1" Content="Container number (1-999):" />
+                <Label Grid.Row="1" Content="Container number (up to 3 digits):" />
                 <toolkit:IntegerUpDown
                     Grid.Row="1"
                     Grid.Column="1"
@@ -50,7 +51,7 @@
                     Minimum="1"
                     Value="{Binding ContainerNumber, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Grid.Row="2" Content="Division number (1-99):" />
+                <Label Grid.Row="2" Content="Division number (up to two digits):" />
                 <toolkit:IntegerUpDown
                     Grid.Row="2"
                     Grid.Column="1"
@@ -64,6 +65,7 @@
                     Grid.Row="3"
                     Grid.Column="1"
                     Margin="{StaticResource DefaultMargin}"
+                    Minimum="1"
                     Value="{Binding Year, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
         </GroupBox>

@@ -29,6 +29,16 @@ namespace Barcodes.Core.UI.Views.Templates
             set => lblLabel.Content = value;
         }
 
+        public int MinimumValue
+        {
+            set => iudValue.Minimum = value;
+        }
+
+        public int MaximumValue
+        {
+            set => iudValue.Maximum = value;
+        }
+
         protected void SetValueBinding(string propertyName)
         {
             var binding = new Binding(propertyName)

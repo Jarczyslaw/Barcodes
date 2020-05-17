@@ -53,7 +53,7 @@ namespace Barcodes.Codes
 
         public void Parse(string code)
         {
-            var match = Regex.Match(code, $@"{Prefix}(\d{{{OrderIdLength}}})(\d{{{ContainerNumberLength}}})(\d{{{DivisionNumberLength}}})(\d{{{YearLength}}})");
+            var match = Regex.Match(code, $@"^{Prefix}(\d{{{OrderIdLength}}})(\d{{{ContainerNumberLength}}})(\d{{{DivisionNumberLength}}})(\d{{{YearLength}}})$");
             if (!match.Success)
             {
                 throw new ArgumentException("Invalid order code format");

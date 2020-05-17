@@ -37,7 +37,7 @@ namespace Barcodes.Codes
         {
             if (string.IsNullOrEmpty(value) || value.Length != 6)
             {
-                throw new ArgumentException("Invalid value length");
+                throw new ArgumentException("Invalid NMVS date length");
             }
 
             var yearValue = value.Substring(0, 2);
@@ -48,7 +48,7 @@ namespace Barcodes.Codes
             {
                 throw new ArgumentException("Invalid year value");
             }
-            year = DateTime.Now.Year / 100 + year;
+            year = DateTime.Now.Year / 100 * 100 + year;
 
             if (!int.TryParse(monthValue, out int month))
             {

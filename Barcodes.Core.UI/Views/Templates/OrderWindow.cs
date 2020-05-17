@@ -7,7 +7,8 @@
         {
             Title = "Barcodes - Order";
             Header = "Order data";
-            OrderIdTitle = "Order ID (9 digits):";
+            OrderIdTitle = "Order ID (up to 9 digits):";
+            OrderIdMaximum = 999999999;
         }
     }
 }

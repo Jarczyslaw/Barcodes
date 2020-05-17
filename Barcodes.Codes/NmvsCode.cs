@@ -42,7 +42,7 @@ namespace Barcodes.Codes
         public void Parse(string codeString)
         {
             codeString = codeString.Replace(GroupSeparator, string.Empty);
-            var match = Regex.Match(codeString, @"01(\d{14})17(\d{6})21(.{1,20})10(.+)");
+            var match = Regex.Match(codeString, @"^01(\d{14})17(\d{6})21(.{1,20})10(.+)$");
             if (!match.Success)
             {
                 throw new ArgumentException("Invalid code string format");

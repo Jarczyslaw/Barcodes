@@ -8,6 +8,7 @@
             Title = "Barcodes - Release document";
             Header = "Release document data";
             OrderIdTitle = "Order ID (7 digits):";
+            OrderIdMaximum = 9999999;
         }
     }
 }

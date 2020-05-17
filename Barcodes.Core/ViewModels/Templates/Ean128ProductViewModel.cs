@@ -41,14 +41,11 @@ namespace Barcodes.Core.ViewModels.Templates
 
         public override void LoadData(string ean128Data)
         {
-            if (string.IsNullOrEmpty(ean128Data))
+            if (Ean128Code.TryParse(ean128Data, out Ean128Code ean128Code))
             {
-                if (Ean128Code.TryParse(ean128Data, out Ean128Code ean128Code))
-                {
-                    ExpireDate = ean128Code.ExpireDate;
-                    BatchId = ean128Code.BatchId;
-                    ProductCode = ean128Code.ProductCode;
-                }
+                ExpireDate = ean128Code.ExpireDate;
+                BatchId = ean128Code.BatchId;
+                ProductCode = ean128Code.ProductCode;
             }
         }
 

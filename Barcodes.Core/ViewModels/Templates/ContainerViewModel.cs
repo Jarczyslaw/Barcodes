@@ -7,7 +7,7 @@ namespace Barcodes.Core.ViewModels.Templates
 {
     public class ContainerViewModel : BaseTemplateViewModel
     {
-        private int containerNumber;
+        private int containerNumber = 1;
 
         public ContainerViewModel(IAppDialogsService dialogsService)
             : base(dialogsService)

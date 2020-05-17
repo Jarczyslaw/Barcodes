@@ -38,7 +38,7 @@ namespace Barcodes.Core.ViewModels.Templates
 
         protected override TemplateResult GetResultData()
         {
-            var code = new WarehouseAndStationCode(Warehouse, Station);
+            var code = new WarehouseAndStationCode(Warehouse, Station.Trim());
             return new TemplateResult(code);
         }
 
@@ -46,7 +46,7 @@ namespace Barcodes.Core.ViewModels.Templates
         {
             try
             {
-                new WarehouseAndStationCode(Warehouse, Station);
+                new WarehouseAndStationCode(Warehouse, Station.Trim());
                 return true;
             }
             catch (Exception exc)

@@ -7,7 +7,9 @@
         {
             Title = "Barcodes - User";
             Header = "User data";
-            Label = "Number (5 digits):";
+            Label = "Number (up to 5 digits):";
+            MinimumValue = 1;
+            MaximumValue = 99999;
             SetValueBinding("Number");
         }
     }

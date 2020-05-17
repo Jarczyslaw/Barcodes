@@ -7,7 +7,9 @@
         {
             Title = "Barcodes - Container";
             Header = "Container data";
-            Label = "Container number (7 digits):";
+            Label = "Container number (up to 7 digits):";
+            MinimumValue = 1;
+            MaximumValue = 9999999;
             SetValueBinding("ContainerNumber");
         }
     }

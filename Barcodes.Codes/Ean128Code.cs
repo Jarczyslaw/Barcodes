@@ -37,7 +37,7 @@ namespace Barcodes.Codes
 
         public void Parse(string codeString)
         {
-            var match = Regex.Match(codeString, @"\(02\)(\d{14})\(17\)(\d{6})\(10\)(.+)");
+            var match = Regex.Match(codeString, @"^\(02\)(\d{14})\(17\)(\d{6})\(10\)(.+)$");
             if (!match.Success)
             {
                 throw new ArgumentException("Invalid code string format");

@@ -30,7 +30,7 @@ namespace Barcodes.Core.ViewModels.Templates
 
         protected override TemplateResult GetResultData()
         {
-            var code = new LocationCode(Location);
+            var code = new LocationCode(Location.Trim());
             return new TemplateResult(code);
         }
 
@@ -38,7 +38,7 @@ namespace Barcodes.Core.ViewModels.Templates
         {
             try
             {
-                new LocationCode(Location);
+                new LocationCode(Location.Trim());
                 return true;
             }
             catch (Exception exc)

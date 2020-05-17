@@ -29,7 +29,6 @@
                     Grid.Column="1"
                     Margin="{StaticResource DefaultMargin}"
                     HorizontalAlignment="Stretch"
-                    Minimum="0"
                     TextAlignment="Left" />
             </Grid>
         </GroupBox>
