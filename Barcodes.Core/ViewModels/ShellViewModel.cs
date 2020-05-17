@@ -39,7 +39,7 @@ namespace Barcodes.Core.ViewModels
 
         public bool OnClosing()
         {
-            return App.CheckStorageSave();
+            return !App.CheckStorageSave();
         }
 
         public bool OnKeyDown(KeyEventArgs keyEventArgs)

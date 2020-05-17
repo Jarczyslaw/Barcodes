@@ -126,6 +126,10 @@
 
     <Window.InputBindings>
         <KeyBinding
+            Key="N"
+            Command="{Binding Proxy.Menu.CreateNewStorageCommand, Source={StaticResource Proxy}}"
+            Modifiers="Control" />
+        <KeyBinding
             Key="L"
             Command="{Binding Proxy.Menu.LoadFromFileCommand, Source={StaticResource Proxy}}"
             Modifiers="Control" />
@@ -189,6 +193,10 @@
                 </Menu.ItemsPanel>
                 <MenuItem Grid.Column="0" Header="_File">
                     <MenuItem
+                        Command="{Binding CreateNewStorageCommand}"
+                        Header="_Create new storage"
+                        InputGestureText="Ctrl+N" />
+                    <MenuItem
                         Command="{Binding LoadFromFileCommand}"
                         Header="_Load storage"
                         InputGestureText="Ctrl+L" />
@@ -203,7 +211,7 @@
                     <Separator />
                     <MenuItem
                         Command="{Binding ClearCommand}"
-                        Header="_Clear storage"
+                        Header="Clea_r storage"
                         InputGestureText="Ctrl+Alt+C" />
                     <Separator />
                     <MenuItem

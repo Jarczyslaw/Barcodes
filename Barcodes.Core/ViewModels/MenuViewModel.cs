@@ -24,6 +24,7 @@ namespace Barcodes.Core.ViewModels
             ShowSettingsCommand = new DelegateCommand(app.ShowSettings);
             CloseAllWindowsCommand = new DelegateCommand(app.CloseAllWindows);
             ClearCommand = new DelegateCommand(app.Clear);
+            CreateNewStorageCommand = new DelegateCommand(app.CreateNewStorage);
         }
 
         public DelegateCommand SaveCommand { get; }
@@ -42,6 +43,7 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand ShowSettingsCommand { get; }
         public DelegateCommand CloseAllWindowsCommand { get; }
         public DelegateCommand ClearCommand { get; }
+        public DelegateCommand CreateNewStorageCommand { get; }
 
         public Action OnClose { get; set; }
     }

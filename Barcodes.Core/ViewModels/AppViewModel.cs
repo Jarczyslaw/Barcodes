@@ -189,15 +189,15 @@ namespace Barcodes.Core.ViewModels
                 }
                 else if (closingMode == SavingMode.Cancel)
                 {
-                    return true;
+                    return false;
                 }
             }
-            return false;
+            return true;
         }
 
         public void LoadBarcodesFromFile()
         {
-            if (!CheckStorageSave())
+            if (CheckStorageSave())
             {
                 var storagePath = servicesContainer.AppSettingsService.StoragePath;
                 var filePath = servicesContainer.AppDialogsService.OpenStorageFile(storagePath);
@@ -258,6 +258,28 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
+        private void SaveStorage(string filePath, Storage storage)
+        {
+            servicesContainer.StorageService.Save(filePath, storage);
+            servicesContainer.AppSettingsService.StoragePath = filePath;
+            StoragePath = filePath;
+        }
+
+        public void CreateNewStorage()
+        {
+            if (CheckStorageSave())
+            {
+                var filePath = servicesContainer.AppDialogsService.SaveStorageFile(servicesContainer.AppSettingsService.StoragePath);
+                if (string.IsNullOrEmpty(filePath))
+                {
+                    return;
+                }
+
+                SaveStorage(filePath, new Storage());
+                LoadFromFile(filePath, false);
+            }
+        }
+
         public void Save(bool validateBarcodesCount, bool promptForPath)
         {
             if (validateBarcodesCount && BarcodesCount == 0)
@@ -272,7 +294,7 @@ namespace Barcodes.Core.ViewModels
             try
             {
                 var filePath = servicesContainer.AppSettingsService.StoragePath;
-                if (promptForPath || string.IsNullOrEmpty(filePath))
+                if (promptForPath)
                 {
                     filePath = servicesContainer.AppDialogsService.SaveStorageFile(filePath);
                     if (string.IsNullOrEmpty(filePath))
@@ -281,9 +303,7 @@ namespace Barcodes.Core.ViewModels
                     }
                 }
 
-                servicesContainer.StorageService.Save(filePath, CreateCurrentStorage());
-                servicesContainer.AppSettingsService.StoragePath = filePath;
-                StoragePath = filePath;
+                SaveStorage(filePath, CreateCurrentStorage());
                 StatusMessage = $"Successfully saved {Path.GetFileName(filePath)}";
             }
             catch (Exception exc)
