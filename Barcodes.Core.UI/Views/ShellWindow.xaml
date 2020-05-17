@@ -142,11 +142,11 @@
             Command="{Binding Proxy.Menu.SaveAsCommand, Source={StaticResource Proxy}}"
             Modifiers="Control+Alt" />
         <KeyBinding
-            Key="P"
+            Key="O"
             Command="{Binding Proxy.Menu.OpenAppLocationCommand, Source={StaticResource Proxy}}"
             Modifiers="Control" />
         <KeyBinding
-            Key="O"
+            Key="P"
             Command="{Binding Proxy.Menu.OpenStorageLocationCommand, Source={StaticResource Proxy}}"
             Modifiers="Control" />
         <KeyBinding
@@ -166,7 +166,7 @@
             Command="{Binding Proxy.Menu.ImportWorkspacesCommand, Source={StaticResource Proxy}}"
             Modifiers="Control+Shift" />
         <KeyBinding
-            Key="C"
+            Key="R"
             Command="{Binding Proxy.Menu.ClearCommand, Source={StaticResource Proxy}}"
             Modifiers="Control+Alt" />
     </Window.InputBindings>
@@ -194,7 +194,7 @@
                 <MenuItem Grid.Column="0" Header="_File">
                     <MenuItem
                         Command="{Binding CreateNewStorageCommand}"
-                        Header="_Create new storage"
+                        Header="Create _new storage"
                         InputGestureText="Ctrl+N" />
                     <MenuItem
                         Command="{Binding LoadFromFileCommand}"
@@ -212,16 +212,16 @@
                     <MenuItem
                         Command="{Binding ClearCommand}"
                         Header="Clea_r storage"
-                        InputGestureText="Ctrl+Alt+C" />
+                        InputGestureText="Ctrl+Alt+R" />
                     <Separator />
                     <MenuItem
                         Command="{Binding OpenAppLocationCommand}"
                         Header="_Open app location"
-                        InputGestureText="Ctrl+P" />
+                        InputGestureText="Ctrl+O" />
                     <MenuItem
                         Command="{Binding OpenStorageLocationCommand}"
                         Header="O_pen storage location"
-                        InputGestureText="Ctrl+O" />
+                        InputGestureText="Ctrl+P" />
                     <Separator />
                     <MenuItem Command="{Binding CloseCommand}" Header="_Close" />
                 </MenuItem>
