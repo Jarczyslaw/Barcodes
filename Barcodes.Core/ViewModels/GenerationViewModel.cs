@@ -227,7 +227,7 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public void Load(BarcodeViewModel barcode, bool edit, Template? template)
+        public void Load(BarcodeViewModel barcode, bool edit, BarcodeTemplate? template)
         {
             if (barcode != null)
             {

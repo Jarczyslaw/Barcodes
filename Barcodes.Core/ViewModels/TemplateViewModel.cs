@@ -1,11 +1,12 @@
-﻿using Barcodes.Core.Models;
+﻿using Barcodes.Codes;
+using Barcodes.Core.Models;
 using System;
 
 namespace Barcodes.Core.ViewModels
 {
     public class TemplateViewModel
     {
-        public Template? Template { get; set; }
+        public BarcodeTemplate? Template { get; set; }
 
         public string Title { get; set; }
 

@@ -262,6 +262,10 @@
     <Resource Include="Resources\icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Barcodes.Codes\Barcodes.Codes.csproj">
+      <Project>{AE51D926-BFB4-4B5E-9C5A-D26025AB5AB0}</Project>
+      <Name>Barcodes.Codes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Barcodes.Core.Common\Barcodes.Core.Common.csproj">
       <Project>{aeaf919b-70e7-42a2-ab75-8cf9dbaf6ee7}</Project>
       <Name>Barcodes.Core.Common</Name>

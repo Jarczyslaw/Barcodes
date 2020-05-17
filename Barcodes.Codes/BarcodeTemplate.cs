@@ -1,6 +1,6 @@
-﻿namespace Barcodes.Core.Models
+﻿namespace Barcodes.Codes
 {
-    public enum Template
+    public enum BarcodeTemplate
     {
         Product,
         LongProduct,

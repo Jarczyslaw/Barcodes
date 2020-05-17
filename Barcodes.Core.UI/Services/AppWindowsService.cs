@@ -1,4 +1,5 @@
-﻿using Barcodes.Core.Abstraction;
+﻿using Barcodes.Codes;
+using Barcodes.Core.Abstraction;
 using Barcodes.Core.Models;
 using Barcodes.Core.UI.Views;
 using Barcodes.Core.ViewModels;
@@ -112,7 +113,7 @@ namespace Barcodes.Core.UI.Services
             return dataContext.ResultBarcode;
         }
 
-        public GenerationResult ShowGenerationWindow(BarcodeViewModel barcode, bool edit, Template? template = null)
+        public GenerationResult ShowGenerationWindow(BarcodeViewModel barcode, bool edit, BarcodeTemplate? template = null)
         {
             var dataContext = containerExtension.Resolve<GenerationViewModel>();
             dataContext.Load(barcode, edit, template);
