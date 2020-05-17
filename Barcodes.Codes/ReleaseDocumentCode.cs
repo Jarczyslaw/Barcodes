@@ -2,6 +2,10 @@
 {
     public class ReleaseDocumentCode : BaseOrderCode
     {
+        public ReleaseDocumentCode()
+        {
+        }
+
         public ReleaseDocumentCode(string code)
             : base(code)
         {

@@ -4,6 +4,10 @@ namespace Barcodes.Codes
 {
     public class UserCode : BaseCode
     {
+        public UserCode()
+        {
+        }
+
         public UserCode(string code)
         {
             Parse(code);
@@ -38,7 +42,7 @@ namespace Barcodes.Codes
             }
         }
 
-        public void Parse(string code)
+        public override void Parse(string code)
         {
             CheckCode(code);
             var body = GetCodeBody(code);

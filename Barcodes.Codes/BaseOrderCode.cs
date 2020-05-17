@@ -5,6 +5,10 @@ namespace Barcodes.Codes
 {
     public abstract class BaseOrderCode : BaseCode
     {
+        protected BaseOrderCode()
+        {
+        }
+
         protected BaseOrderCode(string code)
         {
             Parse(code);
@@ -52,7 +56,7 @@ namespace Barcodes.Codes
 
         public override BarcodeType Type => BarcodeType.Code128;
 
-        public void Parse(string code)
+        public override void Parse(string code)
         {
             var match = Regex.Match(code, $@"^{Prefix}(\d{{{OrderIdLength}}})(\d{{{ContainerNumberLength}}})(\d{{{DivisionNumberLength}}})(\d{{{YearLength}}})$");
             if (!match.Success)

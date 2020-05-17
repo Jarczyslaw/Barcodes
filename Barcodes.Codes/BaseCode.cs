@@ -11,6 +11,8 @@ namespace Barcodes.Codes
         public int PrefixLength => Prefix.Length;
         public virtual int Length => 0;
 
+        public abstract void Parse(string code);
+
         protected void CheckCodeOnlyDigits(string codeBody)
         {
             if (codeBody.Any(c => !char.IsDigit(c)))

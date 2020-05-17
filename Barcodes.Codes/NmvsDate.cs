@@ -4,6 +4,10 @@ namespace Barcodes.Codes
 {
     public class NmvsDate : IEquatable<NmvsDate>
     {
+        public NmvsDate()
+        {
+        }
+
         public NmvsDate(string value)
         {
             Parse(value);

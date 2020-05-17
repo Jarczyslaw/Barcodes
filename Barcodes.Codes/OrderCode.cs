@@ -2,6 +2,10 @@
 {
     public class OrderCode : BaseOrderCode
     {
+        public OrderCode()
+        {
+        }
+
         public OrderCode(string code)
             : base(code)
         {

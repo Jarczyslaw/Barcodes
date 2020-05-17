@@ -47,7 +47,7 @@
                 <controls:CustomTextBox
                     Grid.Row="2"
                     Grid.Column="1"
-                    Width="360"
+                    Width="372"
                     Height="60"
                     VerticalContentAlignment="Top"
                     AcceptsReturn="True"
@@ -62,15 +62,19 @@
                     Grid.Column="1"
                     Orientation="Horizontal">
                     <ComboBox
-                        Width="240"
+                        Width="200"
                         HorizontalAlignment="Left"
                         DisplayMemberPath="Title"
                         ItemsSource="{Binding Templates}"
                         SelectedItem="{Binding SelectedTemplate, UpdateSourceTrigger=PropertyChanged}" />
                     <Button
-                        Width="110"
+                        Width="80"
                         Command="{Binding UseTemplateCommand}"
                         Content="Use template" />
+                    <Button
+                        Width="80"
+                        Command="{Binding DetectTemplateCommand}"
+                        Content="Detect" />
                 </StackPanel>
 
                 <CheckBox

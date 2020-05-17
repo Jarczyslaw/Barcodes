@@ -7,6 +7,10 @@ namespace Barcodes.Codes
 {
     public class Ean128Code : BaseCode
     {
+        public Ean128Code()
+        {
+        }
+
         public Ean128Code(string codeString)
         {
             Parse(codeString);
@@ -35,7 +39,7 @@ namespace Barcodes.Codes
 
         public override BarcodeType Type => BarcodeType.Ean128;
 
-        public void Parse(string codeString)
+        public override void Parse(string codeString)
         {
             var match = Regex.Match(codeString, @"^\(02\)(\d{14})\(17\)(\d{6})\(10\)(.+)$");
             if (!match.Success)

@@ -2,6 +2,10 @@
 {
     public class LocationCode : BaseCode
     {
+        public LocationCode()
+        {
+        }
+
         public LocationCode(string codeOrAddress)
         {
             Parse(codeOrAddress);
@@ -22,7 +26,7 @@
 
         public int BodyLength => 10;
 
-        public void Parse(string code)
+        public override void Parse(string code)
         {
             code = PrepareCode(code);
             CheckCode(code);

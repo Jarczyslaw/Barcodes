@@ -4,6 +4,10 @@ namespace Barcodes.Codes
 {
     public class WarehouseAndStationCode : BaseCode
     {
+        public WarehouseAndStationCode()
+        {
+        }
+
         public WarehouseAndStationCode(string code)
         {
             Parse(code);
@@ -49,7 +53,7 @@ namespace Barcodes.Codes
             }
         }
 
-        public void Parse(string code)
+        public override void Parse(string code)
         {
             CheckCode(code);
             var body = GetCodeBody(code);

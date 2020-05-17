@@ -40,12 +40,14 @@ namespace Barcodes.Core.ViewModels
             EditCommand = new DelegateCommand(() => GenerateBarcode(false), () => Edit);
             CancelCommand = new DelegateCommand(() => OnClose?.Invoke());
             UseTemplateCommand = new DelegateCommand(UseTemplate, () => TemplatesEnabled);
+            DetectTemplateCommand = new DelegateCommand(DetectTemplate);
         }
 
         public DelegateCommand AddNewCommand { get; }
         public DelegateCommand EditCommand { get; }
         public DelegateCommand CancelCommand { get; }
         public DelegateCommand UseTemplateCommand { get; }
+        public DelegateCommand DetectTemplateCommand { get; }
 
         public GenerationResult Result { get; private set; }
 
@@ -243,10 +245,18 @@ namespace Barcodes.Core.ViewModels
 
             Edit = edit;
 
-            var initialTemplate = Templates.SingleOrDefault(t => t.Template == template);
-            if (initialTemplate != null)
+            if (template.HasValue)
             {
-                SelectedTemplate = initialTemplate;
+                SelectTemplate(template.Value);
+            }
+        }
+
+        private void SelectTemplate(BarcodeTemplate template)
+        {
+            var currentTemplate = Templates.SingleOrDefault(t => t.Template == template);
+            if (currentTemplate != null)
+            {
+                SelectedTemplate = currentTemplate;
                 UseTemplate();
             }
         }
@@ -259,6 +269,20 @@ namespace Barcodes.Core.ViewModels
             Height = generationSettings.Height;
             Width = generationSettings.Width;
             ValidateCodeText = generationSettings.ValidateCodeText;
+        }
+
+        private void DetectTemplate()
+        {
+            var factory = new BarcodeTemplateFactory();
+            var codePair = factory.GetCode(Data);
+            if (codePair != null)
+            {
+                SelectTemplate(codePair.Template);
+            }
+            else
+            {
+                services.AppDialogsService.ShowError("No matching templates found");
+            }
         }
     }
 }

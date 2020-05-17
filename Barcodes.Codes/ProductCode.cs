@@ -5,6 +5,10 @@ namespace Barcodes.Codes
 {
     public class ProductCode : BaseCode
     {
+        public ProductCode()
+        {
+        }
+
         public ProductCode(string code)
         {
             Parse(code);
@@ -23,7 +27,7 @@ namespace Barcodes.Codes
 
         public override int Length => 13;
 
-        public void Parse(string code)
+        public override void Parse(string code)
         {
             var match = Regex.Match(code, "^[0-9]{13}$");
             if (!match.Success)

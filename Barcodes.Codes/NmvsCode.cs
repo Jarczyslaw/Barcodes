@@ -6,6 +6,10 @@ namespace Barcodes.Codes
 {
     public class NmvsCode : BaseCode
     {
+        public NmvsCode()
+        {
+        }
+
         public NmvsCode(string nmvsCode)
         {
             Parse(nmvsCode);
@@ -33,13 +37,13 @@ namespace Barcodes.Codes
         public string ProductCode { get; private set; } = string.Empty;
         public string SerialNo { get; private set; } = string.Empty;
         public string BatchId { get; private set; } = string.Empty;
-        public NmvsDate ExpireDate { get; private set; }
+        public NmvsDate ExpireDate { get; private set; } = new NmvsDate();
 
         public override string Code => $"01{ProductCode}17{ExpireDate}21{SerialNo}{GroupSeparator}10{BatchId}";
 
         public override BarcodeType Type => BarcodeType.DataMatrix;
 
-        public void Parse(string codeString)
+        public override void Parse(string codeString)
         {
             codeString = codeString.Replace(GroupSeparator, string.Empty);
             var match = Regex.Match(codeString, @"^01(\d{14})17(\d{6})21(.{1,20})10(.+)$");

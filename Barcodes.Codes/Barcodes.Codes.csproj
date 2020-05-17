@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BarcodeTemplateFactory.cs" />
     <Compile Include="BarcodeType.cs" />
     <Compile Include="BaseCode.cs" />
     <Compile Include="ContainerCode.cs" />
