@@ -105,7 +105,7 @@ namespace Barcodes.Core.UI.Services
             ShowDialog(window);
         }
 
-        public BarcodeViewModel ShowExamplesWindow()
+        public ExampleBarcodeViewModel ShowExamplesWindow()
         {
             var dataContext = containerExtension.Resolve<ExamplesViewModel>();
             var window = new ExamplesWindow(dataContext);

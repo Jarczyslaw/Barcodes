@@ -1,4 +1,5 @@
-﻿using Barcodes.Core.Abstraction;
+﻿using Barcodes.Codes;
+using Barcodes.Core.Abstraction;
 using Barcodes.Core.Extensions;
 using Barcodes.Core.Models;
 using Barcodes.Core.Services;
@@ -310,7 +311,7 @@ namespace Barcodes.Core.ViewModels
             var barcode = servicesContainer.AppWindowsService.ShowExamplesWindow();
             if (barcode != null)
             {
-                AddNewBarcode(barcode, false);
+                AddNewBarcode(barcode, false, barcode.Template);
             }
         }
 
@@ -435,9 +436,9 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public void AddNewBarcode(BarcodeViewModel barcode, bool edit)
+        public void AddNewBarcode(BarcodeViewModel barcode, bool edit, BarcodeTemplate? template = null)
         {
-            var result = servicesContainer.AppWindowsService.ShowGenerationWindow(barcode, edit);
+            var result = servicesContainer.AppWindowsService.ShowGenerationWindow(barcode, edit, template);
             if (result == null)
             {
                 return;

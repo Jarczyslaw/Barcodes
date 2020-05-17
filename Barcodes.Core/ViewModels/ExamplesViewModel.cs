@@ -11,8 +11,8 @@ namespace Barcodes.Core.ViewModels
 {
     public class ExamplesViewModel : BindableBase, ICloseSource
     {
-        private ObservableCollection<BarcodeViewModel> barcodes;
-        private BarcodeViewModel selectedBarcode;
+        private ObservableCollection<ExampleBarcodeViewModel> barcodes;
+        private ExampleBarcodeViewModel selectedBarcode;
 
         public ExamplesViewModel(IGeneratorService generatorService, IDialogsService dialogsService, IAppSettingsService appSettingsService)
         {
@@ -34,15 +34,15 @@ namespace Barcodes.Core.ViewModels
 
         public DelegateCommand CloseCommand { get; }
 
-        public BarcodeViewModel ResultBarcode { get; private set; }
+        public ExampleBarcodeViewModel ResultBarcode { get; private set; }
 
-        public ObservableCollection<BarcodeViewModel> Barcodes
+        public ObservableCollection<ExampleBarcodeViewModel> Barcodes
         {
             get => barcodes;
             set => SetProperty(ref barcodes, value);
         }
 
-        public BarcodeViewModel SelectedBarcode
+        public ExampleBarcodeViewModel SelectedBarcode
         {
             get => selectedBarcode;
             set => SetProperty(ref selectedBarcode, value);

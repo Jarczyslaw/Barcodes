@@ -20,7 +20,7 @@ namespace Barcodes.Core.Abstraction
 
         void ShowAboutWindow();
 
-        BarcodeViewModel ShowExamplesWindow();
+        ExampleBarcodeViewModel ShowExamplesWindow();
 
         GenerationResult ShowGenerationWindow(BarcodeViewModel barcode, bool edit, BarcodeTemplate? template = null);
 
