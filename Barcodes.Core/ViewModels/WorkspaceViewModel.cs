@@ -156,5 +156,10 @@ namespace Barcodes.Core.ViewModels
                 Barcodes = Barcodes.Select(b => b.ToStorage()).ToList()
             };
         }
+
+        public void Clear()
+        {
+            Barcodes.Clear();
+        }
     }
 }

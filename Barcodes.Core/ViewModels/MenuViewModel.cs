@@ -22,7 +22,8 @@ namespace Barcodes.Core.ViewModels
             ImportBarcodesCommand = new DelegateCommand(app.ImportBarcodes);
             ImportWorkspacesCommand = new DelegateCommand(app.ImportWorkspaces);
             ShowSettingsCommand = new DelegateCommand(app.ShowSettings);
-            CloseAllWindows = new DelegateCommand(app.CloseAllWindows);
+            CloseAllWindowsCommand = new DelegateCommand(app.CloseAllWindows);
+            ClearCommand = new DelegateCommand(app.Clear);
         }
 
         public DelegateCommand SaveCommand { get; }
@@ -39,7 +40,8 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand ImportBarcodesCommand { get; }
         public DelegateCommand ImportWorkspacesCommand { get; }
         public DelegateCommand ShowSettingsCommand { get; }
-        public DelegateCommand CloseAllWindows { get; }
+        public DelegateCommand CloseAllWindowsCommand { get; }
+        public DelegateCommand ClearCommand { get; }
 
         public Action OnClose { get; set; }
     }

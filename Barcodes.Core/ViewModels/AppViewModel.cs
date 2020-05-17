@@ -2,7 +2,6 @@
 using Barcodes.Core.Abstraction;
 using Barcodes.Core.Extensions;
 using Barcodes.Core.Models;
-using Barcodes.Core.Services;
 using Barcodes.Extensions;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.DocExport;
@@ -639,12 +638,19 @@ namespace Barcodes.Core.ViewModels
         public void ClearWorkspace(WorkspaceViewModel workspace)
         {
             var dialogResult = servicesContainer.AppDialogsService.ShowYesNoQuestion("Do you really want to clear active workspace?");
-            if (!dialogResult)
+            if (dialogResult)
             {
-                return;
+                workspace.Clear();
             }
+        }
 
-            workspace.Barcodes.Clear();
+        public void Clear()
+        {
+            var dialogResult = servicesContainer.AppDialogsService.ShowYesNoQuestion("Do you really want to remove all workspaces and barcodes?");
+            if (dialogResult)
+            {
+                Workspaces.Clear();
+            }
         }
 
         public bool CheckStorageChanges()

@@ -161,6 +161,10 @@
             Key="W"
             Command="{Binding Proxy.Menu.ImportWorkspacesCommand, Source={StaticResource Proxy}}"
             Modifiers="Control+Shift" />
+        <KeyBinding
+            Key="C"
+            Command="{Binding Proxy.Menu.ClearCommand, Source={StaticResource Proxy}}"
+            Modifiers="Control+Alt" />
     </Window.InputBindings>
 
     <toolkit:BusyIndicator BusyContent="{Binding App.BusyMessage}" IsBusy="{Binding App.IsBusy}">
@@ -196,6 +200,11 @@
                         Command="{Binding SaveAsCommand}"
                         Header="S_ave storage as"
                         InputGestureText="Ctrl+Alt+S" />
+                    <Separator />
+                    <MenuItem
+                        Command="{Binding ClearCommand}"
+                        Header="_Clear storage"
+                        InputGestureText="Ctrl+Alt+C" />
                     <Separator />
                     <MenuItem
                         Command="{Binding OpenAppLocationCommand}"
@@ -247,7 +256,7 @@
                     IsChecked="{Binding Proxy.App.BarcodesVisible, Source={StaticResource Proxy}}" />
                 <MenuItem
                     Grid.Column="8"
-                    Command="{Binding CloseAllWindows}"
+                    Command="{Binding CloseAllWindowsCommand}"
                     Header="Close all windows" />
             </Menu>
 
