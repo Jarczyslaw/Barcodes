@@ -4,18 +4,18 @@ using System.Text.RegularExpressions;
 
 namespace Barcodes.Codes
 {
-    public class NmvsCode : BaseCode
+    public class NmvsProductCode : BaseCode
     {
-        public NmvsCode()
+        public NmvsProductCode()
         {
         }
 
-        public NmvsCode(string nmvsCode)
+        public NmvsProductCode(string nmvsCode)
         {
             Parse(nmvsCode);
         }
 
-        public NmvsCode(string productCode, string serialNo, string batchId, NmvsDate expireDate)
+        public NmvsProductCode(string productCode, string serialNo, string batchId, NmvsDate expireDate)
         {
             Validate(productCode, serialNo, batchId);
             ProductCode = productCode;
@@ -24,7 +24,7 @@ namespace Barcodes.Codes
             ExpireDate = expireDate;
         }
 
-        public NmvsCode(NmvsCode nmvsCode)
+        public NmvsProductCode(NmvsProductCode nmvsCode)
         {
             ProductCode = nmvsCode.ProductCode;
             SerialNo = nmvsCode.SerialNo;
@@ -38,6 +38,8 @@ namespace Barcodes.Codes
         public string SerialNo { get; private set; } = string.Empty;
         public string BatchId { get; private set; } = string.Empty;
         public NmvsDate ExpireDate { get; private set; } = new NmvsDate();
+
+        public string ShortProductCode => ProductCode.Length > 0 ? string.Empty : ProductCode.Substring(1);
 
         public override string Code => $"01{ProductCode}17{ExpireDate}21{SerialNo}{GroupSeparator}10{BatchId}";
 
@@ -58,12 +60,12 @@ namespace Barcodes.Codes
             BatchId = match.Groups[4].Value;
         }
 
-        public static bool TryParse(string codeString, out NmvsCode nmvsCode)
+        public static bool TryParse(string codeString, out NmvsProductCode nmvsCode)
         {
             nmvsCode = null;
             try
             {
-                nmvsCode = new NmvsCode(codeString);
+                nmvsCode = new NmvsProductCode(codeString);
                 return true;
             }
             catch

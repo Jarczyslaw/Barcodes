@@ -1,8 +1,8 @@
 ﻿namespace Barcodes.Core.UI.Views.Templates
 {
-    public partial class Ean128ProductWindow : BaseWindow
+    public partial class LongProductWindow : BaseWindow
     {
-        public Ean128ProductWindow(object dataContext)
+        public LongProductWindow(object dataContext)
             : base(dataContext)
         {
             InitializeComponent();

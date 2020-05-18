@@ -1,13 +1,13 @@
 ﻿using Barcodes.Codes;
 using Barcodes.Core.Abstraction;
 using Barcodes.Core.Models;
+using Barcodes.Extensions;
 using System;
 
 namespace Barcodes.Core.ViewModels.Templates
 {
-    public class NmvsProductViewModel : BaseTemplateViewModel
+    public class NmvsProductViewModel : BaseProductViewModel
     {
-        private string productCode = string.Empty;
         private string batchId = string.Empty;
         private string batchExpDate = string.Empty;
         private string serialNo = string.Empty;
@@ -15,12 +15,6 @@ namespace Barcodes.Core.ViewModels.Templates
         public NmvsProductViewModel(IAppDialogsService dialogsService)
             : base(dialogsService)
         {
-        }
-
-        public string ProductCode
-        {
-            get => productCode;
-            set => SetProperty(ref productCode, value);
         }
 
         public string BatchId
@@ -41,35 +35,21 @@ namespace Barcodes.Core.ViewModels.Templates
             set => SetProperty(ref batchExpDate, value);
         }
 
-        public NmvsCode GetNmvsCode()
+        private NmvsProductCode GetCode()
         {
-            return new NmvsCode(ProductCode.Trim(), SerialNo.Trim(), BatchId.Trim(), new NmvsDate(BatchExpDate.Trim()));
-        }
-
-        public override void LoadData(string nmvsData)
-        {
-            if (!string.IsNullOrEmpty(nmvsData))
-            {
-                if (NmvsCode.TryParse(nmvsData, out NmvsCode nmvsCode))
-                {
-                    ProductCode = nmvsCode.ProductCode;
-                    BatchId = nmvsCode.BatchId;
-                    SerialNo = nmvsCode.SerialNo;
-                    BatchExpDate = nmvsCode.ExpireDate.ToString();
-                }
-            }
+            return new NmvsProductCode(ProductCode.Trim(), SerialNo.Trim(), BatchId.Trim(), new NmvsDate(BatchExpDate.Trim()));
         }
 
         protected override TemplateResult GetResultData()
         {
-            return new TemplateResult(GetNmvsCode());
+            return new TemplateResult(GetCode());
         }
 
         protected override bool Validate()
         {
             try
             {
-                GetNmvsCode();
+                GetCode();
                 return true;
             }
             catch (Exception exc)
@@ -77,6 +57,17 @@ namespace Barcodes.Core.ViewModels.Templates
                 dialogsService.ShowException(null, exc);
                 return false;
             }
+        }
+
+        protected override void LoadProductData(ProductCodeData data)
+        {
+            ProductCode = data.ProductCode.PadLeft(14, '0');
+            BatchId = data.BatchId;
+            if (data.ExpireDate.HasValue)
+            {
+                BatchExpDate = data.ExpireDate.Value.ToExpireDate(false);
+            }
+            SerialNo = data.SerialNo;
         }
     }
 }

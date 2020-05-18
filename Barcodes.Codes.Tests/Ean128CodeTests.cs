@@ -25,7 +25,7 @@ namespace Barcodes.Codes.Tests
         public void ValidFromString()
         {
             var codeString = "(02)12345678901234(17)200517(10)batchId";
-            var code = new Ean128Code(codeString);
+            var code = new LongProductCode(codeString);
             Assert.AreEqual("12345678901234", code.ProductCode);
             Assert.AreEqual("batchId", code.BatchId);
             Assert.AreEqual(new DateTime(2020, 5, 17), code.ExpireDate);
@@ -38,7 +38,7 @@ namespace Barcodes.Codes.Tests
             var productCode = "12345678901234";
             var batchId = "batchId";
             var expireDate = new DateTime(2020, 5, 17);
-            var code = new Ean128Code(productCode, batchId, expireDate);
+            var code = new LongProductCode(productCode, batchId, expireDate);
             Assert.AreEqual("(02)12345678901234(17)200517(10)batchId", code.Code);
         }
 
@@ -57,7 +57,7 @@ namespace Barcodes.Codes.Tests
             };
             foreach (var invalidCode in invalidCodes)
             {
-                Assert.ThrowsException<ArgumentException>(() => new Ean128Code(invalidCode));
+                Assert.ThrowsException<ArgumentException>(() => new LongProductCode(invalidCode));
             }
         }
 
@@ -71,7 +71,7 @@ namespace Barcodes.Codes.Tests
             };
             foreach (var value in values)
             {
-                Assert.ThrowsException<ArgumentException>(() => new Ean128Code(value.ProductCode, value.BatchId, value.ExpireDate));
+                Assert.ThrowsException<ArgumentException>(() => new LongProductCode(value.ProductCode, value.BatchId, value.ExpireDate));
             }
         }
     }

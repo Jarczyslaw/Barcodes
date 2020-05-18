@@ -5,40 +5,32 @@ using System;
 
 namespace Barcodes.Core.ViewModels.Templates
 {
-    public class ProductViewModel : BaseTemplateViewModel
+    public class ProductViewModel : BaseProductViewModel
     {
-        private string product = string.Empty;
-
         public ProductViewModel(IAppDialogsService dialogsService)
             : base(dialogsService)
         {
         }
 
-        public string Product
-        {
-            get => product;
-            set => SetProperty(ref product, value);
-        }
-
-        public override void LoadData(string data)
-        {
-            if (ProductCode.TryParse(data, out ProductCode productCode))
-            {
-                Product = productCode.Product;
-            }
-        }
-
         protected override TemplateResult GetResultData()
         {
-            var code = new ProductCode(product.Trim());
+            var code = new ProductCode(ProductCode.Trim());
             return new TemplateResult(code);
+        }
+
+        protected override void LoadProductData(ProductCodeData data)
+        {
+            if (data.ProductCode.Length > 13)
+            {
+                ProductCode = data.ProductCode.Substring(1);
+            }
         }
 
         protected override bool Validate()
         {
             try
             {
-                new ProductCode(Product.Trim());
+                new ProductCode(ProductCode.Trim());
                 return true;
             }
             catch (Exception exc)

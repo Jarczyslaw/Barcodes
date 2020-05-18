@@ -5,13 +5,12 @@ using System;
 
 namespace Barcodes.Core.ViewModels.Templates
 {
-    public class Ean128ProductViewModel : BaseTemplateViewModel
+    public class LongProductViewModel : BaseProductViewModel
     {
-        private string productCode = string.Empty;
         private string batchId = string.Empty;
         private DateTime expireDate = DateTime.Now;
 
-        public Ean128ProductViewModel(IAppDialogsService dialogsService)
+        public LongProductViewModel(IAppDialogsService dialogsService)
             : base(dialogsService)
         {
         }
@@ -28,43 +27,37 @@ namespace Barcodes.Core.ViewModels.Templates
             set => SetProperty(ref batchId, value);
         }
 
-        public string ProductCode
+        private LongProductCode GetCode()
         {
-            get => productCode;
-            set => SetProperty(ref productCode, value);
-        }
-
-        private Ean128Code GetEan128Code()
-        {
-            return new Ean128Code(ProductCode.Trim(), BatchId.Trim(), ExpireDate);
-        }
-
-        public override void LoadData(string ean128Data)
-        {
-            if (Ean128Code.TryParse(ean128Data, out Ean128Code ean128Code))
-            {
-                ExpireDate = ean128Code.ExpireDate;
-                BatchId = ean128Code.BatchId;
-                ProductCode = ean128Code.ProductCode;
-            }
+            return new LongProductCode(ProductCode.Trim(), BatchId.Trim(), ExpireDate);
         }
 
         protected override TemplateResult GetResultData()
         {
-            return new TemplateResult(GetEan128Code());
+            return new TemplateResult(GetCode());
         }
 
         protected override bool Validate()
         {
             try
             {
-                GetEan128Code();
+                GetCode();
                 return true;
             }
             catch (Exception exc)
             {
                 dialogsService.ShowException(null, exc);
                 return false;
+            }
+        }
+
+        protected override void LoadProductData(ProductCodeData data)
+        {
+            ProductCode = data.ProductCode;
+            BatchId = data.BatchId;
+            if (data.ExpireDate.HasValue)
+            {
+                ExpireDate = data.ExpireDate.Value;
             }
         }
     }

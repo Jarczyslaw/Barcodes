@@ -8,7 +8,7 @@
             Title = "Barcodes - Product";
             Header = "Product data";
             Label = "Product code (EAN, 13 digits):";
-            SetValueBinding("Product");
+            SetValueBinding("ProductCode");
         }
     }
 }

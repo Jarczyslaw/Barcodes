@@ -1,5 +1,5 @@
 ﻿dodać konwertery jako dodatkowa opcja pod prawoklikiem na kodzie żeby można było szybko przerobić ean13/128 na datamatrix i odwrotnie
-
+dodać możliwośc przerobienia ean13/128 na datamatrix i odwrotnie 
 
 okienko do ustawień
 przy minimalizowaniu generationWindow nie minimalizuje się cała aplikacja (owner?)

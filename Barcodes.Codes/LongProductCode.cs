@@ -5,18 +5,18 @@ using System.Text.RegularExpressions;
 
 namespace Barcodes.Codes
 {
-    public class Ean128Code : BaseCode
+    public class LongProductCode : BaseCode
     {
-        public Ean128Code()
+        public LongProductCode()
         {
         }
 
-        public Ean128Code(string codeString)
+        public LongProductCode(string codeString)
         {
             Parse(codeString);
         }
 
-        public Ean128Code(string productCode, string batchId, DateTime expireDate)
+        public LongProductCode(string productCode, string batchId, DateTime expireDate)
         {
             Validate(productCode, batchId);
             ProductCode = productCode;
@@ -24,16 +24,18 @@ namespace Barcodes.Codes
             ExpireDate = expireDate;
         }
 
-        public Ean128Code(Ean128Code ean128Code)
+        public LongProductCode(LongProductCode longProduct)
         {
-            ProductCode = ean128Code.ProductCode;
-            BatchId = ean128Code.BatchId;
-            ExpireDate = ean128Code.ExpireDate;
+            ProductCode = longProduct.ProductCode;
+            BatchId = longProduct.BatchId;
+            ExpireDate = longProduct.ExpireDate;
         }
 
         public string ProductCode { get; private set; } = string.Empty;
         public string BatchId { get; private set; } = string.Empty;
         public DateTime ExpireDate { get; private set; }
+
+        public string ShortProductCode => ProductCode.Length > 0 ? string.Empty : ProductCode.Substring(1);
 
         public override string Code => $"(02){ProductCode}(17){ExpireDate.ToExpireDate(false)}(10){BatchId}";
 
@@ -61,12 +63,12 @@ namespace Barcodes.Codes
             BatchId = batchId;
         }
 
-        public static bool TryParse(string codeString, out Ean128Code ean128Code)
+        public static bool TryParse(string codeString, out LongProductCode longProduct)
         {
-            ean128Code = null;
+            longProduct = null;
             try
             {
-                ean128Code = new Ean128Code(codeString);
+                longProduct = new LongProductCode(codeString);
                 return true;
             }
             catch

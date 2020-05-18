@@ -47,8 +47,8 @@
     <Compile Include="ContainerCode.cs" />
     <Compile Include="ReleaseDocumentCode.cs" />
     <Compile Include="OrderCode.cs" />
-    <Compile Include="Ean128Code.cs" />
-    <Compile Include="NmvsCode.cs" />
+    <Compile Include="LongProductCode.cs" />
+    <Compile Include="NmvsProductCode.cs" />
     <Compile Include="NmvsDate.cs" />
     <Compile Include="LocationCode.cs" />
     <Compile Include="BaseOrderCode.cs" />

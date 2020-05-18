@@ -26,7 +26,7 @@ namespace Barcodes.Core.Models
                 {
                     Template = BarcodeTemplate.LongProduct,
                     Title = "Long product code - EAN128",
-                    Handler = appWindowsService.OpenTemplateWindow<Ean128ProductViewModel>
+                    Handler = appWindowsService.OpenTemplateWindow<LongProductViewModel>
                 },
                 new TemplateViewModel
                 {

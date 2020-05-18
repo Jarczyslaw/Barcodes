@@ -7,9 +7,9 @@ namespace Barcodes.Codes
         private readonly List<CodePair> codePairs = new List<CodePair>
         {
             new CodePair(new ContainerCode(), BarcodeTemplate.Container),
-            new CodePair(new Ean128Code(), BarcodeTemplate.LongProduct),
+            new CodePair(new LongProductCode(), BarcodeTemplate.LongProduct),
             new CodePair(new LocationCode(), BarcodeTemplate.Location),
-            new CodePair(new NmvsCode(), BarcodeTemplate.NmvsProduct),
+            new CodePair(new NmvsProductCode(), BarcodeTemplate.NmvsProduct),
             new CodePair(new OrderCode(), BarcodeTemplate.Order),
             new CodePair(new ProductCode(), BarcodeTemplate.Product),
             new CodePair(new ReleaseDocumentCode(), BarcodeTemplate.ReleaseDocument),

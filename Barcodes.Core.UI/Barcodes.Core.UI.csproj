@@ -115,8 +115,8 @@
     <Compile Include="Views\Templates\WarehouseAndStationWindow.xaml.cs">
       <DependentUpon>WarehouseAndStationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Templates\Ean128ProductWindow.xaml.cs">
-      <DependentUpon>Ean128ProductWindow.xaml</DependentUpon>
+    <Compile Include="Views\Templates\LongProductWindow.xaml.cs">
+      <DependentUpon>LongProductWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Templates\UserWindow.cs" />
     <Compile Include="Views\Templates\LocationWindow.cs" />
@@ -198,7 +198,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Templates\Ean128ProductWindow.xaml">
+    <Page Include="Views\Templates\LongProductWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

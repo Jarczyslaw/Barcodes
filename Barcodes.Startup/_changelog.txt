@@ -14,3 +14,4 @@
 	zmienić input method na templaty dla kodów + okna do nich (zgodnie z tym co jest w examplach)
 	dodać możliwość czyszczenia storage'a
 	dodać możliwość tworzenia nowego storage'a
+	

@@ -27,7 +27,7 @@ namespace Barcodes.Codes.Tests
         public void ValidFromString()
         {
             var codeString = "01123456789012341723010221serialNo10batchId";
-            var code = new NmvsCode(codeString);
+            var code = new NmvsProductCode(codeString);
             Assert.AreEqual("12345678901234", code.ProductCode);
             Assert.AreEqual("batchId", code.BatchId);
             Assert.IsTrue(code.ExpireDate.Equals(new NmvsDate(2023, 1, 2)));
@@ -41,7 +41,7 @@ namespace Barcodes.Codes.Tests
             var productCode = "12345678901234";
             var batchId = "batchId";
             var serialNo = "serialNo";
-            var code = new NmvsCode(productCode, serialNo, batchId, new NmvsDate(2023, 1, 2));
+            var code = new NmvsProductCode(productCode, serialNo, batchId, new NmvsDate(2023, 1, 2));
             Assert.AreEqual("01123456789012341723010221serialNo10batchId", code.Code);
         }
 
@@ -58,7 +58,7 @@ namespace Barcodes.Codes.Tests
             };
             foreach (var invalidCode in invalidCodes)
             {
-                Assert.ThrowsException<ArgumentException>(() => new NmvsCode(invalidCode));
+                Assert.ThrowsException<ArgumentException>(() => new NmvsProductCode(invalidCode));
             }
         }
 
@@ -73,7 +73,7 @@ namespace Barcodes.Codes.Tests
             };
             foreach (var value in values)
             {
-                Assert.ThrowsException<ArgumentException>(() => new NmvsCode(value.ProductCode, value.BatchId, value.SerialNo, value.ExpireDate));
+                Assert.ThrowsException<ArgumentException>(() => new NmvsProductCode(value.ProductCode, value.BatchId, value.SerialNo, value.ExpireDate));
             }
         }
     }
