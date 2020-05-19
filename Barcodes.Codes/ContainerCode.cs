@@ -34,9 +34,9 @@ namespace Barcodes.Codes
 
         private int BodyLength => Length - PrefixLength;
 
-        private void CheckContainer(int user)
+        private void CheckContainer(int container)
         {
-            if (user < 1 || user > MaxValue(BodyLength))
+            if (container < 1 || container > MaxValue(BodyLength))
             {
                 throw new ArgumentException("Invalid container number");
             }

@@ -10,6 +10,7 @@
             Label = "Number (up to 5 digits):";
             MinimumValue = 1;
             MaximumValue = 99999;
+            ShowUpDownButtons = false;
             SetValueBinding("Number");
         }
     }

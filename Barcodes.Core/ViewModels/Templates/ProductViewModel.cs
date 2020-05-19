@@ -20,10 +20,12 @@ namespace Barcodes.Core.ViewModels.Templates
 
         protected override void LoadProductData(ProductCodeData data)
         {
-            if (data.ProductCode.Length > 13)
+            var product = data.ProductCode;
+            if (product.Length > 13)
             {
-                ProductCode = data.ProductCode.Substring(1);
+                product = product.Substring(1);
             }
+            ProductCode = product;
         }
 
         protected override bool Validate()

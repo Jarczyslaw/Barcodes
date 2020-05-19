@@ -10,6 +10,7 @@
             Label = "Container number (up to 7 digits):";
             MinimumValue = 1;
             MaximumValue = 9999999;
+            ShowUpDownButtons = false;
             SetValueBinding("ContainerNumber");
         }
     }

@@ -53,7 +53,7 @@ namespace Barcodes.Core.ViewModels.Templates
 
         protected override void LoadProductData(ProductCodeData data)
         {
-            ProductCode = data.ProductCode;
+            ProductCode = data.ProductCode.PadLeft(14, '0');
             BatchId = data.BatchId;
             if (data.ExpireDate.HasValue)
             {
