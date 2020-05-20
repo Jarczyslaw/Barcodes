@@ -5,6 +5,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Barcodes.Core.ViewModels
 {
@@ -99,8 +100,20 @@ namespace Barcodes.Core.ViewModels
         {
         }
 
+        private void SelectMode(ObservableCollection<AddModeViewModel> modes, AddModeViewModel selectedMode, AddMode mode)
+        {
+            selectedMode = modes.First(m => m.AddMode == mode);
+        }
+
         private void LoadSettings()
         {
+            var settings = appSettingsService.AppSettings;
+            StoragePath = settings.StoragePath;
+            BarcodesVisible = settings.BarcodesVisible;
+            ProtectedKeys = settings.AntiKeyProtection;
+            SelectMode(BarcodeAddModes, SelectedBarcodeAddMode, settings.BarcodeAddMode);
+            SelectMode(WorkspaceAddModes, SelectedWorkspaceAddMode, settings.WorkspaceAddMode);
+            GenerationData.FromGenerationSettings(settings.GenerationSettings);
         }
 
         private void RawSettings()

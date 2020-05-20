@@ -6,6 +6,7 @@
         bool BarcodesVisible { get; set; }
         AddMode BarcodeAddMode { get; set; }
         AddMode WorkspaceAddMode { get; set; }
+        string AntiKeyProtection { get; set; }
 
         AppSettings AppSettings { get; }
         string AppSettingsPath { get; }

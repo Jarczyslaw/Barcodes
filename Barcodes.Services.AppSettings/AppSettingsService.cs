@@ -47,6 +47,16 @@ namespace Barcodes.Services.AppSettings
             }
         }
 
+        public string AntiKeyProtection
+        {
+            get => AppSettings.AntiKeyProtection;
+            set
+            {
+                AppSettings.AntiKeyProtection = value;
+                Save();
+            }
+        }
+
         public string AppSettingsPath { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"appSettings.{FileExtensions.Settings}");
 
         public AppSettings AppSettings { get; private set; } = new AppSettings();

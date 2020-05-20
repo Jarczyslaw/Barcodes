@@ -1,5 +1,4 @@
 ﻿using Barcodes.Codes;
-using Barcodes.Services.Generator;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
