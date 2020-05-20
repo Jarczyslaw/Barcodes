@@ -1,0 +1,51 @@
+﻿<ui:BaseWindow
+    x:Class="Barcodes.Core.UI.Views.RawSettingsWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Barcodes.Core.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:Barcodes.Core.UI"
+    Title="Barcodes - Raw settings"
+    Width="{Binding Width, FallbackValue=600}"
+    Height="{Binding Height, FallbackValue=500}"
+    MinWidth="{Binding Width, FallbackValue=600}"
+    MinHeight="{Binding Height, FallbackValue=500}"
+    Icon="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Row="0" Header="Application settings">
+            <controls:CustomTextBox
+                x:Name="tbInputValue"
+                VerticalContentAlignment="Top"
+                AcceptsReturn="True"
+                IsReadOnly="False"
+                Text="{Binding Settings, UpdateSourceTrigger=PropertyChanged}"
+                TextWrapping="Wrap" />
+        </GroupBox>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <UniformGrid Grid.Column="1" Columns="2">
+                <Button
+                    Command="{Binding SaveCommand}"
+                    Content="Accept"
+                    IsDefault="True" />
+                <Button
+                    Command="{Binding CloseCommand}"
+                    Content="Close"
+                    IsCancel="True" />
+            </UniformGrid>
+        </Grid>
+
+    </Grid>
+</ui:BaseWindow>

@@ -1,7 +1,5 @@
 ﻿using Barcodes.Codes;
-using Barcodes.Services.Generator;
 using Prism.Mvvm;
-using System;
 
 namespace Barcodes.Core.ViewModels
 {

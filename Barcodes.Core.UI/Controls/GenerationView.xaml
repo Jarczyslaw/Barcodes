@@ -40,8 +40,8 @@
                     Width="240"
                     HorizontalAlignment="Left"
                     DisplayMemberPath="TypeTitle"
-                    ItemsSource="{Binding BarcodeTypes}"
-                    SelectedItem="{Binding SelectedBarcodeType, UpdateSourceTrigger=PropertyChanged}" />
+                    ItemsSource="{Binding GenerationData.Types}"
+                    SelectedItem="{Binding GenerationData.SelectedType, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="2" Content="Data:" />
                 <controls:CustomTextBox
@@ -52,10 +52,9 @@
                     VerticalContentAlignment="Top"
                     AcceptsReturn="True"
                     HorizontalScrollBarVisibility="Disabled"
-                    Text="{Binding Data, UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding GenerationData.Data, UpdateSourceTrigger=PropertyChanged}"
                     TextWrapping="Wrap"
                     VerticalScrollBarVisibility="Auto" />
-
 
                 <StackPanel
                     Grid.Row="3"
@@ -82,15 +81,14 @@
                     Grid.Column="1"
                     VerticalContentAlignment="Center"
                     Content="Validate data"
-                    IsChecked="{Binding ValidateCodeText, UpdateSourceTrigger=PropertyChanged}" />
-
+                    IsChecked="{Binding GenerationData.ValidateCodeText, UpdateSourceTrigger=PropertyChanged}" />
 
                 <CheckBox
                     Grid.Row="5"
                     Grid.Column="1"
                     VerticalContentAlignment="Center"
                     Content="Use default sizes"
-                    IsChecked="{Binding DefaultSize}" />
+                    IsChecked="{Binding GenerationData.DefaultSize}" />
 
                 <Label Grid.Row="6" Content="Width: " />
                 <toolkit:IntegerUpDown
@@ -99,10 +97,10 @@
                     Width="120"
                     Margin="{StaticResource DefaultMargin}"
                     HorizontalAlignment="Left"
-                    IsReadOnly="{Binding DefaultSize}"
+                    IsReadOnly="{Binding GenerationData.DefaultSize}"
                     Minimum="100"
                     TextAlignment="Left"
-                    Value="{Binding Width, UpdateSourceTrigger=PropertyChanged}" />
+                    Value="{Binding GenerationData.Width, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="7" Content="Height: " />
                 <toolkit:IntegerUpDown
@@ -111,10 +109,10 @@
                     Width="120"
                     Margin="{StaticResource DefaultMargin}"
                     HorizontalAlignment="Left"
-                    IsReadOnly="{Binding DefaultSize}"
+                    IsReadOnly="{Binding GenerationData.DefaultSize}"
                     Minimum="100"
                     TextAlignment="Left"
-                    Value="{Binding Height, UpdateSourceTrigger=PropertyChanged}" />
+                    Value="{Binding GenerationData.Height, UpdateSourceTrigger=PropertyChanged}" />
 
             </Grid>
         </GroupBox>

@@ -105,6 +105,9 @@
     <Compile Include="Services\AppDialogsService.cs" />
     <Compile Include="Services\AppWindowsService.cs" />
     <Compile Include="Services\WindowManager.cs" />
+    <Compile Include="Views\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Templates\BaseNumericWindow.xaml.cs">
       <DependentUpon>BaseNumericWindow.xaml</DependentUpon>
     </Compile>
@@ -135,8 +138,8 @@
     <Compile Include="Views\AntiKeyProtectionWindow.xaml.cs">
       <DependentUpon>AntiKeyProtectionWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsWindow.xaml.cs">
-      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    <Compile Include="Views\RawSettingsWindow.xaml.cs">
+      <DependentUpon>RawSettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SelectionWindow.xaml.cs">
       <DependentUpon>SelectionWindow.xaml</DependentUpon>
@@ -186,6 +189,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SettingsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Templates\BaseNumericWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -218,7 +225,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SettingsWindow.xaml">
+    <Page Include="Views\RawSettingsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

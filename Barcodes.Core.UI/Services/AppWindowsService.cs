@@ -164,8 +164,8 @@ namespace Barcodes.Core.UI.Services
 
         public bool ShowSettingsWindow()
         {
-            var dataContext = containerExtension.Resolve<SettingsViewModel>();
-            ShowDialog(new SettingsWindow(dataContext));
+            var dataContext = containerExtension.Resolve<RawSettingsViewModel>();
+            ShowDialog(new RawSettingsWindow(dataContext));
             return dataContext.SettingsSaved;
         }
     }

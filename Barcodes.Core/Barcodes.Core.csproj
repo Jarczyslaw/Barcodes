@@ -112,11 +112,13 @@
     <Compile Include="Models\BaseInput.cs" />
     <Compile Include="Models\ValueInput.cs" />
     <Compile Include="Models\SelectionInput.cs" />
+    <Compile Include="ViewModels\AddModeViewModel.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
     <Compile Include="ViewModels\BarcodeMenuViewModel.cs" />
     <Compile Include="Abstraction\IAppDialogsService.cs" />
     <Compile Include="Abstraction\IAppWindowsService.cs" />
     <Compile Include="Abstraction\IServicesContainer.cs" />
+    <Compile Include="ViewModels\GenerationDataViewModel.cs" />
     <Compile Include="ViewModels\BaseInputViewModel.cs" />
     <Compile Include="ViewModels\ExampleBarcodeViewModel.cs" />
     <Compile Include="ViewModels\ExamplesViewModel.cs" />
@@ -128,6 +130,7 @@
     <Compile Include="Abstraction\IStateSaverService.cs" />
     <Compile Include="Services\StateSaver\States\NmvsProductViewModelState.cs" />
     <Compile Include="Services\StateSaver\StateSaverService.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Templates\BaseProductViewModel.cs" />
     <Compile Include="ViewModels\Templates\WarehouseAndStationViewModel.cs" />
     <Compile Include="ViewModels\Templates\UserViewModel.cs" />
@@ -145,7 +148,7 @@
     <Compile Include="ViewModels\Templates\NmvsProductViewModel.cs" />
     <Compile Include="ViewModels\GenerationViewModel.cs" />
     <Compile Include="ViewModels\SelectionViewModel.cs" />
-    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\RawSettingsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\WorkspaceMenuViewModel.cs" />
     <Compile Include="ViewModels\WorkspaceViewModel.cs" />

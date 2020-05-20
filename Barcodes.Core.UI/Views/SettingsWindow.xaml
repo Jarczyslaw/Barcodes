@@ -2,40 +2,160 @@
     x:Class="Barcodes.Core.UI.Views.SettingsWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Barcodes.Core.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:ui="clr-namespace:Barcodes.Core.UI"
     Title="Barcodes - Settings"
-    Width="{Binding Width, FallbackValue=600}"
-    Height="{Binding Height, FallbackValue=500}"
-    MinWidth="{Binding Width, FallbackValue=600}"
-    MinHeight="{Binding Height, FallbackValue=500}"
     Icon="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
+    SizeToContent="WidthAndHeight"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
     <Grid Margin="5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <GroupBox Grid.Row="0" Header="Application settings">
-            <controls:CustomTextBox
-                x:Name="tbInputValue"
-                VerticalContentAlignment="Top"
-                AcceptsReturn="True"
-                IsReadOnly="False"
-                Text="{Binding Settings, UpdateSourceTrigger=PropertyChanged}"
-                TextWrapping="Wrap" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Content="Storage path:" />
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <TextBox
+                        Width="240"
+                        HorizontalAlignment="Stretch"
+                        Text="{Binding StoragePath}" />
+                    <Button
+                        Width="25"
+                        Command="{Binding SetStoragePathCommand}"
+                        Content="..." />
+                </StackPanel>
+
+                <CheckBox
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    VerticalContentAlignment="Center"
+                    Content="Barcodes visible"
+                    IsChecked="{Binding BarcodesVisible, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Row="2" Content="Protected keys:" />
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Width="120"
+                    HorizontalAlignment="Left"
+                    Text="{Binding ProtectedKeys}" />
+
+                <Label Grid.Row="3" Content="New barcode order:" />
+                <ComboBox
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Width="120"
+                    HorizontalAlignment="Left"
+                    DisplayMemberPath="Title"
+                    ItemsSource="{Binding BarcodeAddModes}"
+                    SelectedItem="{Binding SelectedBarcodeAddMode, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Row="4" Content="New workspace order:" />
+                <ComboBox
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Width="120"
+                    HorizontalAlignment="Left"
+                    DisplayMemberPath="Title"
+                    ItemsSource="{Binding WorkspaceAddModes}"
+                    SelectedItem="{Binding SelectedWorkspaceAddMode, UpdateSourceTrigger=PropertyChanged}" />
+
+            </Grid>
         </GroupBox>
-        <Grid Grid.Row="1">
+        <GroupBox Grid.Row="1" Header="Generation settings">
+            <Grid DataContext="{Binding GenerationData}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Content="Type:" />
+                <ComboBox
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Width="120"
+                    HorizontalAlignment="Left"
+                    DisplayMemberPath="TypeTitle"
+                    ItemsSource="{Binding Types}"
+                    SelectedItem="{Binding SelectedType, UpdateSourceTrigger=PropertyChanged}" />
+
+                <CheckBox
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    VerticalContentAlignment="Center"
+                    Content="Validate data"
+                    IsChecked="{Binding ValidateCodeText, UpdateSourceTrigger=PropertyChanged}" />
+
+                <CheckBox
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    VerticalContentAlignment="Center"
+                    Content="Use default sizes"
+                    IsChecked="{Binding DefaultSize}" />
+
+                <Label Grid.Row="3" Content="Width: " />
+                <toolkit:IntegerUpDown
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Width="120"
+                    Margin="{StaticResource DefaultMargin}"
+                    HorizontalAlignment="Left"
+                    IsReadOnly="{Binding DefaultSize}"
+                    Minimum="100"
+                    TextAlignment="Left"
+                    Value="{Binding Width, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Row="4" Content="Height: " />
+                <toolkit:IntegerUpDown
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Width="120"
+                    Margin="{StaticResource DefaultMargin}"
+                    HorizontalAlignment="Left"
+                    IsReadOnly="{Binding DefaultSize}"
+                    Minimum="100"
+                    TextAlignment="Left"
+                    Value="{Binding Height, UpdateSourceTrigger=PropertyChanged}" />
+            </Grid>
+        </GroupBox>
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
-            <UniformGrid Grid.Column="1" Columns="2">
+            <UniformGrid Grid.Column="1" Columns="3">
+                <Button
+                    Command="{Binding RawSettingsCommand}"
+                    Content="Open as text"
+                    IsDefault="True" />
                 <Button
                     Command="{Binding SaveCommand}"
                     Content="Accept"

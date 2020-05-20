@@ -13,16 +13,10 @@ namespace Barcodes.Core.ViewModels
 {
     public class GenerationViewModel : BindableBase, ICloseSource
     {
-        private string data = "Barcode Data";
         private string title = "Barcode Title";
-        private bool defaultSize = true;
-        private int width = 100;
-        private int height = 100;
-        private bool validateCodeText = true;
         private bool edit;
 
-        private BarcodeTypeViewModel selectedBarcodeType;
-        private ObservableCollection<BarcodeTypeViewModel> barcodeTypes;
+        private GenerationDataViewModel generationData = new GenerationDataViewModel();
         private TemplateViewModel selectedTemplate;
         private ObservableCollection<TemplateViewModel> templates;
 
@@ -32,7 +26,6 @@ namespace Barcodes.Core.ViewModels
         {
             this.services = services;
 
-            InitializeBarcodeTypes();
             InitializeTemplates();
             LoadSettings();
 
@@ -57,56 +50,10 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref edit, value);
         }
 
-        public string Data
-        {
-            get => data;
-            set => SetProperty(ref data, value);
-        }
-
         public string Title
         {
             get => title;
             set => SetProperty(ref title, value);
-        }
-
-        public bool DefaultSize
-        {
-            get => defaultSize;
-            set => SetProperty(ref defaultSize, value);
-        }
-
-        public int Width
-        {
-            get => width;
-            set => SetProperty(ref width, value);
-        }
-
-        public int Height
-        {
-            get => height;
-            set => SetProperty(ref height, value);
-        }
-
-        public bool ValidateCodeText
-        {
-            get => validateCodeText;
-            set => SetProperty(ref validateCodeText, value);
-        }
-
-        public BarcodeTypeViewModel SelectedBarcodeType
-        {
-            get => selectedBarcodeType;
-            set
-            {
-                SetProperty(ref selectedBarcodeType, value);
-                UseTemplateCommand?.RaiseCanExecuteChanged();
-            }
-        }
-
-        public ObservableCollection<BarcodeTypeViewModel> BarcodeTypes
-        {
-            get => barcodeTypes;
-            set => SetProperty(ref barcodeTypes, value);
         }
 
         public TemplateViewModel SelectedTemplate
@@ -128,6 +75,12 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref templates, value);
         }
 
+        public GenerationDataViewModel GenerationData
+        {
+            get => generationData;
+            set => SetProperty(ref generationData, value);
+        }
+
         public Action OnClose { get; set; }
 
         private void InitializeTemplates()
@@ -135,18 +88,6 @@ namespace Barcodes.Core.ViewModels
             var factory = new TemplatesFactory();
             Templates = factory.GetAllTemplates(services.AppWindowsService);
             SelectedTemplate = Templates.First();
-        }
-
-        private void InitializeBarcodeTypes()
-        {
-            BarcodeTypes = new ObservableCollection<BarcodeTypeViewModel>()
-            {
-                new BarcodeTypeViewModel(BarcodeType.Ean13),
-                new BarcodeTypeViewModel(BarcodeType.Ean128),
-                new BarcodeTypeViewModel(BarcodeType.Code128),
-                new BarcodeTypeViewModel(BarcodeType.DataMatrix),
-                new BarcodeTypeViewModel(BarcodeType.QRCode),
-            };
         }
 
         private bool GenerateValidation()
@@ -158,7 +99,7 @@ namespace Barcodes.Core.ViewModels
                 return false;
             }
 
-            var data = Data.Trim();
+            var data = GenerationData.Data.Trim();
             if (string.IsNullOrEmpty(data))
             {
                 services.AppDialogsService.ShowError("Enter barcode's data");
@@ -175,21 +116,11 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
-            var barcodeData = new GenerationData
-            {
-                Data = Data.Trim(),
-                Type = SelectedBarcodeType.Type,
-                DefaultSize = DefaultSize,
-                Width = Width,
-                Height = Height,
-                ValidateCodeText = ValidateCodeText
-            };
-
             try
             {
                 Result = new GenerationResult
                 {
-                    Barcode = RunGenerator(barcodeData, Title.Trim()),
+                    Barcode = RunGenerator(GenerationData.ToGenerationData(), Title.Trim()),
                     AddNew = addAsNew
                 };
                 OnClose?.Invoke();
@@ -218,13 +149,13 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
-            var result = SelectedTemplate.Handler(Data);
+            var result = SelectedTemplate.Handler(GenerationData.Data);
             if (result != null)
             {
-                Data = result.Data;
+                GenerationData.Data = result.Data;
                 if (result.BarcodeType.HasValue)
                 {
-                    SelectedBarcodeType = BarcodeTypes.FirstOrDefault(b => b.Type == result.BarcodeType.Value);
+                    GenerationData.SelectType(result.BarcodeType.Value);
                 }
             }
         }
@@ -233,14 +164,8 @@ namespace Barcodes.Core.ViewModels
         {
             if (barcode != null)
             {
-                var generationData = barcode.GenerationData;
-                Data = generationData.Data;
-                SelectedBarcodeType = BarcodeTypes.FirstOrDefault(b => b.Type == generationData.Type);
                 Title = barcode.Title;
-                DefaultSize = generationData.DefaultSize;
-                Width = generationData.Width;
-                Height = generationData.Height;
-                ValidateCodeText = generationData.ValidateCodeText;
+                GenerationData.FromGenerationData(barcode.GenerationData);
             }
 
             Edit = edit;
@@ -264,24 +189,20 @@ namespace Barcodes.Core.ViewModels
         private void LoadSettings()
         {
             var generationSettings = services.AppSettingsService.AppSettings.GenerationSettings;
-            SelectedBarcodeType = BarcodeTypes.FirstOrDefault(b => b.Type == generationSettings.Type);
-            DefaultSize = generationSettings.DefaultSize;
-            Height = generationSettings.Height;
-            Width = generationSettings.Width;
-            ValidateCodeText = generationSettings.ValidateCodeText;
+            GenerationData.FromGenerationSettings(generationSettings);
         }
 
         private void DetectTemplate()
         {
             var factory = new BarcodeTemplateFactory();
-            var codePair = factory.GetCode(Data);
+            var codePair = factory.GetCode(GenerationData.Data);
             if (codePair != null)
             {
                 SelectTemplate(codePair.Template);
             }
             else
             {
-                services.AppDialogsService.ShowError("No matching templates found");
+                services.AppDialogsService.ShowError("No matching template found");
             }
         }
     }
