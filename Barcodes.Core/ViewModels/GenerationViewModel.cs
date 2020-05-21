@@ -120,7 +120,7 @@ namespace Barcodes.Core.ViewModels
             {
                 Result = new GenerationResult
                 {
-                    Barcode = RunGenerator(GenerationData.ToGenerationData(), Title.Trim()),
+                    Barcode = RunGenerator(GenerationData.ToData(), Title.Trim()),
                     AddNew = addAsNew
                 };
                 OnClose?.Invoke();
@@ -165,7 +165,7 @@ namespace Barcodes.Core.ViewModels
             if (barcode != null)
             {
                 Title = barcode.Title;
-                GenerationData.FromGenerationData(barcode.GenerationData);
+                GenerationData.FromData(barcode.GenerationData);
             }
 
             Edit = edit;
@@ -189,7 +189,7 @@ namespace Barcodes.Core.ViewModels
         private void LoadSettings()
         {
             var generationSettings = services.AppSettingsService.AppSettings.GenerationSettings;
-            GenerationData.FromGenerationSettings(generationSettings);
+            GenerationData.FromSettings(generationSettings);
         }
 
         private void DetectTemplate()

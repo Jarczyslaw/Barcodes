@@ -1,4 +1,5 @@
 ﻿using Barcodes.Core.Common;
+using Barcodes.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -19,5 +20,15 @@ namespace Barcodes.Services.AppSettings
         public AddMode WorkspaceAddMode { get; set; }
 
         public GenerationSettings GenerationSettings { get; set; } = new GenerationSettings();
+
+        public string Serialize()
+        {
+            return Serializer.ToString(this);
+        }
+
+        public static AppSettings Deserialize(string serialized)
+        {
+            return Serializer.FromString<AppSettings>(serialized);
+        }
     }
 }

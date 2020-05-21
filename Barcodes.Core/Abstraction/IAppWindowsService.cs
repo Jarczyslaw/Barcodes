@@ -1,6 +1,7 @@
 ﻿using Barcodes.Codes;
 using Barcodes.Core.Models;
 using Barcodes.Core.ViewModels;
+using Barcodes.Services.AppSettings;
 using System;
 using System.Collections.Generic;
 
@@ -29,5 +30,7 @@ namespace Barcodes.Core.Abstraction
         WorkspaceViewModel SelectBarcodesWorkspace(IEnumerable<WorkspaceViewModel> workspaces);
 
         bool ShowSettingsWindow();
+
+        AppSettings ShowRawSettingsWindow(AppSettings appSettings);
     }
 }

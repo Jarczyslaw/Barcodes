@@ -4,6 +4,7 @@ using Barcodes.Core.Models;
 using Barcodes.Core.UI.Views;
 using Barcodes.Core.ViewModels;
 using Barcodes.Core.ViewModels.Templates;
+using Barcodes.Services.AppSettings;
 using Barcodes.Services.Windows;
 using Barcodes.Utils;
 using Prism.Ioc;
@@ -164,9 +165,17 @@ namespace Barcodes.Core.UI.Services
 
         public bool ShowSettingsWindow()
         {
-            var dataContext = containerExtension.Resolve<RawSettingsViewModel>();
-            ShowDialog(new RawSettingsWindow(dataContext));
+            var dataContext = containerExtension.Resolve<SettingsViewModel>();
+            ShowDialog(new SettingsWindow(dataContext));
             return dataContext.SettingsSaved;
+        }
+
+        public AppSettings ShowRawSettingsWindow(AppSettings appSettings)
+        {
+            var dataContext = containerExtension.Resolve<RawSettingsViewModel>();
+            dataContext.LoadSettings(appSettings);
+            ShowDialog(new RawSettingsWindow(dataContext));
+            return dataContext.EditedSettings;
         }
     }
 }

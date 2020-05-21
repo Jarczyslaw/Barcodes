@@ -1,51 +1,31 @@
 ﻿using Barcodes.Core.Abstraction;
 using Barcodes.Core.Common;
-using Barcodes.Core.Services;
 using Barcodes.Services.AppSettings;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.IO;
 
 namespace Barcodes.Core.ViewModels
 {
     public class RawSettingsViewModel : BindableBase, ICloseSource
     {
-        private int width = 600;
-        private int height = 500;
-        private string settings;
+        private string settings = string.Empty;
 
-        private readonly IAppSettingsService appSettingsService;
         private readonly IAppDialogsService appDialogsService;
 
-        public RawSettingsViewModel(IAppSettingsService appSettingsService, IAppDialogsService appDialogsService)
+        public RawSettingsViewModel(IAppDialogsService appDialogsService)
         {
-            this.appSettingsService = appSettingsService;
             this.appDialogsService = appDialogsService;
 
             SaveCommand = new DelegateCommand(Save);
             CloseCommand = new DelegateCommand(() => OnClose?.Invoke());
-
-            LoadSettings();
         }
 
         public DelegateCommand SaveCommand { get; }
 
         public DelegateCommand CloseCommand { get; }
 
-        public bool SettingsSaved { get; set; }
-
-        public int Width
-        {
-            get => width;
-            set => SetProperty(ref width, value);
-        }
-
-        public int Height
-        {
-            get => height;
-            set => SetProperty(ref height, value);
-        }
+        public AppSettings EditedSettings { get; set; }
 
         public string Settings
         {
@@ -59,9 +39,7 @@ namespace Barcodes.Core.ViewModels
         {
             try
             {
-                appSettingsService.Save(Settings);
-                SettingsSaved = true;
-                appDialogsService.ShowInfo("Settings successfully saved");
+                EditedSettings = AppSettings.Deserialize(Settings.Trim());
                 OnClose?.Invoke();
             }
             catch (Exception exc)
@@ -70,16 +48,9 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        private void LoadSettings()
+        public void LoadSettings(AppSettings appSettings)
         {
-            try
-            {
-                Settings = File.ReadAllText(appSettingsService.AppSettingsPath);
-            }
-            catch (Exception exc)
-            {
-                appDialogsService.ShowException("Exception during loading settings file", exc);
-            }
+            Settings = appSettings.Serialize();
         }
     }
 }

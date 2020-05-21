@@ -82,7 +82,7 @@ namespace Barcodes.Core.ViewModels
             SelectedType = Types.FirstOrDefault(b => b.Type == barcodeType);
         }
 
-        public GenerationData ToGenerationData()
+        public GenerationData ToData()
         {
             return new GenerationData
             {
@@ -95,7 +95,7 @@ namespace Barcodes.Core.ViewModels
             };
         }
 
-        public void FromGenerationData(GenerationData generationData)
+        public void FromData(GenerationData generationData)
         {
             Data = generationData.Data;
             SelectType(generationData.Type);
@@ -105,13 +105,25 @@ namespace Barcodes.Core.ViewModels
             ValidateCodeText = generationData.ValidateCodeText;
         }
 
-        public void FromGenerationSettings(GenerationSettings generationSettings)
+        public void FromSettings(GenerationSettings generationSettings)
         {
             SelectType(generationSettings.Type);
             DefaultSize = generationSettings.DefaultSize;
             Height = generationSettings.Height;
             Width = generationSettings.Width;
             ValidateCodeText = generationSettings.ValidateCodeText;
+        }
+
+        public GenerationSettings ToSettings()
+        {
+            return new GenerationSettings
+            {
+                Width = Width,
+                DefaultSize = DefaultSize,
+                Height = Height,
+                Type = SelectedType.Type,
+                ValidateCodeText = ValidateCodeText
+            };
         }
     }
 }
