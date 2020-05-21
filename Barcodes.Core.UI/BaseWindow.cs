@@ -1,4 +1,5 @@
-﻿using Barcodes.Core.Common;
+﻿using Barcodes.Core.Abstraction;
+using Barcodes.Core.Common;
 using Barcodes.Core.UI.Views;
 using Barcodes.Services.AppSettings;
 using Barcodes.Utils;
@@ -16,10 +17,13 @@ namespace Barcodes.Core.UI
         private bool windowInitialized;
 
         private readonly IAppSettingsService appSettingsService;
+        private readonly IAppDialogsService appDialogsService;
 
         public BaseWindow()
         {
             appSettingsService = ServiceLocator.Current.TryResolve<IAppSettingsService>();
+            appDialogsService = ServiceLocator.Current.TryResolve<IAppDialogsService>();
+
             KeyDown += BaseWindow_KeyDown;
         }
 
@@ -86,9 +90,19 @@ namespace Barcodes.Core.UI
                     handled = keyDownAware.OnKeyDown(e);
                 }
 
-                if (!handled && appSettingsService != null && KeyParser.Check(appSettingsService.AppSettings.AntiKeyProtection, e.Key))
+                if (!handled)
                 {
-                    new AntiKeyProtectionWindow().ShowWarning(this, e.Key);
+                    try
+                    {
+                        if (KeyParser.Check(appSettingsService.AppSettings.AntiKeyProtection, e.Key))
+                        {
+                            new AntiKeyProtectionWindow().ShowWarning(this, e.Key);
+                        }
+                    }
+                    catch (Exception exc)
+                    {
+                        appDialogsService.ShowException("Error checking keys", exc);
+                    }
                 }
             }
         }

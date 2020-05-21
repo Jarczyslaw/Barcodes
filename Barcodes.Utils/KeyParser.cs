@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace Barcodes.Utils
@@ -7,20 +8,28 @@ namespace Barcodes.Utils
     {
         public static bool Check(string keys, Key key)
         {
-            if (string.IsNullOrEmpty(keys))
-            {
-                return false;
-            }
+            var keysToCheck = ExtractKeys(keys);
+            return keysToCheck.Contains(key);
+        }
 
-            foreach (var splittedKey in keys.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries))
+        public static List<Key> ExtractKeys(string keys)
+        {
+            var result = new List<Key>();
+            if (!string.IsNullOrEmpty(keys))
             {
-                if (Enum.TryParse(splittedKey.Trim(), out Key result) && key == result)
+                foreach (var splittedKey in keys.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    return true;
+                    if (Enum.TryParse(splittedKey.Trim(), out Key key))
+                    {
+                        result.Add(key);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Invalid application settings key value");
+                    }
                 }
             }
-
-            return false;
+            return result;
         }
     }
 }
