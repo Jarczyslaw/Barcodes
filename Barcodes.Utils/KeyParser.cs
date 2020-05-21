@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Barcodes.Core.Common
+namespace Barcodes.Utils
 {
     public static class KeyParser
     {

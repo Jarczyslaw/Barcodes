@@ -1,6 +1,7 @@
 ﻿using Barcodes.Core.Common;
 using Barcodes.Core.UI.Views;
 using Barcodes.Services.AppSettings;
+using Barcodes.Utils;
 using CommonServiceLocator;
 using System;
 using System.ComponentModel;

@@ -79,7 +79,6 @@
     <Compile Include="IOnClosingAware.cs" />
     <Compile Include="IOnKeyDownAware.cs" />
     <Compile Include="IOnShowAware.cs" />
-    <Compile Include="KeyParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
