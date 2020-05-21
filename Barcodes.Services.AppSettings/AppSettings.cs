@@ -30,5 +30,20 @@ namespace Barcodes.Services.AppSettings
         {
             return Serializer.FromString<AppSettings>(serialized);
         }
+
+        public string Validate()
+        {
+            if (StoragePath.IndexOfAny(Path.GetInvalidPathChars()) != -1)
+            {
+                return "Invalid storage path";
+            }
+
+            if (!KeyParser.Validate(AntiKeyProtection))
+            {
+                return "Invalid protected keys value";
+            }
+
+            return string.Empty;
+        }
     }
 }

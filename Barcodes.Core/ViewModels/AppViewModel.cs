@@ -200,7 +200,7 @@ namespace Barcodes.Core.ViewModels
             if (CheckStorageSave())
             {
                 var storagePath = servicesContainer.AppSettingsService.StoragePath;
-                var filePath = servicesContainer.AppDialogsService.OpenStorageFile(storagePath);
+                var filePath = servicesContainer.AppDialogsService.OpenStorageFile(storagePath, true);
                 if (string.IsNullOrEmpty(filePath))
                 {
                     return;

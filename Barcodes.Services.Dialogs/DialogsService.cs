@@ -110,16 +110,16 @@ namespace Barcodes.Services.Dialogs
             }
         }
 
-        public string OpenFile(string title, string initialDirectory, DialogFilterPair filter)
+        public string OpenFile(string title, string initialDirectory, bool ensureFileExists, DialogFilterPair filter)
         {
-            return OpenFile(title, initialDirectory, new List<DialogFilterPair> { filter });
+            return OpenFile(title, initialDirectory, ensureFileExists, new List<DialogFilterPair> { filter });
         }
 
-        public string OpenFile(string title, string initialDirectory, List<DialogFilterPair> filters)
+        public string OpenFile(string title, string initialDirectory, bool ensureFileExists, List<DialogFilterPair> filters)
         {
             var builder = new CommonOpenDialogBuilder()
                 .Initialize(title, initialDirectory)
-                .SetAsFileDialog(false)
+                .SetAsFileDialog(false, ensureFileExists)
                 .AddFilters(filters);
 
             string result = null;
@@ -142,7 +142,7 @@ namespace Barcodes.Services.Dialogs
         {
             var builder = new CommonOpenDialogBuilder()
                 .Initialize(title, initialDirectory)
-                .SetAsFileDialog(true)
+                .SetAsFileDialog(true, true)
                 .AddFilters(filters);
 
             List<string> result = null;

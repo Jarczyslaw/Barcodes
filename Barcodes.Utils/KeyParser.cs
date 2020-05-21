@@ -31,5 +31,18 @@ namespace Barcodes.Utils
             }
             return result;
         }
+
+        public static bool Validate(string keys)
+        {
+            try
+            {
+                ExtractKeys(keys);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

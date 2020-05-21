@@ -16,12 +16,12 @@ namespace Barcodes.Services.Dialogs.Builders
             return this;
         }
 
-        public CommonOpenDialogBuilder SetAsFileDialog(bool multiselect)
+        public CommonOpenDialogBuilder SetAsFileDialog(bool multiselect, bool ensureFileExists)
         {
             CheckDialogInstance();
 
             dialog.IsFolderPicker = false;
-            dialog.EnsureFileExists = true;
+            dialog.EnsureFileExists = ensureFileExists;
             dialog.Multiselect = multiselect;
             return this;
         }

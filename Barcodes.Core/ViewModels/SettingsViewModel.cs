@@ -121,6 +121,23 @@ namespace Barcodes.Core.ViewModels
 
         private void Save()
         {
+            var settings = ToSettings();
+            var error = settings.Validate();
+            if (!string.IsNullOrEmpty(error))
+            {
+                appDialogsService.ShowError(error);
+                return;
+            }
+
+            try
+            {
+                appSettingsService.Save(settings);
+                SettingsSaved = true;
+            }
+            catch (Exception exc)
+            {
+                appDialogsService.ShowException("Error saving settings", exc);
+            }
         }
 
         private void LoadSettings()
@@ -145,8 +162,8 @@ namespace Barcodes.Core.ViewModels
                 StoragePath = StoragePath,
                 BarcodesVisible = BarcodesVisible,
                 AntiKeyProtection = ProtectedKeys,
-                BarcodeAddMode = SelectedBarcodeAddMode.AddMode,
-                WorkspaceAddMode = SelectedWorkspaceAddMode.AddMode,
+                BarcodeAddMode = SelectedBarcodeAddModeRaw.Value,
+                WorkspaceAddMode = SelectedWorkspaceAddModeRaw.Value,
                 GenerationSettings = GenerationData.ToSettings()
             };
         }

@@ -19,10 +19,10 @@ namespace Barcodes.Core.UI.Services
 
         private readonly DialogFilterPair docFilter = new DialogFilterPair("pdf");
 
-        public string OpenStorageFile(string currentFilePath)
+        public string OpenStorageFile(string currentFilePath, bool ensureFileExists)
         {
             var directoryPath = Path.GetDirectoryName(currentFilePath);
-            return OpenFile("Barcodes storage file", directoryPath, storageFilter);
+            return OpenFile("Barcodes storage file", directoryPath, ensureFileExists, storageFilter);
         }
 
         public string SaveStorageFile(string currentFilePath)
@@ -43,7 +43,7 @@ namespace Barcodes.Core.UI.Services
 
         public string ImportWorkspaceFile()
         {
-            return OpenFile("Workspace file", null, workspaceFilter);
+            return OpenFile("Workspace file", null, true, workspaceFilter);
         }
 
         public List<string> ImportWorkspaceFiles()
@@ -59,7 +59,7 @@ namespace Barcodes.Core.UI.Services
 
         public string ImportBarcodeFile()
         {
-            return OpenFile("Barcode file", null, barcodeFilter);
+            return OpenFile("Barcode file", null, true, barcodeFilter);
         }
 
         public List<string> ImportBarcodeFiles()

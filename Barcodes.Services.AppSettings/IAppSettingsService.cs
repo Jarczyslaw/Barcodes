@@ -15,6 +15,8 @@
 
         void Save();
 
+        void Save(AppSettings appSettings);
+
         void Save(string settings);
     }
 }
