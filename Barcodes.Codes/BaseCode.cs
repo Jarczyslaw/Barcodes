@@ -14,7 +14,7 @@ namespace Barcodes.Codes
         public int PrefixLength => 2;
         public virtual int Length => 0;
 
-        protected string CurrentPrefix
+        public string CurrentPrefix
         {
             get
             {
