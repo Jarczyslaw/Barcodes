@@ -11,7 +11,7 @@ namespace Barcodes.Codes
         public abstract string Code { get; }
         public abstract BarcodeType Type { get; }
         public virtual List<string> Prefixes => new List<string>();
-        public int PrefixLength => 2;
+        public int PrefixLength => CurrentPrefix.Length;
         public virtual int Length => 0;
 
         public string CurrentPrefix
