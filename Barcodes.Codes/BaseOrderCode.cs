@@ -49,7 +49,7 @@ namespace Barcodes.Codes
 
         public override int Length => PrefixLength + OrderIdLength + ContainerNumberLength + DivisionNumberLength + YearLength;
 
-        public override string Code => Prefix + Pad(OrderId, OrderIdLength)
+        public override string Code => CurrentPrefix + Pad(OrderId, OrderIdLength)
             + Pad(ContainerNumber, ContainerNumberLength)
             + Pad(DivisionNumber, DivisionNumberLength)
             + Pad(Year % 100, YearLength);
@@ -58,7 +58,7 @@ namespace Barcodes.Codes
 
         public override void Parse(string code)
         {
-            var match = Regex.Match(code, $@"^{Prefix}(\d{{{OrderIdLength}}})(\d{{{ContainerNumberLength}}})(\d{{{DivisionNumberLength}}})(\d{{{YearLength}}})$");
+            var match = Regex.Match(code, $@"^{CurrentPrefix}(\d{{{OrderIdLength}}})(\d{{{ContainerNumberLength}}})(\d{{{DivisionNumberLength}}})(\d{{{YearLength}}})$");
             if (!match.Success)
             {
                 throw new ArgumentException("Invalid order code format");

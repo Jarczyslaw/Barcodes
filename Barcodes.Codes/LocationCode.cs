@@ -1,4 +1,6 @@
-﻿namespace Barcodes.Codes
+﻿using System.Collections.Generic;
+
+namespace Barcodes.Codes
 {
     public class LocationCode : BaseCode
     {
@@ -18,11 +20,11 @@
 
         public string Address { get; private set; } = string.Empty;
 
-        public override string Code => Prefix + Address;
+        public override string Code => CurrentPrefix + Address;
 
         public override BarcodeType Type => BarcodeType.Code128;
-        public override int Length => Prefix.Length + BodyLength;
-        public override string Prefix => "LK";
+        public override int Length => CurrentPrefix.Length + BodyLength;
+        public override List<string> Prefixes => new List<string> { "LK" };
 
         public int BodyLength => 10;
 
@@ -35,9 +37,9 @@
 
         private string PrepareCode(string code)
         {
-            if (code?.StartsWith(Prefix) == false)
+            if (!CheckPrefix(code))
             {
-                code = Prefix + code;
+                code = CurrentPrefix + code;
             }
             return code;
         }

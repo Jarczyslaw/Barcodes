@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Barcodes.Codes
 {
@@ -31,11 +32,11 @@ namespace Barcodes.Codes
         public int Warehouse { get; private set; } = 1;
         public string Station { get; private set; } = string.Empty;
 
-        public override string Code => Prefix + Warehouse.ToString().PadLeft(2, '0') + Station.PadLeft(2, '0');
+        public override string Code => CurrentPrefix + Warehouse.ToString().PadLeft(2, '0') + Station.PadLeft(2, '0');
 
         public override BarcodeType Type => BarcodeType.Code128;
         public override int Length => 6;
-        public override string Prefix => "ST";
+        public override List<string> Prefixes => new List<string> { "ST" };
 
         private void CheckStation(string station)
         {

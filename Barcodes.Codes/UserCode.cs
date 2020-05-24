@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Barcodes.Codes
 {
@@ -26,11 +27,11 @@ namespace Barcodes.Codes
 
         public int Number { get; private set; } = 1;
 
-        public override string Code => Prefix + Number.ToString().PadLeft(BodyLength, '0');
+        public override string Code => CurrentPrefix + Number.ToString().PadLeft(BodyLength, '0');
 
         public override BarcodeType Type => BarcodeType.Code128;
         public override int Length => 7;
-        public override string Prefix => "PR";
+        public override List<string> Prefixes => new List<string> { "PR" };
 
         private int BodyLength => Length - PrefixLength;
 

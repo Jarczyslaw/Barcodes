@@ -1,4 +1,6 @@
-﻿namespace Barcodes.Codes
+﻿using System.Collections.Generic;
+
+namespace Barcodes.Codes
 {
     public class OrderCode : BaseOrderCode
     {
@@ -23,7 +25,7 @@
 
         public override int OrderIdLength => 9;
 
-        public override string Prefix => "DZ";
+        public override List<string> Prefixes => new List<string> { "DZ" };
 
         public static bool TryParse(string code, out OrderCode orderCode)
         {

@@ -1,15 +1,46 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Barcodes.Codes
 {
     public abstract class BaseCode
     {
+        protected string currentPrefix = string.Empty;
+
         public abstract string Code { get; }
         public abstract BarcodeType Type { get; }
-        public virtual string Prefix => string.Empty;
-        public int PrefixLength => Prefix.Length;
+        public virtual List<string> Prefixes => new List<string>();
+        public int PrefixLength => 2;
         public virtual int Length => 0;
+
+        protected string CurrentPrefix
+        {
+            get
+            {
+                if (Prefixes.Count == 0)
+                {
+                    return string.Empty;
+                }
+
+                if (string.IsNullOrEmpty(currentPrefix))
+                {
+                    return Prefixes.First();
+                }
+                else
+                {
+                    return currentPrefix;
+                }
+            }
+            set
+            {
+                if (!Prefixes.Contains(value))
+                {
+                    throw new ArgumentException("Invalid prefix value");
+                }
+                currentPrefix = value;
+            }
+        }
 
         public abstract void Parse(string code);
 
@@ -21,6 +52,15 @@ namespace Barcodes.Codes
             }
         }
 
+        protected bool CheckPrefix(string code)
+        {
+            if (Prefixes.Count > 0)
+            {
+                return Prefixes.Any(p => code?.StartsWith(p) == true);
+            }
+            return true;
+        }
+
         protected void CheckCode(string code)
         {
             if (string.IsNullOrEmpty(code))
@@ -28,7 +68,7 @@ namespace Barcodes.Codes
                 throw new ArgumentException("Code can not be empty");
             }
 
-            if (!string.IsNullOrEmpty(Prefix) && !code.StartsWith(Prefix))
+            if (!CheckPrefix(code))
             {
                 throw new ArgumentException("Invalid prefix");
             }
