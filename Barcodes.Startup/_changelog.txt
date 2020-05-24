@@ -1,18 +1,17 @@
 ﻿1.3.0
-	przy wyciąganiu pojedynczych kodów zapamiętywać pozycje ostatniego okna
-	przy ładowaniu nowego pliku z kodami zapytać o zapis aktualnego (tego chyba nie ma na ten moment)
-	dorobić wyciąganie okna ze wszystkimi kodami w workspace (okno z małym min sizem i skrolami)
-	dwuklik na tabie powinien otwierać w nowym oknie kody z workspace
-	na oknie z przykładami dorobić dwuklik pod przycisk Generate
-	po edycji kodu i dodaniu nowego na liście zaznaczony jest nadal stary kod a nie nowy
-	obok opcji move up i move down dorobić opcje przesuwania na początek i koniec listy (dla workspaców też)
-	w settingsach dodać możliwość definiowania czy nowe kody mają pojawiać się na początku czy końcu listy
-	skrót klawiaturowy delete na kodzie - usuwanie kodu za potwierdzeniem
-	przycisk na górnej belce który chowa wszystkie wyciągnięte okna
-	rozbudować kopiowanie kodu do schowka - obrazek lub dane
-	zrobić prawoklik na tabie, który jest nieaktywny (aktywacja + otwarcie menu)
-	zmienić input method na templaty dla kodów + okna do nich (zgodnie z tym co jest w examplach)
-	dodać możliwość czyszczenia storage'a
-	dodać możliwość tworzenia nowego storage'a
-	dodać możliwośc przerobienia ean13/128 na datamatrix i odwrotnie 
-	
+	zapamiętanie pozycji okna pojedynczego kodu
+	przy ładowaniu nowego pliku pojawia się pytanie o zapis aktualnych zmian
+	wyciąganie całego workspace do nowego okna (również na dwukliku)
+	dwuklik na przykładzie odpala generację kodu z template'a
+	zaznaczanie na liście kodów ostatnio dodanego kodu
+	kody i workspace - opcje przesuwania na początek i koniec listy
+	w ustawieniach jest możliwość definiowania czy nowy kod/workspace pojawia się na początku/końcu listy
+	usuwanie kodu po naciśnięciu delete
+	dodanie przycisku do chowania wszystkich podrzędnych okien z barcodami i workspaceami
+	można teraz kopiować tylko dane lub sam obrazek kodu
+	prawiklik na nieaktywnym tabie od razu go aktywuje i odpala contextMenu
+	dodano templaty większości używanych kodów
+	opcja czyszczenia wszystkich kodów i workspaceów
+	opcja tworzenia nowego pliku z kodami
+	dodanie konwersji ean13/ean128/NMVS z użyciem templatów
+	okienko ustawień i prawidłowe aplikowanie zmienionych ustawień

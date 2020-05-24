@@ -1,14 +1,3 @@
 ﻿dodać kod palety
 dodać listę prefixów
-
-
-okienko do ustawień
-przy minimalizowaniu generationWindow nie minimalizuje się cała aplikacja (owner?)
-
 zrobić drag and dropa na na zakładkach i na kodach (docelowo dragablz)
-
-
-do testowania:
-	całe okienko ustawień i ustawień w tekscie (również dialog do wybierania nowej ścieżki)
-	okienko generacji - czy sięwszystko binduje i zapisuje
-	wszystkie ścieżki gdzie następuje załadowanie storage albo jego zmiana
