@@ -51,7 +51,7 @@
                     Minimum="1"
                     Value="{Binding ContainerNumber, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Grid.Row="2" Content="Division number (up to two digits):" />
+                <Label Grid.Row="2" Content="Division number (up to 2 digits):" />
                 <toolkit:IntegerUpDown
                     Grid.Row="2"
                     Grid.Column="1"

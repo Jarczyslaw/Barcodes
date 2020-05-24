@@ -8,8 +8,8 @@ namespace Barcodes.Core.ViewModels
     {
         public MenuViewModel(AppViewModel app)
         {
-            SaveCommand = new DelegateCommand(() => app.Save(true, false));
-            SaveAsCommand = new DelegateCommand(() => app.Save(true, true));
+            SaveCommand = new DelegateCommand(() => app.Save(false, false));
+            SaveAsCommand = new DelegateCommand(() => app.Save(true, false));
             LoadFromFileCommand = new DelegateCommand(app.LoadBarcodesFromFile);
             OpenAppLocationCommand = new DelegateCommand(app.OpenAppLocation);
             OpenStorageLocationCommand = new DelegateCommand(app.OpenStorageLocation);

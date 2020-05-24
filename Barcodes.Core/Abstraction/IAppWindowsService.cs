@@ -29,7 +29,7 @@ namespace Barcodes.Core.Abstraction
 
         WorkspaceViewModel SelectBarcodesWorkspace(IEnumerable<WorkspaceViewModel> workspaces);
 
-        bool ShowSettingsWindow();
+        SettingsSaveResult ShowSettingsWindow();
 
         AppSettings ShowRawSettingsWindow(AppSettings appSettings);
     }

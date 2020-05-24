@@ -1,5 +1,6 @@
 ﻿using Barcodes.Core.Abstraction;
 using Barcodes.Core.Common;
+using Barcodes.Core.Models;
 using Barcodes.Services.AppSettings;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -49,7 +50,7 @@ namespace Barcodes.Core.ViewModels
 
         public DelegateCommand RawSettingsCommand { get; }
 
-        public bool SettingsSaved { get; set; }
+        public SettingsSaveResult SettingsSaveResult { get; set; }
 
         public Action OnClose { get; set; }
 
@@ -132,7 +133,8 @@ namespace Barcodes.Core.ViewModels
             try
             {
                 appSettingsService.Save(settings);
-                SettingsSaved = true;
+                SettingsSaveResult = new SettingsSaveResult();
+                OnClose?.Invoke();
             }
             catch (Exception exc)
             {
@@ -179,6 +181,11 @@ namespace Barcodes.Core.ViewModels
 
         private void SetStoragePath()
         {
+            var newStoragePath = appDialogsService.OpenStorageFile(StoragePath, false);
+            if (!string.IsNullOrEmpty(newStoragePath))
+            {
+                StoragePath = newStoragePath;
+            }
         }
     }
 }

@@ -127,7 +127,6 @@
                     Width="120"
                     Margin="{StaticResource DefaultMargin}"
                     HorizontalAlignment="Left"
-                    IsReadOnly="{Binding DefaultSize}"
                     Minimum="100"
                     TextAlignment="Left"
                     Value="{Binding Width, UpdateSourceTrigger=PropertyChanged}" />
@@ -139,7 +138,6 @@
                     Width="120"
                     Margin="{StaticResource DefaultMargin}"
                     HorizontalAlignment="Left"
-                    IsReadOnly="{Binding DefaultSize}"
                     Minimum="100"
                     TextAlignment="Left"
                     Value="{Binding Height, UpdateSourceTrigger=PropertyChanged}" />

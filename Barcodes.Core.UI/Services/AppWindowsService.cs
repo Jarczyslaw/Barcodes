@@ -163,11 +163,11 @@ namespace Barcodes.Core.UI.Services
             return dataContext.Result;
         }
 
-        public bool ShowSettingsWindow()
+        public SettingsSaveResult ShowSettingsWindow()
         {
             var dataContext = containerExtension.Resolve<SettingsViewModel>();
             ShowDialog(new SettingsWindow(dataContext));
-            return dataContext.SettingsSaved;
+            return dataContext.SettingsSaveResult;
         }
 
         public AppSettings ShowRawSettingsWindow(AppSettings appSettings)

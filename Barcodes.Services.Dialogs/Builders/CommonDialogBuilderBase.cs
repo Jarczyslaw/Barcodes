@@ -1,6 +1,7 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Barcodes.Services.Dialogs.Builders
 {
@@ -12,6 +13,7 @@ namespace Barcodes.Services.Dialogs.Builders
         protected void AddFilter(DialogFilterPair filter)
         {
             var dialogFilter = new CommonFileDialogFilter(filter.DisplayName, filter.ExtensionsList);
+            dialog.DefaultExtension = filter.DisplayName;
             dialog.Filters.Add(dialogFilter);
         }
 
@@ -19,6 +21,7 @@ namespace Barcodes.Services.Dialogs.Builders
         {
             if (filters != null)
             {
+                dialog.DefaultExtension = filters[0].DisplayName;
                 foreach (var filter in filters)
                 {
                     AddFilter(filter);

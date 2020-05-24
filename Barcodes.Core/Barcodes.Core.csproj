@@ -105,6 +105,7 @@
     <Compile Include="Extensions\StorageWorkspaceExtensions.cs" />
     <Compile Include="Models\GenerationResult.cs" />
     <Compile Include="Models\PdfExportMode.cs" />
+    <Compile Include="Models\SettingsSaveResult.cs" />
     <Compile Include="Models\TemplateResult.cs" />
     <Compile Include="Models\TemplatesFactory.cs" />
     <Compile Include="ProductCodesDecoder.cs" />
