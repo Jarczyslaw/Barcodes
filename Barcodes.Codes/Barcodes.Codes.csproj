@@ -45,6 +45,7 @@
     <Compile Include="BarcodeType.cs" />
     <Compile Include="BaseCode.cs" />
     <Compile Include="ContainerCode.cs" />
+    <Compile Include="PaletteCode.cs" />
     <Compile Include="ReleaseDocumentCode.cs" />
     <Compile Include="OrderCode.cs" />
     <Compile Include="LongProductCode.cs" />
