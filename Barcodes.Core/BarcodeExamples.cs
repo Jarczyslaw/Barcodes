@@ -29,7 +29,8 @@ namespace Barcodes.Core
                 CreateContainerBarcode(generatorService, generationSettings),
                 CreateUserBarcode(generatorService, generationSettings),
                 CreateLongProductBarcode(generatorService, generationSettings),
-                CreateStationBarcode(generatorService, generationSettings)
+                CreateStationBarcode(generatorService, generationSettings),
+                CreatePaletteBarcode(generatorService, generationSettings)
             };
         }
 
@@ -166,6 +167,23 @@ namespace Barcodes.Core
                 Title = "Stacja (z magazynem)",
                 Barcode = generatorService.CreateBarcode(data),
                 Description = "ST + numer magazynu (2 cyfry) + numer stacji (2 cyfry, 00 - bez stacji)"
+            };
+        }
+
+        private static ExampleBarcodeViewModel CreatePaletteBarcode(IGeneratorService generatorService, GenerationSettings generationSettings)
+        {
+            var data = GetBaseGenerationData(generationSettings);
+
+            data.Data = "PA1234";
+            data.ValidateCodeText = false;
+            data.Type = BarcodeType.Code128;
+
+            return new ExampleBarcodeViewModel(data)
+            {
+                Template = BarcodeTemplate.Palette,
+                Title = "Paleta",
+                Barcode = generatorService.CreateBarcode(data),
+                Description = "PA/PT + numer palety"
             };
         }
     }

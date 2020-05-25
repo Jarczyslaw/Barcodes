@@ -14,7 +14,8 @@ namespace Barcodes.Codes
             new CodePair(new ProductCode(), BarcodeTemplate.Product),
             new CodePair(new ReleaseDocumentCode(), BarcodeTemplate.ReleaseDocument),
             new CodePair(new UserCode(), BarcodeTemplate.User),
-            new CodePair(new WarehouseAndStationCode(), BarcodeTemplate.WarehouseAndStation)
+            new CodePair(new WarehouseAndStationCode(), BarcodeTemplate.WarehouseAndStation),
+            new CodePair(new PaletteCode(), BarcodeTemplate.Palette)
         };
 
         public CodePair GetCode(string codeString)

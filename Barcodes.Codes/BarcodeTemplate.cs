@@ -10,6 +10,7 @@
         Order,
         ReleaseDocument,
         User,
-        WarehouseAndStation
+        WarehouseAndStation,
+        Palette
     }
 }

@@ -40,8 +40,10 @@ namespace Barcodes.Codes
         {
             CheckCode(code);
             var body = GetCodeBody(code);
+            var prefix = GetCodePrefix(code);
             CheckCodeOnlyDigits(body);
             PaletteNumber = int.Parse(body);
+            CurrentPrefix = prefix;
         }
 
         public static bool TryParse(string code, out PaletteCode paletteCode)

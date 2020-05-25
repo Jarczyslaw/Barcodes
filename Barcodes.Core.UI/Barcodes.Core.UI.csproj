@@ -108,6 +108,9 @@
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Templates\PaletteWindow.xaml.cs">
+      <DependentUpon>PaletteWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Templates\BaseNumericWindow.xaml.cs">
       <DependentUpon>BaseNumericWindow.xaml</DependentUpon>
     </Compile>
@@ -190,6 +193,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Templates\PaletteWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

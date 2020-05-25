@@ -70,6 +70,12 @@ namespace Barcodes.Core.Models
                     Title = "Warehouse and station - Code128",
                     Handler = appWindowsService.OpenTemplateWindow<WarehouseAndStationViewModel>
                 },
+                new TemplateViewModel
+                {
+                    Template = BarcodeTemplate.Palette,
+                    Title = "Palette - Code128",
+                    Handler = appWindowsService.OpenTemplateWindow<PaletteViewModel>
+                },
             };
         }
     }

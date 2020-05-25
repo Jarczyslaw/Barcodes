@@ -13,6 +13,7 @@ namespace Barcodes.Codes.Tests
             var codeString = "PA0001234";
             var code = new PaletteCode(codeString);
             Assert.AreEqual(1234, code.PaletteNumber);
+            Assert.AreEqual("PA", code.CurrentPrefix);
         }
 
         [TestMethod]

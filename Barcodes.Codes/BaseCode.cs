@@ -42,6 +42,8 @@ namespace Barcodes.Codes
             }
         }
 
+        public bool HasPrefix => Prefixes.Count > 0;
+
         public abstract void Parse(string code);
 
         protected void CheckCodeOnlyDigits(string codeBody)
@@ -73,6 +75,11 @@ namespace Barcodes.Codes
                 throw new ArgumentException("Invalid prefix");
             }
 
+            if (HasPrefix && code.Length < PrefixLength)
+            {
+                throw new ArgumentException("Invalid code length");
+            }
+
             if (Length != 0 && code.Length != Length)
             {
                 throw new ArgumentException("Invalid code length");
@@ -82,6 +89,11 @@ namespace Barcodes.Codes
         protected string GetCodeBody(string code)
         {
             return code.Substring(PrefixLength);
+        }
+
+        protected string GetCodePrefix(string code)
+        {
+            return code.Substring(0, PrefixLength);
         }
 
         protected int MaxValue(int digits)
