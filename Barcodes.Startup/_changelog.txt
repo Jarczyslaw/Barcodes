@@ -1,4 +1,8 @@
-﻿1.3.0
+﻿1.3.1
+	kody obsługują listę prefixów
+	dodano kod palety
+
+1.3.0
 	zapamiętanie pozycji okna pojedynczego kodu
 	przy ładowaniu nowego pliku pojawia się pytanie o zapis aktualnych zmian
 	wyciąganie całego workspace do nowego okna (również na dwukliku)
