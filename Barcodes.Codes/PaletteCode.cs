@@ -44,6 +44,7 @@ namespace Barcodes.Codes
 
         public override void Parse(string code)
         {
+            code = PrepareCodeWithPrefix(code);
             CheckCode(code);
             var body = GetCodeBody(code);
             var prefix = GetCodePrefix(code);

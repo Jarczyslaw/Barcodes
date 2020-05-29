@@ -8,7 +8,7 @@ namespace Barcodes.Core.ViewModels.Templates
 {
     public class PaletteViewModel : BaseTemplateViewModel
     {
-        private int paletteNumber = 1;
+        private string paletteNumberCode = string.Empty;
         private string selectedPrefix = string.Empty;
 
         public PaletteViewModel(IAppDialogsService dialogsService)
@@ -16,10 +16,10 @@ namespace Barcodes.Core.ViewModels.Templates
         {
         }
 
-        public int PaletteNumber
+        public string PaletteNumberCode
         {
-            get => paletteNumber;
-            set => SetProperty(ref paletteNumber, value);
+            get => paletteNumberCode;
+            set => SetProperty(ref paletteNumberCode, value);
         }
 
         public string SelectedPrefix
@@ -38,15 +38,17 @@ namespace Barcodes.Core.ViewModels.Templates
             SelectedPrefix = new PaletteCode().CurrentPrefix;
             if (PaletteCode.TryParse(data, out PaletteCode containerCode))
             {
-                PaletteNumber = containerCode.PaletteNumber;
+                PaletteNumberCode = containerCode.PaletteNumberCode;
                 SelectedPrefix = containerCode.CurrentPrefix;
             }
         }
 
         protected override TemplateResult GetResultData()
         {
-            var code = new PaletteCode(PaletteNumber);
-            code.CurrentPrefix = SelectedPrefix;
+            var code = new PaletteCode(PaletteNumberCode.Trim())
+            {
+                CurrentPrefix = SelectedPrefix
+            };
             return new TemplateResult(code);
         }
 
@@ -54,7 +56,7 @@ namespace Barcodes.Core.ViewModels.Templates
         {
             try
             {
-                new PaletteCode(PaletteNumber);
+                new PaletteCode(PaletteNumberCode.Trim());
                 return true;
             }
             catch (Exception exc)

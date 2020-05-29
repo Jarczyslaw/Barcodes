@@ -11,7 +11,7 @@
         protected override void OnViewShown()
         {
             base.OnViewShown();
-            iudValue.Focus();
+            tbPaletteNumberCode.Focus();
         }
     }
 }

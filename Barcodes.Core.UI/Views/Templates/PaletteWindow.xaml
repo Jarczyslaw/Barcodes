@@ -33,18 +33,13 @@
                     ItemsSource="{Binding Prefixes}"
                     SelectedItem="{Binding SelectedPrefix, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Grid.Row="1" Content="Palette number:" />
-                <toolkit:IntegerUpDown
-                    x:Name="iudValue"
+                <Label Grid.Row="1" Content="Palette number (digits):" />
+                <controls:CustomTextBox
+                    x:Name="tbPaletteNumberCode"
                     Grid.Row="1"
                     Grid.Column="1"
-                    Width="160"
-                    Margin="{StaticResource DefaultMargin}"
-                    HorizontalAlignment="Stretch"
-                    Minimum="1"
-                    ShowButtonSpinner="False"
-                    TextAlignment="Left"
-                    Value="{Binding PaletteNumber, UpdateSourceTrigger=PropertyChanged}" />
+                    Width="180"
+                    Text="{Binding PaletteNumberCode, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
         </GroupBox>
         <UniformGrid Columns="2">

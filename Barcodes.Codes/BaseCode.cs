@@ -63,12 +63,17 @@ namespace Barcodes.Codes
             return true;
         }
 
-        protected void CheckCode(string code)
+        protected void CheckCodeEmpty(string code)
         {
             if (string.IsNullOrEmpty(code))
             {
                 throw new ArgumentException("Code can not be empty");
             }
+        }
+
+        protected void CheckCode(string code)
+        {
+            CheckCodeEmpty(code);
 
             if (!CheckPrefix(code))
             {
@@ -117,6 +122,16 @@ namespace Barcodes.Codes
             {
                 throw new ArgumentException($"Invalid value of {name} which is lower than {min}");
             }
+        }
+
+        protected string PrepareCodeWithPrefix(string code)
+        {
+            CheckCodeEmpty(code);
+            if (!CheckPrefix(code))
+            {
+                code = CurrentPrefix + code;
+            }
+            return code;
         }
     }
 }

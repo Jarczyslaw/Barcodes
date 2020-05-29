@@ -30,18 +30,9 @@ namespace Barcodes.Codes
 
         public override void Parse(string code)
         {
-            code = PrepareCode(code);
+            code = PrepareCodeWithPrefix(code);
             CheckCode(code);
             Address = GetCodeBody(code);
-        }
-
-        private string PrepareCode(string code)
-        {
-            if (!CheckPrefix(code))
-            {
-                code = CurrentPrefix + code;
-            }
-            return code;
         }
 
         public static bool TryParse(string code, out LocationCode locationCode)
