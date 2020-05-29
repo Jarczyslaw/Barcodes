@@ -1,1 +1,8 @@
-﻿zrobić drag and dropa na na zakładkach i na kodach (docelowo dragablz)
+﻿dodać kod alejki
+po otwarciu zakładki z barkodami okno z barkodami chowa się po głównym oknem
+
+
+
+
+
+zrobić drag and dropa na na zakładkach i na kodach (docelowo dragablz)

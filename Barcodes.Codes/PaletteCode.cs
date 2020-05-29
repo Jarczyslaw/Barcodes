@@ -15,18 +15,24 @@ namespace Barcodes.Codes
         }
 
         public PaletteCode(int number)
+            : this(number, 0)
         {
-            CheckNumber(number);
-            PaletteNumber = number;
         }
 
-        public override string Code => CurrentPrefix + PaletteNumber.ToString();
+        public PaletteCode(int number, int length)
+        {
+            CheckNumber(number);
+            PaletteNumberCode = number.ToString().PadLeft(length, '0');
+        }
+
+        public override string Code => CurrentPrefix + PaletteNumberCode;
 
         public override BarcodeType Type => BarcodeType.Code128;
 
         public override List<string> Prefixes => new List<string> { "PA", "PT" };
 
-        public int PaletteNumber { get; private set; } = 1;
+        public int PaletteNumber => int.Parse(PaletteNumberCode);
+        public string PaletteNumberCode { get; private set; } = "1";
 
         private void CheckNumber(int number)
         {
@@ -42,7 +48,8 @@ namespace Barcodes.Codes
             var body = GetCodeBody(code);
             var prefix = GetCodePrefix(code);
             CheckCodeOnlyDigits(body);
-            PaletteNumber = int.Parse(body);
+
+            PaletteNumberCode = body;
             CurrentPrefix = prefix;
         }
 
