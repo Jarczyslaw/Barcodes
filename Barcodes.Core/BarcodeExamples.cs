@@ -2,6 +2,7 @@
 using Barcodes.Core.ViewModels;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.Generator;
+using System;
 using System.Collections.ObjectModel;
 
 namespace Barcodes.Core
@@ -30,7 +31,25 @@ namespace Barcodes.Core
                 CreateUserBarcode(generatorService, generationSettings),
                 CreateLongProductBarcode(generatorService, generationSettings),
                 CreateStationBarcode(generatorService, generationSettings),
-                CreatePaletteBarcode(generatorService, generationSettings)
+                CreatePaletteBarcode(generatorService, generationSettings),
+                CreateAlleyBarcode(generatorService, generationSettings)
+            };
+        }
+
+        private static ExampleBarcodeViewModel CreateAlleyBarcode(IGeneratorService generatorService, GenerationSettings generationSettings)
+        {
+            var data = GetBaseGenerationData(generationSettings);
+
+            data.Data = "AL0000012345KA";
+            data.ValidateCodeText = false;
+            data.Type = BarcodeType.Code128;
+
+            return new ExampleBarcodeViewModel(data)
+            {
+                Template = BarcodeTemplate.Alley,
+                Title = "Alejka",
+                Barcode = generatorService.CreateBarcode(data),
+                Description = "AL + adres lokalizacji (10 cyfr) + alejka (minimum 2 znaki)"
             };
         }
 

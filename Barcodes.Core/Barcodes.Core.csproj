@@ -133,6 +133,7 @@
     <Compile Include="Services\StateSaver\StateSaverService.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Templates\BaseProductViewModel.cs" />
+    <Compile Include="ViewModels\Templates\AlleyViewModel.cs" />
     <Compile Include="ViewModels\Templates\PaletteViewModel.cs" />
     <Compile Include="ViewModels\Templates\WarehouseAndStationViewModel.cs" />
     <Compile Include="ViewModels\Templates\UserViewModel.cs" />

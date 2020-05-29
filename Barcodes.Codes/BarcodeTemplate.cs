@@ -11,6 +11,7 @@
         ReleaseDocument,
         User,
         WarehouseAndStation,
-        Palette
+        Palette,
+        Alley
     }
 }

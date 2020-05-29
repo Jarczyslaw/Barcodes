@@ -76,6 +76,12 @@ namespace Barcodes.Core.Models
                     Title = "Palette - Code128",
                     Handler = appWindowsService.OpenTemplateWindow<PaletteViewModel>
                 },
+                new TemplateViewModel
+                {
+                    Template = BarcodeTemplate.Alley,
+                    Title = "Alley - Code128",
+                    Handler = appWindowsService.OpenTemplateWindow<AlleyViewModel>
+                },
             };
         }
     }

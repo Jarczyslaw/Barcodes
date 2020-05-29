@@ -52,6 +52,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlleyCodeTests.cs" />
     <Compile Include="PaletteCodeTests.cs" />
     <Compile Include="WarehouseAndStationCodeTests.cs" />
     <Compile Include="UserCodeTests.cs" />
