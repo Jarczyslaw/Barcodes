@@ -29,7 +29,7 @@ namespace Barcodes.Codes.Tests
             code = new PaletteCode(paletteNumber, 7);
             code.CurrentPrefix = "PA";
             Assert.AreEqual(1234, code.PaletteNumber);
-            Assert.AreEqual("PT0001234", code.Code);
+            Assert.AreEqual("PA0001234", code.Code);
         }
 
         [TestMethod]
