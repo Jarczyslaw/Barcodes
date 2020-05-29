@@ -6,5 +6,11 @@
         {
             InitializeComponent();
         }
+
+        protected override void OnViewShown()
+        {
+            base.OnViewShown();
+            BringToFront();
+        }
     }
 }

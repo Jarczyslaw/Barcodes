@@ -1,7 +1,4 @@
-﻿using Barcodes.Core.Common;
-using System.Windows;
-
-namespace Barcodes.Core.UI.Views
+﻿namespace Barcodes.Core.UI.Views
 {
     public partial class BarcodeWindow : BaseWindow
     {
@@ -14,7 +11,7 @@ namespace Barcodes.Core.UI.Views
         protected override void OnViewShown()
         {
             base.OnViewShown();
-            Activate();
+            BringToFront();
         }
     }
 }
