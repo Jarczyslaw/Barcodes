@@ -1,5 +1,5 @@
-﻿dodać kod alejki
-po otwarciu zakładki z barkodami okno z barkodami chowa się po głównym oknem
+﻿dodać zaznaczanie wielu kodów kreskowych
+zrobić import całego storage
 
 
 
