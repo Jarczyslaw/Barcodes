@@ -15,6 +15,7 @@
 
             <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         </ResourceDictionary>
     </prism:PrismApplication.Resources>
 </prism:PrismApplication>

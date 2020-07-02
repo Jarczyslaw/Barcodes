@@ -317,7 +317,8 @@
                                         <controls:BarcodeView
                                             BarcodeVisible="{Binding Proxy.App.BarcodesVisible, Source={StaticResource Proxy}, Mode=OneWay}"
                                             ContextMenu="{StaticResource BarcodesContextMenu}"
-                                            DescriptionVisible="False">
+                                            DescriptionVisible="False"
+                                            IsCheckedEnabled="False">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseDoubleClick">
                                                     <prism:InvokeCommandAction Command="{Binding Proxy.BarcodeMenu.OpenInNewWindowCommand, Source={StaticResource Proxy}}" CommandParameter="{Binding}" />

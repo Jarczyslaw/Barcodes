@@ -8,6 +8,9 @@ namespace Barcodes.Core.UI.Controls
         public static readonly DependencyProperty BarcodeVisibleProperty =
             DependencyProperty.Register(nameof(BarcodeVisible), typeof(bool), typeof(BarcodeView), new FrameworkPropertyMetadata(true, OnBarcodeVisiblePropertyChanged));
 
+        public static readonly DependencyProperty IsCheckedEnabledProperty =
+            DependencyProperty.Register(nameof(IsCheckedEnabled), typeof(bool), typeof(BarcodeView), new FrameworkPropertyMetadata(true, OnIsCheckedEnabledPropertyChanged));
+
         public BarcodeView()
         {
             InitializeComponent();
@@ -17,6 +20,12 @@ namespace Barcodes.Core.UI.Controls
         {
             get => (bool)GetValue(BarcodeVisibleProperty);
             set => SetValue(BarcodeVisibleProperty, value);
+        }
+
+        public bool IsCheckedEnabled
+        {
+            get => (bool)GetValue(IsCheckedEnabledProperty);
+            set => SetValue(IsCheckedEnabledProperty, value);
         }
 
         public bool DescriptionVisible
@@ -33,7 +42,14 @@ namespace Barcodes.Core.UI.Controls
         {
             var barcodeView = source as BarcodeView;
             var barcodeVisible = (bool)e.NewValue;
-            barcodeView.barcodeImage.Visibility = GetVisibility(barcodeVisible);
+            barcodeView.imgBarcode.Visibility = GetVisibility(barcodeVisible);
+        }
+
+        private static void OnIsCheckedEnabledPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            var barcodeView = source as BarcodeView;
+            var isCheckedEnabled = (bool)e.NewValue;
+            barcodeView.chbIsChecked.Visibility = GetVisibility(isCheckedEnabled);
         }
 
         private static Visibility GetVisibility(bool value)

@@ -173,7 +173,7 @@ namespace Barcodes.Core.ViewModels
             var newWorkspace = new WorkspaceViewModel
             {
                 Name = workspaceName,
-                Default = !Workspaces.Any(w => w.Default)
+                DefaultWorkspace = !Workspaces.Any(w => w.DefaultWorkspace)
             };
             AddWorkspace(newWorkspace, servicesContainer.AppSettingsService.WorkspaceAddMode);
         }
@@ -239,7 +239,7 @@ namespace Barcodes.Core.ViewModels
                     AddWorkspace(newWorkspace);
                 }
 
-                SelectedWorkspace = Workspaces.SingleOrDefault(w => w.Default);
+                SelectedWorkspace = Workspaces.SingleOrDefault(w => w.DefaultWorkspace);
                 if (WorkspacesCount != 0 || BarcodesCount != 0)
                 {
                     UpdateMessage($"Successfully loaded {WorkspacesCount} workspaces and {BarcodesCount} barcodes from {Path.GetFileName(storagePath)}");
@@ -500,7 +500,7 @@ namespace Barcodes.Core.ViewModels
 
             var workspace = new WorkspaceViewModel
             {
-                Default = true,
+                DefaultWorkspace = true,
                 Name = workspaceName
             };
             AddWorkspace(workspace);
@@ -614,9 +614,9 @@ namespace Barcodes.Core.ViewModels
         {
             foreach (var w in Workspaces)
             {
-                w.Default = false;
+                w.DefaultWorkspace = false;
             }
-            workspace.Default = true;
+            workspace.DefaultWorkspace = true;
         }
 
         public void MoveWorkspaceLeft(WorkspaceViewModel workspace)
@@ -746,9 +746,9 @@ namespace Barcodes.Core.ViewModels
 
                 AddWorkspaces(workspaces, servicesContainer.AppSettingsService.WorkspaceAddMode);
                 SelectedWorkspace = workspaces.Last();
-                if (!Workspaces.Any(w => w.Default))
+                if (!Workspaces.Any(w => w.DefaultWorkspace))
                 {
-                    workspaces.Last().Default = true;
+                    workspaces.Last().DefaultWorkspace = true;
                 }
                 UpdateMessage($"Successfully imported {workspaces.Count} workspaces");
             }

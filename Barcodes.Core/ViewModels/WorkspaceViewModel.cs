@@ -21,11 +21,22 @@ namespace Barcodes.Core.ViewModels
             Barcodes = new ObservableCollection<BarcodeViewModel>();
         }
 
+        public WorkspaceViewModel(WorkspaceViewModel workspaceViewModel)
+            : this()
+        {
+            DefaultWorkspace = workspaceViewModel.DefaultWorkspace;
+            Name = workspaceViewModel.Name;
+            foreach (var barcode in workspaceViewModel.Barcodes)
+            {
+                Barcodes.Add(new BarcodeViewModel(barcode));
+            }
+        }
+
         public Action<string> OnMessageUpdate { get; set; }
 
         public string DisplayName
         {
-            get => Default ? $"(D) {Name}" : Name;
+            get => DefaultWorkspace ? $"(D) {Name}" : Name;
         }
 
         public string Name
@@ -38,7 +49,7 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public bool Default
+        public bool DefaultWorkspace
         {
             get => defaultWorkspace;
             set
@@ -152,7 +163,7 @@ namespace Barcodes.Core.ViewModels
             return new StorageWorkspace
             {
                 Title = Name,
-                Default = Default,
+                Default = DefaultWorkspace,
                 Barcodes = Barcodes.Select(b => b.ToStorage()).ToList()
             };
         }

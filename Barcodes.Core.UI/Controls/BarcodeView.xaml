@@ -27,18 +27,20 @@
                 <Style TargetType="TextBox">
                     <Setter Property="IsReadOnly" Value="True" />
                     <Setter Property="VerticalContentAlignment" Value="Center" />
-                    <Setter Property="Width" Value="300" />
-                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="MinWidth" Value="300" />
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
                     <Setter Property="Background" Value="{StaticResource LightGreyBrush}" />
                     <Setter Property="Margin" Value="3" />
                 </Style>
             </Grid.Resources>
 
-            <Label
-                Grid.ColumnSpan="2"
-                HorizontalContentAlignment="Center"
-                Content="{Binding Title, Mode=OneWay, FallbackValue=Title}"
-                FontWeight="Bold" />
+            <Grid Grid.ColumnSpan="2">
+                <Label
+                    HorizontalContentAlignment="Center"
+                    Content="{Binding Title, Mode=OneWay, FallbackValue=Title}"
+                    FontWeight="Bold" />
+                <CheckBox x:Name="chbIsChecked" IsChecked="{Binding IsChecked}" />
+            </Grid>
 
             <Label Grid.Row="1" Content="Type:" />
             <TextBox
@@ -63,7 +65,7 @@
                 Text="{Binding GenerationData.Data, Mode=OneWay}" />
 
             <Image
-                x:Name="barcodeImage"
+                x:Name="imgBarcode"
                 Grid.Row="4"
                 Grid.ColumnSpan="2"
                 Width="{Binding Barcode.Width, Mode=OneWay}"
