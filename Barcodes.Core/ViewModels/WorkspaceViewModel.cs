@@ -71,6 +71,8 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref selectedBarcode, value);
         }
 
+        public List<BarcodeViewModel> SelectedBarcodes { get; set; }
+
         private void AddToBarcodes(BarcodeViewModel barcode, AddMode addMode)
         {
             if (addMode == AddMode.AsFirst)
@@ -126,35 +128,35 @@ namespace Barcodes.Core.ViewModels
             OnMessageUpdate?.Invoke($"Successfully removed {barcode.Title}");
         }
 
-        public void MoveDown(BarcodeViewModel barcode)
+        public void MoveDown()
         {
-            var index = Barcodes.IndexOf(barcode);
-            Barcodes.ShiftRight(index);
-        }
-
-        public void MoveUp(BarcodeViewModel barcode)
-        {
-            var index = Barcodes.IndexOf(barcode);
-            Barcodes.ShiftLeft(index);
-        }
-
-        public void SetBarcodeAsFirst(BarcodeViewModel barcode)
-        {
-            if (Barcodes.IndexOf(barcode) > 0)
+            if (SelectedBarcodes != null)
             {
-                Barcodes.Remove(barcode);
-                Barcodes.Insert(0, barcode);
-                SelectedBarcode = barcode;
+                Barcodes.ShiftRight(SelectedBarcodes);
             }
         }
 
-        public void SetBarcodeAsLast(BarcodeViewModel barcode)
+        public void MoveUp()
         {
-            if (Barcodes.IndexOf(barcode) < Barcodes.Count - 1)
+            if (SelectedBarcodes != null)
             {
-                Barcodes.Remove(barcode);
-                Barcodes.Add(barcode);
-                SelectedBarcode = barcode;
+                Barcodes.ShiftLeft(SelectedBarcodes);
+            }
+        }
+
+        public void SetBarcodesAsFirst()
+        {
+            if (SelectedBarcodes != null)
+            {
+                Barcodes.SetAsFirst(SelectedBarcodes);
+            }
+        }
+
+        public void SetBarcodesAsLast()
+        {
+            if (SelectedBarcodes != null)
+            {
+                Barcodes.SetAsLast(SelectedBarcodes);
             }
         }
 

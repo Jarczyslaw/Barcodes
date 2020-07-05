@@ -1,5 +1,6 @@
 ﻿using Barcodes.Core.ViewModels;
 using Barcodes.SingleInstance;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -35,6 +36,17 @@ namespace Barcodes.Core.UI.Views
             {
                 var workspaceViewModel = (sender as TabItem).DataContext as WorkspaceViewModel;
                 shellViewModel.WorkspaceMenu.OpenInNewWindowCommand.Execute(workspaceViewModel);
+            }
+        }
+
+        private void lvBarcodes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var listView = sender as ListView;
+            if (listView.DataContext is WorkspaceViewModel workspaceViewModel)
+            {
+                workspaceViewModel.SelectedBarcodes = listView.SelectedItems
+                    .Cast<BarcodeViewModel>()
+                    .ToList();
             }
         }
     }

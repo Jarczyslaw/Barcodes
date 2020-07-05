@@ -73,22 +73,10 @@
                 CommandParameter="{Binding}"
                 Header="Edit" />
             <MenuItem Header="Change order">
-                <MenuItem
-                    Command="{Binding Proxy.BarcodeMenu.SetAsFirstCommand, Source={StaticResource Proxy}}"
-                    CommandParameter="{Binding}"
-                    Header="Set as first" />
-                <MenuItem
-                    Command="{Binding Proxy.BarcodeMenu.MoveUpCommand, Source={StaticResource Proxy}}"
-                    CommandParameter="{Binding}"
-                    Header="Move up" />
-                <MenuItem
-                    Command="{Binding Proxy.BarcodeMenu.MoveDownCommand, Source={StaticResource Proxy}}"
-                    CommandParameter="{Binding}"
-                    Header="Move down" />
-                <MenuItem
-                    Command="{Binding Proxy.BarcodeMenu.SetAsLastCommand, Source={StaticResource Proxy}}"
-                    CommandParameter="{Binding}"
-                    Header="Set as last" />
+                <MenuItem Command="{Binding Proxy.BarcodeMenu.SetAsFirstCommand, Source={StaticResource Proxy}}" Header="Set as first" />
+                <MenuItem Command="{Binding Proxy.BarcodeMenu.MoveUpCommand, Source={StaticResource Proxy}}" Header="Move up" />
+                <MenuItem Command="{Binding Proxy.BarcodeMenu.MoveDownCommand, Source={StaticResource Proxy}}" Header="Move down" />
+                <MenuItem Command="{Binding Proxy.BarcodeMenu.SetAsLastCommand, Source={StaticResource Proxy}}" Header="Set as last" />
             </MenuItem>
             <MenuItem
                 Command="{Binding Proxy.BarcodeMenu.OpenInNewWindowCommand, Source={StaticResource Proxy}}"
@@ -306,12 +294,14 @@
                             Padding="0"
                             Header="Barcodes">
                             <ListView
+                                x:Name="lvBarcodes"
                                 Background="Transparent"
                                 BorderThickness="0"
                                 ItemsPanel="{StaticResource TileListViewTemplate}"
                                 ItemsSource="{Binding Barcodes}"
                                 SelectedItem="{Binding SelectedBarcode}"
-                                SelectionMode="Single">
+                                SelectionChanged="lvBarcodes_SelectionChanged"
+                                SelectionMode="Extended">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <controls:BarcodeView
