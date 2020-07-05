@@ -1,4 +1,5 @@
 ﻿using Barcodes.Utils;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Barcodes.Services.Storage
@@ -34,12 +35,12 @@ namespace Barcodes.Services.Storage
             Serializer.ToFile(workspace, filePath);
         }
 
-        public StorageBarcode ImportBarcode(string filePath)
+        public List<StorageBarcode> ImportBarcodes(string filePath)
         {
-            return Serializer.FromFile<StorageBarcode>(filePath);
+            return Serializer.FromFile<List<StorageBarcode>>(filePath);
         }
 
-        public void ExportBarcode(string filePath, StorageBarcode barcode)
+        public void ExportBarcodes(string filePath, List<StorageBarcode> barcode)
         {
             Serializer.ToFile(barcode, filePath);
         }

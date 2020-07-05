@@ -78,10 +78,7 @@
                 <MenuItem Command="{Binding Proxy.BarcodeMenu.MoveDownCommand, Source={StaticResource Proxy}}" Header="Move down" />
                 <MenuItem Command="{Binding Proxy.BarcodeMenu.SetAsLastCommand, Source={StaticResource Proxy}}" Header="Set as last" />
             </MenuItem>
-            <MenuItem
-                Command="{Binding Proxy.BarcodeMenu.OpenInNewWindowCommand, Source={StaticResource Proxy}}"
-                CommandParameter="{Binding}"
-                Header="Open in new window" />
+            <MenuItem Command="{Binding Proxy.BarcodeMenu.OpenInNewWindowCommand, Source={StaticResource Proxy}}" Header="Open in new window" />
             <MenuItem
                 Command="{Binding Proxy.BarcodeMenu.SaveToImageFileCommand, Source={StaticResource Proxy}}"
                 CommandParameter="{Binding}"
@@ -96,10 +93,7 @@
                     CommandParameter="{Binding}"
                     Header="Data" />
             </MenuItem>
-            <MenuItem
-                Command="{Binding Proxy.BarcodeMenu.ExportCommand, Source={StaticResource Proxy}}"
-                CommandParameter="{Binding}"
-                Header="Export" />
+            <MenuItem Command="{Binding Proxy.BarcodeMenu.ExportCommand, Source={StaticResource Proxy}}" Header="Export" />
             <MenuItem
                 Command="{Binding Proxy.BarcodeMenu.ChangeWorkspaceCommand, Source={StaticResource Proxy}}"
                 CommandParameter="{Binding}"

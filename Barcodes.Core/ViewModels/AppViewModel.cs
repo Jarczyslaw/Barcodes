@@ -548,9 +548,15 @@ namespace Barcodes.Core.ViewModels
             SelectedWorkspace.RemoveBarcode(barcode);
         }
 
-        public void OpenBarcodeInNewWindow(BarcodeViewModel barcode)
+        public void OpenBarcodesInNewWindow()
         {
-            servicesContainer.AppWindowsService.OpenBarcodeWindow(barcode);
+            if (SelectedBarcodes != null)
+            {
+                foreach (var barcode in SelectedBarcodes)
+                {
+                    servicesContainer.AppWindowsService.OpenBarcodeWindow(barcode);
+                }
+            }
         }
 
         public void SaveToImageFile(BarcodeViewModel barcode)
@@ -698,7 +704,7 @@ namespace Barcodes.Core.ViewModels
 
         public void ImportBarcodes()
         {
-            var barcodeFiles = servicesContainer.AppDialogsService.ImportBarcodeFiles();
+            var barcodeFiles = servicesContainer.AppDialogsService.ImportBarcodesFiles();
             if (barcodeFiles?.Count > 0)
             {
                 barcodeFiles.Reverse();
@@ -707,8 +713,10 @@ namespace Barcodes.Core.ViewModels
                 {
                     try
                     {
-                        var storageBarcode = servicesContainer.StorageService.ImportBarcode(barcodeFile);
-                        barcodes.Add(storageBarcode.ToBarcode(servicesContainer.GeneratorService));
+                        foreach (var storageBarcode in servicesContainer.StorageService.ImportBarcodes(barcodeFile))
+                        {
+                            barcodes.Add(storageBarcode.ToBarcode(servicesContainer.GeneratorService));
+                        }
                     }
                     catch (Exception exc)
                     {
@@ -776,22 +784,27 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public void ExportBarcode(BarcodeViewModel barcode)
+        public void ExportBarcodes()
         {
-            var barcodeFile = servicesContainer.AppDialogsService.ExportBarcodeFile(barcode.Title);
-            if (string.IsNullOrEmpty(barcodeFile))
+            if (SelectedBarcodes != null)
             {
-                return;
-            }
+                var barcodeFile = servicesContainer.AppDialogsService.ExportBarcodesFile();
+                if (string.IsNullOrEmpty(barcodeFile))
+                {
+                    return;
+                }
 
-            try
-            {
-                servicesContainer.StorageService.ExportBarcode(barcodeFile, barcode.ToStorage());
-                StatusMessage = $"{barcode.Title} exported successfully";
-            }
-            catch (Exception exc)
-            {
-                servicesContainer.AppDialogsService.ShowException("Error when exporting barcode", exc);
+                try
+                {
+                    var barcodesToExport = SelectedBarcodes.Select(s => s.ToStorage())
+                        .ToList();
+                    servicesContainer.StorageService.ExportBarcodes(barcodeFile, barcodesToExport);
+                    StatusMessage = $"Barcodes exported successfully";
+                }
+                catch (Exception exc)
+                {
+                    servicesContainer.AppDialogsService.ShowException("Error when exporting barcode", exc);
+                }
             }
         }
 

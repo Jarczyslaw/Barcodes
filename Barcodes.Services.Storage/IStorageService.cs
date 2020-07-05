@@ -1,4 +1,6 @@
-﻿namespace Barcodes.Services.Storage
+﻿using System.Collections.Generic;
+
+namespace Barcodes.Services.Storage
 {
     public interface IStorageService
     {
@@ -6,8 +8,8 @@
         void Save(string filePath, Storage storage);
         StorageWorkspace ImportWorkspace(string filePath);
         void ExportWorkspace(string filePath, StorageWorkspace workspace);
-        StorageBarcode ImportBarcode(string filePath);
-        void ExportBarcode(string filePath, StorageBarcode barcode);
+        List<StorageBarcode> ImportBarcodes(string filePath);
+        void ExportBarcodes(string filePath, List<StorageBarcode> barcode);
         bool StorageChanged(Storage currentStorage);
     }
 }

@@ -57,20 +57,20 @@ namespace Barcodes.Core.UI.Services
             return SaveFile("Workspace file", null, fileName, workspaceFilter);
         }
 
-        public string ImportBarcodeFile()
+        public string ImportBarcodesFile()
         {
-            return OpenFile("Barcode file", null, true, barcodeFilter);
+            return OpenFile("Barcodes file", null, true, barcodeFilter);
         }
 
-        public List<string> ImportBarcodeFiles()
+        public List<string> ImportBarcodesFiles()
         {
-            return OpenFiles("Barcode file", null, barcodeFilter);
+            return OpenFiles("Barcodes files", null, barcodeFilter);
         }
 
-        public string ExportBarcodeFile(string barcodeTitle)
+        public string ExportBarcodesFile()
         {
-            var fileName = $"{barcodeTitle}.{barcodeFilter.DisplayName}";
-            return SaveFile("Barcode file", null, fileName, barcodeFilter);
+            var fileName = $"barcodes.{barcodeFilter.DisplayName}";
+            return SaveFile("Barcodes file", null, fileName, barcodeFilter);
         }
 
         public string SavePdfFile()

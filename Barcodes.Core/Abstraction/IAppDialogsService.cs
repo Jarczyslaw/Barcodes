@@ -16,11 +16,11 @@ namespace Barcodes.Core.Abstraction
 
         string ExportWorkspaceFile(string workspaceName);
 
-        string ImportBarcodeFile();
+        string ImportBarcodesFile();
 
-        List<string> ImportBarcodeFiles();
+        List<string> ImportBarcodesFiles();
 
-        string ExportBarcodeFile(string barcodeTitle);
+        string ExportBarcodesFile();
 
         string SavePdfFile();
 
