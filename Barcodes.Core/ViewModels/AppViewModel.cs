@@ -379,10 +379,16 @@ namespace Barcodes.Core.ViewModels
                     servicesContainer.AppDialogsService.ShowError("No workspace found or there are no barcodes in active workspace");
                     return;
                 }
-                else
+                barcodesToExport.AddRange(SelectedWorkspace.Barcodes);
+            }
+            else if (mode == PdfExportMode.Selected)
+            {
+                if (!AreBarcodesSelected)
                 {
-                    barcodesToExport.AddRange(SelectedWorkspace.Barcodes);
+                    servicesContainer.AppDialogsService.ShowError("No selected barcodes to export");
+                    return;
                 }
+                barcodesToExport.AddRange(SelectedBarcodes);
             }
             else if (mode == PdfExportMode.All)
             {
@@ -391,16 +397,16 @@ namespace Barcodes.Core.ViewModels
                     servicesContainer.AppDialogsService.ShowError("No barcodes to export");
                     return;
                 }
-                else
+                foreach (var workspace in Workspaces)
                 {
-                    foreach (var workspace in Workspaces)
-                    {
-                        barcodesToExport.AddRange(workspace.Barcodes);
-                    }
+                    barcodesToExport.AddRange(workspace.Barcodes);
                 }
             }
 
-            ExecuteExportToPdf(barcodesToExport);
+            if (barcodesToExport.Count > 0)
+            {
+                ExecuteExportToPdf(barcodesToExport);
+            }
         }
 
         private async void ExecuteExportToPdf(IEnumerable<BarcodeViewModel> barcodes)

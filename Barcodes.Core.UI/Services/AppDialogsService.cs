@@ -101,6 +101,12 @@ namespace Barcodes.Core.UI.Services
                 },
                 new CustomButtonData<PdfExportMode>
                 {
+                    Name = "CurrentWorkspaceButton",
+                    Caption = "Selected barcodes",
+                    Value = PdfExportMode.Selected
+                },
+                new CustomButtonData<PdfExportMode>
+                {
                     Name = "CancelButton",
                     Caption = "Cancel",
                     Value = PdfExportMode.None
