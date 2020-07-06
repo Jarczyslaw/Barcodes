@@ -94,15 +94,9 @@
                     Header="Data" />
             </MenuItem>
             <MenuItem Command="{Binding Proxy.BarcodeMenu.ExportCommand, Source={StaticResource Proxy}}" Header="Export" />
-            <MenuItem
-                Command="{Binding Proxy.BarcodeMenu.ChangeWorkspaceCommand, Source={StaticResource Proxy}}"
-                CommandParameter="{Binding}"
-                Header="Change workspace" />
+            <MenuItem Command="{Binding Proxy.BarcodeMenu.ChangeWorkspaceCommand, Source={StaticResource Proxy}}" Header="Change workspace" />
             <Separator />
-            <MenuItem
-                Command="{Binding Proxy.BarcodeMenu.DeleteCommand, Source={StaticResource Proxy}}"
-                CommandParameter="{Binding}"
-                Header="Delete" />
+            <MenuItem Command="{Binding Proxy.BarcodeMenu.DeleteCommand, Source={StaticResource Proxy}}" Header="Delete" />
         </ContextMenu>
     </ui:BaseWindow.Resources>
 

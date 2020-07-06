@@ -46,7 +46,7 @@ namespace Barcodes.Core.ViewModels
         {
             if (keyEventArgs.Key == Key.Delete)
             {
-                App.TryDeleteSelectedBarcode();
+                App.DeleteBarcodes();
                 return true;
             }
             return false;

@@ -73,6 +73,8 @@ namespace Barcodes.Core.ViewModels
 
         public List<BarcodeViewModel> SelectedBarcodes { get; set; }
 
+        public bool AreBarcodesSelected => SelectedBarcodes?.Count > 0;
+
         private void AddToBarcodes(BarcodeViewModel barcode, AddMode addMode)
         {
             if (addMode == AddMode.AsFirst)
@@ -122,15 +124,26 @@ namespace Barcodes.Core.ViewModels
             SelectedBarcode = newBarcode;
         }
 
-        public void RemoveBarcode(BarcodeViewModel barcode)
+        public void RemoveBarcodes()
         {
-            Barcodes.Remove(barcode);
-            OnMessageUpdate?.Invoke($"Successfully removed {barcode.Title}");
+            if (AreBarcodesSelected)
+            {
+                RemoveBarcodes(SelectedBarcodes);
+                OnMessageUpdate?.Invoke($"Successfully removed {barcodes.Count} barcodes");
+            }
+        }
+
+        public void RemoveBarcodes(List<BarcodeViewModel> barcodes)
+        {
+            foreach (var barcode in barcodes)
+            {
+                Barcodes.Remove(barcode);
+            }
         }
 
         public void MoveDown()
         {
-            if (SelectedBarcodes != null)
+            if (AreBarcodesSelected)
             {
                 Barcodes.ShiftRight(SelectedBarcodes);
             }
@@ -138,7 +151,7 @@ namespace Barcodes.Core.ViewModels
 
         public void MoveUp()
         {
-            if (SelectedBarcodes != null)
+            if (AreBarcodesSelected)
             {
                 Barcodes.ShiftLeft(SelectedBarcodes);
             }
@@ -146,7 +159,7 @@ namespace Barcodes.Core.ViewModels
 
         public void SetBarcodesAsFirst()
         {
-            if (SelectedBarcodes != null)
+            if (AreBarcodesSelected)
             {
                 Barcodes.SetAsFirst(SelectedBarcodes);
             }
@@ -154,7 +167,7 @@ namespace Barcodes.Core.ViewModels
 
         public void SetBarcodesAsLast()
         {
-            if (SelectedBarcodes != null)
+            if (AreBarcodesSelected)
             {
                 Barcodes.SetAsLast(SelectedBarcodes);
             }

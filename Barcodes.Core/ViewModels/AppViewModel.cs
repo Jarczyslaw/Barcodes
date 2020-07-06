@@ -111,6 +111,8 @@ namespace Barcodes.Core.ViewModels
             get => SelectedWorkspace?.SelectedBarcodes;
         }
 
+        public bool AreBarcodesSelected => SelectedBarcodes?.Count > 0;
+
         public ObservableCollection<WorkspaceViewModel> Workspaces
         {
             get => workspaces;
@@ -530,27 +532,17 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public void TryDeleteSelectedBarcode()
+        public void DeleteBarcodes()
         {
-            if (SelectedBarcode != null)
+            if (AreBarcodesSelected && servicesContainer.AppDialogsService.ShowYesNoQuestion("Do you really want to delete selected barcodes?"))
             {
-                DeleteBarcode(SelectedBarcode);
+                SelectedWorkspace?.RemoveBarcodes();
             }
-        }
-
-        public void DeleteBarcode(BarcodeViewModel barcode)
-        {
-            if (!servicesContainer.AppDialogsService.ShowYesNoQuestion($"Do you really want to delete barcode {barcode.Title}?"))
-            {
-                return;
-            }
-
-            SelectedWorkspace.RemoveBarcode(barcode);
         }
 
         public void OpenBarcodesInNewWindow()
         {
-            if (SelectedBarcodes != null)
+            if (AreBarcodesSelected)
             {
                 foreach (var barcode in SelectedBarcodes)
                 {
@@ -642,28 +634,29 @@ namespace Barcodes.Core.ViewModels
             SelectedWorkspace = workspace;
         }
 
-        public void ChangeBarcodesWorkspace(BarcodeViewModel barcode)
+        public void ChangeBarcodesWorkspace()
         {
-            var barcodesWorkspace = Workspaces.Single(w => w.Barcodes.Contains(barcode));
-
-            if (Workspaces.Count() == 1)
+            if (AreBarcodesSelected)
             {
-                servicesContainer.AppDialogsService.ShowInfo("There is no workspace to switch to");
-            }
-            else if (Workspaces.Count == 2)
-            {
-                var targetWorkspace = GetWorkspacesWithout(barcodesWorkspace).Single();
-                MoveBarcodeToWorkspace(barcode, barcodesWorkspace, targetWorkspace);
-            }
-            else
-            {
-                var availableWorkspaces = GetWorkspacesWithout(barcodesWorkspace);
-                var targetWorkspace = servicesContainer.AppWindowsService.SelectBarcodesWorkspace(availableWorkspaces);
-                if (targetWorkspace == null)
+                if (Workspaces.Count() == 1)
                 {
-                    return;
+                    servicesContainer.AppDialogsService.ShowInfo("There is no workspace to switch to");
                 }
-                MoveBarcodeToWorkspace(barcode, barcodesWorkspace, targetWorkspace);
+                else if (Workspaces.Count == 2)
+                {
+                    var targetWorkspace = GetWorkspacesWithout(SelectedWorkspace).Single();
+                    MoveBarcodesToWorkspace(SelectedBarcodes, SelectedWorkspace, targetWorkspace);
+                }
+                else
+                {
+                    var availableWorkspaces = GetWorkspacesWithout(SelectedWorkspace);
+                    var targetWorkspace = servicesContainer.AppWindowsService.SelectBarcodesWorkspace(availableWorkspaces);
+                    if (targetWorkspace == null)
+                    {
+                        return;
+                    }
+                    MoveBarcodesToWorkspace(SelectedBarcodes, SelectedWorkspace, targetWorkspace);
+                }
             }
         }
 
@@ -672,10 +665,10 @@ namespace Barcodes.Core.ViewModels
             return Workspaces.Where(w => w != workspace);
         }
 
-        private void MoveBarcodeToWorkspace(BarcodeViewModel barcode, WorkspaceViewModel sourceWorkspace, WorkspaceViewModel targetWorkspace)
+        private void MoveBarcodesToWorkspace(List<BarcodeViewModel> barcodes, WorkspaceViewModel sourceWorkspace, WorkspaceViewModel targetWorkspace)
         {
-            sourceWorkspace.Barcodes.Remove(barcode);
-            targetWorkspace.Barcodes.Insert(0, barcode);
+            targetWorkspace.InsertNewBarcodes(barcodes, servicesContainer.AppSettingsService.BarcodeAddMode);
+            sourceWorkspace.RemoveBarcodes(barcodes);
         }
 
         public void ClearWorkspace(WorkspaceViewModel workspace)
@@ -786,7 +779,7 @@ namespace Barcodes.Core.ViewModels
 
         public void ExportBarcodes()
         {
-            if (SelectedBarcodes != null)
+            if (AreBarcodesSelected)
             {
                 var barcodeFile = servicesContainer.AppDialogsService.ExportBarcodesFile();
                 if (string.IsNullOrEmpty(barcodeFile))
