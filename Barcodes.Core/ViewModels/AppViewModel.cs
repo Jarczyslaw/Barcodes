@@ -667,7 +667,7 @@ namespace Barcodes.Core.ViewModels
 
         private void MoveBarcodesToWorkspace(List<BarcodeViewModel> barcodes, WorkspaceViewModel sourceWorkspace, WorkspaceViewModel targetWorkspace)
         {
-            targetWorkspace.InsertNewBarcodes(barcodes, servicesContainer.AppSettingsService.BarcodeAddMode);
+            targetWorkspace.InsertNewBarcodes(barcodes, servicesContainer.AppSettingsService.BarcodeAddMode, false);
             sourceWorkspace.RemoveBarcodes(barcodes);
         }
 
@@ -792,7 +792,7 @@ namespace Barcodes.Core.ViewModels
                     var barcodesToExport = SelectedBarcodes.Select(s => s.ToStorage())
                         .ToList();
                     servicesContainer.StorageService.ExportBarcodes(barcodeFile, barcodesToExport);
-                    StatusMessage = $"Barcodes exported successfully";
+                    StatusMessage = "Barcodes exported successfully";
                 }
                 catch (Exception exc)
                 {
