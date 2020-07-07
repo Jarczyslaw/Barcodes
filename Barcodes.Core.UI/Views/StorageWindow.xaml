@@ -1,0 +1,85 @@
+﻿<ui:BaseWindow
+    x:Class="Barcodes.Core.UI.Views.StorageWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Barcodes.Core.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:Barcodes.Core.UI"
+    Title="Barcodes - Storage content"
+    Width="1300"
+    Height="900"
+    MinWidth="900"
+    MinHeight="500"
+    Icon="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+
+    <ui:BaseWindow.Resources>
+        <ui:BindingProxy x:Key="Proxy" Proxy="{Binding}" />
+    </ui:BaseWindow.Resources>
+
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TabControl
+            x:Name="tabControl"
+            ItemsSource="{Binding Workspaces}"
+            SelectedItem="{Binding SelectedWorkspace}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Margin="16,3" Text="{Binding DisplayName, Mode=OneWay}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <GroupBox
+                        Grid.Row="1"
+                        Padding="0"
+                        Header="Barcodes">
+                        <ListView
+                            x:Name="lvBarcodes"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            ItemsPanel="{StaticResource TileListViewTemplate}"
+                            ItemsSource="{Binding Barcodes}"
+                            SelectionMode="Extended">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <controls:BarcodeView
+                                        BarcodeVisible="True"
+                                        DescriptionVisible="False"
+                                        IsCheckedEnabled="True" />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </GroupBox>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Column="1"
+                Command="{Binding CheckAllCommand}"
+                Content="Check all" />
+            <Button
+                Grid.Column="2"
+                Command="{Binding UncheckAllCommand}"
+                Content="Uncheck all" />
+            <Button
+                Grid.Column="3"
+                Command="{Binding CloseCommand}"
+                Content="Close" />
+        </Grid>
+    </Grid>
+</ui:BaseWindow>

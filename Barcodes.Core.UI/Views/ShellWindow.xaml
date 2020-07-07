@@ -142,6 +142,10 @@
             Command="{Binding Proxy.Menu.ImportWorkspacesCommand, Source={StaticResource Proxy}}"
             Modifiers="Control+Shift" />
         <KeyBinding
+            Key="S"
+            Command="{Binding Proxy.Menu.ImportStorageCommand, Source={StaticResource Proxy}}"
+            Modifiers="Control+Shift" />
+        <KeyBinding
             Key="R"
             Command="{Binding Proxy.Menu.ClearCommand, Source={StaticResource Proxy}}"
             Modifiers="Control+Alt" />
@@ -220,6 +224,10 @@
                         Command="{Binding ImportWorkspacesCommand}"
                         Header="_Workspaces"
                         InputGestureText="Ctrl+Shift+W" />
+                    <MenuItem
+                        Command="{Binding ImportStorageCommand}"
+                        Header="_Storage"
+                        InputGestureText="Ctrl+Shift+S" />
                 </MenuItem>
                 <MenuItem
                     Grid.Column="3"

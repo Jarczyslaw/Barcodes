@@ -9,7 +9,7 @@
     xmlns:prism="http://prismlibrary.com/"
     xmlns:ui="clr-namespace:Barcodes.Core.UI"
     Title="Barcodes - Examples"
-    Width="1350"
+    Width="1300"
     Height="900"
     MinWidth="900"
     MinHeight="500"

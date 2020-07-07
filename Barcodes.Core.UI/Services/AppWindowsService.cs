@@ -177,5 +177,13 @@ namespace Barcodes.Core.UI.Services
             ShowDialog(new RawSettingsWindow(dataContext));
             return dataContext.EditedSettings;
         }
+
+        public List<WorkspaceViewModel> ShowStorageWindow(List<WorkspaceViewModel> workspaces)
+        {
+            var dataContext = containerExtension.Resolve<StorageViewModel>();
+            dataContext.SetWorkspaces(workspaces);
+            ShowDialog(new StorageWindow(dataContext));
+            return dataContext.WorkspacesToImport;
+        }
     }
 }
