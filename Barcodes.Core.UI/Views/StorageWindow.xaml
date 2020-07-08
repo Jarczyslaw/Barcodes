@@ -17,6 +17,17 @@
 
     <ui:BaseWindow.Resources>
         <ui:BindingProxy x:Key="Proxy" Proxy="{Binding}" />
+
+        <ContextMenu x:Key="WorkspacesContextMenu">
+            <MenuItem
+                Command="{Binding Proxy.WorkspaceCheckAllCommand, Source={StaticResource Proxy}}"
+                CommandParameter="{Binding}"
+                Header="Check all" />
+            <MenuItem
+                Command="{Binding Proxy.WorkspaceUncheckAllCommand, Source={StaticResource Proxy}}"
+                CommandParameter="{Binding}"
+                Header="Uncheck all" />
+        </ContextMenu>
     </ui:BaseWindow.Resources>
 
     <Grid Margin="5">
@@ -29,6 +40,16 @@
             x:Name="tabControl"
             ItemsSource="{Binding Workspaces}"
             SelectedItem="{Binding SelectedWorkspace}">
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="{x:Type TabItem}">
+                    <EventSetter Event="MouseRightButtonDown" Handler="TabItem_MouseRightButtonDown" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="ContextMenu" Value="{StaticResource WorkspacesContextMenu}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TabControl.ItemContainerStyle>
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Margin="16,3" Text="{Binding DisplayName, Mode=OneWay}" />
@@ -67,17 +88,23 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Button
-                Grid.Column="1"
+                Grid.Column="0"
                 Command="{Binding CheckAllCommand}"
                 Content="Check all" />
             <Button
-                Grid.Column="2"
+                Grid.Column="1"
                 Command="{Binding UncheckAllCommand}"
                 Content="Uncheck all" />
             <Button
-                Grid.Column="3"
+                Grid.Column="4"
+                Command="{Binding AcceptCommand}"
+                Content="Accept" />
+            <Button
+                Grid.Column="5"
                 Command="{Binding CloseCommand}"
                 Content="Close" />
         </Grid>

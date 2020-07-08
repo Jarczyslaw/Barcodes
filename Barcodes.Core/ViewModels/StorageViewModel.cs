@@ -28,28 +28,49 @@ namespace Barcodes.Core.ViewModels
 
         public Action OnClose { get; set; }
 
-        public DelegateCommand CheckAllCommand => new DelegateCommand(() => SetChecked(Workspaces, true));
+        public DelegateCommand CheckAllCommand => new DelegateCommand(() => SetWorkspacesChecked(Workspaces, true));
 
-        public DelegateCommand UncheckAllCommand => new DelegateCommand(() => SetChecked(Workspaces, false));
+        public DelegateCommand UncheckAllCommand => new DelegateCommand(() => SetWorkspacesChecked(Workspaces, false));
+
+        public DelegateCommand<WorkspaceViewModel> WorkspaceCheckAllCommand => new DelegateCommand<WorkspaceViewModel>(w => SetBarcodesChecked(w.Barcodes, true));
+
+        public DelegateCommand<WorkspaceViewModel> WorkspaceUncheckAllCommand => new DelegateCommand<WorkspaceViewModel>(w => SetBarcodesChecked(w.Barcodes, false));
 
         public DelegateCommand CloseCommand => new DelegateCommand(() => OnClose?.Invoke());
+
+        public DelegateCommand AcceptCommand => new DelegateCommand(() =>
+        {
+            
+        });
 
         public void SetWorkspaces(List<WorkspaceViewModel> workspaces)
         {
             Workspaces = new ObservableCollection<WorkspaceViewModel>();
             Workspaces.AddRange(workspaces);
-            SetChecked(Workspaces, true);
+            SetWorkspacesChecked(Workspaces, true);
         }
 
-        private void SetChecked(ICollection<WorkspaceViewModel> workspaces, bool isChecked)
+        private void SetWorkspacesChecked(ICollection<WorkspaceViewModel> workspaces, bool isChecked)
         {
             foreach (var workspace in workspaces)
             {
-                foreach (var barcode in workspace.Barcodes)
-                {
-                    barcode.IsChecked = isChecked;
-                }
+                SetBarcodesChecked(workspace.Barcodes, isChecked);
             }
+        }
+
+        private void SetBarcodesChecked(ICollection<BarcodeViewModel> barcodes, bool isChecked)
+        {
+            foreach (var barcode in barcodes)
+            {
+                barcode.IsChecked = isChecked;
+            }
+        }
+
+        private List<WorkspaceViewModel> GetCheckedWorkspaces()
+        {
+            var result = new List<WorkspaceViewModel>();
+
+            return result;
         }
     }
 }

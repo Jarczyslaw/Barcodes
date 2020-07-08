@@ -34,7 +34,7 @@ namespace Barcodes.Core.UI.Views
         {
             if (DataContext is ShellViewModel shellViewModel)
             {
-                var workspaceViewModel = (sender as TabItem).DataContext as WorkspaceViewModel;
+                var workspaceViewModel = (sender as TabItem)?.DataContext as WorkspaceViewModel;
                 shellViewModel.WorkspaceMenu.OpenInNewWindowCommand.Execute(workspaceViewModel);
             }
         }
