@@ -766,7 +766,7 @@ namespace Barcodes.Core.ViewModels
 
         public void ImportStorage()
         {
-            servicesContainer.AppWindowsService.ShowStorageWindow(Workspaces.ToList());
+            servicesContainer.AppWindowsService.ShowStorageWindow(this, Workspaces.ToList());
         }
 
         public void ExportWorkspace(WorkspaceViewModel workspace)

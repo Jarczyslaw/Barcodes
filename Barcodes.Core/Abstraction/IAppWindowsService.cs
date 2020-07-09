@@ -33,6 +33,6 @@ namespace Barcodes.Core.Abstraction
 
         AppSettings ShowRawSettingsWindow(AppSettings appSettings);
 
-        List<WorkspaceViewModel> ShowStorageWindow(List<WorkspaceViewModel> workspaces);
+        void ShowStorageWindow(AppViewModel appViewModel, List<WorkspaceViewModel> workspaces);
     }
 }

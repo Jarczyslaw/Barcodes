@@ -75,6 +75,21 @@ namespace Barcodes.Core.ViewModels
 
         public bool AreBarcodesSelected => SelectedBarcodes?.Count > 0;
 
+        public bool IsChecked
+        {
+            set
+            {
+                foreach (var barcode in Barcodes)
+                {
+                    barcode.IsChecked = value;
+                }
+            }
+        }
+
+        public bool ContainsCheckedBarcodes => Barcodes.Any(b => b.IsChecked);
+
+        public List<BarcodeViewModel> CheckedBarcodes => Barcodes.Where(b => b.IsChecked).ToList();
+
         private void AddToBarcodes(BarcodeViewModel barcode, AddMode addMode)
         {
             if (addMode == AddMode.AsFirst)

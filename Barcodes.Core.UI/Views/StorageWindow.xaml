@@ -20,13 +20,16 @@
 
         <ContextMenu x:Key="WorkspacesContextMenu">
             <MenuItem
-                Command="{Binding Proxy.WorkspaceCheckAllCommand, Source={StaticResource Proxy}}"
+                Command="{Binding Proxy.ImportWorkspaceCommand, Source={StaticResource Proxy}}"
                 CommandParameter="{Binding}"
-                Header="Check all" />
+                Header="Import" />
+        </ContextMenu>
+
+        <ContextMenu x:Key="BarcodesContextMenu">
             <MenuItem
-                Command="{Binding Proxy.WorkspaceUncheckAllCommand, Source={StaticResource Proxy}}"
+                Command="{Binding Proxy.ImportBarcodesCommand, Source={StaticResource Proxy}}"
                 CommandParameter="{Binding}"
-                Header="Uncheck all" />
+                Header="Import" />
         </ContextMenu>
     </ui:BaseWindow.Resources>
 
@@ -38,6 +41,7 @@
 
         <TabControl
             x:Name="tabControl"
+            ItemTemplate="{StaticResource WorkspaceHeader}"
             ItemsSource="{Binding Workspaces}"
             SelectedItem="{Binding SelectedWorkspace}">
             <TabControl.ItemContainerStyle>
@@ -50,11 +54,6 @@
                     </Style.Triggers>
                 </Style>
             </TabControl.ItemContainerStyle>
-            <TabControl.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Margin="16,3" Text="{Binding DisplayName, Mode=OneWay}" />
-                </DataTemplate>
-            </TabControl.ItemTemplate>
             <TabControl.ContentTemplate>
                 <DataTemplate>
                     <GroupBox
@@ -67,13 +66,15 @@
                             BorderThickness="0"
                             ItemsPanel="{StaticResource TileListViewTemplate}"
                             ItemsSource="{Binding Barcodes}"
+                            SelectionChanged="lvBarcodes_SelectionChanged"
                             SelectionMode="Extended">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <controls:BarcodeView
                                         BarcodeVisible="True"
+                                        ContextMenu="{StaticResource BarcodesContextMenu}"
                                         DescriptionVisible="False"
-                                        IsCheckedEnabled="True" />
+                                        IsCheckedEnabled="False" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
@@ -88,23 +89,13 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Button
-                Grid.Column="0"
-                Command="{Binding CheckAllCommand}"
-                Content="Check all" />
+                Grid.Column="2"
+                Command="{Binding ImportAllCommand}"
+                Content="Import all" />
             <Button
-                Grid.Column="1"
-                Command="{Binding UncheckAllCommand}"
-                Content="Uncheck all" />
-            <Button
-                Grid.Column="4"
-                Command="{Binding AcceptCommand}"
-                Content="Accept" />
-            <Button
-                Grid.Column="5"
+                Grid.Column="3"
                 Command="{Binding CloseCommand}"
                 Content="Close" />
         </Grid>

@@ -6,4 +6,7 @@
             ItemHeight="{Binding (ListView.View).ItemHeight, RelativeSource={RelativeSource AncestorType=ListView}}"
             ItemWidth="{Binding (ListView.View).ItemWidth, RelativeSource={RelativeSource AncestorType=ListView}}" />
     </ItemsPanelTemplate>
+    <DataTemplate x:Key="WorkspaceHeader">
+        <TextBlock Margin="16,3" Text="{Binding DisplayName, Mode=OneWay}" />
+    </DataTemplate>
 </ResourceDictionary>

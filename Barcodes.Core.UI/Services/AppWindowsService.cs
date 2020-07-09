@@ -178,12 +178,11 @@ namespace Barcodes.Core.UI.Services
             return dataContext.EditedSettings;
         }
 
-        public List<WorkspaceViewModel> ShowStorageWindow(List<WorkspaceViewModel> workspaces)
+        public void ShowStorageWindow(AppViewModel appViewModel, List<WorkspaceViewModel> workspaces)
         {
             var dataContext = containerExtension.Resolve<StorageViewModel>();
-            dataContext.SetWorkspaces(workspaces);
-            ShowDialog(new StorageWindow(dataContext));
-            return dataContext.WorkspacesToImport;
+            dataContext.SetWorkspaces(appViewModel, workspaces);
+            Show(new StorageWindow(), dataContext, GetActiveWindow());
         }
     }
 }
