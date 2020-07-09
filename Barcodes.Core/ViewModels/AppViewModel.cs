@@ -724,14 +724,19 @@ namespace Barcodes.Core.ViewModels
                     }
                 }
 
-                if (!TryAddInitialWorkspace())
-                {
-                    return;
-                }
-
-                SelectedWorkspace.InsertNewBarcodes(barcodes, servicesContainer.AppSettingsService.BarcodeAddMode);
-                UpdateMessage($"Successfully imported {barcodes.Count} barcodes");
+                ImportBarcodes(barcodes);
             }
+        }
+
+        public void ImportBarcodes(List<BarcodeViewModel> barcodes)
+        {
+            if (!TryAddInitialWorkspace())
+            {
+                return;
+            }
+
+            SelectedWorkspace.InsertNewBarcodes(barcodes, servicesContainer.AppSettingsService.BarcodeAddMode);
+            UpdateMessage($"Successfully imported {barcodes.Count} barcodes");
         }
 
         public void ImportWorkspaces()
@@ -754,14 +759,14 @@ namespace Barcodes.Core.ViewModels
                     }
                 }
 
-                AddWorkspaces(workspaces, servicesContainer.AppSettingsService.WorkspaceAddMode);
-                SelectedWorkspace = workspaces.Last();
-                if (!Workspaces.Any(w => w.DefaultWorkspace))
-                {
-                    workspaces.Last().DefaultWorkspace = true;
-                }
-                UpdateMessage($"Successfully imported {workspaces.Count} workspaces");
+                ImportWorkspaces(workspaces);
             }
+        }
+
+        public void ImportWorkspaces(List<WorkspaceViewModel> workspaces)
+        {
+            AddWorkspaces(workspaces, servicesContainer.AppSettingsService.WorkspaceAddMode);
+            UpdateMessage($"Successfully imported {workspaces.Count} workspaces");
         }
 
         public void ImportStorage()
