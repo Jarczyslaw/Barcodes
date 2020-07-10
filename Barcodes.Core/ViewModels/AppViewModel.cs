@@ -180,7 +180,6 @@ namespace Barcodes.Core.ViewModels
             var newWorkspace = new WorkspaceViewModel
             {
                 Name = workspaceName,
-                DefaultWorkspace = !Workspaces.Any(w => w.DefaultWorkspace)
             };
             AddWorkspace(newWorkspace, servicesContainer.AppSettingsService.WorkspaceAddMode);
         }
@@ -513,7 +512,6 @@ namespace Barcodes.Core.ViewModels
 
             var workspace = new WorkspaceViewModel
             {
-                DefaultWorkspace = true,
                 Name = workspaceName
             };
             AddWorkspace(workspace);
