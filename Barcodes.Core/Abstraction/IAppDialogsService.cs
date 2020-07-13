@@ -6,7 +6,7 @@ namespace Barcodes.Core.Abstraction
 {
     public interface IAppDialogsService : IDialogsService
     {
-        string OpenStorageFile(string currentFilePath, bool ensureFileExists);
+        string OpenStorageFile(string currentFilePath = null, bool ensureFileExists = true);
 
         string SaveStorageFile(string currentFilePath);
 

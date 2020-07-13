@@ -201,7 +201,7 @@ namespace Barcodes.Core.ViewModels
             return true;
         }
 
-        public void LoadBarcodesFromFile()
+        public void LoadStorageFromFile()
         {
             if (CheckStorageChangesAndSave())
             {
@@ -216,30 +216,40 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
+        private List<WorkspaceViewModel> LoadStorage(string storagePath, bool storageValidation)
+        {
+            var storage = servicesContainer.StorageService.Load(storagePath, true);
+            if (storage == null)
+            {
+                return null;
+            }
+
+            var newWorkspaces = new List<WorkspaceViewModel>();
+            foreach (var storageWorkspace in storage.Content)
+            {
+                newWorkspaces.Add(storageWorkspace.ToWorkspace(servicesContainer.GeneratorService));
+            }
+
+            if (storageValidation && newWorkspaces.Count == 0)
+            {
+                servicesContainer.AppDialogsService.ShowError("Selected file has no workspaces");
+                return null;
+            }
+
+            return newWorkspaces;
+        }
+
         private void LoadFromFile(string storagePath, bool storageValidation)
         {
             try
             {
-                var storage = servicesContainer.StorageService.Load(storagePath, true);
-                if (storage == null)
+                var newWorkspaces = LoadStorage(storagePath, storageValidation);
+                if (newWorkspaces == null)
                 {
                     return;
                 }
 
-                if (storageValidation && storage.WorkspacesCount == 0)
-                {
-                    servicesContainer.AppDialogsService.ShowError("Selected file has no workspaces");
-                    return;
-                }
-
-                var newWorkspaces = new List<WorkspaceViewModel>();
-                foreach (var storageWorkspace in storage.Content)
-                {
-                    var newWorkspace = storageWorkspace.ToWorkspace(servicesContainer.GeneratorService);
-                    newWorkspaces.Add(newWorkspace);
-                }
-
-                workspaces.Clear();
+                Workspaces.Clear();
                 foreach (var newWorkspace in newWorkspaces)
                 {
                     AddWorkspace(newWorkspace);
@@ -769,7 +779,26 @@ namespace Barcodes.Core.ViewModels
 
         public void ImportStorage()
         {
-            servicesContainer.AppWindowsService.ShowStorageWindow(this, Workspaces.ToList());
+            try
+            {
+                var filePath = servicesContainer.AppDialogsService.OpenStorageFile(null, true);
+                if (string.IsNullOrEmpty(filePath))
+                {
+                    return;
+                }
+
+                var workspaces = LoadStorage(storagePath, true);
+                if (workspaces == null)
+                {
+                    return;
+                }
+
+                servicesContainer.AppWindowsService.ShowStorageWindow(this, workspaces);
+            }
+            catch (Exception exc)
+            {
+                servicesContainer.AppDialogsService.ShowException("Error when importing storage", exc);
+            }
         }
 
         public void ExportWorkspace(WorkspaceViewModel workspace)

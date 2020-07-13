@@ -8,6 +8,7 @@
     xmlns:ui="clr-namespace:Barcodes.Core.UI"
     Title="Barcodes - Settings"
     Icon="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
+    ResizeMode="CanMinimize"
     SizeToContent="WidthAndHeight"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">

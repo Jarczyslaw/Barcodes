@@ -19,9 +19,13 @@ namespace Barcodes.Core.UI.Services
 
         private readonly DialogFilterPair docFilter = new DialogFilterPair("pdf");
 
-        public string OpenStorageFile(string currentFilePath, bool ensureFileExists)
+        public string OpenStorageFile(string currentFilePath = null, bool ensureFileExists = true)
         {
-            var directoryPath = Path.GetDirectoryName(currentFilePath);
+            string directoryPath = null;
+            if (!string.IsNullOrEmpty(currentFilePath))
+            {
+                directoryPath = Path.GetDirectoryName(currentFilePath);
+            }
             return OpenFile("Barcodes storage file", directoryPath, ensureFileExists, storageFilter);
         }
 
