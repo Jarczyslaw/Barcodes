@@ -1,4 +1,7 @@
-﻿1.3.2
+﻿1.4
+	dodano możliwość zaznaczania wielu kodów i ich manipulacji (usuwanie, zmiana kolejności, eksport itd.)
+
+1.3.2
 	dodano kod alejki
 	poprawiono kod palety
 	poprawiono odpalanie okien barcodów i workspaców

@@ -14,6 +14,7 @@ namespace Barcodes.Core.ViewModels
         private bool defaultWorkspace;
         private string name;
         private BarcodeViewModel selectedBarcode;
+        private List<BarcodeViewModel> selectedBarcodes;
         private ObservableCollection<BarcodeViewModel> barcodes;
 
         public WorkspaceViewModel()
@@ -71,7 +72,15 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref selectedBarcode, value);
         }
 
-        public List<BarcodeViewModel> SelectedBarcodes { get; set; }
+        public List<BarcodeViewModel> SelectedBarcodes
+        {
+            get => selectedBarcodes;
+            set
+            {
+                selectedBarcodes = value.OrderBy(b => Barcodes.IndexOf(b))
+                    .ToList();
+            }
+        }
 
         public bool AreBarcodesSelected => SelectedBarcodes?.Count > 0;
 
