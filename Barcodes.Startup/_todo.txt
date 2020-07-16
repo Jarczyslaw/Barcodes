@@ -1,5 +1,4 @@
 ﻿zrobić import całego storage
-usunąć zachowanie związane z domyślnym workspacem
 
 
 

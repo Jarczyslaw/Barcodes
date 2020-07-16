@@ -216,7 +216,7 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        private List<WorkspaceViewModel> LoadStorage(string storagePath, bool storageValidation)
+        private List<WorkspaceViewModel> LoadStorage(string storagePath, bool storageValidation, bool clearDefaultFlag)
         {
             var storage = servicesContainer.StorageService.Load(storagePath, true);
             if (storage == null)
@@ -228,6 +228,11 @@ namespace Barcodes.Core.ViewModels
             foreach (var storageWorkspace in storage.Content)
             {
                 newWorkspaces.Add(storageWorkspace.ToWorkspace(servicesContainer.GeneratorService));
+            }
+
+            if (clearDefaultFlag)
+            {
+                newWorkspaces.ForEach(w => w.DefaultWorkspace = false);
             }
 
             if (storageValidation && newWorkspaces.Count == 0)
@@ -243,7 +248,7 @@ namespace Barcodes.Core.ViewModels
         {
             try
             {
-                var newWorkspaces = LoadStorage(storagePath, storageValidation);
+                var newWorkspaces = LoadStorage(storagePath, storageValidation, false);
                 if (newWorkspaces == null)
                 {
                     return;
@@ -255,7 +260,7 @@ namespace Barcodes.Core.ViewModels
                     AddWorkspace(newWorkspace);
                 }
 
-                SelectedWorkspace = Workspaces.SingleOrDefault(w => w.DefaultWorkspace);
+                SetDefaultWorkspace();
                 if (WorkspacesCount != 0 || BarcodesCount != 0)
                 {
                     UpdateMessage($"Successfully loaded {WorkspacesCount} workspaces and {BarcodesCount} barcodes from {Path.GetFileName(storagePath)}");
@@ -271,6 +276,23 @@ namespace Barcodes.Core.ViewModels
             {
                 servicesContainer.AppDialogsService.ShowException("Error when loading storage from file", exc);
             }
+        }
+
+        private void SetDefaultWorkspace()
+        {
+            WorkspaceViewModel selected = null;
+            foreach (var workspace in Workspaces)
+            {
+                if (selected == null && workspace.DefaultWorkspace)
+                {
+                    selected = workspace;
+                }
+                else
+                {
+                    workspace.DefaultWorkspace = false;
+                }
+            }
+            SelectedWorkspace = selected;
         }
 
         private void SaveStorage(string filePath, Storage storage)
@@ -753,12 +775,14 @@ namespace Barcodes.Core.ViewModels
             if (workspaceFiles?.Count > 0)
             {
                 var workspaces = new List<WorkspaceViewModel>();
-                foreach (var workspace in workspaceFiles)
+                foreach (var workspaceFile in workspaceFiles)
                 {
                     try
                     {
-                        var storageWorkspace = servicesContainer.StorageService.ImportWorkspace(workspace);
-                        workspaces.Add(storageWorkspace.ToWorkspace(servicesContainer.GeneratorService));
+                        var storageWorkspace = servicesContainer.StorageService.ImportWorkspace(workspaceFile);
+                        var workspace = storageWorkspace.ToWorkspace(servicesContainer.GeneratorService);
+                        workspace.DefaultWorkspace = false;
+                        workspaces.Add(workspace);
                     }
                     catch (Exception exc)
                     {
@@ -787,7 +811,7 @@ namespace Barcodes.Core.ViewModels
                     return;
                 }
 
-                var workspaces = LoadStorage(storagePath, true);
+                var workspaces = LoadStorage(storagePath, true, true);
                 if (workspaces == null)
                 {
                     return;

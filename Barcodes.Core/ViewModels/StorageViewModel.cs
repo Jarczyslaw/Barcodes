@@ -53,10 +53,6 @@ namespace Barcodes.Core.ViewModels
         public void SetWorkspaces(AppViewModel appViewModel, List<WorkspaceViewModel> workspaces)
         {
             this.appViewModel = appViewModel;
-            foreach (var workspace in workspaces)
-            {
-                workspace.DefaultWorkspace = false;
-            }
             Workspaces = new ObservableCollection<WorkspaceViewModel>();
             Workspaces.AddRange(workspaces);
         }
