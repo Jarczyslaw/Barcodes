@@ -25,6 +25,18 @@ namespace Barcodes.Extensions
             return result;
         }
 
+        public static IList<T> GetRange<T>(this IList<T> @this, int index, int count)
+        {
+            var result = new List<T>();
+            for (int i = index; i < index + count; i++)
+            {
+                result.Add(@this[i]);
+            }
+            return result;
+        }
+
+        #region ShiftLeft
+
         public static void ShiftLeft<T>(this IList<T> @this, int index)
         {
             if (@this.Count < 2)
@@ -61,6 +73,10 @@ namespace Barcodes.Extensions
         {
             ShiftLeft(@this, @this.IndexesOf(entries));
         }
+
+        #endregion ShiftLeft
+
+        #region ShiftRight
 
         public static void ShiftRight<T>(this IList<T> @this, int index)
         {
@@ -99,6 +115,10 @@ namespace Barcodes.Extensions
             ShiftRight(@this, @this.IndexesOf(entries));
         }
 
+        #endregion ShiftRight
+
+        #region Swap
+
         public static void Swap<T>(this IList<T> @this, T oldValue, T newValue)
         {
             var oldIndex = @this.IndexOf(oldValue);
@@ -116,17 +136,21 @@ namespace Barcodes.Extensions
             }
         }
 
-        public static IList<T> GetRange<T>(this IList<T> @this, int index, int count)
+        #endregion Swap
+
+        #region SetAsFirstFast
+
+        public static bool SetAsFirstFast<T>(this IList<T> @this, T item)
         {
-            var result = new List<T>();
-            for (int i = index; i < index + count; i++)
-            {
-                result.Add(@this[i]);
-            }
-            return result;
+            return SetAsFirstFast(@this, @this.IndexOf(item));
         }
 
-        public static bool SetAsFirst<T>(this IList<T> @this, int index)
+        public static void SetAsFirstFast<T>(this IList<T> @this, List<T> items)
+        {
+            SetAsFirstFast(@this, IndexesOf(@this, items));
+        }
+
+        public static bool SetAsFirstFast<T>(this IList<T> @this, int index)
         {
             if (index > 0)
             {
@@ -138,7 +162,7 @@ namespace Barcodes.Extensions
             return false;
         }
 
-        public static void SetAsFirst<T>(this IList<T> @this, List<int> indexes)
+        public static void SetAsFirstFast<T>(this IList<T> @this, List<int> indexes)
         {
             indexes.Sort();
             indexes.Reverse();
@@ -155,17 +179,21 @@ namespace Barcodes.Extensions
             }
         }
 
-        public static bool SetAsFirst<T>(this IList<T> @this, T item)
+        #endregion SetAsFirstFast
+
+        #region SetAsLastFast
+
+        public static bool SetAsLastFast<T>(this IList<T> @this, T item)
         {
-            return SetAsFirst(@this, @this.IndexOf(item));
+            return SetAsLastFast(@this, @this.IndexOf(item));
         }
 
-        public static void SetAsFirst<T>(this IList<T> @this, List<T> items)
+        public static void SetAsLastFast<T>(this IList<T> @this, List<T> items)
         {
-            SetAsFirst(@this, IndexesOf(@this, items));
+            SetAsLastFast(@this, IndexesOf(@this, items));
         }
 
-        public static bool SetAsLast<T>(this IList<T> @this, int index)
+        public static bool SetAsLastFast<T>(this IList<T> @this, int index)
         {
             if (index >= 0 && index < @this.Count - 1)
             {
@@ -177,12 +205,7 @@ namespace Barcodes.Extensions
             return false;
         }
 
-        public static bool SetAsLast<T>(this IList<T> @this, T item)
-        {
-            return SetAsLast(@this, @this.IndexOf(item));
-        }
-
-        public static void SetAsLast<T>(this IList<T> @this, List<int> indexes)
+        public static void SetAsLastFast<T>(this IList<T> @this, List<int> indexes)
         {
             indexes.Sort();
             indexes.Reverse();
@@ -200,9 +223,77 @@ namespace Barcodes.Extensions
             }
         }
 
+        #endregion SetAsLastFast
+
+        #region SetAsFirst
+
+        public static void SetAsFirst<T>(this IList<T> @this, int index)
+        {
+            @this.SetAsFirst(new List<int> { index });
+        }
+
+        public static void SetAsFirst<T>(this IList<T> @this, T item)
+        {
+            @this.SetAsFirst(@this.IndexOf(item));
+        }
+
+        public static void SetAsFirst<T>(this IList<T> @this, List<T> items)
+        {
+            @this.SetAsFirst(@this.IndexesOf(items));
+        }
+
+        public static void SetAsFirst<T>(this IList<T> @this, List<int> indexes)
+        {
+            indexes.Sort();
+            var targetIndex = 0;
+            foreach (var index in indexes)
+            {
+                var temp = @this[index];
+                for (int i = index; i > targetIndex; i--)
+                {
+                    @this[i] = @this[i - 1];
+                }
+                @this[targetIndex] = temp;
+                targetIndex++;
+            }
+        }
+
+        #endregion SetAsFirst
+
+        #region SetAsLast
+
+        public static void SetAsLast<T>(this IList<T> @this, int index)
+        {
+            @this.SetAsLast(new List<int> { index });
+        }
+
+        public static void SetAsLast<T>(this IList<T> @this, T item)
+        {
+            @this.SetAsLast(@this.IndexOf(item));
+        }
+
         public static void SetAsLast<T>(this IList<T> @this, List<T> items)
         {
-            SetAsLast(@this, IndexesOf(@this, items));
+            @this.SetAsLast(@this.IndexesOf(items));
         }
+
+        public static void SetAsLast<T>(this IList<T> @this, List<int> indexes)
+        {
+            indexes.Sort();
+            indexes.Reverse();
+            var targetIndex = @this.Count - 1;
+            foreach (var index in indexes)
+            {
+                var temp = @this[index];
+                for (int i = index; i < targetIndex; i++)
+                {
+                    @this[i] = @this[i + 1];
+                }
+                @this[targetIndex] = temp;
+                targetIndex--;
+            }
+        }
+
+        #endregion SetAsLast
     }
 }

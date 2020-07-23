@@ -890,18 +890,14 @@ namespace Barcodes.Core.ViewModels
 
         public void SetWorkspaceAsFirst(WorkspaceViewModel workspace)
         {
-            if (Workspaces.SetAsFirst(workspace))
-            {
-                SelectedWorkspace = workspace;
-            }
+            Workspaces.SetAsFirst(workspace);
+            SelectedWorkspace = workspace;
         }
 
         public void SetWorkspaceAsLast(WorkspaceViewModel workspace)
         {
-            if (Workspaces.SetAsLast(workspace))
-            {
-                SelectedWorkspace = workspace;
-            }
+            Workspaces.SetAsLast(workspace);
+            SelectedWorkspace = workspace;
         }
 
         public void SetBarcodesAsFirst()
