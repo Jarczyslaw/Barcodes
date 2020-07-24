@@ -37,22 +37,24 @@ namespace Barcodes.Extensions
 
         #region ShiftLeft
 
-        public static void ShiftLeft<T>(this IList<T> @this, int index)
+        public static bool ShiftLeft<T>(this IList<T> @this, int index)
         {
-            if (@this.Count < 2)
-                return;
-
-            if (index < 1)
-                return;
+            if (@this.Count < 2 || index < 1)
+                return false;
 
             var temp = @this[index - 1];
             @this.RemoveAt(index - 1);
             @this.Insert(index, temp);
+            return true;
         }
 
-        public static void ShiftLeft<T>(this IList<T> @this, List<int> indexes)
+        public static bool ShiftLeft<T>(this IList<T> @this, List<int> indexes, bool skipSorting = false)
         {
-            indexes.Sort();
+            var changed = false;
+            if (!skipSorting)
+            {
+                indexes.Sort();
+            }
             for (int i = 0; i < indexes.Count; i++)
             {
                 var index = indexes[i];
@@ -60,8 +62,10 @@ namespace Barcodes.Extensions
                 {
                     @this.ShiftLeft(index);
                     indexes[i]--;
+                    changed = true;
                 }
             }
+            return changed;
         }
 
         public static void ShiftLeft<T>(this IList<T> @this, T entry)
@@ -78,22 +82,24 @@ namespace Barcodes.Extensions
 
         #region ShiftRight
 
-        public static void ShiftRight<T>(this IList<T> @this, int index)
+        public static bool ShiftRight<T>(this IList<T> @this, int index)
         {
-            if (@this.Count < 2)
-                return;
-
-            if (index > @this.Count - 2)
-                return;
+            if (@this.Count < 2 || index > @this.Count - 2)
+                return false;
 
             var temp = @this[index + 1];
             @this.RemoveAt(index + 1);
             @this.Insert(index, temp);
+            return true;
         }
 
-        public static void ShiftRight<T>(this IList<T> @this, List<int> indexes)
+        public static bool ShiftRight<T>(this IList<T> @this, List<int> indexes, bool skipSorting = false)
         {
-            indexes.Sort();
+            var changed = false;
+            if (!skipSorting)
+            {
+                indexes.Sort();
+            }
             for (int i = indexes.Count - 1; i >= 0; i--)
             {
                 var index = indexes[i];
@@ -101,8 +107,10 @@ namespace Barcodes.Extensions
                 {
                     @this.ShiftRight(index);
                     indexes[i]++;
+                    changed = true;
                 }
             }
+            return changed;
         }
 
         public static void ShiftRight<T>(this IList<T> @this, T entry)
@@ -138,93 +146,6 @@ namespace Barcodes.Extensions
 
         #endregion Swap
 
-        #region SetAsFirstFast
-
-        public static bool SetAsFirstFast<T>(this IList<T> @this, T item)
-        {
-            return SetAsFirstFast(@this, @this.IndexOf(item));
-        }
-
-        public static void SetAsFirstFast<T>(this IList<T> @this, List<T> items)
-        {
-            SetAsFirstFast(@this, IndexesOf(@this, items));
-        }
-
-        public static bool SetAsFirstFast<T>(this IList<T> @this, int index)
-        {
-            if (index > 0)
-            {
-                var item = @this[index];
-                @this.Remove(item);
-                @this.Insert(0, item);
-                return true;
-            }
-            return false;
-        }
-
-        public static void SetAsFirstFast<T>(this IList<T> @this, List<int> indexes)
-        {
-            indexes.Sort();
-            indexes.Reverse();
-            var items = new List<T>();
-            foreach (var index in indexes)
-            {
-                items.Add(@this[index]);
-                @this.RemoveAt(index);
-            }
-
-            foreach (var item in items)
-            {
-                @this.Insert(0, item);
-            }
-        }
-
-        #endregion SetAsFirstFast
-
-        #region SetAsLastFast
-
-        public static bool SetAsLastFast<T>(this IList<T> @this, T item)
-        {
-            return SetAsLastFast(@this, @this.IndexOf(item));
-        }
-
-        public static void SetAsLastFast<T>(this IList<T> @this, List<T> items)
-        {
-            SetAsLastFast(@this, IndexesOf(@this, items));
-        }
-
-        public static bool SetAsLastFast<T>(this IList<T> @this, int index)
-        {
-            if (index >= 0 && index < @this.Count - 1)
-            {
-                var item = @this[index];
-                @this.Remove(item);
-                @this.Add(item);
-                return true;
-            }
-            return false;
-        }
-
-        public static void SetAsLastFast<T>(this IList<T> @this, List<int> indexes)
-        {
-            indexes.Sort();
-            indexes.Reverse();
-            var items = new List<T>();
-            foreach (var index in indexes)
-            {
-                items.Add(@this[index]);
-                @this.RemoveAt(index);
-            }
-
-            items.Reverse();
-            foreach (var item in items)
-            {
-                @this.Add(item);
-            }
-        }
-
-        #endregion SetAsLastFast
-
         #region SetAsFirst
 
         public static void SetAsFirst<T>(this IList<T> @this, int index)
@@ -245,17 +166,7 @@ namespace Barcodes.Extensions
         public static void SetAsFirst<T>(this IList<T> @this, List<int> indexes)
         {
             indexes.Sort();
-            var targetIndex = 0;
-            foreach (var index in indexes)
-            {
-                var temp = @this[index];
-                for (int i = index; i > targetIndex; i--)
-                {
-                    @this[i] = @this[i - 1];
-                }
-                @this[targetIndex] = temp;
-                targetIndex++;
-            }
+            while (@this.ShiftLeft(indexes, true)) ;
         }
 
         #endregion SetAsFirst
@@ -280,18 +191,7 @@ namespace Barcodes.Extensions
         public static void SetAsLast<T>(this IList<T> @this, List<int> indexes)
         {
             indexes.Sort();
-            indexes.Reverse();
-            var targetIndex = @this.Count - 1;
-            foreach (var index in indexes)
-            {
-                var temp = @this[index];
-                for (int i = index; i < targetIndex; i++)
-                {
-                    @this[i] = @this[i + 1];
-                }
-                @this[targetIndex] = temp;
-                targetIndex--;
-            }
+            while (@this.ShiftRight(indexes, true)) ;
         }
 
         #endregion SetAsLast
