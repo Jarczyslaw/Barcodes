@@ -181,7 +181,7 @@ namespace Barcodes.Core.UI.Services
         public void ShowStorageWindow(AppViewModel appViewModel, List<WorkspaceViewModel> workspaces)
         {
             var dataContext = containerExtension.Resolve<StorageViewModel>();
-            dataContext.SetWorkspaces(appViewModel, workspaces);
+            dataContext.PrepareAndSetWorkspaces(appViewModel, workspaces);
             Show(new StorageWindow(), dataContext);
         }
     }

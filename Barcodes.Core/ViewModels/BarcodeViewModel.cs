@@ -21,7 +21,7 @@ namespace Barcodes.Core.ViewModels
         {
             Title = barcodeViewModel.Title;
             Description = barcodeViewModel.Description;
-            Barcode = barcodeViewModel.Barcode;
+            Barcode = barcodeViewModel.Barcode.Clone();
             GenerationData = barcodeViewModel.GenerationData;
         }
 

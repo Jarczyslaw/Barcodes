@@ -1,5 +1,5 @@
-﻿zrobić import całego storage
-
+﻿przetestować import storage
+zapamiętywanie ustawień generowania po wygenerowaniu + flaga w ustawieniach
 
 
 

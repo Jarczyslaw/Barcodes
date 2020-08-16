@@ -32,29 +32,46 @@ namespace Barcodes.Core.ViewModels
 
         public DelegateCommand<WorkspaceViewModel> ImportWorkspaceCommand => new DelegateCommand<WorkspaceViewModel>(workspace =>
         {
-            appViewModel.ImportWorkspaces(new List<WorkspaceViewModel>
+            ImportWorkspaces(new List<WorkspaceViewModel>
             {
                 workspace
             });
         });
 
-        public DelegateCommand ImportBarcodesCommand => new DelegateCommand(() =>
-        {
-            if (SelectedBarcodes != null)
-            {
-                appViewModel.ImportBarcodes(SelectedBarcodes);
-            }
-        });
+        public DelegateCommand ImportAllCommand => new DelegateCommand(() => ImportWorkspaces(Workspaces));
 
-        public DelegateCommand ImportAllCommand => new DelegateCommand(() => appViewModel.ImportWorkspaces(Workspaces.ToList()));
+        public DelegateCommand ImportBarcodesCommand => new DelegateCommand(ImportBarcodes);
 
         public DelegateCommand CloseCommand => new DelegateCommand(() => OnClose?.Invoke());
 
-        public void SetWorkspaces(AppViewModel appViewModel, List<WorkspaceViewModel> workspaces)
+        public void PrepareAndSetWorkspaces(AppViewModel appViewModel, List<WorkspaceViewModel> workspaces)
         {
             this.appViewModel = appViewModel;
             Workspaces = new ObservableCollection<WorkspaceViewModel>();
             Workspaces.AddRange(workspaces);
+            foreach (var workspace in Workspaces)
+            {
+                workspace.IsChecked = false;
+                workspace.DefaultWorkspace = false;
+            }
+        }
+
+        private void ImportBarcodes()
+        {
+            if (SelectedBarcodes != null)
+            {
+                var toImport = SelectedBarcodes.OrderBy(b => SelectedWorkspace.Barcodes.IndexOf(b))
+                    .Select(b => new BarcodeViewModel(b))
+                    .ToList();
+                appViewModel.ImportBarcodes(toImport);
+            }
+        }
+
+        private void ImportWorkspaces(IEnumerable<WorkspaceViewModel> workspaces)
+        {
+            var toImport = workspaces.Select(w => new WorkspaceViewModel(w))
+                .ToList();
+            appViewModel.ImportWorkspaces(toImport);
         }
     }
 }

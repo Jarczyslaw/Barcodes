@@ -116,7 +116,7 @@ namespace Barcodes.Core.ViewModels
             AddToBarcodes(barcode, addMode);
             if (updateMessage)
             {
-                OnMessageUpdate?.Invoke($"Barcode {barcode.Title} generated successfully!");
+                OnMessageUpdate?.Invoke($"Barcode {barcode.Title} added successfully!");
             }
             SelectedBarcode = barcode;
         }
@@ -135,7 +135,7 @@ namespace Barcodes.Core.ViewModels
 
             if (updateMessage)
             {
-                OnMessageUpdate?.Invoke($"{barcodes.Count} barcodes generated successfully!");
+                OnMessageUpdate?.Invoke($"{barcodes.Count} barcodes added successfully!");
             }
         }
 
