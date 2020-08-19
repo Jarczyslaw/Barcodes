@@ -123,6 +123,7 @@ namespace Barcodes.Core.ViewModels
                     Barcode = RunGenerator(GenerationData.ToData(), Title.Trim()),
                     AddNew = addAsNew
                 };
+                services.AppSettingsService.TryUpdateGenerationSettings(GenerationData.ToSettings());
                 OnClose?.Invoke();
             }
             catch (Exception exc)

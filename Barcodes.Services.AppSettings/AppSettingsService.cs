@@ -57,6 +57,26 @@ namespace Barcodes.Services.AppSettings
             }
         }
 
+        public GenerationSettings GenerationSettings
+        {
+            get => AppSettings.GenerationSettings;
+            set
+            {
+                AppSettings.GenerationSettings = value;
+                Save();
+            }
+        }
+
+        public bool UpdateAfterEveryGeneration
+        {
+            get => AppSettings.UpdateAfterEveryGeneration;
+            set
+            {
+                AppSettings.UpdateAfterEveryGeneration = value;
+                Save();
+            }
+        }
+
         public string AppSettingsPath { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"appSettings.{FileExtensions.Settings}");
 
         public AppSettings AppSettings { get; private set; } = new AppSettings();
@@ -87,6 +107,14 @@ namespace Barcodes.Services.AppSettings
         {
             AppSettings = Serializer.FromString<AppSettings>(settings);
             Save();
+        }
+
+        public void TryUpdateGenerationSettings(GenerationSettings generationSettings)
+        {
+            if (UpdateAfterEveryGeneration)
+            {
+                GenerationSettings = generationSettings;
+            }
         }
     }
 }

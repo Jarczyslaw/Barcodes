@@ -24,6 +24,7 @@ namespace Barcodes.Core.ViewModels
         private AddModeViewModel selectedWorkspaceAddMode;
         private ObservableCollection<AddModeViewModel> workspaceAddModes = new ObservableCollection<AddModeViewModel>();
         private GenerationDataViewModel generationData = new GenerationDataViewModel();
+        private bool updateAfterEveryGeneration;
 
         public SettingsViewModel(IAppWindowsService appWindowsService, IAppSettingsService appSettingsService, IAppDialogsService appDialogsService)
         {
@@ -64,6 +65,12 @@ namespace Barcodes.Core.ViewModels
         {
             get => barcodesVisible;
             set => SetProperty(ref barcodesVisible, value);
+        }
+
+        public bool UpdateAfterEveryGeneration
+        {
+            get => updateAfterEveryGeneration;
+            set => SetProperty(ref updateAfterEveryGeneration, value);
         }
 
         public string ProtectedKeys
@@ -154,6 +161,7 @@ namespace Barcodes.Core.ViewModels
             ProtectedKeys = settings.AntiKeyProtection;
             SelectedBarcodeAddModeRaw = settings.BarcodeAddMode;
             SelectedWorkspaceAddModeRaw = settings.WorkspaceAddMode;
+            UpdateAfterEveryGeneration = settings.UpdateAfterEveryGeneration;
             GenerationData.FromSettings(settings.GenerationSettings);
         }
 
@@ -166,6 +174,7 @@ namespace Barcodes.Core.ViewModels
                 AntiKeyProtection = ProtectedKeys,
                 BarcodeAddMode = SelectedBarcodeAddModeRaw.Value,
                 WorkspaceAddMode = SelectedWorkspaceAddModeRaw.Value,
+                UpdateAfterEveryGeneration = UpdateAfterEveryGeneration,
                 GenerationSettings = GenerationData.ToSettings()
             };
         }

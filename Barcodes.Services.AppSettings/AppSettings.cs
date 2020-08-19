@@ -19,6 +19,8 @@ namespace Barcodes.Services.AppSettings
         [JsonConverter(typeof(StringEnumConverter))]
         public AddMode WorkspaceAddMode { get; set; }
 
+        public bool UpdateAfterEveryGeneration { get; set; }
+
         public GenerationSettings GenerationSettings { get; set; } = new GenerationSettings();
 
         public string Serialize()

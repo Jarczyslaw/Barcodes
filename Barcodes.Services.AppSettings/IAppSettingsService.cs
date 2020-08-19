@@ -7,6 +7,8 @@
         AddMode BarcodeAddMode { get; set; }
         AddMode WorkspaceAddMode { get; set; }
         string AntiKeyProtection { get; set; }
+        GenerationSettings GenerationSettings { get; set; }
+        bool UpdateAfterEveryGeneration { get; set; }
 
         AppSettings AppSettings { get; }
         string AppSettingsPath { get; }
@@ -18,5 +20,7 @@
         void Save(AppSettings appSettings);
 
         void Save(string settings);
+
+        void TryUpdateGenerationSettings(GenerationSettings generationSettings);
     }
 }

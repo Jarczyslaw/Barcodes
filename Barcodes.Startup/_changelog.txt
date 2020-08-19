@@ -2,6 +2,8 @@
 	dodano możliwość zaznaczania wielu kodów i ich manipulacji (usuwanie, zmiana kolejności, eksport itd.)
 	poprawki w działaniu flagi domyślności na workspacach
 	dodano możliwość importu wybranych kodów/zakładek z istniejącego storage
+	dodano możliwośc aktualizacji ustawień generowania kodów po każdym stworzeniu kodu kreskowego
+	poprawki błędów
 
 1.3.2
 	dodano kod alejki

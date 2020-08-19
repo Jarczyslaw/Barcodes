@@ -17,6 +17,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <GroupBox Grid.Row="0" Header="Application settings">
@@ -83,9 +84,16 @@
 
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Row="1" Header="Generation settings">
+        <CheckBox
+            Grid.Row="1"
+            Grid.Column="1"
+            VerticalContentAlignment="Center"
+            Content="Update generation settings after every barcode creation"
+            IsChecked="{Binding UpdateAfterEveryGeneration, UpdateSourceTrigger=PropertyChanged}" />
+        <GroupBox Grid.Row="2" Header="Generation settings">
             <Grid DataContext="{Binding GenerationData}">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -97,9 +105,9 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Content="Type:" />
+                <Label Grid.Row="1" Content="Type:" />
                 <ComboBox
-                    Grid.Row="0"
+                    Grid.Row="1"
                     Grid.Column="1"
                     Width="120"
                     HorizontalAlignment="Left"
@@ -108,22 +116,22 @@
                     SelectedItem="{Binding SelectedType, UpdateSourceTrigger=PropertyChanged}" />
 
                 <CheckBox
-                    Grid.Row="1"
+                    Grid.Row="2"
                     Grid.Column="1"
                     VerticalContentAlignment="Center"
                     Content="Validate data"
                     IsChecked="{Binding ValidateCodeText, UpdateSourceTrigger=PropertyChanged}" />
 
                 <CheckBox
-                    Grid.Row="2"
+                    Grid.Row="3"
                     Grid.Column="1"
                     VerticalContentAlignment="Center"
                     Content="Use default sizes"
-                    IsChecked="{Binding DefaultSize}" />
+                    IsChecked="{Binding DefaultSize, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Grid.Row="3" Content="Width: " />
+                <Label Grid.Row="4" Content="Width: " />
                 <toolkit:IntegerUpDown
-                    Grid.Row="3"
+                    Grid.Row="4"
                     Grid.Column="1"
                     Width="120"
                     Margin="{StaticResource DefaultMargin}"
@@ -132,9 +140,9 @@
                     TextAlignment="Left"
                     Value="{Binding Width, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Grid.Row="4" Content="Height: " />
+                <Label Grid.Row="5" Content="Height: " />
                 <toolkit:IntegerUpDown
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Grid.Column="1"
                     Width="120"
                     Margin="{StaticResource DefaultMargin}"
@@ -144,7 +152,7 @@
                     Value="{Binding Height, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
         </GroupBox>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*" />
