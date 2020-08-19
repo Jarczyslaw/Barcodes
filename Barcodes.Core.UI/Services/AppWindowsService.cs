@@ -166,7 +166,7 @@ namespace Barcodes.Core.UI.Services
         public SettingsSaveResult ShowSettingsWindow()
         {
             var dataContext = containerExtension.Resolve<SettingsViewModel>();
-            ShowDialog(new SettingsWindow(dataContext), null, MainWindow);
+            ShowDialog(new SettingsWindow(dataContext), MainWindow, null);
             return dataContext.SettingsSaveResult;
         }
 
@@ -174,7 +174,7 @@ namespace Barcodes.Core.UI.Services
         {
             var dataContext = containerExtension.Resolve<RawSettingsViewModel>();
             dataContext.LoadSettings(appSettings);
-            ShowDialog(new RawSettingsWindow(dataContext), null);
+            ShowDialog(new RawSettingsWindow(dataContext), ActiveWindow, null);
             return dataContext.EditedSettings;
         }
 
