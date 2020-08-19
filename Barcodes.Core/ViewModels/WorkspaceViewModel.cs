@@ -99,6 +99,15 @@ namespace Barcodes.Core.ViewModels
 
         public List<BarcodeViewModel> CheckedBarcodes => Barcodes.Where(b => b.IsChecked).ToList();
 
+        private void SetSelectedBarcode(BarcodeViewModel barcode)
+        {
+            SelectedBarcode = barcode;
+            SelectedBarcodes = new List<BarcodeViewModel>
+            {
+                barcode
+            };
+        }
+
         private void AddToBarcodes(BarcodeViewModel barcode, AddMode addMode)
         {
             if (addMode == AddMode.AsFirst)
@@ -118,7 +127,7 @@ namespace Barcodes.Core.ViewModels
             {
                 OnMessageUpdate?.Invoke($"Barcode {barcode.Title} added successfully!");
             }
-            SelectedBarcode = barcode;
+            SetSelectedBarcode(barcode);
         }
 
         public void InsertNewBarcodes(List<BarcodeViewModel> barcodes, AddMode addMode = AddMode.AsFirst, bool updateMessage = true)
@@ -145,15 +154,16 @@ namespace Barcodes.Core.ViewModels
             Barcodes.Remove(barcode);
             Barcodes.Insert(barcodeIndex, newBarcode);
             OnMessageUpdate?.Invoke($"Barcode {newBarcode.Title} edited successfully!");
-            SelectedBarcode = newBarcode;
+            SetSelectedBarcode(newBarcode);
         }
 
         public void RemoveBarcodes()
         {
             if (AreBarcodesSelected)
             {
+                var count = SelectedBarcodes.Count;
                 RemoveBarcodes(SelectedBarcodes);
-                OnMessageUpdate?.Invoke($"Successfully removed {barcodes.Count} barcodes");
+                OnMessageUpdate?.Invoke($"Successfully removed {count} barcodes");
             }
         }
 

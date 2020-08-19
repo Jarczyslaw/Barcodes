@@ -4,10 +4,16 @@ namespace Barcodes.Services.Windows
 {
     public interface IWindowsService
     {
-        bool? ShowDialog(Window window, object dataContext = null);
-        void Show(Window window, object dataContext = null, Window owner = null);
+        Window MainWindow { get; }
+
+        Window ActiveWindow { get; }
+
+        bool? ShowDialog(Window window, Window owner, object dataContext = null);
+
+        void Show(Window window, Window owner, object dataContext = null);
+
         bool IsWindowOpen<T>() where T : Window;
+
         void RestoreWindows<T>() where T : Window;
-        Window GetActiveWindow();
     }
 }

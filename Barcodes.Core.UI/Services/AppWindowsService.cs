@@ -65,7 +65,7 @@ namespace Barcodes.Core.UI.Services
         {
             var window = new BarcodeWindow(barcodeViewModel);
             barcodesWindowsManager.RegisterWindow(window);
-            Show(window);
+            Show(window, null);
         }
 
         public void OpenWorkspaceWindow(WorkspaceViewModel workspaceViewModel)
@@ -73,7 +73,7 @@ namespace Barcodes.Core.UI.Services
             var dataContext = new WorkspaceWindowViewModel(workspaceViewModel, this);
             var window = new WorkspaceWindow();
             workspacesWindowsManager.RegisterWindow(window, true);
-            Show(window, dataContext);
+            Show(window, null, dataContext);
         }
 
         public TemplateResult OpenTemplateWindow<TViewModel>(string data)
@@ -96,21 +96,21 @@ namespace Barcodes.Core.UI.Services
             var dataContext = containerExtension.Resolve<TViewModel>();
             dataContext.LoadData(data);
             var window = containerExtension.Resolve<TWindow>((typeof(object), dataContext));
-            ShowDialog(window);
+            ShowDialog(window, ActiveWindow);
             return dataContext.ResultData;
         }
 
         public void ShowAboutWindow()
         {
             var window = containerExtension.Resolve<AboutWindow>();
-            ShowDialog(window);
+            ShowDialog(window, MainWindow, null);
         }
 
         public ExampleBarcodeViewModel ShowExamplesWindow()
         {
             var dataContext = containerExtension.Resolve<ExamplesViewModel>();
             var window = new ExamplesWindow(dataContext);
-            ShowDialog(window, dataContext);
+            ShowDialog(window, MainWindow, dataContext);
             return dataContext.ResultBarcode;
         }
 
@@ -119,7 +119,7 @@ namespace Barcodes.Core.UI.Services
             var dataContext = containerExtension.Resolve<GenerationViewModel>();
             dataContext.Load(barcode, edit, template);
             var window = new GenerationWindow(dataContext);
-            ShowDialog(window);
+            ShowDialog(window, MainWindow, null);
             return dataContext.Result;
         }
 
@@ -141,7 +141,7 @@ namespace Barcodes.Core.UI.Services
 
             var dataContext = new InputViewModel(input);
             var window = new InputWindow(dataContext);
-            ShowDialog(window);
+            ShowDialog(window, MainWindow, null);
             return dataContext.Result;
         }
 
@@ -159,14 +159,14 @@ namespace Barcodes.Core.UI.Services
             };
             var dataContext = new SelectionViewModel<WorkspaceViewModel>(input);
             var window = new SelectionWindow(dataContext);
-            ShowDialog(window);
+            ShowDialog(window, MainWindow, null);
             return dataContext.Result;
         }
 
         public SettingsSaveResult ShowSettingsWindow()
         {
             var dataContext = containerExtension.Resolve<SettingsViewModel>();
-            ShowDialog(new SettingsWindow(dataContext));
+            ShowDialog(new SettingsWindow(dataContext), null, MainWindow);
             return dataContext.SettingsSaveResult;
         }
 
@@ -174,7 +174,7 @@ namespace Barcodes.Core.UI.Services
         {
             var dataContext = containerExtension.Resolve<RawSettingsViewModel>();
             dataContext.LoadSettings(appSettings);
-            ShowDialog(new RawSettingsWindow(dataContext));
+            ShowDialog(new RawSettingsWindow(dataContext), null);
             return dataContext.EditedSettings;
         }
 
@@ -182,7 +182,7 @@ namespace Barcodes.Core.UI.Services
         {
             var dataContext = containerExtension.Resolve<StorageViewModel>();
             dataContext.PrepareAndSetWorkspaces(appViewModel, workspaces);
-            Show(new StorageWindow(), dataContext);
+            Show(new StorageWindow(), null, dataContext);
         }
     }
 }

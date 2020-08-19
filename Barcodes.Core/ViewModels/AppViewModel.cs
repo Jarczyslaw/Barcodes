@@ -101,11 +101,6 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref selectedWorkspace, value);
         }
 
-        public BarcodeViewModel SelectedBarcode
-        {
-            get => SelectedWorkspace?.SelectedBarcode;
-        }
-
         public List<BarcodeViewModel> SelectedBarcodes
         {
             get => SelectedWorkspace?.SelectedBarcodes;
@@ -811,7 +806,7 @@ namespace Barcodes.Core.ViewModels
                     return;
                 }
 
-                var workspaces = LoadStorage(storagePath, true, true);
+                var workspaces = LoadStorage(filePath, true, true);
                 if (workspaces == null)
                 {
                     return;
