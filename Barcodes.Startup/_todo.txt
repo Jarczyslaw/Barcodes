@@ -1,3 +1,3 @@
-﻿
-
-zrobić drag and dropa na na zakładkach i na kodach (docelowo dragablz)
+﻿zrobić drag and drop
+zrobić drukowanie automatyczne kodów (może z użyciem pdfa po drodze) - dla pojedynczego, dla zaznaczonych i dla wszystkich w workspace
+logowanie błędów do pliku
