@@ -1,3 +1,7 @@
-﻿zrobić drag and drop
+﻿logowanie błędów do pliku
+zrobić drag and drop
 zrobić drukowanie automatyczne kodów (może z użyciem pdfa po drodze) - dla pojedynczego, dla zaznaczonych i dla wszystkich w workspace
-logowanie błędów do pliku
+dorobić apkę na androida do wyświetlania kodów:
+	- przeorganizować slna
+	- ogarnąc przesyłanie obrazów na xamarina (sockety? grpc? wcf?)
+	- parowanie telefonu z kompem - skanowanie sieci? skan kodu i dwustronna synchronizacja?
