@@ -1,6 +1,8 @@
 ﻿logowanie błędów do pliku
+loader przed wygenerowaniem exampli bo czasem to długo trwa
 zrobić drag and drop
 zrobić drukowanie automatyczne kodów (może z użyciem pdfa po drodze) - dla pojedynczego, dla zaznaczonych i dla wszystkich w workspace
+dorobić okienko do szybkiego tworzenia barkodów
 dorobić apkę na androida do wyświetlania kodów:
 	- przeorganizować slna
 	- ogarnąc przesyłanie obrazów na xamarina (sockety? grpc? wcf?)
