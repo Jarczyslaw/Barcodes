@@ -4,6 +4,7 @@ using Barcodes.Core.UI.Views;
 using Barcodes.Services.AppSettings;
 using Barcodes.Utils;
 using CommonServiceLocator;
+using Prism.Ioc;
 using System;
 using System.ComponentModel;
 using System.Windows;
@@ -21,8 +22,8 @@ namespace Barcodes.Core.UI
 
         public BaseWindow()
         {
-            appSettingsService = ServiceLocator.Current.TryResolve<IAppSettingsService>();
-            appDialogsService = ServiceLocator.Current.TryResolve<IAppDialogsService>();
+            appSettingsService = ContainerLocator.Container.Resolve<IAppSettingsService>();
+            appDialogsService = ContainerLocator.Container.Resolve<IAppDialogsService>();
 
             KeyDown += BaseWindow_KeyDown;
         }
