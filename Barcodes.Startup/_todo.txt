@@ -1,4 +1,5 @@
-﻿logowanie błędów do pliku
+﻿generowanie z exampli - poszerzyć okno i jeśli ktoś anuluje generowanie to nie pokazywać okna do generacji
+logowanie błędów do pliku
 loader przed wygenerowaniem exampli bo czasem to długo trwa
 zrobić drag and drop
 zrobić drukowanie automatyczne kodów (może z użyciem pdfa po drodze) - dla pojedynczego, dla zaznaczonych i dla wszystkich w workspace
