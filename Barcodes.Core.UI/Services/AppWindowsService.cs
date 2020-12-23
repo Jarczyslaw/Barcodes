@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Barcodes.Core.UI.Services
@@ -106,12 +107,11 @@ namespace Barcodes.Core.UI.Services
             ShowDialog(window, MainWindow, null);
         }
 
-        public ExampleBarcodeViewModel ShowExamplesWindow()
+        public GenerationResult ShowExamplesWindow(ExamplesViewModel examplesViewModel)
         {
-            var dataContext = containerExtension.Resolve<ExamplesViewModel>();
-            var window = new ExamplesWindow(dataContext);
-            ShowDialog(window, MainWindow, dataContext);
-            return dataContext.ResultBarcode;
+            var window = new ExamplesWindow(examplesViewModel);
+            ShowDialog(window, MainWindow, examplesViewModel);
+            return examplesViewModel.GenerationResult;
         }
 
         public GenerationResult ShowGenerationWindow(BarcodeViewModel barcode, bool edit, BarcodeTemplate? template = null)

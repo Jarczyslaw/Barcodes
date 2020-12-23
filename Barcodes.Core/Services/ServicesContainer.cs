@@ -1,11 +1,11 @@
 ﻿using Barcodes.Core.Abstraction;
-using Barcodes.Core.Services.StateSaver;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
 using Barcodes.Services.Sys;
 using Prism.Events;
+using Prism.Ioc;
 
 namespace Barcodes.Core.Services
 {
@@ -21,9 +21,12 @@ namespace Barcodes.Core.Services
         public IDocExportService DocExportService { get; }
         public IStateSaverService StateSaverService { get; }
 
+        public IContainerExtension ContainerExtension { get; }
+
         public ServicesContainer(IEventAggregator eventAggregator, IGeneratorService generatorService, IAppDialogsService appDialogsService,
             IAppWindowsService appWindowsService, ISysService systemService, IAppSettingsService appSettingsService,
-            IStorageService storageService, IDocExportService docExportService, IStateSaverService stateSaverService)
+            IStorageService storageService, IDocExportService docExportService, IStateSaverService stateSaverService,
+            IContainerExtension containerExtension)
         {
             EventAggregator = eventAggregator;
             GeneratorService = generatorService;
@@ -34,6 +37,7 @@ namespace Barcodes.Core.Services
             StorageService = storageService;
             DocExportService = docExportService;
             StateSaverService = stateSaverService;
+            ContainerExtension = containerExtension;
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿1.4
+﻿1.5
+	dużo poprawek na oknie z examplami 
+
+1.4
 	dodano możliwość zaznaczania wielu kodów i ich manipulacji (usuwanie, zmiana kolejności, eksport itd.)
 	poprawki w działaniu flagi domyślności na workspacach
 	dodano możliwość importu wybranych kodów/zakładek z istniejącego storage

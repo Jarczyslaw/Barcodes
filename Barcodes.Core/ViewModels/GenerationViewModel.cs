@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Barcodes.Core.ViewModels
 {
-    public class GenerationViewModel : BindableBase, ICloseSource
+    public class GenerationViewModel : BindableBase, ICloseSource, IOnShowAware
     {
         private string title = "Barcode Title";
         private bool edit;
@@ -19,7 +19,7 @@ namespace Barcodes.Core.ViewModels
         private GenerationDataViewModel generationData = new GenerationDataViewModel();
         private TemplateViewModel selectedTemplate;
         private ObservableCollection<TemplateViewModel> templates;
-
+        private BarcodeTemplate? initialTemplate;
         private readonly IServicesContainer services;
 
         public GenerationViewModel(IServicesContainer services)
@@ -170,11 +170,7 @@ namespace Barcodes.Core.ViewModels
             }
 
             Edit = edit;
-
-            if (template.HasValue)
-            {
-                SelectTemplate(template.Value);
-            }
+            initialTemplate = template;
         }
 
         private void SelectTemplate(BarcodeTemplate template)
@@ -204,6 +200,14 @@ namespace Barcodes.Core.ViewModels
             else
             {
                 services.AppDialogsService.ShowError("No matching template found");
+            }
+        }
+
+        public void OnShow()
+        {
+            if (initialTemplate.HasValue)
+            {
+                SelectTemplate(initialTemplate.Value);
             }
         }
     }

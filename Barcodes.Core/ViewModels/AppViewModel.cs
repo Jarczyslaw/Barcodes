@@ -6,6 +6,7 @@ using Barcodes.Extensions;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Storage;
+using Prism.Ioc;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -366,12 +367,32 @@ namespace Barcodes.Core.ViewModels
             servicesContainer.AppWindowsService.ShowAboutWindow();
         }
 
-        public void ShowExamples()
+        public async void ShowExamples()
         {
-            var barcode = servicesContainer.AppWindowsService.ShowExamplesWindow();
+            ExamplesViewModel examplesViewModel = null;
+            await HeavyAction("Generating examples...", () =>
+            {
+                examplesViewModel = servicesContainer.ContainerExtension.Resolve<ExamplesViewModel>();
+                return examplesViewModel.CreateExamples();
+            });
+
+            var barcode = servicesContainer.AppWindowsService.ShowExamplesWindow(examplesViewModel);
             if (barcode != null)
             {
-                AddNewBarcode(barcode, false, barcode.Template);
+                AddNewBarcode(barcode);
+            }
+        }
+
+        private async Task HeavyAction(string message, Func<Task> action)
+        {
+            try
+            {
+                BusyMessage = message;
+                await action();
+            }
+            finally
+            {
+                BusyMessage = null;
             }
         }
 
@@ -511,17 +532,20 @@ namespace Barcodes.Core.ViewModels
         public void AddNewBarcode(BarcodeViewModel barcode, bool edit, BarcodeTemplate? template = null)
         {
             var result = servicesContainer.AppWindowsService.ShowGenerationWindow(barcode, edit, template);
-            if (result == null)
+            if (result != null)
             {
-                return;
+                AddNewBarcode(result);
             }
+        }
 
+        public void AddNewBarcode(GenerationResult generationResult)
+        {
             if (!TryAddInitialWorkspace())
             {
                 return;
             }
 
-            SelectedWorkspace.InsertNewBarcode(result.Barcode, servicesContainer.AppSettingsService.BarcodeAddMode);
+            SelectedWorkspace.InsertNewBarcode(generationResult.Barcode, servicesContainer.AppSettingsService.BarcodeAddMode);
         }
 
         private bool TryAddInitialWorkspace()

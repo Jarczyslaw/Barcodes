@@ -47,7 +47,7 @@
                 <controls:CustomTextBox
                     Grid.Row="2"
                     Grid.Column="1"
-                    Width="372"
+                    Width="410"
                     Height="60"
                     VerticalContentAlignment="Top"
                     AcceptsReturn="True"
@@ -61,7 +61,7 @@
                     Grid.Column="1"
                     Orientation="Horizontal">
                     <ComboBox
-                        Width="200"
+                        Width="240"
                         HorizontalAlignment="Left"
                         DisplayMemberPath="Title"
                         ItemsSource="{Binding Templates}"

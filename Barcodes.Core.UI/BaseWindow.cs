@@ -3,7 +3,6 @@ using Barcodes.Core.Common;
 using Barcodes.Core.UI.Views;
 using Barcodes.Services.AppSettings;
 using Barcodes.Utils;
-using CommonServiceLocator;
 using Prism.Ioc;
 using System;
 using System.ComponentModel;

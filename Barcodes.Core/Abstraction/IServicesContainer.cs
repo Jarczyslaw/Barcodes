@@ -4,6 +4,7 @@ using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
 using Barcodes.Services.Sys;
 using Prism.Events;
+using Prism.Ioc;
 
 namespace Barcodes.Core.Abstraction
 {
@@ -18,5 +19,6 @@ namespace Barcodes.Core.Abstraction
         IStorageService StorageService { get; }
         IDocExportService DocExportService { get; }
         IStateSaverService StateSaverService { get; }
+        IContainerExtension ContainerExtension { get; }
     }
 }

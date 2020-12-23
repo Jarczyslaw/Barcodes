@@ -4,6 +4,7 @@ using Barcodes.Core.ViewModels;
 using Barcodes.Services.AppSettings;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Barcodes.Core.Abstraction
 {
@@ -21,7 +22,7 @@ namespace Barcodes.Core.Abstraction
 
         void ShowAboutWindow();
 
-        ExampleBarcodeViewModel ShowExamplesWindow();
+        GenerationResult ShowExamplesWindow(ExamplesViewModel examplesViewModel);
 
         GenerationResult ShowGenerationWindow(BarcodeViewModel barcode, bool edit, BarcodeTemplate? template = null);
 
