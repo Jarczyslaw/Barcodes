@@ -48,7 +48,7 @@ namespace Barcodes.Core.ViewModels
             catch (Exception exc)
             {
                 var message = "Exception during saving settings file";
-                loggerService.Error(message, exc);
+                loggerService.Error(exc, message);
                 appDialogsService.ShowException(message, exc);
             }
         }

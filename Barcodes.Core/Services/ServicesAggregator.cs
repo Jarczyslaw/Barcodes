@@ -46,7 +46,7 @@ namespace Barcodes.Core.Services
 
         public void LogException(string message, Exception exc)
         {
-            LoggerService.Error(message, exc);
+            LoggerService.Error(exc, message);
             AppDialogsService.ShowException(message, exc);
         }
     }

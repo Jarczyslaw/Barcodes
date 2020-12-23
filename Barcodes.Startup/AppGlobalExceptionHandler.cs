@@ -18,7 +18,7 @@ namespace Barcodes.Startup
         public override bool HandleException(string source, Exception exception)
         {
             var message = $"Unexpected critical exception - {source}";
-            loggerService.Fatal(message);
+            loggerService.Fatal(exception, message);
             appDialogsService.ShowCriticalException(message, exception);
             return true;
         }

@@ -150,7 +150,7 @@ namespace Barcodes.Core.ViewModels
             catch (Exception exc)
             {
                 var message = "Error saving settings";
-                loggerService.Error(message, exc);
+                loggerService.Error(exc, message);
                 appDialogsService.ShowException(message, exc);
             }
         }
