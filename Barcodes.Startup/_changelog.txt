@@ -1,5 +1,6 @@
 ﻿1.5
 	dużo poprawek na oknie z examplami 
+	dodano logowanie do pliku
 
 1.4
 	dodano możliwość zaznaczania wielu kodów i ich manipulacji (usuwanie, zmiana kolejności, eksport itd.)
