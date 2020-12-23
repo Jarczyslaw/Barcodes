@@ -2,6 +2,7 @@
 using Barcodes.Core.Common;
 using Barcodes.Core.UI.Views;
 using Barcodes.Services.AppSettings;
+using Barcodes.Services.Logging;
 using Barcodes.Utils;
 using Prism.Ioc;
 using System;
@@ -18,11 +19,13 @@ namespace Barcodes.Core.UI
 
         private readonly IAppSettingsService appSettingsService;
         private readonly IAppDialogsService appDialogsService;
+        private readonly ILoggerService loggerService;
 
         public BaseWindow()
         {
             appSettingsService = ContainerLocator.Container.Resolve<IAppSettingsService>();
             appDialogsService = ContainerLocator.Container.Resolve<IAppDialogsService>();
+            loggerService = ContainerLocator.Container.Resolve<ILoggerService>();
 
             KeyDown += BaseWindow_KeyDown;
         }

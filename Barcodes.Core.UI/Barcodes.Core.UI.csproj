@@ -319,6 +319,10 @@
       <Project>{D4D91166-8BF2-4E82-825A-BD1F46B05B48}</Project>
       <Name>Barcodes.Services.Generator</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Barcodes.Services.Logging\Barcodes.Services.Logging.csproj">
+      <Project>{15c387af-4aae-4f52-b9ac-42089fc11d8b}</Project>
+      <Name>Barcodes.Services.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Barcodes.Services.Windows\Barcodes.Services.Windows.csproj">
       <Project>{44CE1158-08AB-452E-ABCD-C6E305E1A01A}</Project>
       <Name>Barcodes.Services.Windows</Name>

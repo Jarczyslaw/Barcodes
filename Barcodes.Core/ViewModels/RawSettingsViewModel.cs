@@ -1,6 +1,7 @@
 ﻿using Barcodes.Core.Abstraction;
 using Barcodes.Core.Common;
 using Barcodes.Services.AppSettings;
+using Barcodes.Services.Logging;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
@@ -12,10 +13,12 @@ namespace Barcodes.Core.ViewModels
         private string settings = string.Empty;
 
         private readonly IAppDialogsService appDialogsService;
+        private readonly ILoggerService loggerService;
 
-        public RawSettingsViewModel(IAppDialogsService appDialogsService)
+        public RawSettingsViewModel(IAppDialogsService appDialogsService, ILoggerService loggerService)
         {
             this.appDialogsService = appDialogsService;
+            this.loggerService = loggerService;
 
             SaveCommand = new DelegateCommand(Save);
             CloseCommand = new DelegateCommand(() => OnClose?.Invoke());
@@ -44,7 +47,9 @@ namespace Barcodes.Core.ViewModels
             }
             catch (Exception exc)
             {
-                appDialogsService.ShowException("Exception during saving settings file", exc);
+                var message = "Exception during saving settings file";
+                loggerService.Error(message, exc);
+                appDialogsService.ShowException(message, exc);
             }
         }
 

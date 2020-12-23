@@ -2,6 +2,7 @@
 using Barcodes.Core.Common;
 using Barcodes.Core.Models;
 using Barcodes.Services.AppSettings;
+using Barcodes.Services.Logging;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
@@ -15,6 +16,7 @@ namespace Barcodes.Core.ViewModels
         private readonly IAppSettingsService appSettingsService;
         private readonly IAppDialogsService appDialogsService;
         private readonly IAppWindowsService appWindowsService;
+        private readonly ILoggerService loggerService;
 
         private string storagePath = string.Empty;
         private bool barcodesVisible;
@@ -26,11 +28,13 @@ namespace Barcodes.Core.ViewModels
         private GenerationDataViewModel generationData = new GenerationDataViewModel();
         private bool updateAfterEveryGeneration;
 
-        public SettingsViewModel(IAppWindowsService appWindowsService, IAppSettingsService appSettingsService, IAppDialogsService appDialogsService)
+        public SettingsViewModel(IAppWindowsService appWindowsService, IAppSettingsService appSettingsService,
+            IAppDialogsService appDialogsService, ILoggerService loggerService)
         {
             this.appWindowsService = appWindowsService;
             this.appSettingsService = appSettingsService;
             this.appDialogsService = appDialogsService;
+            this.loggerService = loggerService;
 
             SaveCommand = new DelegateCommand(Save);
             CloseCommand = new DelegateCommand(() => OnClose?.Invoke());
@@ -145,7 +149,9 @@ namespace Barcodes.Core.ViewModels
             }
             catch (Exception exc)
             {
-                appDialogsService.ShowException("Error saving settings", exc);
+                var message = "Error saving settings";
+                loggerService.Error(message, exc);
+                appDialogsService.ShowException(message, exc);
             }
         }
 

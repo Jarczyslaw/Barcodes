@@ -27,9 +27,9 @@ namespace Barcodes.Core.ViewModels
         private string title = string.Empty;
         private string storagePath = string.Empty;
 
-        private readonly IServicesContainer servicesContainer;
+        private readonly IServicesAggregator servicesContainer;
 
-        public AppViewModel(IServicesContainer servicesContainer)
+        public AppViewModel(IServicesAggregator servicesContainer)
         {
             this.servicesContainer = servicesContainer;
 
@@ -270,7 +270,7 @@ namespace Barcodes.Core.ViewModels
             }
             catch (Exception exc)
             {
-                servicesContainer.AppDialogsService.ShowException("Error when loading storage from file", exc);
+                servicesContainer.LogException("Error when loading storage from file", exc);
             }
         }
 
@@ -320,7 +320,7 @@ namespace Barcodes.Core.ViewModels
                 }
                 catch (Exception exc)
                 {
-                    servicesContainer.AppDialogsService.ShowException("Error when creating new storage file", exc);
+                    servicesContainer.LogException("Error when creating new storage file", exc);
                 }
             }
         }
@@ -345,7 +345,7 @@ namespace Barcodes.Core.ViewModels
             }
             catch (Exception exc)
             {
-                servicesContainer.AppDialogsService.ShowException("Error when saving barcodes to file", exc);
+                servicesContainer.LogException("Error when saving barcodes to file", exc);
                 if (showContinueQuestion)
                 {
                     return servicesContainer.AppDialogsService.ShowYesNoQuestion("An error occured. Do you want to continue?");
@@ -489,7 +489,7 @@ namespace Barcodes.Core.ViewModels
             }
             catch (Exception exc)
             {
-                servicesContainer.AppDialogsService.ShowException("Error when generating a document", exc);
+                servicesContainer.LogException("Error when generating a document", exc);
             }
             finally
             {
@@ -505,7 +505,7 @@ namespace Barcodes.Core.ViewModels
             }
             catch (Exception exc)
             {
-                servicesContainer.AppDialogsService.ShowException("Can not open app location", exc);
+                servicesContainer.LogException("Can not open app location", exc);
             }
         }
 
@@ -525,7 +525,7 @@ namespace Barcodes.Core.ViewModels
             }
             catch (Exception exc)
             {
-                servicesContainer.AppDialogsService.ShowException(openErrorMessage, exc);
+                servicesContainer.LogException(openErrorMessage, exc);
             }
         }
 
@@ -621,7 +621,7 @@ namespace Barcodes.Core.ViewModels
             }
             catch (Exception exc)
             {
-                servicesContainer.AppDialogsService.ShowException("Error when saving barcode to png file", exc);
+                servicesContainer.LogException("Error when saving barcode to png file", exc);
             }
         }
 
@@ -768,7 +768,7 @@ namespace Barcodes.Core.ViewModels
                     }
                     catch (Exception exc)
                     {
-                        servicesContainer.AppDialogsService.ShowException("Error when importing barcode", exc);
+                        servicesContainer.LogException("Error when importing barcode", exc);
                         return;
                     }
                 }
@@ -805,7 +805,7 @@ namespace Barcodes.Core.ViewModels
                     }
                     catch (Exception exc)
                     {
-                        servicesContainer.AppDialogsService.ShowException("Error when importing workspace", exc);
+                        servicesContainer.LogException("Error when importing workspace", exc);
                         return;
                     }
                 }
@@ -840,7 +840,7 @@ namespace Barcodes.Core.ViewModels
             }
             catch (Exception exc)
             {
-                servicesContainer.AppDialogsService.ShowException("Error when importing storage", exc);
+                servicesContainer.LogException("Error when importing storage", exc);
             }
         }
 
@@ -859,7 +859,7 @@ namespace Barcodes.Core.ViewModels
             }
             catch (Exception exc)
             {
-                servicesContainer.AppDialogsService.ShowException("Error when exporting barcode", exc);
+                servicesContainer.LogException("Error when exporting barcode", exc);
             }
         }
 
@@ -882,7 +882,7 @@ namespace Barcodes.Core.ViewModels
                 }
                 catch (Exception exc)
                 {
-                    servicesContainer.AppDialogsService.ShowException("Error when exporting barcode", exc);
+                    servicesContainer.LogException("Error when exporting barcode", exc);
                 }
             }
         }
@@ -896,7 +896,7 @@ namespace Barcodes.Core.ViewModels
             }
             catch (Exception exc)
             {
-                servicesContainer.AppDialogsService.ShowException("Error while loading storage from file", exc);
+                servicesContainer.LogException("Error while loading storage from file", exc);
             }
         }
 

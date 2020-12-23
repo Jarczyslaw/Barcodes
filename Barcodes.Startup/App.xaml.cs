@@ -7,6 +7,7 @@ using Barcodes.Services.AppSettings;
 using Barcodes.Services.Dialogs;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
+using Barcodes.Services.Logging;
 using Barcodes.Services.Storage;
 using Barcodes.Services.Sys;
 using Barcodes.Services.Windows;
@@ -68,6 +69,7 @@ namespace Barcodes.Startup
 
             containerRegistry.RegisterInstance(singleInstanceManager);
             containerRegistry.RegisterSingleton<IAppSettingsService, AppSettingsService>();
+            containerRegistry.RegisterSingleton<ILoggerService, LoggerService>();
             var appDialogsService = new AppDialogsService();
             containerRegistry.RegisterInstance<IDialogsService>(appDialogsService);
             containerRegistry.RegisterInstance<IAppDialogsService>(appDialogsService);
@@ -77,7 +79,7 @@ namespace Barcodes.Startup
             containerRegistry.RegisterSingleton<IAppWindowsService, AppWindowsService>();
             containerRegistry.RegisterSingleton<IStorageService, StorageService>();
             containerRegistry.RegisterSingleton<IDocExportService, DocExportService>();
-            containerRegistry.RegisterSingleton<IServicesContainer, ServicesContainer>();
+            containerRegistry.RegisterSingleton<IServicesAggregator, ServicesAggregator>();
             containerRegistry.RegisterSingleton<IStateSaverService, StateSaverService>();
             RegisterGlobalExceptionHandler();
         }

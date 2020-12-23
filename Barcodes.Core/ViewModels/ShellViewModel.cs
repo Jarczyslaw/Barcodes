@@ -8,7 +8,7 @@ namespace Barcodes.Core.ViewModels
 {
     public class ShellViewModel : BindableBase, IOnShowAware, ICloseSource, IOnClosingAware, IOnKeyDownAware
     {
-        public ShellViewModel(IServicesContainer servicesContainer)
+        public ShellViewModel(IServicesAggregator servicesContainer)
         {
             App = new AppViewModel(servicesContainer);
             Menu = new MenuViewModel(App);

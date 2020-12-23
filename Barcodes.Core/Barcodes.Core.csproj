@@ -118,14 +118,14 @@
     <Compile Include="ViewModels\BarcodeMenuViewModel.cs" />
     <Compile Include="Abstraction\IAppDialogsService.cs" />
     <Compile Include="Abstraction\IAppWindowsService.cs" />
-    <Compile Include="Abstraction\IServicesContainer.cs" />
+    <Compile Include="Abstraction\IServicesAggregator.cs" />
     <Compile Include="ViewModels\GenerationDataViewModel.cs" />
     <Compile Include="ViewModels\BaseInputViewModel.cs" />
     <Compile Include="ViewModels\ExampleBarcodeViewModel.cs" />
     <Compile Include="ViewModels\ExamplesViewModel.cs" />
     <Compile Include="ViewModels\InputViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
-    <Compile Include="Services\ServicesContainer.cs" />
+    <Compile Include="Services\ServicesAggregator.cs" />
     <Compile Include="Services\StateSaver\States\Ean128ProductViewModelState.cs" />
     <Compile Include="Services\StateSaver\States\GenerationViewModelState.cs" />
     <Compile Include="Abstraction\IStateSaverService.cs" />
@@ -190,6 +190,10 @@
     <ProjectReference Include="..\Barcodes.Services.Generator\Barcodes.Services.Generator.csproj">
       <Project>{D4D91166-8BF2-4E82-825A-BD1F46B05B48}</Project>
       <Name>Barcodes.Services.Generator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Barcodes.Services.Logging\Barcodes.Services.Logging.csproj">
+      <Project>{15c387af-4aae-4f52-b9ac-42089fc11d8b}</Project>
+      <Name>Barcodes.Services.Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\Barcodes.Services.Storage\Barcodes.Services.Storage.csproj">
       <Project>{804A49A8-76BB-4EE0-83B2-6E2EC77AF5D0}</Project>

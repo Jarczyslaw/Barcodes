@@ -20,9 +20,9 @@ namespace Barcodes.Core.ViewModels
         private TemplateViewModel selectedTemplate;
         private ObservableCollection<TemplateViewModel> templates;
         private BarcodeTemplate? initialTemplate;
-        private readonly IServicesContainer services;
+        private readonly IServicesAggregator services;
 
-        public GenerationViewModel(IServicesContainer services)
+        public GenerationViewModel(IServicesAggregator services)
         {
             this.services = services;
 
