@@ -1,8 +1,13 @@
 ﻿using Barcodes.Extensions;
+using MigraDoc.DocumentObjectModel;
+using MigraDoc.Rendering.Printing;
+using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Barcodes.Services.DocExport
 {
@@ -21,7 +26,8 @@ namespace Barcodes.Services.DocExport
             {
                 Directory.CreateDirectory(tempImagesPath);
                 PrepareImages(barcodes);
-                CreateDocument(barcodes, filePath);
+                var pdfDocument = CreatePdfDocument(barcodes);
+                SaveDocument(pdfDocument, filePath);
             }
             finally
             {
@@ -34,7 +40,67 @@ namespace Barcodes.Services.DocExport
             return Task.Run(() => Export(barcodes, filePath));
         }
 
-        private void CreateDocument(List<DocBarcodeData> barcodes, string filePath)
+        public void Print(List<DocBarcodeData> barcodes)
+        {
+            var printerSettings = ShowPrintDialog();
+            if (printerSettings != null)
+            {
+                StartPrinting(printerSettings, barcodes);
+            }
+        }
+
+        public Task PrintAsync(List<DocBarcodeData> barcodes)
+        {
+            var printerSettings = ShowPrintDialog();
+            if (printerSettings != null)
+            {
+                return Task.Run(() => StartPrinting(printerSettings, barcodes));
+            }
+            return Task.CompletedTask;
+        }
+
+        private void StartPrinting(PrinterSettings settings, List<DocBarcodeData> barcodes)
+        {
+            if (settings != null)
+            {
+                try
+                {
+                    Directory.CreateDirectory(tempImagesPath);
+                    PrepareImages(barcodes);
+                    var builder = PrepareDocument(barcodes);
+                    PrintDocument(settings, builder.Document);
+                }
+                finally
+                {
+                    Directory.Delete(tempImagesPath, true);
+                }
+            }
+
+        }
+
+        private void PrintDocument(PrinterSettings settings, Document document)
+        {
+            var printDocument = new MigraDocPrintDocument(document);
+            printDocument.PrinterSettings = settings;
+            printDocument.Print();
+        }
+
+        private PrinterSettings ShowPrintDialog()
+        {
+            var printerSettings = new PrinterSettings();
+            using (var dialog = new PrintDialog())
+            {
+                dialog.PrinterSettings = printerSettings;
+                dialog.AllowSomePages = true;
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    return printerSettings;
+                }
+            }
+            return null;
+        }
+
+        private DocBuilder PrepareDocument(List<DocBarcodeData> barcodes)
         {
             var builder = new DocBuilder();
             builder.AddTitle()
@@ -44,7 +110,17 @@ namespace Barcodes.Services.DocExport
                 builder.AddBarcode(barcode);
             }
 
-            var document = builder.Render();
+            return builder;
+        }
+
+        private PdfDocument CreatePdfDocument(List<DocBarcodeData> barcodes)
+        {
+            var builder = PrepareDocument(barcodes);
+            return builder.Render();
+        }
+
+        private void SaveDocument(PdfDocument document, string filePath)
+        {
             document.Save(filePath);
             document.Close();
         }

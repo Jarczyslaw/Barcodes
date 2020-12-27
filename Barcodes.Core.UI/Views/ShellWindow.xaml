@@ -164,6 +164,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
@@ -229,25 +230,30 @@
                         Header="_Storage"
                         InputGestureText="Ctrl+Shift+S" />
                 </MenuItem>
+
                 <MenuItem
                     Grid.Column="3"
                     Command="{Binding ExportToPdfCommand}"
                     Header="_Export to PDF" />
                 <MenuItem
                     Grid.Column="4"
+                    Command="{Binding PrintCommand}"
+                    Header="_Print" />
+                <MenuItem
+                    Grid.Column="5"
                     Command="{Binding ShowSettingsCommand}"
                     Header="_Settings" />
-                <MenuItem Grid.Column="5" Header="_Help">
+                <MenuItem Grid.Column="6" Header="_Help">
                     <MenuItem Command="{Binding ShowExamplesCommand}" Header="_Examples" />
                     <MenuItem Command="{Binding ShowAboutCommand}" Header="_About" />
                 </MenuItem>
                 <MenuItem
-                    Grid.Column="7"
+                    Grid.Column="8"
                     Header="Barcodes visible"
                     IsCheckable="True"
                     IsChecked="{Binding Proxy.App.BarcodesVisible, Source={StaticResource Proxy}}" />
                 <MenuItem
-                    Grid.Column="8"
+                    Grid.Column="9"
                     Command="{Binding CloseAllWindowsCommand}"
                     Header="Close all windows" />
             </Menu>

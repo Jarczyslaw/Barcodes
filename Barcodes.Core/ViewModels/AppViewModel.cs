@@ -410,12 +410,12 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public void ExportToPdf()
+        private List<BarcodeViewModel> GetBarcodesToExport()
         {
             var mode = servicesContainer.AppDialogsService.ShowPdfExportQuestion();
             if (mode == PdfExportMode.None)
             {
-                return;
+                return null;
             }
 
             var barcodesToExport = new List<BarcodeViewModel>();
@@ -424,7 +424,7 @@ namespace Barcodes.Core.ViewModels
                 if (SelectedWorkspace == null || SelectedWorkspace.Barcodes.Count == 0)
                 {
                     servicesContainer.AppDialogsService.ShowError("No workspace found or there are no barcodes in active workspace");
-                    return;
+                    return null;
                 }
                 barcodesToExport.AddRange(SelectedWorkspace.Barcodes);
             }
@@ -433,7 +433,7 @@ namespace Barcodes.Core.ViewModels
                 if (!AreBarcodesSelected)
                 {
                     servicesContainer.AppDialogsService.ShowError("No selected barcodes to export");
-                    return;
+                    return null;
                 }
                 barcodesToExport.AddRange(SelectedBarcodes);
             }
@@ -442,7 +442,7 @@ namespace Barcodes.Core.ViewModels
                 if (BarcodesCount == 0)
                 {
                     servicesContainer.AppDialogsService.ShowError("No barcodes to export");
-                    return;
+                    return null;
                 }
                 foreach (var workspace in Workspaces)
                 {
@@ -450,9 +450,52 @@ namespace Barcodes.Core.ViewModels
                 }
             }
 
-            if (barcodesToExport.Count > 0)
+            return barcodesToExport;
+        }
+
+        public void ExportToPdf()
+        {
+            var barcodesToExport = GetBarcodesToExport();
+            if (barcodesToExport?.Count > 0)
             {
                 ExecuteExportToPdf(barcodesToExport);
+            }
+        }
+
+        public void Print()
+        {
+            var barcodesToPrint = GetBarcodesToExport();
+            if (barcodesToPrint?.Count > 0)
+            {
+                ExecutePrint(barcodesToPrint);
+            }
+        }
+
+        private async void ExecutePrint(IEnumerable<BarcodeViewModel> barcodes)
+        {
+            try
+            {
+                BusyMessage = "Printing barcodes...";
+
+                var barcodesToExport = barcodes.Select(b => new DocBarcodeData
+                {
+                    Title = b.Title,
+                    Data = b.GenerationData.Data,
+                    Barcode = b.Barcode
+                }).ToList();
+                await servicesContainer.DocExportService.PrintAsync(barcodesToExport)
+                    .ConfigureAwait(false);
+
+                StatusMessage = "Successfully printed";
+                BusyMessage = null;
+            }
+            catch (Exception exc)
+            {
+                servicesContainer.LogException("Error when printing barcodes", exc);
+            }
+            finally
+            {
+                BusyMessage = null;
             }
         }
 
@@ -475,8 +518,6 @@ namespace Barcodes.Core.ViewModels
                     Barcode = b.Barcode
                 }).ToList();
                 await servicesContainer.DocExportService.ExportAsync(barcodesToExport, filePath)
-                    .ConfigureAwait(false);
-                await Task.Delay(2000)
                     .ConfigureAwait(false);
 
                 StatusMessage = $"Successfully exported to {filePath}";
