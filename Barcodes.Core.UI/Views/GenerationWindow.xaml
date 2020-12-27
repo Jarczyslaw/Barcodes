@@ -5,6 +5,7 @@
     xmlns:controls="clr-namespace:Barcodes.Core.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:ui="clr-namespace:Barcodes.Core.UI"
     Title="Barcodes - Generation"
     Icon="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
@@ -12,7 +13,9 @@
     SizeToContent="WidthAndHeight"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
-    <Grid>
-        <controls:GenerationView x:Name="generationView" />
-    </Grid>
+    <toolkit:BusyIndicator BusyContent="Generating barcode..." IsBusy="{Binding IsBusy}">
+        <Grid>
+            <controls:GenerationView x:Name="generationView" />
+        </Grid>
+    </toolkit:BusyIndicator>
 </ui:BaseWindow>

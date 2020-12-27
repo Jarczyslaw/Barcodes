@@ -8,6 +8,7 @@ using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Barcodes.Core.ViewModels
 {
@@ -15,6 +16,7 @@ namespace Barcodes.Core.ViewModels
     {
         private string title = "Barcode Title";
         private bool edit;
+        private bool isBusy;
 
         private GenerationDataViewModel generationData = new GenerationDataViewModel();
         private TemplateViewModel selectedTemplate;
@@ -48,6 +50,12 @@ namespace Barcodes.Core.ViewModels
         {
             get => edit;
             set => SetProperty(ref edit, value);
+        }
+
+        public bool IsBusy
+        {
+            get => isBusy;
+            set => SetProperty(ref isBusy, value);
         }
 
         public string Title
@@ -109,7 +117,7 @@ namespace Barcodes.Core.ViewModels
             return true;
         }
 
-        private void GenerateBarcode(bool addAsNew)
+        private async void GenerateBarcode(bool addAsNew)
         {
             if (!GenerateValidation())
             {
@@ -120,7 +128,7 @@ namespace Barcodes.Core.ViewModels
             {
                 Result = new GenerationResult
                 {
-                    Barcode = RunGenerator(GenerationData.ToData(), Title.Trim()),
+                    Barcode = await RunGenerator(GenerationData.ToData(), Title.Trim()),
                     AddNew = addAsNew
                 };
                 services.AppSettingsService.TryUpdateGenerationSettings(GenerationData.ToSettings());
@@ -132,15 +140,26 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        private BarcodeViewModel RunGenerator(GenerationData barcodeData, string title)
+        private async Task<BarcodeViewModel> RunGenerator(GenerationData barcodeData, string title)
         {
-            var barcodeBitmap = services.GeneratorService.CreateBarcode(barcodeData);
-            barcodeBitmap.Freeze();
-            return new BarcodeViewModel(barcodeData)
+            try
             {
-                Barcode = barcodeBitmap,
-                Title = title
-            };
+                IsBusy = true;
+                return await Task.Run(() =>
+                {
+                    var barcodeBitmap = services.GeneratorService.CreateBarcode(barcodeData);
+                    barcodeBitmap.Freeze();
+                    return new BarcodeViewModel(barcodeData)
+                    {
+                        Barcode = barcodeBitmap,
+                        Title = title
+                    };
+                });
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         private void UseTemplate()
