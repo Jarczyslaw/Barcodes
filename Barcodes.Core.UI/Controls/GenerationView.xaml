@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
     mc:Ignorable="d">
-    <StackPanel Margin="5">
+    <StackPanel>
         <GroupBox Header="Barcode generation">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -116,24 +116,5 @@
 
             </Grid>
         </GroupBox>
-        <UniformGrid Columns="3">
-            <Button
-                Grid.Row="5"
-                Grid.ColumnSpan="5"
-                Command="{Binding AddNewCommand}"
-                Content="Add new"
-                IsDefault="True" />
-            <Button
-                Grid.Row="5"
-                Grid.ColumnSpan="5"
-                Command="{Binding EditCommand}"
-                Content="Edit" />
-            <Button
-                Grid.Row="5"
-                Grid.ColumnSpan="5"
-                Command="{Binding CancelCommand}"
-                Content="Cancel"
-                IsCancel="True" />
-        </UniformGrid>
     </StackPanel>
 </UserControl>

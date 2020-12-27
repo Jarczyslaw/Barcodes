@@ -14,8 +14,27 @@
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
     <toolkit:BusyIndicator BusyContent="Generating barcode..." IsBusy="{Binding IsBusy}">
-        <Grid>
+        <StackPanel Margin="5" Orientation="Vertical">
             <controls:GenerationView x:Name="generationView" />
-        </Grid>
+            <UniformGrid Columns="3">
+                <Button
+                    Grid.Row="5"
+                    Grid.ColumnSpan="5"
+                    Command="{Binding AddNewCommand}"
+                    Content="Add new"
+                    IsDefault="True" />
+                <Button
+                    Grid.Row="5"
+                    Grid.ColumnSpan="5"
+                    Command="{Binding EditCommand}"
+                    Content="Edit" />
+                <Button
+                    Grid.Row="5"
+                    Grid.ColumnSpan="5"
+                    Command="{Binding CancelCommand}"
+                    Content="Cancel"
+                    IsCancel="True" />
+            </UniformGrid>
+        </StackPanel>
     </toolkit:BusyIndicator>
 </ui:BaseWindow>
