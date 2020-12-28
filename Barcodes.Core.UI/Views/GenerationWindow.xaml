@@ -18,19 +18,11 @@
             <controls:GenerationView x:Name="generationView" />
             <UniformGrid Columns="3">
                 <Button
-                    Grid.Row="5"
-                    Grid.ColumnSpan="5"
                     Command="{Binding AddNewCommand}"
                     Content="Add new"
                     IsDefault="True" />
+                <Button Command="{Binding EditCommand}" Content="Edit" />
                 <Button
-                    Grid.Row="5"
-                    Grid.ColumnSpan="5"
-                    Command="{Binding EditCommand}"
-                    Content="Edit" />
-                <Button
-                    Grid.Row="5"
-                    Grid.ColumnSpan="5"
                     Command="{Binding CancelCommand}"
                     Content="Cancel"
                     IsCancel="True" />

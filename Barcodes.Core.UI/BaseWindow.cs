@@ -104,7 +104,9 @@ namespace Barcodes.Core.UI
                     }
                     catch (Exception exc)
                     {
-                        appDialogsService.ShowException("Error checking keys", exc);
+                        var message = "Error checking keys";
+                        appDialogsService.ShowException(message, exc);
+                        loggerService.Error(exc, message);
                     }
                 }
             }
