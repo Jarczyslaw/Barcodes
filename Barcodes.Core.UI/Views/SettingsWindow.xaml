@@ -33,6 +33,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0" Content="Storage path:" />
@@ -51,20 +52,27 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     VerticalContentAlignment="Center"
+                    Content="Open quick generator on startup"
+                    IsChecked="{Binding OpenQuickGenerator, UpdateSourceTrigger=PropertyChanged}" />
+
+                <CheckBox
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    VerticalContentAlignment="Center"
                     Content="Barcodes visible"
                     IsChecked="{Binding BarcodesVisible, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Grid.Row="2" Content="Protected keys:" />
+                <Label Grid.Row="3" Content="Protected keys:" />
                 <TextBox
-                    Grid.Row="2"
+                    Grid.Row="3"
                     Grid.Column="1"
                     Width="120"
                     HorizontalAlignment="Left"
                     Text="{Binding ProtectedKeys}" />
 
-                <Label Grid.Row="3" Content="New barcode order:" />
+                <Label Grid.Row="4" Content="New barcode order:" />
                 <ComboBox
-                    Grid.Row="3"
+                    Grid.Row="4"
                     Grid.Column="1"
                     Width="120"
                     HorizontalAlignment="Left"
@@ -72,9 +80,9 @@
                     ItemsSource="{Binding BarcodeAddModes}"
                     SelectedItem="{Binding SelectedBarcodeAddMode, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Grid.Row="4" Content="New workspace order:" />
+                <Label Grid.Row="5" Content="New workspace order:" />
                 <ComboBox
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Grid.Column="1"
                     Width="120"
                     HorizontalAlignment="Left"

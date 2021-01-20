@@ -2,6 +2,7 @@
 using Barcodes.Utils;
 using System.Diagnostics;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -23,7 +24,6 @@ namespace Barcodes.Core.UI.Views
         private void AboutWindow_Loaded(object sender, RoutedEventArgs e)
         {
             KeyDown += AboutWindow_KeyDown;
-            GenerateRandomBarcode();
         }
 
         private void ShowVersion()
@@ -47,23 +47,23 @@ namespace Barcodes.Core.UI.Views
             catch { }
         }
 
-        private void AboutWindow_KeyDown(object sender, KeyEventArgs e)
+        private async void AboutWindow_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.F5)
             {
-                GenerateRandomBarcode();
+                await GenerateRandomBarcode();
             }
         }
 
-        private void GenerateRandomBarcode()
+        public async Task GenerateRandomBarcode()
         {
             var randomText = RandomTexts.Get();
-            imgBarcode.Source = barcodesGenerator.CreateQRBarcode(300, randomText);
+            imgBarcode.Source = await Task.Run(() => barcodesGenerator.CreateQRBarcode(300, randomText));
         }
 
-        private void ImgBarcode_MouseDown(object sender, MouseButtonEventArgs e)
+        private async void ImgBarcode_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            GenerateRandomBarcode();
+            await GenerateRandomBarcode();
         }
     }
 }

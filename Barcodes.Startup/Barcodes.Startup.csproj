@@ -203,10 +203,6 @@
       <Project>{dd4da36d-8f15-433c-814d-c3df0efbb6a4}</Project>
       <Name>Barcodes.Services.Sys</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Barcodes.Services.Windows\Barcodes.Services.Windows.csproj">
-      <Project>{44ce1158-08ab-452e-abcd-c6e305e1a01a}</Project>
-      <Name>Barcodes.Services.Windows</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Barcodes.SingleInstance\Barcodes.SingleInstance.csproj">
       <Project>{3e40a410-eee1-43ac-b383-caa9fb3c9213}</Project>
       <Name>Barcodes.SingleInstance</Name>

@@ -7,6 +7,16 @@ namespace Barcodes.Services.AppSettings
 {
     public class AppSettingsService : IAppSettingsService
     {
+        public bool OpenQuickGeneratorOnStartup
+        {
+            get => AppSettings.OpenQuickGeneratorOnStartup;
+            set
+            {
+                AppSettings.OpenQuickGeneratorOnStartup = value;
+                Save();
+            }
+        }
+
         public string StoragePath
         {
             get => AppSettings.StoragePath;

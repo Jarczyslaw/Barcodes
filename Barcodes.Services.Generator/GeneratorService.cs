@@ -14,7 +14,9 @@ namespace Barcodes.Services.Generator
                 generator.BarCodeWidth.Pixels = size;
                 generator.BarCodeHeight.Pixels = size;
                 generator.D2.DisplayText = string.Empty;
-                return generator.GenerateBarCodeImage().ToBitmapSource();
+                var image = generator.GenerateBarCodeImage().ToBitmapSource();
+                image.Freeze();
+                return image;
             }
         }
 

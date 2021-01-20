@@ -10,7 +10,6 @@ using Barcodes.Services.Generator;
 using Barcodes.Services.Logging;
 using Barcodes.Services.Storage;
 using Barcodes.Services.Sys;
-using Barcodes.Services.Windows;
 using Barcodes.SingleInstance;
 using Prism.Ioc;
 using Prism.Mvvm;
@@ -75,7 +74,6 @@ namespace Barcodes.Startup
             containerRegistry.RegisterInstance<IAppDialogsService>(appDialogsService);
             containerRegistry.RegisterSingleton<ISysService, SysService>();
             containerRegistry.RegisterSingleton<IGeneratorService, GeneratorService>();
-            containerRegistry.RegisterSingleton<IWindowsService, WindowsService>();
             containerRegistry.RegisterSingleton<IAppWindowsService, AppWindowsService>();
             containerRegistry.RegisterSingleton<IStorageService, StorageService>();
             containerRegistry.RegisterSingleton<IDocExportService, DocExportService>();

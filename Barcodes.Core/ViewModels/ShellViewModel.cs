@@ -6,11 +6,15 @@ using System.Windows.Input;
 
 namespace Barcodes.Core.ViewModels
 {
-    public class ShellViewModel : BindableBase, IOnShowAware, ICloseSource, IOnClosingAware, IOnKeyDownAware
+    public class ShellViewModel : BindableBase, IOnShowAware, ICloseSource, IOnClosingAware, IOnKeyDownAware, IMinimizeSource
     {
-        public ShellViewModel(IServicesAggregator servicesContainer)
+        private readonly IServicesAggregator services;
+
+        public ShellViewModel(IServicesAggregator services)
         {
-            App = new AppViewModel(servicesContainer);
+            this.services = services;
+
+            App = new AppViewModel(services);
             Menu = new MenuViewModel(App);
             BarcodeMenu = new BarcodeMenuViewModel(App);
             WorkspaceMenu = new WorkspaceMenuViewModel(App);
@@ -29,11 +33,21 @@ namespace Barcodes.Core.ViewModels
             set => Menu.OnClose = value;
         }
 
+        public Action Minimize { get; set; }
+
         public void OnShow()
         {
-            if (App.BarcodesCount == 0)
+            if (services.AppSettingsService.OpenQuickGeneratorOnStartup)
             {
-                App.AddNewBarcode(null, false);
+                App.ShowQuickGenerator();
+                //Minimize();
+            }
+            else
+            {
+                if (App.BarcodesCount == 0)
+                {
+                    App.AddNewBarcode(null, false);
+                }
             }
         }
 

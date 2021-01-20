@@ -106,6 +106,9 @@
     <Compile Include="Services\AppDialogsService.cs" />
     <Compile Include="Services\AppWindowsService.cs" />
     <Compile Include="Services\WindowManager.cs" />
+    <Compile Include="Views\QuickGeneratorWindow.xaml.cs">
+      <DependentUpon>QuickGeneratorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\StorageWindow.xaml.cs">
       <DependentUpon>StorageWindow.xaml</DependentUpon>
     </Compile>
@@ -198,6 +201,10 @@
     <Page Include="Styles\Values.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\QuickGeneratorWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\StorageWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -322,10 +329,6 @@
     <ProjectReference Include="..\Barcodes.Services.Logging\Barcodes.Services.Logging.csproj">
       <Project>{15c387af-4aae-4f52-b9ac-42089fc11d8b}</Project>
       <Name>Barcodes.Services.Logging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Barcodes.Services.Windows\Barcodes.Services.Windows.csproj">
-      <Project>{44CE1158-08AB-452E-ABCD-C6E305E1A01A}</Project>
-      <Name>Barcodes.Services.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\Barcodes.SingleInstance\Barcodes.SingleInstance.csproj">
       <Project>{3E40A410-EEE1-43AC-B383-CAA9FB3C9213}</Project>

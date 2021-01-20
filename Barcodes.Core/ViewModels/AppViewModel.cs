@@ -362,9 +362,9 @@ namespace Barcodes.Core.ViewModels
             };
         }
 
-        public void ShowAbout()
+        public async void ShowAbout()
         {
-            servicesContainer.AppWindowsService.ShowAboutWindow();
+            await HeavyAction("Please wait...", () => servicesContainer.AppWindowsService.ShowAboutWindow(() => BusyMessage = null));
         }
 
         public async void ShowExamples()
@@ -974,7 +974,7 @@ namespace Barcodes.Core.ViewModels
         {
             if (servicesContainer.AppWindowsService.WindowsCount > 0)
             {
-                var result = servicesContainer.AppDialogsService.ShowYesNoQuestion("Do you really want to close all barcodes and workspaces windows?");
+                var result = servicesContainer.AppDialogsService.ShowYesNoQuestion("Do you really want to close all child windows?");
                 if (result)
                 {
                     servicesContainer.AppWindowsService.CloseBarcodesAndWorkspacesWindows();
@@ -985,6 +985,11 @@ namespace Barcodes.Core.ViewModels
         public void OpenWorkspaceInNewWindowCommand(WorkspaceViewModel workspaceViewModel)
         {
             servicesContainer.AppWindowsService.OpenWorkspaceWindow(workspaceViewModel);
+        }
+
+        public void ShowQuickGenerator()
+        {
+            servicesContainer.AppWindowsService.ShowQuickGeneratorWindow();
         }
     }
 }

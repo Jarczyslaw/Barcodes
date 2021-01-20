@@ -76,6 +76,11 @@ namespace Barcodes.Core.UI
             {
                 closeAware.OnClose += Close;
             }
+
+            if (DataContext is IMinimizeSource minimizeSource)
+            {
+                minimizeSource.Minimize += () => WindowState = WindowState.Minimized;
+            }
         }
 
         protected virtual void OnViewShown()

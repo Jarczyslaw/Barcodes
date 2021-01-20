@@ -18,6 +18,7 @@ namespace Barcodes.Core.ViewModels
         private readonly IAppWindowsService appWindowsService;
         private readonly ILoggerService loggerService;
 
+        private bool openQuickGenerator;
         private string storagePath = string.Empty;
         private bool barcodesVisible;
         private string protectedKeys = string.Empty;
@@ -25,7 +26,7 @@ namespace Barcodes.Core.ViewModels
         private ObservableCollection<AddModeViewModel> barcodeAddModes = new ObservableCollection<AddModeViewModel>();
         private AddModeViewModel selectedWorkspaceAddMode;
         private ObservableCollection<AddModeViewModel> workspaceAddModes = new ObservableCollection<AddModeViewModel>();
-        private GenerationDataViewModel generationData = new GenerationDataViewModel();
+        private GenerationDataViewModel generationData;
         private bool updateAfterEveryGeneration;
 
         public SettingsViewModel(IAppWindowsService appWindowsService, IAppSettingsService appSettingsService,
@@ -35,6 +36,8 @@ namespace Barcodes.Core.ViewModels
             this.appSettingsService = appSettingsService;
             this.appDialogsService = appDialogsService;
             this.loggerService = loggerService;
+
+            generationData = new GenerationDataViewModel(null, appWindowsService, null);
 
             SaveCommand = new DelegateCommand(Save);
             CloseCommand = new DelegateCommand(() => OnClose?.Invoke());
@@ -58,6 +61,12 @@ namespace Barcodes.Core.ViewModels
         public SettingsSaveResult SettingsSaveResult { get; set; }
 
         public Action OnClose { get; set; }
+
+        public bool OpenQuickGenerator
+        {
+            get => openQuickGenerator;
+            set => SetProperty(ref openQuickGenerator, value);
+        }
 
         public string StoragePath
         {
@@ -162,6 +171,7 @@ namespace Barcodes.Core.ViewModels
 
         private void FromSettings(AppSettings settings)
         {
+            OpenQuickGenerator = settings.OpenQuickGeneratorOnStartup;
             StoragePath = settings.StoragePath;
             BarcodesVisible = settings.BarcodesVisible;
             ProtectedKeys = settings.AntiKeyProtection;
@@ -175,6 +185,7 @@ namespace Barcodes.Core.ViewModels
         {
             return new AppSettings
             {
+                OpenQuickGeneratorOnStartup = OpenQuickGenerator,
                 StoragePath = StoragePath,
                 BarcodesVisible = BarcodesVisible,
                 AntiKeyProtection = ProtectedKeys,

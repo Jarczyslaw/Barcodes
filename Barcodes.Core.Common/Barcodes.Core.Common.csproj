@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="FileExtensions.cs" />
     <Compile Include="ICloseSource.cs" />
+    <Compile Include="IMinimizeSource.cs" />
     <Compile Include="IOnClosingAware.cs" />
     <Compile Include="IOnKeyDownAware.cs" />
     <Compile Include="IOnShowAware.cs" />

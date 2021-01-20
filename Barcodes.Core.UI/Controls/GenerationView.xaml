@@ -8,7 +8,7 @@
     xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
     mc:Ignorable="d">
     <StackPanel>
-        <GroupBox Header="Barcode generation">
+        <GroupBox Header="Barcode generation settings">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -27,7 +27,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Label Content="Title:" />
+                <Label x:Name="lbTitle" Content="Title:" />
                 <controls:CustomTextBox
                     x:Name="tbTitle"
                     Grid.Column="1"
@@ -40,19 +40,21 @@
                     Width="240"
                     HorizontalAlignment="Left"
                     DisplayMemberPath="TypeTitle"
-                    ItemsSource="{Binding GenerationData.Types}"
-                    SelectedItem="{Binding GenerationData.SelectedType, UpdateSourceTrigger=PropertyChanged}" />
+                    ItemsSource="{Binding Types}"
+                    SelectedItem="{Binding SelectedType, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="2" Content="Data:" />
                 <controls:CustomTextBox
+                    x:Name="tbData"
                     Grid.Row="2"
                     Grid.Column="1"
-                    Width="410"
+                    Width="412"
                     Height="60"
+                    HorizontalAlignment="Left"
                     VerticalContentAlignment="Top"
                     AcceptsReturn="True"
                     HorizontalScrollBarVisibility="Disabled"
-                    Text="{Binding GenerationData.Data, UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding Data, UpdateSourceTrigger=PropertyChanged}"
                     TextWrapping="Wrap"
                     VerticalScrollBarVisibility="Auto" />
 
@@ -81,14 +83,14 @@
                     Grid.Column="1"
                     VerticalContentAlignment="Center"
                     Content="Validate data"
-                    IsChecked="{Binding GenerationData.ValidateCodeText, UpdateSourceTrigger=PropertyChanged}" />
+                    IsChecked="{Binding ValidateCodeText, UpdateSourceTrigger=PropertyChanged}" />
 
                 <CheckBox
                     Grid.Row="5"
                     Grid.Column="1"
                     VerticalContentAlignment="Center"
                     Content="Use default sizes"
-                    IsChecked="{Binding GenerationData.DefaultSize}" />
+                    IsChecked="{Binding DefaultSize}" />
 
                 <Label Grid.Row="6" Content="Width: " />
                 <toolkit:IntegerUpDown
@@ -97,10 +99,10 @@
                     Width="120"
                     Margin="{StaticResource DefaultMargin}"
                     HorizontalAlignment="Left"
-                    IsReadOnly="{Binding GenerationData.DefaultSize}"
+                    IsReadOnly="{Binding DefaultSize}"
                     Minimum="100"
                     TextAlignment="Left"
-                    Value="{Binding GenerationData.Width, UpdateSourceTrigger=PropertyChanged}" />
+                    Value="{Binding Width, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="7" Content="Height: " />
                 <toolkit:IntegerUpDown
@@ -109,10 +111,10 @@
                     Width="120"
                     Margin="{StaticResource DefaultMargin}"
                     HorizontalAlignment="Left"
-                    IsReadOnly="{Binding GenerationData.DefaultSize}"
+                    IsReadOnly="{Binding DefaultSize}"
                     Minimum="100"
                     TextAlignment="Left"
-                    Value="{Binding GenerationData.Height, UpdateSourceTrigger=PropertyChanged}" />
+                    Value="{Binding Height, UpdateSourceTrigger=PropertyChanged}" />
 
             </Grid>
         </GroupBox>

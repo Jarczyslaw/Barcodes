@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Barcodes.Core.UI.Converters;
 
 namespace Barcodes.Core.UI.Controls
 {
@@ -32,7 +33,7 @@ namespace Barcodes.Core.UI.Controls
         {
             set
             {
-                var visibility = GetVisibility(value);
+                var visibility = BoolToVisibilityConverter.Convert(value, Visibility.Collapsed);
                 lblDescription.Visibility = visibility;
                 tbDescription.Visibility = visibility;
             }
@@ -42,19 +43,14 @@ namespace Barcodes.Core.UI.Controls
         {
             var barcodeView = source as BarcodeView;
             var barcodeVisible = (bool)e.NewValue;
-            barcodeView.imgBarcode.Visibility = GetVisibility(barcodeVisible);
+            barcodeView.imgBarcode.Visibility = BoolToVisibilityConverter.Convert(barcodeVisible, Visibility.Collapsed);
         }
 
         private static void OnIsCheckedEnabledPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
             var barcodeView = source as BarcodeView;
             var isCheckedEnabled = (bool)e.NewValue;
-            barcodeView.chbIsChecked.Visibility = GetVisibility(isCheckedEnabled);
-        }
-
-        private static Visibility GetVisibility(bool value)
-        {
-            return value ? Visibility.Visible : Visibility.Collapsed;
+            barcodeView.chbIsChecked.Visibility = BoolToVisibilityConverter.Convert(isCheckedEnabled, Visibility.Collapsed);
         }
     }
 }

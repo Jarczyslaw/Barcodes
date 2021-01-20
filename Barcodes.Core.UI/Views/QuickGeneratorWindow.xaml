@@ -1,0 +1,85 @@
+﻿<ui:BaseWindow
+    x:Class="Barcodes.Core.UI.Views.QuickGeneratorWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Barcodes.Core.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:ui="clr-namespace:Barcodes.Core.UI"
+    Title="Barcodes - Quick Generator"
+    Icon="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
+    ResizeMode="CanMinimize"
+    SizeToContent="WidthAndHeight"
+    mc:Ignorable="d">
+    <toolkit:BusyIndicator BusyContent="Generating barcode..." IsBusy="{Binding IsBusy}">
+        <DockPanel LastChildFill="True">
+            <Menu DockPanel.Dock="Top">
+                <Menu.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <DockPanel HorizontalAlignment="Stretch" />
+                    </ItemsPanelTemplate>
+                </Menu.ItemsPanel>
+                <MenuItem Command="{Binding NewWindowCommand}" Header="New window" />
+                <MenuItem Header="Options">
+                    <MenuItem Command="{Binding ExportImageCommand}" Header="Export to image file" />
+                    <MenuItem Command="{Binding ExportBarcodeCommand}" Header="Export to barcode file" />
+                    <MenuItem Command="{Binding CopyImageCommand}" Header="Copy image to clipboard" />
+                </MenuItem>
+                <MenuItem
+                    HorizontalAlignment="Right"
+                    Command="{Binding CloseAllCommand}"
+                    Header="Close generators windows" />
+            </Menu>
+            <StatusBar DockPanel.Dock="Bottom">
+                <StatusBarItem>
+                    <TextBlock Text="{Binding StatusMessage}" />
+                </StatusBarItem>
+            </StatusBar>
+            <StackPanel Margin="5" Orientation="Vertical">
+                <controls:GenerationView
+                    x:Name="generationView"
+                    DataContext="{Binding GenerationData}"
+                    TitleVisible="False" />
+                <GroupBox Header="Previous barcodes">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Barcode's data:" />
+                        <ComboBox
+                            Grid.Column="1"
+                            Width="240"
+                            HorizontalAlignment="Left"
+                            DisplayMemberPath="TypeTitle"
+                            ItemsSource="{Binding GenerationData.Types}"
+                            SelectedItem="{Binding GenerationData.SelectedType, UpdateSourceTrigger=PropertyChanged}" />
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="Barcode" Visibility="{Binding BarcodeVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <StackPanel>
+                        <Image
+                            x:Name="imgBarcode"
+                            Margin="5"
+                            Source="{Binding Barcode.Barcode, Mode=OneWay}"
+                            Stretch="None" />
+                    </StackPanel>
+                </GroupBox>
+                <UniformGrid Columns="3">
+                    <Button Visibility="Hidden" />
+                    <Button
+                        Command="{Binding GenerateCommand}"
+                        Content="Generate"
+                        IsDefault="True" />
+                    <Button
+                        Command="{Binding CancelCommand}"
+                        Content="Cancel"
+                        IsCancel="True" />
+                </UniformGrid>
+            </StackPanel>
+        </DockPanel>
+
+    </toolkit:BusyIndicator>
+</ui:BaseWindow>

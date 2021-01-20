@@ -27,6 +27,7 @@ namespace Barcodes.Core.ViewModels
             ClearCommand = new DelegateCommand(app.Clear);
             CreateNewStorageCommand = new DelegateCommand(app.CreateNewStorage);
             PrintCommand = new DelegateCommand(app.Print);
+            QuickGeneratorCommand = new DelegateCommand(app.ShowQuickGenerator);
         }
 
         public DelegateCommand SaveCommand { get; }
@@ -48,6 +49,7 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand ClearCommand { get; }
         public DelegateCommand CreateNewStorageCommand { get; }
         public DelegateCommand PrintCommand { get; }
+        public DelegateCommand QuickGeneratorCommand { get; }
 
         public Action OnClose { get; set; }
     }

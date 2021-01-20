@@ -168,6 +168,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                         </Grid>
                     </ItemsPanelTemplate>
@@ -249,11 +250,15 @@
                 </MenuItem>
                 <MenuItem
                     Grid.Column="8"
+                    Command="{Binding QuickGeneratorCommand}"
+                    Header="Quick generator" />
+                <MenuItem
+                    Grid.Column="9"
                     Header="Barcodes visible"
                     IsCheckable="True"
                     IsChecked="{Binding Proxy.App.BarcodesVisible, Source={StaticResource Proxy}}" />
                 <MenuItem
-                    Grid.Column="9"
+                    Grid.Column="10"
                     Command="{Binding CloseAllWindowsCommand}"
                     Header="Close all windows" />
             </Menu>

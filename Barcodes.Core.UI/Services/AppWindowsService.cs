@@ -6,7 +6,6 @@ using Barcodes.Core.ViewModels;
 using Barcodes.Core.ViewModels.Templates;
 using Barcodes.Extensions;
 using Barcodes.Services.AppSettings;
-using Barcodes.Services.Windows;
 using Prism.Ioc;
 using System;
 using System.Collections.Generic;
@@ -17,11 +16,12 @@ using System.Windows;
 
 namespace Barcodes.Core.UI.Services
 {
-    public class AppWindowsService : WindowsService, IAppWindowsService
+    public class AppWindowsService : IAppWindowsService
     {
         private readonly IContainerExtension containerExtension;
         private readonly WindowManager barcodesWindowsManager = new WindowManager();
         private readonly WindowManager workspacesWindowsManager = new WindowManager();
+        private readonly WindowManager quickGeneratorWindowsManager = new WindowManager();
 
         private readonly Dictionary<Type, Type> templateMapping = new Dictionary<Type, Type>();
 
@@ -30,6 +30,10 @@ namespace Barcodes.Core.UI.Services
             this.containerExtension = containerExtension;
             CreateTemplatesMapping();
         }
+
+        public Window MainWindow => Application.Current.MainWindow;
+
+        public Window ActiveWindow => Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
 
         public int WindowsCount => barcodesWindowsManager.WindowsCount + workspacesWindowsManager.WindowsCount;
 
@@ -60,21 +64,24 @@ namespace Barcodes.Core.UI.Services
         {
             barcodesWindowsManager.CloseAll();
             workspacesWindowsManager.CloseAll();
+            quickGeneratorWindowsManager.CloseAll();
         }
 
         public void OpenBarcodeWindow(BarcodeViewModel barcodeViewModel)
         {
             var window = new BarcodeWindow(barcodeViewModel);
-            barcodesWindowsManager.RegisterWindow(window);
-            Show(window, null);
+            barcodesWindowsManager.RegisterWindow(window, true);
+            window.Show();
         }
 
         public void OpenWorkspaceWindow(WorkspaceViewModel workspaceViewModel)
         {
-            var dataContext = new WorkspaceWindowViewModel(workspaceViewModel, this);
-            var window = new WorkspaceWindow();
-            workspacesWindowsManager.RegisterWindow(window, true);
-            Show(window, null, dataContext);
+            var window = new WorkspaceWindow
+            {
+                DataContext = new WorkspaceWindowViewModel(workspaceViewModel, this)
+            };
+            workspacesWindowsManager.RegisterWindow(window, true, true);
+            window.Show();
         }
 
         public TemplateResult OpenTemplateWindow<TViewModel>(string data)
@@ -97,20 +104,27 @@ namespace Barcodes.Core.UI.Services
             var dataContext = containerExtension.Resolve<TViewModel>();
             dataContext.LoadData(data);
             var window = containerExtension.Resolve<TWindow>((typeof(object), dataContext));
-            ShowDialog(window, ActiveWindow);
+            window.Owner = ActiveWindow;
+            window.ShowDialog();
             return dataContext.ResultData;
         }
 
-        public void ShowAboutWindow()
+        public async Task ShowAboutWindow(Action beforeShow)
         {
             var window = containerExtension.Resolve<AboutWindow>();
-            ShowDialog(window, MainWindow, null);
+            await window.GenerateRandomBarcode();
+            beforeShow();
+            window.Owner = MainWindow;
+            window.ShowDialog();
         }
 
         public GenerationResult ShowExamplesWindow(ExamplesViewModel examplesViewModel)
         {
-            var window = new ExamplesWindow(examplesViewModel);
-            ShowDialog(window, MainWindow, examplesViewModel);
+            var window = new ExamplesWindow(examplesViewModel)
+            {
+                Owner = MainWindow
+            };
+            window.ShowDialog();
             return examplesViewModel.GenerationResult;
         }
 
@@ -118,8 +132,11 @@ namespace Barcodes.Core.UI.Services
         {
             var dataContext = containerExtension.Resolve<GenerationViewModel>();
             dataContext.Load(barcode, edit, template);
-            var window = new GenerationWindow(dataContext);
-            ShowDialog(window, MainWindow, null);
+            var window = new GenerationWindow(dataContext)
+            {
+                Owner = ActiveWindow
+            };
+            window.ShowDialog();
             return dataContext.Result;
         }
 
@@ -140,8 +157,11 @@ namespace Barcodes.Core.UI.Services
             };
 
             var dataContext = new InputViewModel(input);
-            var window = new InputWindow(dataContext);
-            ShowDialog(window, MainWindow, null);
+            var window = new InputWindow(dataContext)
+            {
+                Owner = MainWindow
+            };
+            window.ShowDialog();
             return dataContext.Result;
         }
 
@@ -158,15 +178,22 @@ namespace Barcodes.Core.UI.Services
                 DisplayMemberPath = "Name"
             };
             var dataContext = new SelectionViewModel<WorkspaceViewModel>(input);
-            var window = new SelectionWindow(dataContext);
-            ShowDialog(window, MainWindow, null);
+            var window = new SelectionWindow(dataContext)
+            {
+                Owner = MainWindow
+            };
+            window.ShowDialog();
             return dataContext.Result;
         }
 
         public SettingsSaveResult ShowSettingsWindow()
         {
             var dataContext = containerExtension.Resolve<SettingsViewModel>();
-            ShowDialog(new SettingsWindow(dataContext), MainWindow, null);
+            var window = new SettingsWindow(dataContext)
+            {
+                Owner = MainWindow
+            };
+            window.ShowDialog();
             return dataContext.SettingsSaveResult;
         }
 
@@ -174,7 +201,11 @@ namespace Barcodes.Core.UI.Services
         {
             var dataContext = containerExtension.Resolve<RawSettingsViewModel>();
             dataContext.LoadSettings(appSettings);
-            ShowDialog(new RawSettingsWindow(dataContext), ActiveWindow, null);
+            var window = new RawSettingsWindow(dataContext)
+            {
+                Owner = ActiveWindow
+            };
+            window.ShowDialog();
             return dataContext.EditedSettings;
         }
 
@@ -182,7 +213,24 @@ namespace Barcodes.Core.UI.Services
         {
             var dataContext = containerExtension.Resolve<StorageViewModel>();
             dataContext.PrepareAndSetWorkspaces(appViewModel, workspaces);
-            Show(new StorageWindow(), null, dataContext);
+            var window = new StorageWindow
+            {
+                DataContext = dataContext
+            };
+            window.Show();
+        }
+
+        public void ShowQuickGeneratorWindow()
+        {
+            var dataContext = containerExtension.Resolve<QuickGeneratorViewModel>();
+            var window = new QuickGeneratorWindow(dataContext);
+            quickGeneratorWindowsManager.RegisterWindow(window);
+            window.Show();
+        }
+
+        public void CloseAllQuickGenerators()
+        {
+            quickGeneratorWindowsManager.CloseAll();
         }
     }
 }

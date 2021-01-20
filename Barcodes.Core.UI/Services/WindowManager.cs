@@ -20,9 +20,18 @@ namespace Barcodes.Core.UI.Services
             }
         }
 
-        public void RegisterWindow(Window window, bool setSize = false)
+        public void RegisterWindow(Window window, bool setPosition = false, bool setSize = false)
         {
-            SetupWindowPosition(window, setSize);
+            if (setSize)
+            {
+                SetSize(window);
+            }
+
+            if (setPosition)
+            {
+                SetPosition(window);
+            }
+
             windows.Add(window);
             currentActiveWindow = window;
             window.Closed += Window_Closed;
@@ -53,18 +62,22 @@ namespace Barcodes.Core.UI.Services
             currentActiveWindow = sender as Window;
         }
 
-        private void SetupWindowPosition(Window window, bool setSize)
+        private void SetPosition(Window window)
         {
             if (currentActiveWindow != null)
             {
                 window.Top = currentActiveWindow.Top + SystemParameters.WindowCaptionHeight;
                 window.Left = currentActiveWindow.Left;
+            }
+        }
 
-                if (setSize)
-                {
-                    window.Width = currentActiveWindow.Width;
-                    window.Height = currentActiveWindow.Height;
-                }
+        private void SetSize(Window window)
+        {
+            if (currentActiveWindow != null)
+
+            {
+                window.Width = currentActiveWindow.Width;
+                window.Height = currentActiveWindow.Height;
             }
         }
     }

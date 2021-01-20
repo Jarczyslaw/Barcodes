@@ -20,7 +20,7 @@ namespace Barcodes.Core.Abstraction
 
         TemplateResult OpenTemplateWindow<TViewModel>(string data);
 
-        void ShowAboutWindow();
+        Task ShowAboutWindow(Action beforeShow);
 
         GenerationResult ShowExamplesWindow(ExamplesViewModel examplesViewModel);
 
@@ -35,5 +35,9 @@ namespace Barcodes.Core.Abstraction
         AppSettings ShowRawSettingsWindow(AppSettings appSettings);
 
         void ShowStorageWindow(AppViewModel appViewModel, List<WorkspaceViewModel> workspaces);
+
+        void ShowQuickGeneratorWindow();
+
+        void CloseAllQuickGenerators();
     }
 }

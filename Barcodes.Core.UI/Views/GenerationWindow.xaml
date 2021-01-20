@@ -15,7 +15,7 @@
     mc:Ignorable="d">
     <toolkit:BusyIndicator BusyContent="Generating barcode..." IsBusy="{Binding IsBusy}">
         <StackPanel Margin="5" Orientation="Vertical">
-            <controls:GenerationView x:Name="generationView" />
+            <controls:GenerationView x:Name="generationView" DataContext="{Binding GenerationData}" />
             <UniformGrid Columns="3">
                 <Button
                     Command="{Binding AddNewCommand}"
