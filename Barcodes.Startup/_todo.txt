@@ -9,6 +9,8 @@ jeśli wybrany jest kod kreskowy EAN13/product code to wyłączyć z automatu va
 dorobić okienko do szybkiego tworzenia barkodów
 dorobić loadera przy ładowaniu okna about
 kod zlecenia może mieć popjemnik 0
+dodać możliwość zamykania poszczególnych typów okien z głównego okna
+dorobić menu na prawokliku (na barcodzie, na kontrolce z ustawieniami generowania itd)
 dorobić apkę na androida do wyświetlania kodów:
 	- przeorganizować slna
 	- ogarnąc przesyłanie obrazów na xamarina (sockety? grpc? wcf?)
