@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 
 namespace Barcodes.Core.ViewModels
 {
@@ -149,11 +148,7 @@ namespace Barcodes.Core.ViewModels
         {
             get
             {
-                if (selectedQuickBarcode == null)
-                {
-                    return emptyQuickBarcode;
-                }
-                return selectedQuickBarcode;
+                return selectedQuickBarcode ?? emptyQuickBarcode;
             }
             set => SetProperty(ref selectedQuickBarcode, value);
         }
@@ -218,13 +213,14 @@ namespace Barcodes.Core.ViewModels
             var quickBarcodes = storageService.LoadQuickBarcodes();
             if (quickBarcodes != null)
             {
-                var newBarcodes = quickBarcodes.Select(s => new StorageBarcodeViewModel(s)).ToList();
-                var toSelect = newBarcodes.FirstOrDefault(b => SelectedQuickBarcode != null && b.Title == SelectedQuickBarcode.Title);
+                var newBarcodes = quickBarcodes.ConvertAll(s => new StorageBarcodeViewModel(s));
+                var toSelect = newBarcodes.Find(b => SelectedQuickBarcode != null && b.Title == SelectedQuickBarcode.Title);
                 QuickBarcodes = new ObservableCollection<StorageBarcodeViewModel>(newBarcodes);
                 SelectedQuickBarcode = toSelect;
             }
             else
             {
+                SelectedQuickBarcode = null;
                 QuickBarcodes = null;
                 SelectedQuickBarcode = null;
             }
