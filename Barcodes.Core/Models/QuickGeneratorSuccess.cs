@@ -1,4 +1,5 @@
 ﻿using Barcodes.Core.ViewModels;
+using System.Collections.ObjectModel;
 
 namespace Barcodes.Core.Models
 {

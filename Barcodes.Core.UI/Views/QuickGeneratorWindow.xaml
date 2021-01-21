@@ -20,16 +20,15 @@
                         <DockPanel HorizontalAlignment="Stretch" />
                     </ItemsPanelTemplate>
                 </Menu.ItemsPanel>
-                <MenuItem Command="{Binding NewWindowCommand}" Header="New window" />
                 <MenuItem Header="Options">
                     <MenuItem Command="{Binding ExportImageCommand}" Header="Export to image file" />
                     <MenuItem Command="{Binding ExportBarcodeCommand}" Header="Export to barcode file" />
                     <MenuItem Command="{Binding CopyImageCommand}" Header="Copy image to clipboard" />
                 </MenuItem>
-                <MenuItem
-                    HorizontalAlignment="Right"
-                    Command="{Binding CloseAllCommand}"
-                    Header="Close generators windows" />
+                <MenuItem HorizontalAlignment="Right" Header="Windows">
+                    <MenuItem Command="{Binding NewWindowCommand}" Header="New generator window" />
+                    <MenuItem Command="{Binding CloseAllCommand}" Header="Close all generators" />
+                </MenuItem>
             </Menu>
             <StatusBar DockPanel.Dock="Bottom">
                 <StatusBarItem>
@@ -41,21 +40,28 @@
                     x:Name="generationView"
                     DataContext="{Binding GenerationData}"
                     TitleVisible="False" />
-                <GroupBox Header="Previous barcodes">
+                <GroupBox Header="Previous barcodes" Visibility="{Binding QuickBarcodesVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <Label Content="Barcode's data:" />
+                        <Label Content="Barcode:" />
                         <ComboBox
                             Grid.Column="1"
                             Width="240"
                             HorizontalAlignment="Left"
-                            DisplayMemberPath="TypeTitle"
-                            ItemsSource="{Binding GenerationData.Types}"
-                            SelectedItem="{Binding GenerationData.SelectedType, UpdateSourceTrigger=PropertyChanged}" />
+                            DisplayMemberPath="Title"
+                            ItemsSource="{Binding QuickBarcodes}"
+                            SelectedItem="{Binding SelectedQuickBarcode, UpdateSourceTrigger=PropertyChanged}" />
+                        <Button
+                            Grid.Column="2"
+                            Width="70"
+                            Command="{Binding ClearQuickBarcodesCommand}"
+                            Content="Clear"
+                            IsCancel="True" />
                     </Grid>
                 </GroupBox>
                 <GroupBox Header="Barcode" Visibility="{Binding BarcodeVisible, Converter={StaticResource BoolToVisibilityConverter}}">

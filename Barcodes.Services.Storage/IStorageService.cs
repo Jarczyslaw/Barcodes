@@ -23,5 +23,7 @@ namespace Barcodes.Services.Storage
         List<StorageBarcode> LoadQuickBarcodes();
 
         void AddQuickBarcode(StorageBarcode barcode, int maxCapacity);
+
+        void ClearQuickBarcodes();
     }
 }

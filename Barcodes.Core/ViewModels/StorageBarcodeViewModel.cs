@@ -13,7 +13,14 @@ namespace Barcodes.Core.ViewModels
 
         public string Title
         {
-            get => $"{StorageBarcode.Data} - {StorageBarcode.Type}";
+            get
+            {
+                if (StorageBarcode == null)
+                {
+                    return "Generate and select barcode";
+                }
+                return $"{StorageBarcode.Data} - {StorageBarcode.Type}";
+            }
         }
     }
 }

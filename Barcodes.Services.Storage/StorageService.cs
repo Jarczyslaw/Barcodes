@@ -3,6 +3,7 @@ using Barcodes.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Barcodes.Services.Storage
 {
@@ -12,7 +13,7 @@ namespace Barcodes.Services.Storage
 
         public string QuickBarcodesPath { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"quickBarcodes.{FileExtensions.QuickBarcodes}");
 
-        private List<StorageBarcode> quickBarcodes = new List<StorageBarcode>();
+        private List<StorageBarcode> quickBarcodes;
 
         public Storage Load(string filePath, bool throwException = false)
         {
@@ -58,22 +59,36 @@ namespace Barcodes.Services.Storage
 
         public List<StorageBarcode> LoadQuickBarcodes()
         {
-            if (!File.Exists(QuickBarcodesPath))
+            if (quickBarcodes == null && File.Exists(QuickBarcodesPath))
             {
-                return null;
+                quickBarcodes = Serializer.FromFile<List<StorageBarcode>>(QuickBarcodesPath);
             }
-
-            return Serializer.FromFile<List<StorageBarcode>>(QuickBarcodesPath);
+            return quickBarcodes;
         }
 
         public void AddQuickBarcode(StorageBarcode barcode, int maxCapacity)
         {
-            quickBarcodes.Add(barcode);
+            if (quickBarcodes == null)
+            {
+                quickBarcodes = new List<StorageBarcode>();
+            }
+
+            quickBarcodes.RemoveAll(b => barcode.Data == b.Data && barcode.Type == b.Type);
+            quickBarcodes.Insert(0, barcode);
             if (quickBarcodes.Count > maxCapacity)
             {
-                quickBarcodes.RemoveRange(0, quickBarcodes.Count - maxCapacity);
+                quickBarcodes.RemoveRange(maxCapacity, quickBarcodes.Count - maxCapacity);
             }
             Serializer.ToFile(quickBarcodes, QuickBarcodesPath);
+        }
+
+        public void ClearQuickBarcodes()
+        {
+            quickBarcodes = null;
+            if (File.Exists(QuickBarcodesPath))
+            {
+                File.Delete(QuickBarcodesPath);
+            }
         }
     }
 }
