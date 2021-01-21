@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using Barcodes.Core.Abstraction;
+using Prism.Commands;
 using Prism.Mvvm;
 using System;
 
@@ -6,50 +7,39 @@ namespace Barcodes.Core.ViewModels
 {
     public class MenuViewModel : BindableBase
     {
-        public MenuViewModel(AppViewModel app)
+        private readonly IServicesAggregator services;
+        private readonly AppViewModel app;
+
+        public MenuViewModel(AppViewModel app, IServicesAggregator services)
         {
-            SaveCommand = new DelegateCommand(() => app.Save(false, false));
-            SaveAsCommand = new DelegateCommand(() => app.Save(true, false));
-            LoadFromFileCommand = new DelegateCommand(app.LoadStorageFromFile);
-            OpenAppLocationCommand = new DelegateCommand(app.OpenAppLocation);
-            OpenStorageLocationCommand = new DelegateCommand(app.OpenStorageLocation);
-            CloseCommand = new DelegateCommand(() => OnClose?.Invoke());
-            ExportToPdfCommand = new DelegateCommand(app.ExportToPdf);
-            ShowAboutCommand = new DelegateCommand(app.ShowAbout);
-            ShowExamplesCommand = new DelegateCommand(app.ShowExamples);
-            AddNewWorkspaceCommand = new DelegateCommand(app.AddNewWorkspace);
-            AddNewBarcodeCommand = new DelegateCommand(() => app.AddNewBarcode(null, false));
-            ImportBarcodesCommand = new DelegateCommand(app.ImportBarcodes);
-            ImportWorkspacesCommand = new DelegateCommand(app.ImportWorkspaces);
-            ImportStorageCommand = new DelegateCommand(app.ImportStorage);
-            ShowSettingsCommand = new DelegateCommand(app.ShowSettings);
-            CloseAllWindowsCommand = new DelegateCommand(app.CloseAllWindows);
-            ClearCommand = new DelegateCommand(app.Clear);
-            CreateNewStorageCommand = new DelegateCommand(app.CreateNewStorage);
-            PrintCommand = new DelegateCommand(app.Print);
-            QuickGeneratorCommand = new DelegateCommand(app.ShowQuickGenerator);
+            this.services = services;
+            this.app = app;
         }
 
-        public DelegateCommand SaveCommand { get; }
-        public DelegateCommand SaveAsCommand { get; }
-        public DelegateCommand LoadFromFileCommand { get; }
-        public DelegateCommand OpenAppLocationCommand { get; }
-        public DelegateCommand OpenStorageLocationCommand { get; }
-        public DelegateCommand CloseCommand { get; }
-        public DelegateCommand ExportToPdfCommand { get; }
-        public DelegateCommand ShowAboutCommand { get; }
-        public DelegateCommand ShowExamplesCommand { get; }
-        public DelegateCommand AddNewWorkspaceCommand { get; }
-        public DelegateCommand AddNewBarcodeCommand { get; }
-        public DelegateCommand ImportBarcodesCommand { get; }
-        public DelegateCommand ImportWorkspacesCommand { get; }
-        public DelegateCommand ImportStorageCommand { get; }
-        public DelegateCommand ShowSettingsCommand { get; }
-        public DelegateCommand CloseAllWindowsCommand { get; }
-        public DelegateCommand ClearCommand { get; }
-        public DelegateCommand CreateNewStorageCommand { get; }
-        public DelegateCommand PrintCommand { get; }
-        public DelegateCommand QuickGeneratorCommand { get; }
+        public DelegateCommand SaveCommand => new DelegateCommand(() => app.Save(false, false));
+        public DelegateCommand SaveAsCommand => new DelegateCommand(() => app.Save(true, false));
+        public DelegateCommand LoadFromFileCommand => new DelegateCommand(app.LoadStorageFromFile);
+        public DelegateCommand OpenAppLocationCommand => new DelegateCommand(app.OpenAppLocation);
+        public DelegateCommand OpenStorageLocationCommand => new DelegateCommand(app.OpenStorageLocation);
+        public DelegateCommand CloseCommand => new DelegateCommand(() => OnClose?.Invoke());
+        public DelegateCommand ExportToPdfCommand => new DelegateCommand(app.ExportToPdf);
+        public DelegateCommand ShowAboutCommand => new DelegateCommand(app.ShowAbout);
+        public DelegateCommand ShowExamplesCommand => new DelegateCommand(app.ShowExamples);
+        public DelegateCommand AddNewWorkspaceCommand => new DelegateCommand(app.AddNewWorkspace);
+        public DelegateCommand AddNewBarcodeCommand => new DelegateCommand(() => app.AddNewBarcode(null, false));
+        public DelegateCommand ImportBarcodesCommand => new DelegateCommand(app.ImportBarcodes);
+        public DelegateCommand ImportWorkspacesCommand => new DelegateCommand(app.ImportWorkspaces);
+        public DelegateCommand ImportStorageCommand => new DelegateCommand(app.ImportStorage);
+        public DelegateCommand ShowSettingsCommand => new DelegateCommand(app.ShowSettings);
+        public DelegateCommand CloseAllWindowsCommand => new DelegateCommand(services.AppWindowsService.CloseAllWindows);
+        public DelegateCommand ClearCommand => new DelegateCommand(app.Clear);
+        public DelegateCommand CreateNewStorageCommand => new DelegateCommand(app.CreateNewStorage);
+        public DelegateCommand PrintCommand => new DelegateCommand(app.Print);
+        public DelegateCommand QuickGeneratorCommand => new DelegateCommand(app.ShowQuickGenerator);
+        public DelegateCommand CloseBarcodesWindowsCommand => new DelegateCommand(services.AppWindowsService.CloseBarcodesWindows);
+
+        public DelegateCommand CloseWorkspacesWindowsCommand => new DelegateCommand(services.AppWindowsService.CloseWorkspacesWindows);
+        public DelegateCommand CloseGeneratorsWindowsCommand => new DelegateCommand(services.AppWindowsService.CloseQuickGeneratorsWindows);
 
         public Action OnClose { get; set; }
     }

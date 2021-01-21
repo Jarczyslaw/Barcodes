@@ -52,7 +52,7 @@ namespace Barcodes.Core.ViewModels
 
         public DelegateCommand NewWindowCommand => new DelegateCommand(() => appWindowsService.ShowQuickGeneratorWindow());
 
-        public DelegateCommand CloseAllCommand => new DelegateCommand(() => appWindowsService.CloseAllQuickGenerators());
+        public DelegateCommand CloseAllCommand => new DelegateCommand(appWindowsService.CloseQuickGeneratorsWindows);
 
         public DelegateCommand ExportImageCommand => new DelegateCommand(() =>
         {

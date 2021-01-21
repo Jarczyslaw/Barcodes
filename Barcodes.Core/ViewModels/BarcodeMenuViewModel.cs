@@ -1,37 +1,31 @@
-﻿using Prism.Commands;
+﻿using Barcodes.Core.Abstraction;
+using Prism.Commands;
 using Prism.Mvvm;
 
 namespace Barcodes.Core.ViewModels
 {
     public class BarcodeMenuViewModel : BindableBase
     {
-        public BarcodeMenuViewModel(AppViewModel app)
+        private readonly IServicesAggregator services;
+        private readonly AppViewModel app;
+
+        public BarcodeMenuViewModel(AppViewModel app, IServicesAggregator services)
         {
-            EditCommand = new DelegateCommand<BarcodeViewModel>(app.EditBarcode);
-            MoveUpCommand = new DelegateCommand(app.MoveBarcodesUp);
-            MoveDownCommand = new DelegateCommand(app.MoveBarcodesDown);
-            OpenInNewWindowCommand = new DelegateCommand(app.OpenBarcodesInNewWindow);
-            SaveToImageFileCommand = new DelegateCommand<BarcodeViewModel>(app.SaveToImageFile);
-            CopyImageToClipboardCommand = new DelegateCommand<BarcodeViewModel>(app.CopyImageToClipboard);
-            CopyDataToClipboardCommand = new DelegateCommand<BarcodeViewModel>(app.CopyDataToClipboard);
-            DeleteCommand = new DelegateCommand(app.DeleteBarcodes);
-            ChangeWorkspaceCommand = new DelegateCommand(app.ChangeBarcodesWorkspace);
-            ExportCommand = new DelegateCommand(app.ExportBarcodes);
-            SetAsFirstCommand = new DelegateCommand(app.SetBarcodesAsFirst);
-            SetAsLastCommand = new DelegateCommand(app.SetBarcodesAsLast);
+            this.services = services;
+            this.app = app;
         }
 
-        public DelegateCommand<BarcodeViewModel> EditCommand { get; }
-        public DelegateCommand MoveUpCommand { get; }
-        public DelegateCommand MoveDownCommand { get; }
-        public DelegateCommand OpenInNewWindowCommand { get; }
-        public DelegateCommand<BarcodeViewModel> SaveToImageFileCommand { get; }
-        public DelegateCommand<BarcodeViewModel> CopyImageToClipboardCommand { get; }
-        public DelegateCommand<BarcodeViewModel> CopyDataToClipboardCommand { get; }
-        public DelegateCommand DeleteCommand { get; }
-        public DelegateCommand ChangeWorkspaceCommand { get; }
-        public DelegateCommand ExportCommand { get; }
-        public DelegateCommand SetAsFirstCommand { get; }
-        public DelegateCommand SetAsLastCommand { get; }
+        public DelegateCommand<BarcodeViewModel> EditCommand => new DelegateCommand<BarcodeViewModel>(app.EditBarcode);
+        public DelegateCommand MoveUpCommand => new DelegateCommand(app.MoveBarcodesUp);
+        public DelegateCommand MoveDownCommand => new DelegateCommand(app.MoveBarcodesDown);
+        public DelegateCommand OpenInNewWindowCommand => new DelegateCommand(app.OpenBarcodesInNewWindow);
+        public DelegateCommand<BarcodeViewModel> SaveToImageFileCommand => new DelegateCommand<BarcodeViewModel>(app.SaveToImageFile);
+        public DelegateCommand<BarcodeViewModel> CopyImageToClipboardCommand => new DelegateCommand<BarcodeViewModel>(app.CopyImageToClipboard);
+        public DelegateCommand<BarcodeViewModel> CopyDataToClipboardCommand => new DelegateCommand<BarcodeViewModel>(app.CopyDataToClipboard);
+        public DelegateCommand DeleteCommand => new DelegateCommand(app.DeleteBarcodes);
+        public DelegateCommand ChangeWorkspaceCommand => new DelegateCommand(app.ChangeBarcodesWorkspace);
+        public DelegateCommand ExportCommand => new DelegateCommand(app.ExportBarcodes);
+        public DelegateCommand SetAsFirstCommand => new DelegateCommand(app.SetBarcodesAsFirst);
+        public DelegateCommand SetAsLastCommand => new DelegateCommand(app.SetBarcodesAsLast);
     }
 }

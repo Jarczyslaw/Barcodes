@@ -257,10 +257,12 @@
                     Header="Barcodes visible"
                     IsCheckable="True"
                     IsChecked="{Binding Proxy.App.BarcodesVisible, Source={StaticResource Proxy}}" />
-                <MenuItem
-                    Grid.Column="10"
-                    Command="{Binding CloseAllWindowsCommand}"
-                    Header="Close all windows" />
+                <MenuItem Grid.Column="10" Header="Windows">
+                    <MenuItem Command="{Binding CloseBarcodesWindowsCommand}" Header="Close barcodes" />
+                    <MenuItem Command="{Binding CloseWorkspacesWindowsCommand}" Header="Close workspaces" />
+                    <MenuItem Command="{Binding CloseGeneratorsWindowsCommand}" Header="Close quick generators" />
+                    <MenuItem Command="{Binding CloseAllWindowsCommand}" Header="Close all" />
+                </MenuItem>
             </Menu>
 
             <StatusBar DataContext="{Binding App}" DockPanel.Dock="Bottom">

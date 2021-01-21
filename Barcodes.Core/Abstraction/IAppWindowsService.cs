@@ -12,7 +12,13 @@ namespace Barcodes.Core.Abstraction
     {
         int WindowsCount { get; }
 
-        void CloseBarcodesAndWorkspacesWindows();
+        void CloseBarcodesWindows();
+
+        void CloseWorkspacesWindows();
+
+        void CloseQuickGeneratorsWindows();
+
+        void CloseAllWindows();
 
         void OpenBarcodeWindow(BarcodeViewModel barcodeViewModel);
 
@@ -37,7 +43,5 @@ namespace Barcodes.Core.Abstraction
         void ShowStorageWindow(AppViewModel appViewModel, List<WorkspaceViewModel> workspaces);
 
         void ShowQuickGeneratorWindow();
-
-        void CloseAllQuickGenerators();
     }
 }

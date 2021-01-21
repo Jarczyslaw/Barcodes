@@ -970,18 +970,6 @@ namespace Barcodes.Core.ViewModels
             SelectedWorkspace?.SetBarcodesAsLast();
         }
 
-        public void CloseAllWindows()
-        {
-            if (servicesContainer.AppWindowsService.WindowsCount > 0)
-            {
-                var result = servicesContainer.AppDialogsService.ShowYesNoQuestion("Do you really want to close all child windows?");
-                if (result)
-                {
-                    servicesContainer.AppWindowsService.CloseBarcodesAndWorkspacesWindows();
-                }
-            }
-        }
-
         public void OpenWorkspaceInNewWindowCommand(WorkspaceViewModel workspaceViewModel)
         {
             servicesContainer.AppWindowsService.OpenWorkspaceWindow(workspaceViewModel);

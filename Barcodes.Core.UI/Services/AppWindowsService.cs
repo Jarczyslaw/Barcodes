@@ -60,7 +60,22 @@ namespace Barcodes.Core.UI.Services
             return Assembly.GetExecutingAssembly().GetDerivedTypes(typeof(Window));
         }
 
-        public void CloseBarcodesAndWorkspacesWindows()
+        public void CloseBarcodesWindows()
+        {
+            barcodesWindowsManager.CloseAll();
+        }
+
+        public void CloseWorkspacesWindows()
+        {
+            workspacesWindowsManager.CloseAll();
+        }
+
+        public void CloseQuickGeneratorsWindows()
+        {
+            quickGeneratorWindowsManager.CloseAll();
+        }
+
+        public void CloseAllWindows()
         {
             barcodesWindowsManager.CloseAll();
             workspacesWindowsManager.CloseAll();
@@ -228,9 +243,6 @@ namespace Barcodes.Core.UI.Services
             window.Show();
         }
 
-        public void CloseAllQuickGenerators()
-        {
-            quickGeneratorWindowsManager.CloseAll();
-        }
+        
     }
 }
