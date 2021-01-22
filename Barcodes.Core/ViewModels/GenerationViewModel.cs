@@ -3,6 +3,7 @@ using Barcodes.Core.Abstraction;
 using Barcodes.Core.Models;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.Generator;
+using Barcodes.Services.Sys;
 using Prism.Commands;
 using System;
 
@@ -17,13 +18,13 @@ namespace Barcodes.Core.ViewModels
         private GenerationDataViewModel generationData;
         private BarcodeTemplate? initialTemplate;
 
-        public GenerationViewModel(IAppDialogsService appDialogsService, IAppWindowsService appWindowsService,
+        public GenerationViewModel(IAppDialogsService appDialogsService, IAppWindowsService appWindowsService, ISysService sysService,
             IAppSettingsService appSettingsService, IGeneratorService generatorService)
         {
             this.appDialogsService = appDialogsService;
             this.appSettingsService = appSettingsService;
 
-            generationData = new GenerationDataViewModel(appDialogsService, appWindowsService, generatorService);
+            generationData = new GenerationDataViewModel(appDialogsService, appWindowsService, generatorService, sysService);
             LoadSettings();
 
             AddNewCommand = new DelegateCommand(() => GenerateBarcode(true));

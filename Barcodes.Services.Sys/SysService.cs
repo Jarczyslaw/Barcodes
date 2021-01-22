@@ -16,6 +16,18 @@ namespace Barcodes.Services.Sys
             Clipboard.SetText(data);
         }
 
+        public string GetTextFromClipboard()
+        {
+            try
+            {
+                return Clipboard.GetText();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public void OpenAppLocation()
         {
             var appLocation = System.AppDomain.CurrentDomain.BaseDirectory;

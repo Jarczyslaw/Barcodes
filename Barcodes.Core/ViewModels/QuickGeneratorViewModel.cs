@@ -45,7 +45,7 @@ namespace Barcodes.Core.ViewModels
 
             eventAggregator.GetEvent<OnBarcodeGeneratedEvent>().Subscribe(OnBarcodeGenerated);
 
-            generationData = new GenerationDataViewModel(appDialogsService, appWindowsService, generatorService);
+            generationData = new GenerationDataViewModel(appDialogsService, appWindowsService, generatorService, sysService);
             LoadSettings();
             LoadQuickBarcodes();
         }

@@ -6,9 +6,19 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:ui="clr-namespace:Barcodes.Core.UI"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <ui:BindingProxy x:Key="Proxy" Proxy="{Binding}" />
+    </UserControl.Resources>
     <StackPanel>
         <GroupBox Header="Barcode generation settings">
+            <GroupBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="{Binding Proxy.CopySettingsToClipboardCommand, Source={StaticResource Proxy}}" Header="Copy settings to clipboard" />
+                    <MenuItem Command="{Binding Proxy.PasteSettingsFromClipboardCommand, Source={StaticResource Proxy}}" Header="Paste settings from clipboard" />
+                </ContextMenu>
+            </GroupBox.ContextMenu>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />

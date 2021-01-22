@@ -1,4 +1,6 @@
 ﻿using Barcodes.Codes;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Barcodes.Services.Generator
 {
@@ -19,8 +21,12 @@ namespace Barcodes.Services.Generator
             ValidateCodeText = other.ValidateCodeText;
         }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public BarcodeType Type { get; set; }
+
+        [JsonIgnore]
         public bool DefaultSize { get; set; } = true;
+
         public int MinWidth { get; } = 100;
         public int Width { get; set; }
         public int Height { get; set; }

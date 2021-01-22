@@ -3,6 +3,8 @@ using Barcodes.Core.Abstraction;
 using Barcodes.Core.Models;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.Generator;
+using Barcodes.Services.Sys;
+using Barcodes.Utils;
 using Prism.Commands;
 using Prism.Mvvm;
 using System.Collections.ObjectModel;
@@ -16,6 +18,7 @@ namespace Barcodes.Core.ViewModels
         private readonly IAppDialogsService appDialogsService;
         private readonly IAppWindowsService appWindowsService;
         private readonly IGeneratorService generatorService;
+        private readonly ISysService sysService;
 
         private string title = "Barcode Title";
         private string data = "Barcode Data";
@@ -29,11 +32,13 @@ namespace Barcodes.Core.ViewModels
         private TemplateViewModel selectedTemplate;
         private ObservableCollection<TemplateViewModel> templates;
 
-        public GenerationDataViewModel(IAppDialogsService appDialogsService, IAppWindowsService appWindowsService, IGeneratorService generatorService)
+        public GenerationDataViewModel(IAppDialogsService appDialogsService, IAppWindowsService appWindowsService, IGeneratorService generatorService,
+            ISysService sysService)
         {
             this.appDialogsService = appDialogsService;
             this.appWindowsService = appWindowsService;
             this.generatorService = generatorService;
+            this.sysService = sysService;
 
             InitializeBarcodeTypes();
             InitializeTemplates();
@@ -44,6 +49,21 @@ namespace Barcodes.Core.ViewModels
 
         public DelegateCommand UseTemplateCommand { get; }
         public DelegateCommand DetectTemplateCommand { get; }
+
+        public DelegateCommand CopySettingsToClipboardCommand => new DelegateCommand(() => sysService.CopyToClipboard(Serializer.ToString(ToData())));
+
+        public DelegateCommand PasteSettingsFromClipboardCommand => new DelegateCommand(() =>
+        {
+            try
+            {
+                var rawData = sysService.GetTextFromClipboard();
+                FromData(Serializer.FromString<GenerationData>(rawData));
+            }
+            catch
+            {
+                appDialogsService.ShowError("Clipboard does not contain valid generation data");
+            }
+        });
 
         public TemplateViewModel SelectedTemplate
         {
@@ -248,7 +268,7 @@ namespace Barcodes.Core.ViewModels
                     return false;
                 }
             }
-            
+
             var data = Data.Trim();
             if (string.IsNullOrEmpty(data))
             {

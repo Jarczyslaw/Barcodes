@@ -13,5 +13,7 @@ namespace Barcodes.Services.Sys
         void OpenFileLocation(string filePath);
 
         void StartProcess(string process, string arguments = null);
+
+        string GetTextFromClipboard();
     }
 }
