@@ -1,4 +1,5 @@
 ﻿using Barcodes.Core.Abstraction;
+using Barcodes.Core.Extensions;
 using Barcodes.Core.Models;
 using Barcodes.Extensions;
 using Barcodes.Services.AppSettings;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Barcodes.Core.ViewModels
 {
@@ -48,7 +50,7 @@ namespace Barcodes.Core.ViewModels
             LoadQuickBarcodes();
         }
 
-        public DelegateCommand GenerateCommand => new DelegateCommand(() => GenerateBarcode());
+        public DelegateCommand GenerateCommand => new DelegateCommand(async () => await GenerateBarcode());
 
         public DelegateCommand NewWindowCommand => new DelegateCommand(() => appWindowsService.ShowQuickGeneratorWindow());
 
@@ -150,7 +152,14 @@ namespace Barcodes.Core.ViewModels
             {
                 return selectedQuickBarcode ?? emptyQuickBarcode;
             }
-            set => SetProperty(ref selectedQuickBarcode, value);
+            set
+            {
+                SetProperty(ref selectedQuickBarcode, value);
+                if (selectedQuickBarcode?.StorageBarcode != null)
+                {
+                    GenerationData.FromData(selectedQuickBarcode.StorageBarcode.ToGenerationData());
+                }
+            }
         }
 
         public bool QuickBarcodesVisible
@@ -179,7 +188,7 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        private async void GenerateBarcode()
+        private async Task GenerateBarcode()
         {
             if (GenerationData.GenerateValidation())
             {

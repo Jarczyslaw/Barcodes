@@ -8,20 +8,24 @@ namespace Barcodes.Core.Extensions
     {
         public static BarcodeViewModel ToBarcode(this StorageBarcode storageBarcode, IGeneratorService generator)
         {
-            var barcodeData = new GenerationData
-            {
-                Data = storageBarcode.Data,
-                Type = storageBarcode.Type,
-                DefaultSize = storageBarcode.DefaultSize,
-                ValidateCodeText = false,
-                Width = storageBarcode.Width,
-                Height = storageBarcode.Height
-            };
-
+            var barcodeData = ToGenerationData(storageBarcode);
             return new BarcodeViewModel(barcodeData)
             {
                 Title = storageBarcode.Title,
                 Barcode = generator.CreateBarcode(barcodeData)
+            };
+        }
+
+        public static GenerationData ToGenerationData(this StorageBarcode @this)
+        {
+            return new GenerationData
+            {
+                Data = @this.Data,
+                Type = @this.Type,
+                DefaultSize = @this.DefaultSize,
+                ValidateCodeText = false,
+                Width = @this.Width,
+                Height = @this.Height
             };
         }
     }
