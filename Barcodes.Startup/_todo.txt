@@ -7,9 +7,9 @@ zrobić drag and drop
 //zrobić drukowanie automatyczne kodów (może z użyciem pdfa po drodze) - dla pojedynczego, dla zaznaczonych i dla wszystkich w workspace
 jeśli wybrany jest kod kreskowy EAN13/product code to wyłączyć z automatu valdiate data
 dorobić okienko do szybkiego tworzenia barkodów
-dorobić loadera przy ładowaniu okna about
+//dorobić loadera przy ładowaniu okna about
 kod zlecenia może mieć popjemnik 0
-dodać możliwość zamykania poszczególnych typów okien z głównego okna
+//dodać możliwość zamykania poszczególnych typów okien z głównego okna
 dorobić menu na prawokliku (na barcodzie, na kontrolce z ustawieniami generowania itd)
 dorobić apkę na androida do wyświetlania kodów:
 	- przeorganizować slna
