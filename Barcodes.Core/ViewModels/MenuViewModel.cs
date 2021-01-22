@@ -2,6 +2,7 @@
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.IO;
 
 namespace Barcodes.Core.ViewModels
 {
@@ -19,8 +20,39 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand SaveCommand => new DelegateCommand(() => app.Save(false, false));
         public DelegateCommand SaveAsCommand => new DelegateCommand(() => app.Save(true, false));
         public DelegateCommand LoadFromFileCommand => new DelegateCommand(app.LoadStorageFromFile);
-        public DelegateCommand OpenAppLocationCommand => new DelegateCommand(app.OpenAppLocation);
-        public DelegateCommand OpenStorageLocationCommand => new DelegateCommand(app.OpenStorageLocation);
+
+        public DelegateCommand OpenAppLocationCommand => new DelegateCommand(() =>
+        {
+            try
+            {
+                services.SystemService.OpenAppLocation();
+            }
+            catch (Exception exc)
+            {
+                services.LogException("Can not open app location", exc);
+            }
+        });
+
+        public DelegateCommand OpenStorageLocationCommand => new DelegateCommand(() =>
+        {
+            const string openErrorMessage = "Can not open storage file location";
+            try
+            {
+                if (!File.Exists(services.AppSettingsService.StoragePath))
+                {
+                    services.AppDialogsService.ShowError(openErrorMessage);
+                    return;
+                }
+
+                var storagePath = services.AppSettingsService.StoragePath;
+                services.SystemService.OpenFileLocation(storagePath);
+            }
+            catch (Exception exc)
+            {
+                services.LogException(openErrorMessage, exc);
+            }
+        });
+
         public DelegateCommand CloseCommand => new DelegateCommand(() => OnClose?.Invoke());
         public DelegateCommand ExportToPdfCommand => new DelegateCommand(app.ExportToPdf);
         public DelegateCommand ShowAboutCommand => new DelegateCommand(app.ShowAbout);
@@ -35,7 +67,7 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand ClearCommand => new DelegateCommand(app.Clear);
         public DelegateCommand CreateNewStorageCommand => new DelegateCommand(app.CreateNewStorage);
         public DelegateCommand PrintCommand => new DelegateCommand(app.Print);
-        public DelegateCommand QuickGeneratorCommand => new DelegateCommand(app.ShowQuickGenerator);
+        public DelegateCommand QuickGeneratorCommand => new DelegateCommand(services.AppWindowsService.ShowQuickGeneratorWindow);
         public DelegateCommand CloseBarcodesWindowsCommand => new DelegateCommand(services.AppWindowsService.CloseBarcodesWindows);
 
         public DelegateCommand CloseWorkspacesWindowsCommand => new DelegateCommand(services.AppWindowsService.CloseWorkspacesWindows);

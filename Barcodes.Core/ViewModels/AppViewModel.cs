@@ -383,7 +383,7 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        private async Task HeavyAction(string message, Func<Task> action)
+        public async Task HeavyAction(string message, Func<Task> action)
         {
             try
             {
@@ -535,38 +535,6 @@ namespace Barcodes.Core.ViewModels
             finally
             {
                 BusyMessage = null;
-            }
-        }
-
-        public void OpenAppLocation()
-        {
-            try
-            {
-                servicesContainer.SystemService.OpenAppLocation();
-            }
-            catch (Exception exc)
-            {
-                servicesContainer.LogException("Can not open app location", exc);
-            }
-        }
-
-        public void OpenStorageLocation()
-        {
-            const string openErrorMessage = "Can not open storage file location";
-            try
-            {
-                if (!File.Exists(servicesContainer.AppSettingsService.StoragePath))
-                {
-                    servicesContainer.AppDialogsService.ShowError(openErrorMessage);
-                    return;
-                }
-
-                var storagePath = servicesContainer.AppSettingsService.StoragePath;
-                servicesContainer.SystemService.OpenFileLocation(storagePath);
-            }
-            catch (Exception exc)
-            {
-                servicesContainer.LogException(openErrorMessage, exc);
             }
         }
 
@@ -973,11 +941,6 @@ namespace Barcodes.Core.ViewModels
         public void OpenWorkspaceInNewWindowCommand(WorkspaceViewModel workspaceViewModel)
         {
             servicesContainer.AppWindowsService.OpenWorkspaceWindow(workspaceViewModel);
-        }
-
-        public void ShowQuickGenerator()
-        {
-            servicesContainer.AppWindowsService.ShowQuickGeneratorWindow();
         }
     }
 }

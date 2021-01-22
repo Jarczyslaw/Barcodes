@@ -39,7 +39,7 @@ namespace Barcodes.Core.ViewModels
         {
             if (services.AppSettingsService.OpenQuickGeneratorOnStartup)
             {
-                App.ShowQuickGenerator();
+                services.AppWindowsService.ShowQuickGeneratorWindow();
                 //Minimize();
             }
             else
