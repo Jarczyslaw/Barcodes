@@ -2,6 +2,10 @@
 	dużo poprawek na oknie z examplami 
 	dodano logowanie do pliku
 	dodano możliwość automatycznego drukowania plików pdf z barcodami
+	loadery przed pierwszym uruchomienien okien, które mogą generować kody (about, examples itd.)
+	rozbudowano opcje zamykania poszczególnych typów okien
+	dodano uproszczony generator kodów
+	na nagłówku groupBoxa w kontrolce ustawień generacji dodano możliwość kopiowania i wklejania danych 
 
 1.4
 	dodano możliwość zaznaczania wielu kodów i ich manipulacji (usuwanie, zmiana kolejności, eksport itd.)
