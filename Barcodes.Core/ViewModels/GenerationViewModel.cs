@@ -24,7 +24,7 @@ namespace Barcodes.Core.ViewModels
             this.appDialogsService = appDialogsService;
             this.appSettingsService = appSettingsService;
 
-            generationData = new GenerationDataViewModel(appDialogsService, appWindowsService, generatorService, sysService);
+            generationData = new GenerationDataViewModel(appDialogsService, appWindowsService, generatorService, sysService, appSettingsService);
             LoadSettings();
 
             AddNewCommand = new DelegateCommand(() => GenerateBarcode(true));

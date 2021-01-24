@@ -17,6 +17,8 @@
                 <ContextMenu>
                     <MenuItem Command="{Binding Proxy.CopySettingsToClipboardCommand, Source={StaticResource Proxy}}" Header="Copy settings to clipboard" />
                     <MenuItem Command="{Binding Proxy.PasteSettingsFromClipboardCommand, Source={StaticResource Proxy}}" Header="Paste settings from clipboard" />
+                    <Separator />
+                    <MenuItem Command="{Binding Proxy.RestoreSettingsCommand, Source={StaticResource Proxy}}" Header="Restore current settings" />
                 </ContextMenu>
             </GroupBox.ContextMenu>
             <Grid>

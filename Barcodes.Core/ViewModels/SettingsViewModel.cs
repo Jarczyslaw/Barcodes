@@ -37,7 +37,7 @@ namespace Barcodes.Core.ViewModels
             this.appDialogsService = appDialogsService;
             this.loggerService = loggerService;
 
-            generationData = new GenerationDataViewModel(null, appWindowsService, null, null);
+            generationData = new GenerationDataViewModel(null, appWindowsService, null, null, null);
 
             SaveCommand = new DelegateCommand(Save);
             CloseCommand = new DelegateCommand(() => OnClose?.Invoke());

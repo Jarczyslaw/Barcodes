@@ -19,6 +19,7 @@ namespace Barcodes.Core.ViewModels
         private readonly IAppWindowsService appWindowsService;
         private readonly IGeneratorService generatorService;
         private readonly ISysService sysService;
+        private readonly IAppSettingsService appSettingsService;
 
         private string title = "Barcode Title";
         private string data = "Barcode Data";
@@ -33,22 +34,20 @@ namespace Barcodes.Core.ViewModels
         private ObservableCollection<TemplateViewModel> templates;
 
         public GenerationDataViewModel(IAppDialogsService appDialogsService, IAppWindowsService appWindowsService, IGeneratorService generatorService,
-            ISysService sysService)
+            ISysService sysService, IAppSettingsService appSettingsService)
         {
             this.appDialogsService = appDialogsService;
             this.appWindowsService = appWindowsService;
             this.generatorService = generatorService;
             this.sysService = sysService;
+            this.appSettingsService = appSettingsService;
 
             InitializeBarcodeTypes();
             InitializeTemplates();
-
-            UseTemplateCommand = new DelegateCommand(UseTemplate, () => TemplatesEnabled);
-            DetectTemplateCommand = new DelegateCommand(DetectTemplate);
         }
 
-        public DelegateCommand UseTemplateCommand { get; }
-        public DelegateCommand DetectTemplateCommand { get; }
+        public DelegateCommand UseTemplateCommand => new DelegateCommand(UseTemplate, () => TemplatesEnabled);
+        public DelegateCommand DetectTemplateCommand => new DelegateCommand(DetectTemplate);
 
         public DelegateCommand CopySettingsToClipboardCommand => new DelegateCommand(() => sysService.CopyToClipboard(Serializer.ToString(ToData())));
 
@@ -63,6 +62,12 @@ namespace Barcodes.Core.ViewModels
             {
                 appDialogsService.ShowError("Clipboard does not contain valid generation data");
             }
+        });
+
+        public DelegateCommand RestoreSettingsCommand => new DelegateCommand(() =>
+        {
+            var settings = appSettingsService.AppSettings.GenerationSettings;
+            FromSettings(settings);
         });
 
         public TemplateViewModel SelectedTemplate
