@@ -40,7 +40,7 @@
                     x:Name="generationView"
                     DataContext="{Binding GenerationData}"
                     TitleVisible="False" />
-                <GroupBox Header="Previous barcodes" Visibility="{Binding QuickBarcodesVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                <GroupBox Header="Previous barcodes">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -51,11 +51,12 @@
                         <Label Content="Barcode:" />
                         <ComboBox
                             Grid.Column="1"
-                            Width="240"
+                            Width="330"
                             HorizontalAlignment="Left"
                             DisplayMemberPath="Title"
-                            ItemsSource="{Binding QuickBarcodes}"
-                            SelectedItem="{Binding SelectedQuickBarcode, UpdateSourceTrigger=PropertyChanged}" />
+                            IsSynchronizedWithCurrentItem="True"
+                            ItemsSource="{Binding QuickBarcodes, Mode=TwoWay}"
+                            SelectedItem="{Binding SelectedQuickBarcode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Button
                             Grid.Column="2"
                             Width="70"

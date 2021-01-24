@@ -1,6 +1,6 @@
 ﻿using Barcodes.Core.Abstraction;
+using Barcodes.Core.Events;
 using Barcodes.Core.Extensions;
-using Barcodes.Core.Models;
 using Barcodes.Extensions;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.Generator;
@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Barcodes.Core.ViewModels
@@ -43,14 +44,14 @@ namespace Barcodes.Core.ViewModels
             this.sysService = sysService;
             this.storageService = storageService;
 
-            eventAggregator.GetEvent<OnBarcodeGeneratedEvent>().Subscribe(OnBarcodeGenerated);
+            eventAggregator.GetEvent<OnBarcodeGeneratedEvent>().Subscribe(OnBarcodeGenerated, threadOption: ThreadOption.UIThread);
 
             generationData = new GenerationDataViewModel(appDialogsService, appWindowsService, generatorService, sysService);
             LoadSettings();
             LoadQuickBarcodes();
         }
 
-        public DelegateCommand GenerateCommand => new DelegateCommand(async () => await GenerateBarcode());
+        public DelegateCommand GenerateCommand => new DelegateCommand(async () => await GenerateBarcode(true));
 
         public DelegateCommand NewWindowCommand => new DelegateCommand(() => appWindowsService.ShowQuickGeneratorWindow());
 
@@ -115,10 +116,7 @@ namespace Barcodes.Core.ViewModels
             {
                 storageService.ClearQuickBarcodes();
                 LoadQuickBarcodes();
-                eventAggregator.GetEvent<OnBarcodeGeneratedEvent>().Publish(new QuickGeneratorSuccess
-                {
-                    Sender = this,
-                });
+                NotifyOtherQuickGenerators();
             }
         });
 
@@ -148,47 +146,30 @@ namespace Barcodes.Core.ViewModels
 
         public StorageBarcodeViewModel SelectedQuickBarcode
         {
-            get
-            {
-                return selectedQuickBarcode ?? emptyQuickBarcode;
-            }
+            get => selectedQuickBarcode;
             set
             {
-                SetProperty(ref selectedQuickBarcode, value);
-                if (selectedQuickBarcode?.StorageBarcode != null)
-                {
-                    GenerationData.FromData(selectedQuickBarcode.StorageBarcode.ToGenerationData());
-                }
+                SetProperty(ref selectedQuickBarcode, value, nameof(SelectedQuickBarcode));
+                SetSelectedQuickBarcode(value, false);
             }
-        }
-
-        public bool QuickBarcodesVisible
-        {
-            get => QuickBarcodes?.Count > 0;
         }
 
         public ObservableCollection<StorageBarcodeViewModel> QuickBarcodes
         {
-            get
+            get => quickBarcodes;
+            set => SetProperty(ref quickBarcodes, value);
+        }
+
+        private async void SetSelectedQuickBarcode(StorageBarcodeViewModel value, bool updateQuickBarcodes)
+        {
+            if (value?.StorageBarcode != null)
             {
-                var result = new ObservableCollection<StorageBarcodeViewModel>()
-                {
-                    emptyQuickBarcode
-                };
-                if (quickBarcodes != null)
-                {
-                    result.AddRange(quickBarcodes);
-                }
-                return result;
-            }
-            set
-            {
-                SetProperty(ref quickBarcodes, value);
-                RaisePropertyChanged(nameof(QuickBarcodesVisible));
+                GenerationData.FromData(value.StorageBarcode.ToGenerationData());
+                await GenerateBarcode(updateQuickBarcodes);
             }
         }
 
-        private async Task GenerateBarcode()
+        private async Task GenerateBarcode(bool updateQuickBarcodes)
         {
             if (GenerationData.GenerateValidation())
             {
@@ -196,13 +177,13 @@ namespace Barcodes.Core.ViewModels
                 {
                     IsBusy = true;
                     Barcode = await GenerationData.RunGenerator();
-                    appSettingsService.TryUpdateGenerationSettings(GenerationData.ToSettings());
-                    storageService.AddQuickBarcode(Barcode.ToStorage(), 5);
-                    LoadQuickBarcodes();
-                    eventAggregator.GetEvent<OnBarcodeGeneratedEvent>().Publish(new QuickGeneratorSuccess
+                    if (updateQuickBarcodes)
                     {
-                        Sender = this,
-                    });
+                        appSettingsService.TryUpdateGenerationSettings(GenerationData.ToSettings());
+                        storageService.AddQuickBarcode(Barcode.ToStorage(), 5);
+                        LoadQuickBarcodes();
+                        NotifyOtherQuickGenerators();
+                    }
                     IsBusy = false;
                     StatusMessage = "Barcode generated successfully";
                 }
@@ -219,20 +200,21 @@ namespace Barcodes.Core.ViewModels
 
         private void LoadQuickBarcodes()
         {
-            var quickBarcodes = storageService.LoadQuickBarcodes();
-            if (quickBarcodes != null)
+            var barcodes = new ObservableCollection<StorageBarcodeViewModel>()
             {
-                var newBarcodes = quickBarcodes.ConvertAll(s => new StorageBarcodeViewModel(s));
-                var toSelect = newBarcodes.Find(b => SelectedQuickBarcode != null && b.Title == SelectedQuickBarcode.Title);
-                QuickBarcodes = new ObservableCollection<StorageBarcodeViewModel>(newBarcodes);
-                SelectedQuickBarcode = toSelect;
-            }
-            else
+                emptyQuickBarcode
+            };
+            var fromStorage = storageService.LoadQuickBarcodes();
+            if (fromStorage != null)
             {
-                SelectedQuickBarcode = null;
-                QuickBarcodes = null;
-                SelectedQuickBarcode = null;
+                barcodes.AddRange(fromStorage.ConvertAll(s => new StorageBarcodeViewModel(s)));
             }
+
+            var previouslySelected = SelectedQuickBarcode;
+            QuickBarcodes = barcodes;
+            var toSelect = QuickBarcodes.FirstOrDefault(b => previouslySelected != null && b.Title == previouslySelected.Title);
+            selectedQuickBarcode = toSelect != null ? toSelect : quickBarcodes.First();
+            RaisePropertyChanged(nameof(SelectedQuickBarcode));
         }
 
         private void LoadSettings()
@@ -242,9 +224,9 @@ namespace Barcodes.Core.ViewModels
             GenerationData.Data = string.Empty;
         }
 
-        private void OnBarcodeGenerated(QuickGeneratorSuccess quickGeneratorSuccess)
+        private void OnBarcodeGenerated(QuickGeneratorViewModel sender)
         {
-            if (quickGeneratorSuccess.Sender != this)
+            if (sender != this)
             {
                 LoadQuickBarcodes();
             }
@@ -260,8 +242,9 @@ namespace Barcodes.Core.ViewModels
             return true;
         }
 
-        private class OnBarcodeGeneratedEvent : PubSubEvent<QuickGeneratorSuccess>
+        private void NotifyOtherQuickGenerators()
         {
+            eventAggregator.GetEvent<OnBarcodeGeneratedEvent>().Publish(this);
         }
     }
 }
