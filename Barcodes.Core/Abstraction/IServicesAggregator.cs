@@ -16,13 +16,16 @@ namespace Barcodes.Core.Abstraction
         IGeneratorService GeneratorService { get; }
         IAppDialogsService AppDialogsService { get; }
         IAppWindowsService AppWindowsService { get; }
-        ISysService SystemService { get; }
+        ISysService SysService { get; }
         IAppSettingsService AppSettingsService { get; }
         IStorageService StorageService { get; }
         IDocExportService DocExportService { get; }
         IStateSaverService StateSaverService { get; }
         IContainerExtension ContainerExtension { get; }
         ILoggerService LoggerService { get; }
+
         void LogException(string message, Exception exc);
+
+        void OpenAppLocation();
     }
 }

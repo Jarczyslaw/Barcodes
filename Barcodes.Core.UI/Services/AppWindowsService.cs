@@ -50,6 +50,11 @@ namespace Barcodes.Core.UI.Services
             }
         }
 
+        public void CloseShell()
+        {
+            MainWindow.Close();
+        }
+
         private List<Type> GetViewModels()
         {
             return Assembly.GetAssembly(typeof(BaseTemplateViewModel)).GetDerivedTypes(typeof(BaseTemplateViewModel));

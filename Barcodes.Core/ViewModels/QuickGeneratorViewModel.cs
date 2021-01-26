@@ -2,10 +2,7 @@
 using Barcodes.Core.Events;
 using Barcodes.Core.Extensions;
 using Barcodes.Extensions;
-using Barcodes.Services.AppSettings;
-using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
-using Barcodes.Services.Sys;
 using Prism.Commands;
 using Prism.Events;
 using System;
@@ -19,12 +16,7 @@ namespace Barcodes.Core.ViewModels
 {
     public class QuickGeneratorViewModel : BaseViewModel
     {
-        private readonly IAppDialogsService appDialogsService;
-        private readonly IAppSettingsService appSettingsService;
-        private readonly IEventAggregator eventAggregator;
-        private readonly IAppWindowsService appWindowsService;
-        private readonly ISysService sysService;
-        private readonly IStorageService storageService;
+        private readonly IServicesAggregator services;
 
         private GenerationDataViewModel generationData;
         private BarcodeViewModel barcode;
@@ -33,29 +25,41 @@ namespace Barcodes.Core.ViewModels
         private ObservableCollection<StorageBarcodeViewModel> quickBarcodes;
         private StorageBarcodeViewModel emptyQuickBarcode = new StorageBarcodeViewModel(null);
 
-        public QuickGeneratorViewModel(IAppDialogsService appDialogsService, IAppWindowsService appWindowsService, ISysService sysService,
-            IAppSettingsService appSettingsService, IGeneratorService generatorService, IStorageService storageService,
-            IEventAggregator eventAggregator)
+        public QuickGeneratorViewModel(IServicesAggregator services)
         {
-            this.appDialogsService = appDialogsService;
-            this.appSettingsService = appSettingsService;
-            this.eventAggregator = eventAggregator;
-            this.appWindowsService = appWindowsService;
-            this.sysService = sysService;
-            this.storageService = storageService;
+            this.services = services;
 
-            eventAggregator.GetEvent<OnBarcodeGeneratedEvent>().Subscribe(OnBarcodeGenerated, threadOption: ThreadOption.UIThread);
+            services.EventAggregator.GetEvent<OnBarcodeGeneratedEvent>().Subscribe(OnBarcodeGenerated, threadOption: ThreadOption.UIThread);
 
-            generationData = new GenerationDataViewModel(appDialogsService, appWindowsService, generatorService, sysService, appSettingsService);
+            generationData = new GenerationDataViewModel(services.AppDialogsService, services.AppWindowsService, services.GeneratorService,
+                services.SysService, services.AppSettingsService);
             LoadSettings();
             LoadQuickBarcodes();
         }
 
+        public DelegateCommand OpenAppLocationCommand => new DelegateCommand(services.OpenAppLocation);
+
+        public DelegateCommand CloseCommand => new DelegateCommand(() => OnClose?.Invoke());
+
+        public DelegateCommand CloseAppCommand => new DelegateCommand(services.AppWindowsService.CloseShell);
+
+        public DelegateCommand SettingsCommand => new DelegateCommand(() =>
+        {
+        });
+
+        public DelegateCommand ExamplesCommand => new DelegateCommand(() =>
+        {
+        });
+
+        public DelegateCommand AboutCommand => new DelegateCommand(() =>
+        {
+        });
+
         public DelegateCommand GenerateCommand => new DelegateCommand(async () => await GenerateBarcode(true));
 
-        public DelegateCommand NewWindowCommand => new DelegateCommand(() => appWindowsService.ShowQuickGeneratorWindow());
+        public DelegateCommand NewWindowCommand => new DelegateCommand(services.AppWindowsService.ShowQuickGeneratorWindow);
 
-        public DelegateCommand CloseAllCommand => new DelegateCommand(appWindowsService.CloseQuickGeneratorsWindows);
+        public DelegateCommand CloseAllCommand => new DelegateCommand(services.AppWindowsService.CloseQuickGeneratorsWindows);
 
         public DelegateCommand ExportImageCommand => new DelegateCommand(() =>
         {
@@ -63,7 +67,7 @@ namespace Barcodes.Core.ViewModels
             {
                 try
                 {
-                    var filePath = appDialogsService.SavePngFile(barcode.Title);
+                    var filePath = services.AppDialogsService.SavePngFile(barcode.Title);
                     if (string.IsNullOrEmpty(filePath))
                     {
                         return;
@@ -74,7 +78,7 @@ namespace Barcodes.Core.ViewModels
                 }
                 catch (Exception exc)
                 {
-                    appDialogsService.ShowException("Error when saving barcode to png file", exc);
+                    services.AppDialogsService.ShowException("Error when saving barcode to png file", exc);
                 }
             }
         });
@@ -83,7 +87,7 @@ namespace Barcodes.Core.ViewModels
         {
             if (CheckGeneratedBarcode())
             {
-                var barcodeFile = appDialogsService.ExportBarcodesFile();
+                var barcodeFile = services.AppDialogsService.ExportBarcodesFile();
                 if (string.IsNullOrEmpty(barcodeFile))
                 {
                     return;
@@ -91,12 +95,12 @@ namespace Barcodes.Core.ViewModels
 
                 try
                 {
-                    storageService.ExportBarcodes(barcodeFile, new List<StorageBarcode> { Barcode.ToStorage() });
+                    services.StorageService.ExportBarcodes(barcodeFile, new List<StorageBarcode> { Barcode.ToStorage() });
                     StatusMessage = "Barcode exported successfully";
                 }
                 catch (Exception exc)
                 {
-                    appDialogsService.ShowException("Error when exporting barcode", exc);
+                    services.AppDialogsService.ShowException("Error when exporting barcode", exc);
                 }
             }
         });
@@ -105,16 +109,16 @@ namespace Barcodes.Core.ViewModels
         {
             if (CheckGeneratedBarcode())
             {
-                sysService.CopyToClipboard(Barcode.Barcode);
+                services.SysService.CopyToClipboard(Barcode.Barcode);
                 StatusMessage = "Barcodes copied to clipboard";
             }
         });
 
         public DelegateCommand ClearQuickBarcodesCommand => new DelegateCommand(() =>
         {
-            if (appDialogsService.ShowYesNoQuestion("Do you really want to clear previously generated barcodes?"))
+            if (services.AppDialogsService.ShowYesNoQuestion("Do you really want to clear previously generated barcodes?"))
             {
-                storageService.ClearQuickBarcodes();
+                services.StorageService.ClearQuickBarcodes();
                 LoadQuickBarcodes();
                 NotifyOtherQuickGenerators();
             }
@@ -175,21 +179,22 @@ namespace Barcodes.Core.ViewModels
             {
                 try
                 {
-                    IsBusy = true;
-                    Barcode = await GenerationData.RunGenerator();
-                    if (updateQuickBarcodes)
+                    await HeavyAction("Generating barcode...", async () =>
                     {
-                        appSettingsService.TryUpdateGenerationSettings(GenerationData.ToSettings());
-                        storageService.AddQuickBarcode(Barcode.ToStorage(), 5);
-                        LoadQuickBarcodes();
-                        NotifyOtherQuickGenerators();
-                    }
-                    IsBusy = false;
+                        Barcode = await GenerationData.RunGenerator();
+                        if (updateQuickBarcodes)
+                        {
+                            services.AppSettingsService.TryUpdateGenerationSettings(GenerationData.ToSettings());
+                            services.StorageService.AddQuickBarcode(Barcode.ToStorage(), 5);
+                            LoadQuickBarcodes();
+                            NotifyOtherQuickGenerators();
+                        }
+                    });
                     StatusMessage = "Barcode generated successfully";
                 }
                 catch (Exception exc)
                 {
-                    appDialogsService.ShowException("Exception during barcode generation. Try disabling validation and adjust the barcode sizes", exc);
+                    services.AppDialogsService.ShowException("Exception during barcode generation. Try disabling validation and adjust the barcode sizes", exc);
                 }
                 finally
                 {
@@ -204,7 +209,7 @@ namespace Barcodes.Core.ViewModels
             {
                 emptyQuickBarcode
             };
-            var fromStorage = storageService.LoadQuickBarcodes();
+            var fromStorage = services.StorageService.LoadQuickBarcodes();
             if (fromStorage != null)
             {
                 barcodes.AddRange(fromStorage.ConvertAll(s => new StorageBarcodeViewModel(s)));
@@ -219,7 +224,7 @@ namespace Barcodes.Core.ViewModels
 
         private void LoadSettings()
         {
-            var generationSettings = appSettingsService.AppSettings.GenerationSettings;
+            var generationSettings = services.AppSettingsService.AppSettings.GenerationSettings;
             GenerationData.FromSettings(generationSettings);
             GenerationData.Data = string.Empty;
         }
@@ -236,7 +241,7 @@ namespace Barcodes.Core.ViewModels
         {
             if (Barcode == null || Barcode.Barcode == null)
             {
-                appDialogsService.ShowError("No barcode generated");
+                services.AppDialogsService.ShowError("No barcode generated");
                 return false;
             }
             return true;
@@ -244,7 +249,7 @@ namespace Barcodes.Core.ViewModels
 
         private void NotifyOtherQuickGenerators()
         {
-            eventAggregator.GetEvent<OnBarcodeGeneratedEvent>().Publish(this);
+            services.EventAggregator.GetEvent<OnBarcodeGeneratedEvent>().Publish(this);
         }
     }
 }

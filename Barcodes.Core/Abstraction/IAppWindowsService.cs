@@ -12,6 +12,8 @@ namespace Barcodes.Core.Abstraction
     {
         int WindowsCount { get; }
 
+        void CloseShell();
+
         void CloseBarcodesWindows();
 
         void CloseWorkspacesWindows();

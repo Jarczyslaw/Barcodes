@@ -12,7 +12,7 @@
     ResizeMode="CanMinimize"
     SizeToContent="WidthAndHeight"
     mc:Ignorable="d">
-    <toolkit:BusyIndicator BusyContent="Generating barcode..." IsBusy="{Binding IsBusy}">
+    <toolkit:BusyIndicator BusyContent="{Binding BusyMessage}" IsBusy="{Binding IsBusy}">
         <DockPanel LastChildFill="True">
             <Menu DockPanel.Dock="Top">
                 <Menu.ItemsPanel>
@@ -20,10 +20,16 @@
                         <DockPanel HorizontalAlignment="Stretch" />
                     </ItemsPanelTemplate>
                 </Menu.ItemsPanel>
-                <MenuItem Header="Options">
-                    <MenuItem Command="{Binding ExportImageCommand}" Header="Export to image file" />
-                    <MenuItem Command="{Binding ExportBarcodeCommand}" Header="Export to barcode file" />
-                    <MenuItem Command="{Binding CopyImageCommand}" Header="Copy image to clipboard" />
+                <MenuItem Header="File">
+                    <MenuItem Command="{Binding OpenAppLocationCommand}" Header="Open app location" />
+                    <Separator />
+                    <MenuItem Command="{Binding CloseCommand}" Header="Close" />
+                    <MenuItem Command="{Binding CloseAppCommand}" Header="Close app" />
+                </MenuItem>
+                <MenuItem Command="{Binding SettingsCommand}" Header="Settings" />
+                <MenuItem Header="Help">
+                    <MenuItem Command="{Binding ExamplesCommand}" Header="Examples" />
+                    <MenuItem Command="{Binding AboutCommand}" Header="About" />
                 </MenuItem>
                 <MenuItem HorizontalAlignment="Right" Header="Windows">
                     <MenuItem Command="{Binding NewWindowCommand}" Header="New generator window" />

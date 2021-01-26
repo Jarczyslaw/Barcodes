@@ -7,22 +7,20 @@ using Barcodes.Services.AppSettings;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Storage;
 using Prism.Ioc;
-using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Barcodes.Core.ViewModels
 {
-    public class AppViewModel : BindableBase
+    public class AppViewModel : BaseViewModel
     {
         private string statusMessage = string.Empty;
         private WorkspaceViewModel selectedWorkspace;
         private ObservableCollection<WorkspaceViewModel> workspaces;
-        private string busyMessage = string.Empty;
+
         private bool barcodesVisible;
         private string title = string.Empty;
         private string storagePath = string.Empty;
@@ -67,22 +65,9 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public bool IsBusy { get; set; }
-
         public int WorkspacesCount
         {
             get => Workspaces.Count;
-        }
-
-        public string BusyMessage
-        {
-            get => busyMessage;
-            set
-            {
-                SetProperty(ref busyMessage, value);
-                IsBusy = !string.IsNullOrEmpty(busyMessage);
-                RaisePropertyChanged(nameof(IsBusy));
-            }
         }
 
         public string StatusMessage
@@ -383,19 +368,6 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public async Task HeavyAction(string message, Func<Task> action)
-        {
-            try
-            {
-                BusyMessage = message;
-                await action();
-            }
-            finally
-            {
-                BusyMessage = null;
-            }
-        }
-
         public void ShowSettings()
         {
             var previousStoragePath = servicesContainer.AppSettingsService.StoragePath;
@@ -525,7 +497,7 @@ namespace Barcodes.Core.ViewModels
 
                 if (servicesContainer.AppDialogsService.ShowYesNoQuestion($"Do you want to open the newly generated file?"))
                 {
-                    servicesContainer.SystemService.StartProcess(filePath);
+                    servicesContainer.SysService.StartProcess(filePath);
                 }
             }
             catch (Exception exc)
@@ -636,13 +608,13 @@ namespace Barcodes.Core.ViewModels
 
         public void CopyImageToClipboard(BarcodeViewModel barcode)
         {
-            servicesContainer.SystemService.CopyToClipboard(barcode.Barcode);
+            servicesContainer.SysService.CopyToClipboard(barcode.Barcode);
             StatusMessage = $"Barcode image from {barcode.Title} copied to clipboard";
         }
 
         public void CopyDataToClipboard(BarcodeViewModel barcode)
         {
-            servicesContainer.SystemService.CopyToClipboard(barcode.GenerationData.Data);
+            servicesContainer.SysService.CopyToClipboard(barcode.GenerationData.Data);
             StatusMessage = $"Barcode data from {barcode.Title} copied to clipboard";
         }
 

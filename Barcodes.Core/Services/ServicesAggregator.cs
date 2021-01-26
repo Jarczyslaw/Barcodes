@@ -17,7 +17,7 @@ namespace Barcodes.Core.Services
         public IGeneratorService GeneratorService { get; }
         public IAppDialogsService AppDialogsService { get; }
         public IAppWindowsService AppWindowsService { get; }
-        public ISysService SystemService { get; }
+        public ISysService SysService { get; }
         public IAppSettingsService AppSettingsService { get; }
         public IStorageService StorageService { get; }
         public IDocExportService DocExportService { get; }
@@ -35,7 +35,7 @@ namespace Barcodes.Core.Services
             GeneratorService = generatorService;
             AppDialogsService = appDialogsService;
             AppWindowsService = appWindowsService;
-            SystemService = systemService;
+            SysService = systemService;
             AppSettingsService = appSettingsService;
             StorageService = storageService;
             DocExportService = docExportService;
@@ -48,6 +48,18 @@ namespace Barcodes.Core.Services
         {
             LoggerService.Error(exc, message);
             AppDialogsService.ShowException(message, exc);
+        }
+
+        public void OpenAppLocation()
+        {
+            try
+            {
+                SysService.OpenAppLocation();
+            }
+            catch (Exception exc)
+            {
+                LogException("Can not open app location", exc);
+            }
         }
     }
 }

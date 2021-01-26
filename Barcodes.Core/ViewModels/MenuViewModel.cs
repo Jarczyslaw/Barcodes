@@ -21,17 +21,7 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand SaveAsCommand => new DelegateCommand(() => app.Save(true, false));
         public DelegateCommand LoadFromFileCommand => new DelegateCommand(app.LoadStorageFromFile);
 
-        public DelegateCommand OpenAppLocationCommand => new DelegateCommand(() =>
-        {
-            try
-            {
-                services.SystemService.OpenAppLocation();
-            }
-            catch (Exception exc)
-            {
-                services.LogException("Can not open app location", exc);
-            }
-        });
+        public DelegateCommand OpenAppLocationCommand => new DelegateCommand(services.OpenAppLocation);
 
         public DelegateCommand OpenStorageLocationCommand => new DelegateCommand(() =>
         {
@@ -45,7 +35,7 @@ namespace Barcodes.Core.ViewModels
                 }
 
                 var storagePath = services.AppSettingsService.StoragePath;
-                services.SystemService.OpenFileLocation(storagePath);
+                services.SysService.OpenFileLocation(storagePath);
             }
             catch (Exception exc)
             {
