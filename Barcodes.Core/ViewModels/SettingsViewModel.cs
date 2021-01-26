@@ -26,7 +26,7 @@ namespace Barcodes.Core.ViewModels
         private ObservableCollection<AddModeViewModel> barcodeAddModes = new ObservableCollection<AddModeViewModel>();
         private AddModeViewModel selectedWorkspaceAddMode;
         private ObservableCollection<AddModeViewModel> workspaceAddModes = new ObservableCollection<AddModeViewModel>();
-        private GenerationDataViewModel generationData;
+        private GenerationBaseDataViewModel generationData;
         private bool updateAfterEveryGeneration;
 
         public SettingsViewModel(IAppWindowsService appWindowsService, IAppSettingsService appSettingsService,
@@ -37,7 +37,7 @@ namespace Barcodes.Core.ViewModels
             this.appDialogsService = appDialogsService;
             this.loggerService = loggerService;
 
-            generationData = new GenerationDataViewModel(null, appWindowsService, null, null, null);
+            generationData = new GenerationBaseDataViewModel();
 
             SaveCommand = new DelegateCommand(Save);
             CloseCommand = new DelegateCommand(() => OnClose?.Invoke());
@@ -128,7 +128,7 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref workspaceAddModes, value);
         }
 
-        public GenerationDataViewModel GenerationData
+        public GenerationBaseDataViewModel GenerationData
         {
             get => generationData;
             set => SetProperty(ref generationData, value);

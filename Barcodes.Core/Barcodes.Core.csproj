@@ -121,6 +121,7 @@
     <Compile Include="Abstraction\IAppWindowsService.cs" />
     <Compile Include="Abstraction\IServicesAggregator.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\GenerationBaseDataViewModel.cs" />
     <Compile Include="ViewModels\GenerationDataViewModel.cs" />
     <Compile Include="ViewModels\BaseInputViewModel.cs" />
     <Compile Include="ViewModels\ExampleBarcodeViewModel.cs" />

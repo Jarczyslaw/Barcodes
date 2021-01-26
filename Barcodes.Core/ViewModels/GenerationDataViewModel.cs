@@ -6,14 +6,13 @@ using Barcodes.Services.Generator;
 using Barcodes.Services.Sys;
 using Barcodes.Utils;
 using Prism.Commands;
-using Prism.Mvvm;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Barcodes.Core.ViewModels
 {
-    public class GenerationDataViewModel : BindableBase
+    public class GenerationDataViewModel : GenerationBaseDataViewModel
     {
         private readonly IAppDialogsService appDialogsService;
         private readonly IAppWindowsService appWindowsService;
@@ -23,13 +22,7 @@ namespace Barcodes.Core.ViewModels
 
         private string title = "Barcode Title";
         private string data = "Barcode Data";
-        private bool defaultSize = true;
-        private int width = 100;
-        private int height = 100;
-        private bool validateCodeText = true;
 
-        private BarcodeTypeViewModel selectedType;
-        private ObservableCollection<BarcodeTypeViewModel> types;
         private TemplateViewModel selectedTemplate;
         private ObservableCollection<TemplateViewModel> templates;
 
@@ -42,7 +35,6 @@ namespace Barcodes.Core.ViewModels
             this.sysService = sysService;
             this.appSettingsService = appSettingsService;
 
-            InitializeBarcodeTypes();
             InitializeTemplates();
         }
 
@@ -101,101 +93,17 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref data, value);
         }
 
-        public bool DefaultSize
+        public override GenerationData ToData()
         {
-            get => defaultSize;
-            set => SetProperty(ref defaultSize, value);
+            var data = base.ToData();
+            data.Data = Data.Trim();
+            return data;
         }
 
-        public int Width
-        {
-            get => width;
-            set => SetProperty(ref width, value);
-        }
-
-        public int Height
-        {
-            get => height;
-            set => SetProperty(ref height, value);
-        }
-
-        public bool ValidateCodeText
-        {
-            get => validateCodeText;
-            set => SetProperty(ref validateCodeText, value);
-        }
-
-        public BarcodeTypeViewModel SelectedType
-        {
-            get => selectedType;
-            set => SetProperty(ref selectedType, value);
-        }
-
-        public ObservableCollection<BarcodeTypeViewModel> Types
-        {
-            get => types;
-            set => SetProperty(ref types, value);
-        }
-
-        private void InitializeBarcodeTypes()
-        {
-            Types = new ObservableCollection<BarcodeTypeViewModel>()
-            {
-                new BarcodeTypeViewModel(BarcodeType.Ean13),
-                new BarcodeTypeViewModel(BarcodeType.Ean128),
-                new BarcodeTypeViewModel(BarcodeType.Code128),
-                new BarcodeTypeViewModel(BarcodeType.DataMatrix),
-                new BarcodeTypeViewModel(BarcodeType.QRCode),
-            };
-        }
-
-        public void SelectType(BarcodeType barcodeType)
-        {
-            SelectedType = Types.FirstOrDefault(b => b.Type == barcodeType);
-        }
-
-        public GenerationData ToData()
-        {
-            return new GenerationData
-            {
-                Data = Data.Trim(),
-                Type = SelectedType.Type,
-                DefaultSize = DefaultSize,
-                Width = Width,
-                Height = Height,
-                ValidateCodeText = ValidateCodeText
-            };
-        }
-
-        public void FromData(GenerationData generationData)
+        public override void FromData(GenerationData generationData)
         {
             Data = generationData.Data;
-            SelectType(generationData.Type);
-            DefaultSize = generationData.DefaultSize;
-            Width = generationData.Width;
-            Height = generationData.Height;
-            ValidateCodeText = generationData.ValidateCodeText;
-        }
-
-        public void FromSettings(GenerationSettings generationSettings)
-        {
-            SelectType(generationSettings.Type);
-            DefaultSize = generationSettings.DefaultSize;
-            Height = generationSettings.Height;
-            Width = generationSettings.Width;
-            ValidateCodeText = generationSettings.ValidateCodeText;
-        }
-
-        public GenerationSettings ToSettings()
-        {
-            return new GenerationSettings
-            {
-                Width = Width,
-                DefaultSize = DefaultSize,
-                Height = Height,
-                Type = SelectedType.Type,
-                ValidateCodeText = ValidateCodeText
-            };
+            base.FromData(generationData);
         }
 
         private void InitializeTemplates()
