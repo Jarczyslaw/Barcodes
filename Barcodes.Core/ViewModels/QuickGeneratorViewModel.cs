@@ -114,19 +114,17 @@ namespace Barcodes.Core.ViewModels
             if (CheckGeneratedBarcode())
             {
                 var barcodeFile = services.AppDialogsService.ExportBarcodesFile();
-                if (string.IsNullOrEmpty(barcodeFile))
+                if (!string.IsNullOrEmpty(barcodeFile))
                 {
-                    return;
-                }
-
-                try
-                {
-                    services.StorageService.ExportBarcodes(barcodeFile, new List<StorageBarcode> { Barcode.ToStorage() });
-                    StatusMessage = "Barcode exported successfully";
-                }
-                catch (Exception exc)
-                {
-                    services.AppDialogsService.ShowException("Error when exporting barcode", exc);
+                    try
+                    {
+                        services.StorageService.ExportBarcodes(barcodeFile, new List<StorageBarcode> { Barcode.ToStorage() });
+                        StatusMessage = "Barcode exported successfully";
+                    }
+                    catch (Exception exc)
+                    {
+                        services.AppDialogsService.ShowException("Error when exporting barcode", exc);
+                    }
                 }
             }
         });
@@ -250,7 +248,7 @@ namespace Barcodes.Core.ViewModels
 
             var previouslySelected = SelectedQuickBarcode;
             QuickBarcodes = barcodes;
-            var toSelect = QuickBarcodes.FirstOrDefault(b => previouslySelected != null && b.Compare(previouslySelected));
+            var toSelect = QuickBarcodes.FirstOrDefault(b => b.Compare(previouslySelected));
             selectedQuickBarcode = toSelect != null ? toSelect : quickBarcodes.First();
             RaisePropertyChanged(nameof(SelectedQuickBarcode));
         }

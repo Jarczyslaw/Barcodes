@@ -26,15 +26,20 @@ namespace Barcodes.Core.ViewModels
 
         public bool Compare(StorageBarcodeViewModel other)
         {
+            if (StorageBarcode == null || other?.StorageBarcode == null)
+            {
+                return false;
+            }
             return other.StorageBarcode.Data == StorageBarcode.Data && other.StorageBarcode.Type == StorageBarcode.Type;
         }
 
         private string GetSanitizedData()
         {
             var result = Regex.Replace(StorageBarcode.Data, @"\t|\n|\r", " ");
-            if (result.Length > 30)
+            var maxLength = 25;
+            if (result.Length > maxLength)
             {
-                result = result.Substring(0, 27) + "...";
+                result = result.Substring(0, maxLength) + "...";
             }
             return result;
         }
