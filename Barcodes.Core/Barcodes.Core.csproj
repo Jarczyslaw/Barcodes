@@ -114,6 +114,8 @@
     <Compile Include="Models\BaseInput.cs" />
     <Compile Include="Models\ValueInput.cs" />
     <Compile Include="Models\SelectionInput.cs" />
+    <Compile Include="Services\AppEvents.cs" />
+    <Compile Include="Services\IAppEvents.cs" />
     <Compile Include="ViewModels\AddModeViewModel.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
     <Compile Include="ViewModels\BarcodeMenuViewModel.cs" />

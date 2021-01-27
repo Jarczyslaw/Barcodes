@@ -52,12 +52,13 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
                         <Label Content="Barcode:" />
                         <ComboBox
                             Grid.Column="1"
-                            Width="330"
+                            Width="300"
                             HorizontalAlignment="Left"
                             DisplayMemberPath="Title"
                             IsSynchronizedWithCurrentItem="True"
@@ -65,10 +66,14 @@
                             SelectedItem="{Binding SelectedQuickBarcode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Button
                             Grid.Column="2"
-                            Width="70"
+                            Width="50"
+                            Command="{Binding LoadQuickBarcodesCommand}"
+                            Content="Load" />
+                        <Button
+                            Grid.Column="3"
+                            Width="50"
                             Command="{Binding ClearQuickBarcodesCommand}"
-                            Content="Clear"
-                            IsCancel="True" />
+                            Content="Clear" />
                     </Grid>
                 </GroupBox>
                 <GroupBox Header="Barcode" Visibility="{Binding BarcodeVisible, Converter={StaticResource BoolToVisibilityConverter}}">

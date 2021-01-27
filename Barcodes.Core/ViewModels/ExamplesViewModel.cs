@@ -38,15 +38,24 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
-            var result = appWindowsService.ShowGenerationWindow(SelectedBarcode, false, SelectedBarcode.Template);
-            if (result != null)
+            if (ParentViewModel is AppViewModel)
             {
-                GenerationResult = result;
+                var result = appWindowsService.ShowGenerationWindow(this, SelectedBarcode, false, SelectedBarcode.Template);
+                if (result != null)
+                {
+                    GenerationResult = result;
+                    OnClose?.Invoke();
+                }
+            }
+            else
+            {
                 OnClose?.Invoke();
             }
         });
 
         public DelegateCommand CloseCommand => new DelegateCommand(() => OnClose?.Invoke());
+
+        public BaseViewModel ParentViewModel { get; set; }
 
         public GenerationResult GenerationResult { get; private set; }
 

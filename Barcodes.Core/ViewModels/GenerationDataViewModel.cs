@@ -35,10 +35,12 @@ namespace Barcodes.Core.ViewModels
             this.sysService = sysService;
             this.appSettingsService = appSettingsService;
 
+            UseTemplateCommand = new DelegateCommand(UseTemplate, () => SelectedTemplate?.Handler != null);
+
             InitializeTemplates();
         }
 
-        public DelegateCommand UseTemplateCommand => new DelegateCommand(UseTemplate, () => TemplatesEnabled);
+        public DelegateCommand UseTemplateCommand { get; }
         public DelegateCommand DetectTemplateCommand => new DelegateCommand(DetectTemplate);
 
         public DelegateCommand CopySettingsToClipboardCommand => new DelegateCommand(() => sysService.CopyToClipboard(Serializer.ToString(ToData())));
@@ -56,11 +58,7 @@ namespace Barcodes.Core.ViewModels
             }
         });
 
-        public DelegateCommand RestoreSettingsCommand => new DelegateCommand(() =>
-        {
-            var settings = appSettingsService.AppSettings.GenerationSettings;
-            FromSettings(settings);
-        });
+        public DelegateCommand RestoreSettingsCommand => new DelegateCommand(() => FromSettings(appSettingsService.AppSettings.GenerationSettings));
 
         public TemplateViewModel SelectedTemplate
         {
@@ -68,12 +66,11 @@ namespace Barcodes.Core.ViewModels
             set
             {
                 SetProperty(ref selectedTemplate, value);
-                TemplatesEnabled = value.Handler != null;
                 UseTemplateCommand?.RaiseCanExecuteChanged();
             }
         }
 
-        public bool TemplatesEnabled { get; set; }
+        public object ParentViewModel { get; set; }
 
         public ObservableCollection<TemplateViewModel> Templates
         {
@@ -120,7 +117,7 @@ namespace Barcodes.Core.ViewModels
                 return;
             }
 
-            var result = SelectedTemplate.Handler(Data);
+            var result = SelectedTemplate.Handler(ParentViewModel, Data);
             if (result != null)
             {
                 Data = result.Data;
@@ -161,7 +158,6 @@ namespace Barcodes.Core.ViewModels
             {
                 var data = ToData();
                 var barcodeBitmap = generatorService.CreateBarcode(data);
-                barcodeBitmap.Freeze();
                 return new BarcodeViewModel(data)
                 {
                     Barcode = barcodeBitmap,

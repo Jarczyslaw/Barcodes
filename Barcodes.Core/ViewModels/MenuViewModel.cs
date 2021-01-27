@@ -52,7 +52,7 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand ImportBarcodesCommand => new DelegateCommand(app.ImportBarcodes);
         public DelegateCommand ImportWorkspacesCommand => new DelegateCommand(app.ImportWorkspaces);
         public DelegateCommand ImportStorageCommand => new DelegateCommand(app.ImportStorage);
-        public DelegateCommand ShowSettingsCommand => new DelegateCommand(app.ShowSettings);
+        public DelegateCommand ShowSettingsCommand => new DelegateCommand(() => services.AppWindowsService.ShowSettingsWindow(null));
         public DelegateCommand CloseAllWindowsCommand => new DelegateCommand(services.AppWindowsService.CloseAllWindows);
         public DelegateCommand ClearCommand => new DelegateCommand(app.Clear);
         public DelegateCommand CreateNewStorageCommand => new DelegateCommand(app.CreateNewStorage);

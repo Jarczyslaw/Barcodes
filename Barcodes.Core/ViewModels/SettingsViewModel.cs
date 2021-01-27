@@ -1,6 +1,7 @@
 ﻿using Barcodes.Core.Abstraction;
 using Barcodes.Core.Common;
 using Barcodes.Core.Models;
+using Barcodes.Core.Services;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.Logging;
 using Prism.Commands;
@@ -17,6 +18,7 @@ namespace Barcodes.Core.ViewModels
         private readonly IAppDialogsService appDialogsService;
         private readonly IAppWindowsService appWindowsService;
         private readonly ILoggerService loggerService;
+        private readonly IAppEvents appEvents;
 
         private bool openQuickGenerator;
         private string storagePath = string.Empty;
@@ -30,12 +32,13 @@ namespace Barcodes.Core.ViewModels
         private bool updateAfterEveryGeneration;
 
         public SettingsViewModel(IAppWindowsService appWindowsService, IAppSettingsService appSettingsService,
-            IAppDialogsService appDialogsService, ILoggerService loggerService)
+            IAppDialogsService appDialogsService, ILoggerService loggerService, IAppEvents appEvents)
         {
             this.appWindowsService = appWindowsService;
             this.appSettingsService = appSettingsService;
             this.appDialogsService = appDialogsService;
             this.loggerService = loggerService;
+            this.appEvents = appEvents;
 
             generationData = new GenerationBaseDataViewModel();
 
@@ -152,9 +155,11 @@ namespace Barcodes.Core.ViewModels
 
             try
             {
+                SettingsSaveResult = CreateSaveResult(settings);
                 appSettingsService.Save(settings);
-                SettingsSaveResult = new SettingsSaveResult();
+
                 OnClose?.Invoke();
+                appEvents.RiseSettingsChanged(SettingsSaveResult);
             }
             catch (Exception exc)
             {
@@ -162,6 +167,16 @@ namespace Barcodes.Core.ViewModels
                 loggerService.Error(exc, message);
                 appDialogsService.ShowException(message, exc);
             }
+        }
+
+        private SettingsSaveResult CreateSaveResult(AppSettings newSettings)
+        {
+            return new SettingsSaveResult()
+            {
+                CurrentStoragePath = newSettings.StoragePath,
+                PreviusStoragePath = appSettingsService.StoragePath,
+                BarcodesVisible = newSettings.BarcodesVisible
+            };
         }
 
         private void LoadSettings()
@@ -198,7 +213,7 @@ namespace Barcodes.Core.ViewModels
 
         private void RawSettings()
         {
-            var result = appWindowsService.ShowRawSettingsWindow(ToSettings());
+            var result = appWindowsService.ShowRawSettingsWindow(this, ToSettings());
             if (result != null)
             {
                 FromSettings(result);

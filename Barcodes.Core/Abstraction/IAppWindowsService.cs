@@ -26,21 +26,21 @@ namespace Barcodes.Core.Abstraction
 
         void OpenWorkspaceWindow(WorkspaceViewModel workspaceViewModel);
 
-        TemplateResult OpenTemplateWindow<TViewModel>(string data);
+        TemplateResult OpenTemplateWindow<TViewModel>(object parentViewModel, string data);
 
-        Task ShowAboutWindow(Action beforeShow);
+        Task ShowAboutWindow(object parentViewModel, Action beforeShow);
 
-        GenerationResult ShowExamplesWindow(ExamplesViewModel examplesViewModel);
+        GenerationResult ShowExamplesWindow(object parentViewModel, ExamplesViewModel examplesViewModel);
 
-        GenerationResult ShowGenerationWindow(BarcodeViewModel barcode, bool edit, BarcodeTemplate? template = null);
+        GenerationResult ShowGenerationWindow(object parentViewModel, BarcodeViewModel barcode, bool edit, BarcodeTemplate? template = null);
 
         string ShowWorkspaceNameWindow(string currentName, Func<string, bool> validationRule);
 
         WorkspaceViewModel SelectBarcodesWorkspace(IEnumerable<WorkspaceViewModel> workspaces);
 
-        SettingsSaveResult ShowSettingsWindow();
+        SettingsSaveResult ShowSettingsWindow(object parentViewModel);
 
-        AppSettings ShowRawSettingsWindow(AppSettings appSettings);
+        AppSettings ShowRawSettingsWindow(object parentViewModel, AppSettings appSettings);
 
         void ShowStorageWindow(AppViewModel appViewModel, List<WorkspaceViewModel> workspaces);
 

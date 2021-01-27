@@ -1,10 +1,10 @@
-﻿using Barcodes.Services.AppSettings;
+﻿using Barcodes.Core.Services;
+using Barcodes.Services.AppSettings;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Logging;
 using Barcodes.Services.Storage;
 using Barcodes.Services.Sys;
-using Prism.Events;
 using Prism.Ioc;
 using System;
 
@@ -12,7 +12,7 @@ namespace Barcodes.Core.Abstraction
 {
     public interface IServicesAggregator
     {
-        IEventAggregator EventAggregator { get; }
+        IAppEvents AppEvents { get; }
         IGeneratorService GeneratorService { get; }
         IAppDialogsService AppDialogsService { get; }
         IAppWindowsService AppWindowsService { get; }

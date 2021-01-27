@@ -1,5 +1,6 @@
 ﻿using Barcodes.Core.Models;
 using Barcodes.Services.Dialogs;
+using System;
 using System.Collections.Generic;
 
 namespace Barcodes.Core.Abstraction
@@ -29,5 +30,7 @@ namespace Barcodes.Core.Abstraction
         PdfExportMode ShowPdfExportQuestion();
 
         SavingMode ShowSavingQuestion();
+
+        void ShowBarcodeGenerationException(Exception exc);
     }
 }

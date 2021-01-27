@@ -10,6 +10,6 @@ namespace Barcodes.Core.ViewModels
 
         public string Title { get; set; }
 
-        public Func<string, TemplateResult> Handler { get; set; }
+        public Func<object, string, TemplateResult> Handler { get; set; }
     }
 }

@@ -24,7 +24,10 @@ namespace Barcodes.Core.ViewModels
             this.appDialogsService = appDialogsService;
             this.appSettingsService = appSettingsService;
 
-            generationData = new GenerationDataViewModel(appDialogsService, appWindowsService, generatorService, sysService, appSettingsService);
+            generationData = new GenerationDataViewModel(appDialogsService, appWindowsService, generatorService, sysService, appSettingsService)
+            {
+                ParentViewModel = this
+            };
             LoadSettings();
 
             AddNewCommand = new DelegateCommand(() => GenerateBarcode(true));
@@ -66,7 +69,7 @@ namespace Barcodes.Core.ViewModels
                 }
                 catch (Exception exc)
                 {
-                    appDialogsService.ShowException("Exception during barcode generation. Try disabling validation and adjust the barcode sizes", exc);
+                    appDialogsService.ShowBarcodeGenerationException(exc);
                 }
                 finally
                 {

@@ -33,7 +33,11 @@ namespace Barcodes.Core.ViewModels
 
             workspaces = new ObservableCollection<WorkspaceViewModel>();
             StoragePath = string.Empty;
+
+            servicesContainer.AppEvents.SettingsChanged += AppEvents_SettingsChanged;
         }
+
+
 
         public bool BarcodesVisible
         {
@@ -349,7 +353,7 @@ namespace Barcodes.Core.ViewModels
 
         public async void ShowAbout()
         {
-            await HeavyAction("Please wait...", () => servicesContainer.AppWindowsService.ShowAboutWindow(() => BusyMessage = null));
+            await HeavyAction("Please wait...", () => servicesContainer.AppWindowsService.ShowAboutWindow(null, () => BusyMessage = null));
         }
 
         public async void ShowExamples()
@@ -358,27 +362,23 @@ namespace Barcodes.Core.ViewModels
             await HeavyAction("Generating examples...", () =>
             {
                 examplesViewModel = servicesContainer.ContainerExtension.Resolve<ExamplesViewModel>();
+                examplesViewModel.ParentViewModel = this;
                 return examplesViewModel.CreateExamples();
             });
 
-            var barcode = servicesContainer.AppWindowsService.ShowExamplesWindow(examplesViewModel);
+            var barcode = servicesContainer.AppWindowsService.ShowExamplesWindow(null, examplesViewModel);
             if (barcode != null)
             {
                 AddNewBarcode(barcode);
             }
         }
 
-        public void ShowSettings()
+        private void AppEvents_SettingsChanged(SettingsSaveResult settingsSaveResult)
         {
-            var previousStoragePath = servicesContainer.AppSettingsService.StoragePath;
-            var result = servicesContainer.AppWindowsService.ShowSettingsWindow();
-            if (result != null)
+            BarcodesVisible = settingsSaveResult.BarcodesVisible;
+            if (settingsSaveResult.StoragePathChanged && !Save(false, false))
             {
-                BarcodesVisible = servicesContainer.AppSettingsService.BarcodesVisible;
-                if (previousStoragePath != servicesContainer.AppSettingsService.StoragePath && !Save(false, false))
-                {
-                    SetStoragePath(previousStoragePath);
-                }
+                SetStoragePath(settingsSaveResult.PreviusStoragePath);
             }
         }
 
@@ -512,7 +512,7 @@ namespace Barcodes.Core.ViewModels
 
         public void AddNewBarcode(BarcodeViewModel barcode, bool edit, BarcodeTemplate? template = null)
         {
-            var result = servicesContainer.AppWindowsService.ShowGenerationWindow(barcode, edit, template);
+            var result = servicesContainer.AppWindowsService.ShowGenerationWindow(null, barcode, edit, template);
             if (result != null)
             {
                 AddNewBarcode(result);
@@ -552,7 +552,7 @@ namespace Barcodes.Core.ViewModels
 
         public void EditBarcode(BarcodeViewModel barcode)
         {
-            var result = servicesContainer.AppWindowsService.ShowGenerationWindow(barcode, true);
+            var result = servicesContainer.AppWindowsService.ShowGenerationWindow(null, barcode, true);
             if (result == null)
             {
                 return;

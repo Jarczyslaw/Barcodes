@@ -5,7 +5,6 @@ using Barcodes.Services.Generator;
 using Barcodes.Services.Logging;
 using Barcodes.Services.Storage;
 using Barcodes.Services.Sys;
-using Prism.Events;
 using Prism.Ioc;
 using System;
 
@@ -13,7 +12,7 @@ namespace Barcodes.Core.Services
 {
     public class ServicesAggregator : IServicesAggregator
     {
-        public IEventAggregator EventAggregator { get; }
+        public IAppEvents AppEvents { get; }
         public IGeneratorService GeneratorService { get; }
         public IAppDialogsService AppDialogsService { get; }
         public IAppWindowsService AppWindowsService { get; }
@@ -26,12 +25,12 @@ namespace Barcodes.Core.Services
         public IContainerExtension ContainerExtension { get; }
         public ILoggerService LoggerService { get; }
 
-        public ServicesAggregator(IEventAggregator eventAggregator, IGeneratorService generatorService, IAppDialogsService appDialogsService,
+        public ServicesAggregator(IAppEvents appEvents, IGeneratorService generatorService, IAppDialogsService appDialogsService,
             IAppWindowsService appWindowsService, ISysService systemService, IAppSettingsService appSettingsService,
             IStorageService storageService, IDocExportService docExportService, IStateSaverService stateSaverService,
             IContainerExtension containerExtension, ILoggerService loggerService)
         {
-            EventAggregator = eventAggregator;
+            AppEvents = appEvents;
             GeneratorService = generatorService;
             AppDialogsService = appDialogsService;
             AppWindowsService = appWindowsService;

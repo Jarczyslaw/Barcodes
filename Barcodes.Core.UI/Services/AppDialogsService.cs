@@ -2,6 +2,7 @@
 using Barcodes.Core.Common;
 using Barcodes.Core.Models;
 using Barcodes.Services.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -143,6 +144,11 @@ namespace Barcodes.Core.UI.Services
                 }
             };
             return ShowCustomButtonsQuestion("Do you want to save current storage's changes?", buttons);
+        }
+
+        public void ShowBarcodeGenerationException(Exception exc)
+        {
+            ShowException("Exception during barcode generation. Try disabling validation and adjust the barcode sizes", exc);
         }
     }
 }

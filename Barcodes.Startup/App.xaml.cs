@@ -67,6 +67,7 @@ namespace Barcodes.Startup
             base.RegisterRequiredTypes(containerRegistry);
 
             containerRegistry.RegisterInstance(singleInstanceManager);
+            containerRegistry.RegisterSingleton<IAppEvents, AppEvents>();
             containerRegistry.RegisterSingleton<IAppSettingsService, AppSettingsService>();
             containerRegistry.RegisterSingleton<ILoggerService, LoggerService>();
             var appDialogsService = new AppDialogsService();

@@ -37,6 +37,15 @@ namespace Barcodes.Core.UI.Services
 
         public int WindowsCount => barcodesWindowsManager.WindowsCount + workspacesWindowsManager.WindowsCount;
 
+        private Window GetWindowWithDataContext(object dataContext)
+        {
+            if (dataContext == null)
+            {
+                return MainWindow;
+            }
+            return Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.DataContext == dataContext);
+        }
+
         private void CreateTemplatesMapping()
         {
             var windows = GetAllWindows();
@@ -104,57 +113,57 @@ namespace Barcodes.Core.UI.Services
             window.Show();
         }
 
-        public TemplateResult OpenTemplateWindow<TViewModel>(string data)
+        public TemplateResult OpenTemplateWindow<TViewModel>(object parentViewModel, string data)
         {
             var viewModelType = typeof(TViewModel);
-            return OpenTemplateWindow(viewModelType, templateMapping[viewModelType], data);
+            return OpenTemplateWindow(viewModelType, templateMapping[viewModelType], parentViewModel, data);
         }
 
-        private TemplateResult OpenTemplateWindow(Type viewModelType, Type viewType, string data)
+        private TemplateResult OpenTemplateWindow(Type viewModelType, Type viewType, object parentViewModel, string data)
         {
             var method = typeof(AppWindowsService).GetMethod(nameof(GenericOpenTemplateWindow), BindingFlags.NonPublic | BindingFlags.Instance);
             var generic = method.MakeGenericMethod(viewModelType, viewType);
-            return (TemplateResult)generic.Invoke(this, new object[] { data });
+            return (TemplateResult)generic.Invoke(this, new object[] { parentViewModel, data });
         }
 
-        private TemplateResult GenericOpenTemplateWindow<TViewModel, TWindow>(string data)
+        private TemplateResult GenericOpenTemplateWindow<TViewModel, TWindow>(object parentViewModel, string data)
             where TViewModel : BaseTemplateViewModel
             where TWindow : Window
         {
             var dataContext = containerExtension.Resolve<TViewModel>();
             dataContext.LoadData(data);
             var window = containerExtension.Resolve<TWindow>((typeof(object), dataContext));
-            window.Owner = ActiveWindow;
+            window.Owner = GetWindowWithDataContext(parentViewModel);
             window.ShowDialog();
             return dataContext.ResultData;
         }
 
-        public async Task ShowAboutWindow(Action beforeShow)
+        public async Task ShowAboutWindow(object parentViewModel, Action beforeShow)
         {
             var window = containerExtension.Resolve<AboutWindow>();
             await window.GenerateRandomBarcode();
             beforeShow();
-            window.Owner = MainWindow;
+            window.Owner = GetWindowWithDataContext(parentViewModel);
             window.ShowDialog();
         }
 
-        public GenerationResult ShowExamplesWindow(ExamplesViewModel examplesViewModel)
+        public GenerationResult ShowExamplesWindow(object parentViewModel, ExamplesViewModel examplesViewModel)
         {
             var window = new ExamplesWindow(examplesViewModel)
             {
-                Owner = MainWindow
+                Owner = GetWindowWithDataContext(parentViewModel)
             };
             window.ShowDialog();
             return examplesViewModel.GenerationResult;
         }
 
-        public GenerationResult ShowGenerationWindow(BarcodeViewModel barcode, bool edit, BarcodeTemplate? template = null)
+        public GenerationResult ShowGenerationWindow(object parentViewModel, BarcodeViewModel barcode, bool edit, BarcodeTemplate? template = null)
         {
             var dataContext = containerExtension.Resolve<GenerationViewModel>();
             dataContext.Load(barcode, edit, template);
             var window = new GenerationWindow(dataContext)
             {
-                Owner = ActiveWindow
+                Owner = GetWindowWithDataContext(parentViewModel)
             };
             window.ShowDialog();
             return dataContext.Result;
@@ -206,24 +215,24 @@ namespace Barcodes.Core.UI.Services
             return dataContext.Result;
         }
 
-        public SettingsSaveResult ShowSettingsWindow()
+        public SettingsSaveResult ShowSettingsWindow(object parentViewModel)
         {
             var dataContext = containerExtension.Resolve<SettingsViewModel>();
             var window = new SettingsWindow(dataContext)
             {
-                Owner = MainWindow
+                Owner = GetWindowWithDataContext(parentViewModel)
             };
             window.ShowDialog();
             return dataContext.SettingsSaveResult;
         }
 
-        public AppSettings ShowRawSettingsWindow(AppSettings appSettings)
+        public AppSettings ShowRawSettingsWindow(object parentViewModel, AppSettings appSettings)
         {
             var dataContext = containerExtension.Resolve<RawSettingsViewModel>();
             dataContext.LoadSettings(appSettings);
             var window = new RawSettingsWindow(dataContext)
             {
-                Owner = ActiveWindow
+                Owner = GetWindowWithDataContext(parentViewModel)
             };
             window.ShowDialog();
             return dataContext.EditedSettings;
@@ -247,7 +256,5 @@ namespace Barcodes.Core.UI.Services
             quickGeneratorWindowsManager.RegisterWindow(window);
             window.Show();
         }
-
-        
     }
 }
