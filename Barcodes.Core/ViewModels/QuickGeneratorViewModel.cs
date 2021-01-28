@@ -247,16 +247,14 @@ namespace Barcodes.Core.ViewModels
             {
                 try
                 {
-                    StorageBarcodeViewModel storageBarcodeViewModel = null;
                     await HeavyAction("Generating barcode...", async () =>
                     {
                         Barcode = await GenerationData.RunGenerator();
-                        storageBarcodeViewModel = new StorageBarcodeViewModel(Barcode.ToStorage());
-                        BarcodeHeader = storageBarcodeViewModel.Title;
+                        BarcodeHeader = Barcode.GenerationData.GetTitle();
                         if (updateQuickBarcodes)
                         {
-                            services.AppSettingsService.TryUpdateGenerationSettings(GenerationData.ToSettings());
-                            services.StorageService.AddQuickBarcode(storageBarcodeViewModel.StorageBarcode, 5);
+                            services.AppSettingsService.TryUpdateGenerationSettings(Barcode.GenerationData.ToSettings());
+                            services.StorageService.AddQuickBarcode(Barcode.GenerationData.ToStorageBarcode(), 5);
                             LoadQuickBarcodes();
                             NotifyOtherQuickGenerators();
                         }

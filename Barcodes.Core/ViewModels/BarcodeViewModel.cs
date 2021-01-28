@@ -2,6 +2,7 @@
 using Barcodes.Services.Storage;
 using Prism.Mvvm;
 using System.Windows.Media.Imaging;
+using Barcodes.Core.Extensions;
 
 namespace Barcodes.Core.ViewModels
 {
@@ -63,15 +64,9 @@ namespace Barcodes.Core.ViewModels
 
         public StorageBarcode ToStorage()
         {
-            return new StorageBarcode
-            {
-                Data = GenerationData.Data,
-                Title = Title,
-                Type = GenerationData.Type,
-                Width = GenerationData.Width,
-                Height = GenerationData.Height,
-                DefaultSize = GenerationData.DefaultSize
-            };
+            var result = GenerationData.ToStorageBarcode();
+            result.Title = Title;
+            return result;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Barcodes.Core.ViewModels;
+using Barcodes.Extensions;
 using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
 
@@ -27,6 +28,11 @@ namespace Barcodes.Core.Extensions
                 Width = @this.Width,
                 Height = @this.Height
             };
+        }
+
+        public static string GetTitle(this StorageBarcode @this)
+        {
+            return $"{@this.Data.Sanitize(25)} - {@this.Type}";
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using Barcodes.Services.Storage;
-using System.Text.RegularExpressions;
+﻿using Barcodes.Core.Extensions;
+using Barcodes.Services.Storage;
 
 namespace Barcodes.Core.ViewModels
 {
@@ -20,7 +20,7 @@ namespace Barcodes.Core.ViewModels
                 {
                     return "Generate and select barcode";
                 }
-                return $"{GetSanitizedData()} - {StorageBarcode.Type}";
+                return StorageBarcode.GetTitle();
             }
         }
 
@@ -31,17 +31,6 @@ namespace Barcodes.Core.ViewModels
                 return false;
             }
             return other.StorageBarcode.Data == StorageBarcode.Data && other.StorageBarcode.Type == StorageBarcode.Type;
-        }
-
-        private string GetSanitizedData()
-        {
-            var result = Regex.Replace(StorageBarcode.Data, @"\t|\n|\r", " ");
-            var maxLength = 25;
-            if (result.Length > maxLength)
-            {
-                result = result.Substring(0, maxLength) + "...";
-            }
-            return result;
         }
     }
 }

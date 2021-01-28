@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="BarcodeExamples.cs" />
     <Compile Include="Events\OnBarcodeGeneratedEvent.cs" />
+    <Compile Include="Extensions\GenerationDataExtensions.cs" />
     <Compile Include="Models\SavingMode.cs" />
     <Compile Include="Extensions\StorageBarcodeExtensions.cs" />
     <Compile Include="Extensions\StorageWorkspaceExtensions.cs" />

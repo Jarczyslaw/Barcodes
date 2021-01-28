@@ -1,4 +1,6 @@
-﻿namespace Barcodes.Extensions
+﻿using System.Text.RegularExpressions;
+
+namespace Barcodes.Extensions
 {
     public static class StringExtensions
     {
@@ -13,6 +15,16 @@
             }
 
             return true;
+        }
+
+        public static string Sanitize(this string input, int maxLength)
+        {
+            var result = Regex.Replace(input, @"\t|\n|\r", " ");
+            if (result.Length > maxLength)
+            {
+                result = result.Substring(0, maxLength) + "...";
+            }
+            return result;
         }
     }
 }
