@@ -25,27 +25,13 @@ namespace Barcodes.Core.ViewModels
         private ObservableCollection<StorageBarcodeViewModel> quickBarcodes;
         private StorageBarcodeViewModel emptyQuickBarcode = new StorageBarcodeViewModel(null);
         private string barcodeHeader;
+        private DelegateCommand restoreQuickBarcodesCommand;
+        private DelegateCommand loadQuickBarcodesCommand;
+        private DelegateCommand clearQuickBarcodesCommand;
 
         public QuickGeneratorViewModel(IServicesAggregator services)
         {
             this.services = services;
-
-            RestoreQuickBarcodesCommand = new DelegateCommand(async () =>
-            {
-                GenerationData.FromData(SelectedQuickBarcode.StorageBarcode.ToGenerationData());
-                await RestoreBarcode(SelectedQuickBarcode);
-            }, () => SelectedQuickBarcode?.StorageBarcode != null);
-            LoadQuickBarcodesCommand = new DelegateCommand(async () => await RestoreBarcode(SelectedQuickBarcode),
-                () => SelectedQuickBarcode?.StorageBarcode != null);
-            ClearQuickBarcodesCommand = new DelegateCommand(() =>
-            {
-                if (services.AppDialogsService.ShowYesNoQuestion("Do you really want to clear previously generated barcodes?"))
-                {
-                    services.StorageService.ClearQuickBarcodes();
-                    LoadQuickBarcodes();
-                    NotifyOtherQuickGenerators();
-                }
-            }, () => QuickBarcodes?.Count > 1);
 
             services.AppEvents.QuickBarcodeUpdate += AppEvents_QuickBarcodeUpdate;
 
@@ -144,11 +130,24 @@ namespace Barcodes.Core.ViewModels
             }
         });
 
-        public DelegateCommand ClearQuickBarcodesCommand { get; }
+        public DelegateCommand ClearQuickBarcodesCommand => clearQuickBarcodesCommand ?? (clearQuickBarcodesCommand = new DelegateCommand(() =>
+        {
+            if (services.AppDialogsService.ShowYesNoQuestion("Do you really want to clear previously generated barcodes?"))
+            {
+                services.StorageService.ClearQuickBarcodes();
+                LoadQuickBarcodes();
+                NotifyOtherQuickGenerators();
+            }
+        }, () => QuickBarcodes?.Count > 1));
 
-        public DelegateCommand RestoreQuickBarcodesCommand { get; }
+        public DelegateCommand RestoreQuickBarcodesCommand => restoreQuickBarcodesCommand ?? (restoreQuickBarcodesCommand = new DelegateCommand(async () =>
+        {
+            GenerationData.FromData(SelectedQuickBarcode.StorageBarcode.ToGenerationData());
+            await RestoreBarcode(SelectedQuickBarcode);
+        }, () => SelectedQuickBarcode?.StorageBarcode != null));
 
-        public DelegateCommand LoadQuickBarcodesCommand { get; }
+        public DelegateCommand LoadQuickBarcodesCommand => loadQuickBarcodesCommand ?? (loadQuickBarcodesCommand = new DelegateCommand(async () => await RestoreBarcode(SelectedQuickBarcode),
+            () => SelectedQuickBarcode?.StorageBarcode != null));
 
         public DelegateCommand ResetCommand => new DelegateCommand(() =>
         {
@@ -234,7 +233,7 @@ namespace Barcodes.Core.ViewModels
                     };
                     BarcodeHeader = storageBarcodeViewModel.Title;
                 });
-                StatusMessage = "Barcode restored successfully";
+                StatusMessage = "Barcode loaded successfully";
             }
             catch (Exception exc)
             {
