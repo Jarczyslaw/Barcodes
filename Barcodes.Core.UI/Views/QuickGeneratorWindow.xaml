@@ -22,6 +22,7 @@
                 </Menu.ItemsPanel>
                 <MenuItem Header="File">
                     <MenuItem Command="{Binding OpenAppLocationCommand}" Header="Open app location" />
+                    <MenuItem Command="{Binding ClearQuickBarcodesCommand}" Header="Clear barcodes" />
                     <Separator />
                     <MenuItem Command="{Binding CloseCommand}" Header="Close" />
                     <MenuItem Command="{Binding CloseAppCommand}" Header="Close app" />
@@ -67,15 +68,27 @@
                         <Button
                             Grid.Column="2"
                             Width="50"
-                            Command="{Binding RestoreQuickBarcodesCommand}"
-                            Content="Restore" />
+                            Command="{Binding LoadQuickBarcodesCommand}"
+                            Content="Load" />
                         <Button
                             Grid.Column="3"
                             Width="50"
-                            Command="{Binding ClearQuickBarcodesCommand}"
-                            Content="Clear" />
+                            Command="{Binding RestoreQuickBarcodesCommand}"
+                            Content="Restore" />
                     </Grid>
                 </GroupBox>
+                <UniformGrid Columns="4">
+                    <Button Visibility="Hidden" />
+                    <Button
+                        Command="{Binding GenerateCommand}"
+                        Content="Generate"
+                        IsDefault="True" />
+                    <Button Command="{Binding ResetCommand}" Content="Reset" />
+                    <Button
+                        Command="{Binding CancelCommand}"
+                        Content="Cancel"
+                        IsCancel="True" />
+                </UniformGrid>
                 <GroupBox Header="{Binding BarcodeHeader}" Visibility="{Binding BarcodeVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                     <StackPanel>
                         <Image
@@ -85,17 +98,7 @@
                             Stretch="None" />
                     </StackPanel>
                 </GroupBox>
-                <UniformGrid Columns="3">
-                    <Button Visibility="Hidden" />
-                    <Button
-                        Command="{Binding GenerateCommand}"
-                        Content="Generate"
-                        IsDefault="True" />
-                    <Button
-                        Command="{Binding CancelCommand}"
-                        Content="Cancel"
-                        IsCancel="True" />
-                </UniformGrid>
+
             </StackPanel>
         </DockPanel>
 

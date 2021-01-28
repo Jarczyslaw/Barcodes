@@ -30,7 +30,12 @@ namespace Barcodes.Core.ViewModels
         {
             this.services = services;
 
-            RestoreQuickBarcodesCommand = new DelegateCommand(async () => await RestoreBarcode(SelectedQuickBarcode),
+            RestoreQuickBarcodesCommand = new DelegateCommand(async () =>
+            {
+                GenerationData.FromData(SelectedQuickBarcode.StorageBarcode.ToGenerationData());
+                await RestoreBarcode(SelectedQuickBarcode);
+            }, () => SelectedQuickBarcode?.StorageBarcode != null);
+            LoadQuickBarcodesCommand = new DelegateCommand(async () => await RestoreBarcode(SelectedQuickBarcode),
                 () => SelectedQuickBarcode?.StorageBarcode != null);
             ClearQuickBarcodesCommand = new DelegateCommand(() =>
             {
@@ -143,6 +148,20 @@ namespace Barcodes.Core.ViewModels
 
         public DelegateCommand RestoreQuickBarcodesCommand { get; }
 
+        public DelegateCommand LoadQuickBarcodesCommand { get; }
+
+        public DelegateCommand ResetCommand => new DelegateCommand(() =>
+        {
+            if (services.AppDialogsService.ShowYesNoQuestion("Do you really want to reset all data?"))
+            {
+                GenerationData.RestoreSettingsCommand.Execute();
+                GenerationData.Data = string.Empty;
+                SelectedQuickBarcode = QuickBarcodes.First();
+                Barcode = null;
+                StatusMessage = null;
+            }
+        });
+
         public string BarcodeHeader
         {
             get
@@ -150,7 +169,7 @@ namespace Barcodes.Core.ViewModels
                 var value = "Barcode";
                 if (!string.IsNullOrEmpty(barcodeHeader))
                 {
-                    value += " - " + barcodeHeader;
+                    value += ": " + barcodeHeader;
                 }
                 return value;
             }
@@ -188,6 +207,7 @@ namespace Barcodes.Core.ViewModels
             {
                 SetProperty(ref selectedQuickBarcode, value);
                 RestoreQuickBarcodesCommand.RaiseCanExecuteChanged();
+                LoadQuickBarcodesCommand.RaiseCanExecuteChanged();
             }
         }
 
