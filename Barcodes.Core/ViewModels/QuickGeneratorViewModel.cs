@@ -24,12 +24,13 @@ namespace Barcodes.Core.ViewModels
         private StorageBarcodeViewModel selectedQuickBarcode;
         private ObservableCollection<StorageBarcodeViewModel> quickBarcodes;
         private StorageBarcodeViewModel emptyQuickBarcode = new StorageBarcodeViewModel(null);
+        private string barcodeHeader;
 
         public QuickGeneratorViewModel(IServicesAggregator services)
         {
             this.services = services;
 
-            LoadQuickBarcodesCommand = new DelegateCommand(async () => await LoadBarcode(SelectedQuickBarcode),
+            RestoreQuickBarcodesCommand = new DelegateCommand(async () => await RestoreBarcode(SelectedQuickBarcode),
                 () => SelectedQuickBarcode?.StorageBarcode != null);
             ClearQuickBarcodesCommand = new DelegateCommand(() =>
             {
@@ -140,7 +141,21 @@ namespace Barcodes.Core.ViewModels
 
         public DelegateCommand ClearQuickBarcodesCommand { get; }
 
-        public DelegateCommand LoadQuickBarcodesCommand { get; }
+        public DelegateCommand RestoreQuickBarcodesCommand { get; }
+
+        public string BarcodeHeader
+        {
+            get
+            {
+                var value = "Barcode";
+                if (!string.IsNullOrEmpty(barcodeHeader))
+                {
+                    value += " - " + barcodeHeader;
+                }
+                return value;
+            }
+            set => SetProperty(ref barcodeHeader, value);
+        }
 
         public BarcodeViewModel Barcode
         {
@@ -172,7 +187,7 @@ namespace Barcodes.Core.ViewModels
             set
             {
                 SetProperty(ref selectedQuickBarcode, value);
-                LoadQuickBarcodesCommand.RaiseCanExecuteChanged();
+                RestoreQuickBarcodesCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -186,7 +201,7 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        private async Task LoadBarcode(StorageBarcodeViewModel storageBarcodeViewModel)
+        private async Task RestoreBarcode(StorageBarcodeViewModel storageBarcodeViewModel)
         {
             try
             {
@@ -197,8 +212,9 @@ namespace Barcodes.Core.ViewModels
                     {
                         Barcode = await Task.Run(() => services.GeneratorService.CreateBarcode(generationData))
                     };
+                    BarcodeHeader = storageBarcodeViewModel.Title;
                 });
-                StatusMessage = $"Barcode {storageBarcodeViewModel.Title} loaded successfully";
+                StatusMessage = "Barcode restored successfully";
             }
             catch (Exception exc)
             {
@@ -217,6 +233,7 @@ namespace Barcodes.Core.ViewModels
                     {
                         Barcode = await GenerationData.RunGenerator();
                         storageBarcodeViewModel = new StorageBarcodeViewModel(Barcode.ToStorage());
+                        BarcodeHeader = storageBarcodeViewModel.Title;
                         if (updateQuickBarcodes)
                         {
                             services.AppSettingsService.TryUpdateGenerationSettings(GenerationData.ToSettings());
@@ -225,7 +242,7 @@ namespace Barcodes.Core.ViewModels
                             NotifyOtherQuickGenerators();
                         }
                     });
-                    StatusMessage = $"Barcode {storageBarcodeViewModel.Title} generated successfully";
+                    StatusMessage = "Barcode generated successfully";
                 }
                 catch (Exception exc)
                 {

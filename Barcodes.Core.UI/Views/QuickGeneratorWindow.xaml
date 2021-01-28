@@ -67,8 +67,8 @@
                         <Button
                             Grid.Column="2"
                             Width="50"
-                            Command="{Binding LoadQuickBarcodesCommand}"
-                            Content="Load" />
+                            Command="{Binding RestoreQuickBarcodesCommand}"
+                            Content="Restore" />
                         <Button
                             Grid.Column="3"
                             Width="50"
@@ -76,7 +76,7 @@
                             Content="Clear" />
                     </Grid>
                 </GroupBox>
-                <GroupBox Header="Barcode" Visibility="{Binding BarcodeVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                <GroupBox Header="{Binding BarcodeHeader}" Visibility="{Binding BarcodeVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                     <StackPanel>
                         <Image
                             x:Name="imgBarcode"
