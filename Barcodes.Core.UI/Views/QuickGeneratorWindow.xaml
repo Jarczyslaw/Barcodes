@@ -85,8 +85,8 @@
                         IsDefault="True" />
                     <Button Command="{Binding ResetCommand}" Content="Reset" />
                     <Button
-                        Command="{Binding CancelCommand}"
-                        Content="Cancel"
+                        Command="{Binding CloseCommand}"
+                        Content="Close"
                         IsCancel="True" />
                 </UniformGrid>
                 <GroupBox Header="{Binding BarcodeHeader}" Visibility="{Binding BarcodeVisible, Converter={StaticResource BoolToVisibilityConverter}}">

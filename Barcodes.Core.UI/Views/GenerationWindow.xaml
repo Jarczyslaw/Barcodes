@@ -23,8 +23,8 @@
                     IsDefault="True" />
                 <Button Command="{Binding EditCommand}" Content="Edit" />
                 <Button
-                    Command="{Binding CancelCommand}"
-                    Content="Cancel"
+                    Command="{Binding CloseCommand}"
+                    Content="Close"
                     IsCancel="True" />
             </UniformGrid>
         </StackPanel>

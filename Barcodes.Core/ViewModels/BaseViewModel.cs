@@ -30,7 +30,7 @@ namespace Barcodes.Core.ViewModels
 
         public Action OnClose { get; set; }
 
-        public DelegateCommand CancelCommand => new DelegateCommand(CloseView);
+        public DelegateCommand CloseCommand => new DelegateCommand(CloseView);
 
         protected void CloseView()
         {

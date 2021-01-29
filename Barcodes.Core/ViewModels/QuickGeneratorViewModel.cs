@@ -46,8 +46,6 @@ namespace Barcodes.Core.ViewModels
 
         public DelegateCommand OpenAppLocationCommand => new DelegateCommand(services.OpenAppLocation);
 
-        public DelegateCommand CloseCommand => new DelegateCommand(() => OnClose?.Invoke());
-
         public DelegateCommand CloseAppCommand => new DelegateCommand(services.AppWindowsService.CloseShell);
 
         public DelegateCommand SettingsCommand => new DelegateCommand(() => services.AppWindowsService.ShowSettingsWindow(this));
