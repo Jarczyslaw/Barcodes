@@ -3,6 +3,7 @@ using Barcodes.Services.Storage;
 using Prism.Mvvm;
 using System.Windows.Media.Imaging;
 using Barcodes.Core.Extensions;
+using Barcodes.Services.DocExport;
 
 namespace Barcodes.Core.ViewModels
 {
@@ -67,6 +68,16 @@ namespace Barcodes.Core.ViewModels
             var result = GenerationData.ToStorageBarcode();
             result.Title = Title;
             return result;
+        }
+
+        public DocBarcodeData ToDocBarcodeData()
+        {
+            return new DocBarcodeData
+            {
+                Title = Title,
+                Data = GenerationData.Data,
+                Barcode = Barcode
+            };
         }
     }
 }

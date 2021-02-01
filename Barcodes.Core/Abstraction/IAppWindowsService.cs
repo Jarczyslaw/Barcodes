@@ -45,5 +45,7 @@ namespace Barcodes.Core.Abstraction
         void ShowStorageWindow(AppViewModel appViewModel, List<WorkspaceViewModel> workspaces);
 
         void ShowQuickGeneratorWindow();
+
+        StorageBarcodeViewModel SelectStorageBarcode(object parentViewModel, List<StorageBarcodeViewModel> barcodes);
     }
 }

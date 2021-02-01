@@ -12,6 +12,9 @@
     ResizeMode="CanMinimize"
     SizeToContent="WidthAndHeight"
     mc:Ignorable="d">
+    <Window.Resources>
+        <ui:BindingProxy x:Key="Proxy" Proxy="{Binding}" />
+    </Window.Resources>
     <toolkit:BusyIndicator BusyContent="{Binding BusyMessage}" IsBusy="{Binding IsBusy}">
         <DockPanel LastChildFill="True">
             <Menu DockPanel.Dock="Top">
@@ -27,6 +30,9 @@
                     <MenuItem Command="{Binding CloseCommand}" Header="Close" />
                     <MenuItem Command="{Binding CloseAppCommand}" Header="Close app" />
                 </MenuItem>
+                <MenuItem Command="{Binding ImportCommand}" Header="Import" />
+                <MenuItem Command="{Binding ExportCommand}" Header="Export" />
+                <MenuItem Command="{Binding PrintCommand}" Header="Print" />
                 <MenuItem Command="{Binding SettingsCommand}" Header="Settings" />
                 <MenuItem Header="Help">
                     <MenuItem Command="{Binding ExamplesCommand}" Header="Examples" />
@@ -95,7 +101,15 @@
                             x:Name="imgBarcode"
                             Margin="5"
                             Source="{Binding Barcode.Barcode, Mode=OneWay}"
-                            Stretch="None" />
+                            Stretch="None">
+                            <Image.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Command="{Binding Proxy.SaveImageCommand, Source={StaticResource Proxy}}" Header="Save image to file" />
+                                    <MenuItem Command="{Binding Proxy.CopyDataCommand, Source={StaticResource Proxy}}" Header="Copy data to clipboard" />
+                                    <MenuItem Command="{Binding Proxy.CopyImageCommand, Source={StaticResource Proxy}}" Header="Copy image to clipboard" />
+                                </ContextMenu>
+                            </Image.ContextMenu>
+                        </Image>
                     </StackPanel>
                 </GroupBox>
 

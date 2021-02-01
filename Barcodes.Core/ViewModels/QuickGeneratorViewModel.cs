@@ -2,6 +2,7 @@
 using Barcodes.Core.Common;
 using Barcodes.Core.Extensions;
 using Barcodes.Extensions;
+using Barcodes.Services.DocExport;
 using Barcodes.Services.Storage;
 using Prism.Commands;
 using Prism.Ioc;
@@ -25,9 +26,12 @@ namespace Barcodes.Core.ViewModels
         private ObservableCollection<StorageBarcodeViewModel> quickBarcodes;
         private StorageBarcodeViewModel emptyQuickBarcode = new StorageBarcodeViewModel(null);
         private string barcodeHeader;
+
         private DelegateCommand restoreQuickBarcodesCommand;
         private DelegateCommand loadQuickBarcodesCommand;
         private DelegateCommand clearQuickBarcodesCommand;
+        private DelegateCommand exportCommand;
+        private DelegateCommand printCommand;
 
         public QuickGeneratorViewModel(IServicesAggregator services)
         {
@@ -77,55 +81,35 @@ namespace Barcodes.Core.ViewModels
 
         public DelegateCommand CloseAllCommand => new DelegateCommand(services.AppWindowsService.CloseQuickGeneratorsWindows);
 
-        public DelegateCommand ExportImageCommand => new DelegateCommand(() =>
+        public DelegateCommand SaveImageCommand => new DelegateCommand(() =>
         {
-            if (CheckGeneratedBarcode())
+            try
             {
-                try
+                var filePath = services.AppDialogsService.SavePngFile(barcode.Title);
+                if (string.IsNullOrEmpty(filePath))
                 {
-                    var filePath = services.AppDialogsService.SavePngFile(barcode.Title);
-                    if (string.IsNullOrEmpty(filePath))
-                    {
-                        return;
-                    }
+                    return;
+                }
 
-                    barcode.Barcode.ToPng(filePath);
-                    StatusMessage = $"Barcode saved in {Path.GetFileName(filePath)}";
-                }
-                catch (Exception exc)
-                {
-                    services.AppDialogsService.ShowException("Error when saving barcode to png file", exc);
-                }
+                barcode.Barcode.ToPng(filePath);
+                StatusMessage = $"Barcode saved in {Path.GetFileName(filePath)}";
+            }
+            catch (Exception exc)
+            {
+                services.AppDialogsService.ShowException("Error when saving barcode to png file", exc);
             }
         });
 
-        public DelegateCommand ExportBarcodeCommand => new DelegateCommand(() =>
+        public DelegateCommand CopyDataCommand => new DelegateCommand(() =>
         {
-            if (CheckGeneratedBarcode())
-            {
-                var barcodeFile = services.AppDialogsService.ExportBarcodesFile();
-                if (!string.IsNullOrEmpty(barcodeFile))
-                {
-                    try
-                    {
-                        services.StorageService.ExportBarcodes(barcodeFile, new List<StorageBarcode> { Barcode.ToStorage() });
-                        StatusMessage = "Barcode exported successfully";
-                    }
-                    catch (Exception exc)
-                    {
-                        services.AppDialogsService.ShowException("Error when exporting barcode", exc);
-                    }
-                }
-            }
+            services.SysService.CopyToClipboard(Barcode.GenerationData.Data);
+            StatusMessage = "Barcodes data copied to clipboard";
         });
 
         public DelegateCommand CopyImageCommand => new DelegateCommand(() =>
         {
-            if (CheckGeneratedBarcode())
-            {
-                services.SysService.CopyToClipboard(Barcode.Barcode);
-                StatusMessage = "Barcodes copied to clipboard";
-            }
+            services.SysService.CopyToClipboard(Barcode.Barcode);
+            StatusMessage = "Barcodes copied to clipboard";
         });
 
         public DelegateCommand ClearQuickBarcodesCommand => clearQuickBarcodesCommand ?? (clearQuickBarcodesCommand = new DelegateCommand(() =>
@@ -159,6 +143,81 @@ namespace Barcodes.Core.ViewModels
             }
         });
 
+        public DelegateCommand ImportCommad => new DelegateCommand(async () =>
+        {
+            try
+            {
+                var barcodeFile = services.AppDialogsService.ImportBarcodesFile();
+                if (!string.IsNullOrEmpty(barcodeFile))
+                {
+                    var barcodes = services.StorageService.ImportBarcodes(barcodeFile);
+                    StorageBarcodeViewModel barcodeToImport = null;
+                    if (barcodes.Count == 0)
+                    {
+                        services.AppDialogsService.ShowError("No barcodes found in selected file");
+                        return;
+                    }
+                    else if (barcodes.Count == 1)
+                    {
+                        barcodeToImport = new StorageBarcodeViewModel(barcodes[0]);
+                    }
+                    else
+                    {
+                        var selectedBarcode = services.AppWindowsService.SelectStorageBarcode(this,
+                            barcodes.Select(b => new StorageBarcodeViewModel(b)).ToList());
+                        if (selectedBarcode != null)
+                        {
+                            barcodeToImport = selectedBarcode;
+                        }
+                    }
+
+                    if (barcodeToImport != null)
+                    {
+                        GenerationData.FromData(barcodeToImport.StorageBarcode.ToGenerationData());
+                        await RestoreBarcode(barcodeToImport);
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                services.LogException("Error when importing barcode", exc);
+            }
+        });
+
+        public DelegateCommand ExportCommand => exportCommand ?? (exportCommand = new DelegateCommand(() =>
+        {
+            var barcodeFile = services.AppDialogsService.ExportBarcodesFile();
+            if (!string.IsNullOrEmpty(barcodeFile))
+            {
+                try
+                {
+                    services.StorageService.ExportBarcodes(barcodeFile, new List<StorageBarcode> { Barcode.ToStorage() });
+                    StatusMessage = "Barcode exported successfully";
+                }
+                catch (Exception exc)
+                {
+                    services.AppDialogsService.ShowException("Error when exporting barcode", exc);
+                }
+            }
+        }, () => BarcodeVisible));
+
+        public DelegateCommand PrintCommand => printCommand ?? (printCommand = new DelegateCommand(async () =>
+        {
+            try
+            {
+                await HeavyAction("Printing barcode...", async () =>
+                {
+                    await services.DocExportService.PrintAsync(new List<DocBarcodeData> { barcode.ToDocBarcodeData() })
+                        .ConfigureAwait(false);
+                    StatusMessage = "Successfully printed";
+                });
+            }
+            catch (Exception exc)
+            {
+                services.LogException("Error when printing barcodes", exc);
+            }
+        }, () => BarcodeVisible));
+
         public string BarcodeHeader
         {
             get
@@ -180,6 +239,8 @@ namespace Barcodes.Core.ViewModels
             {
                 SetProperty(ref barcode, value);
                 RaisePropertyChanged(nameof(BarcodeVisible));
+                ExportCommand.RaiseCanExecuteChanged();
+                PrintCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -298,16 +359,6 @@ namespace Barcodes.Core.ViewModels
             {
                 LoadQuickBarcodes();
             }
-        }
-
-        private bool CheckGeneratedBarcode()
-        {
-            if (Barcode == null || Barcode.Barcode == null)
-            {
-                services.AppDialogsService.ShowError("No barcode generated");
-                return false;
-            }
-            return true;
         }
 
         private void NotifyOtherQuickGenerators()

@@ -330,6 +330,10 @@
       <Project>{15c387af-4aae-4f52-b9ac-42089fc11d8b}</Project>
       <Name>Barcodes.Services.Logging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Barcodes.Services.Storage\Barcodes.Services.Storage.csproj">
+      <Project>{804a49a8-76bb-4ee0-83b2-6e2ec77af5d0}</Project>
+      <Name>Barcodes.Services.Storage</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Barcodes.SingleInstance\Barcodes.SingleInstance.csproj">
       <Project>{3E40A410-EEE1-43AC-B383-CAA9FB3C9213}</Project>
       <Name>Barcodes.SingleInstance</Name>

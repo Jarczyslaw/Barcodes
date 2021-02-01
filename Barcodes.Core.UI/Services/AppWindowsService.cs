@@ -6,6 +6,7 @@ using Barcodes.Core.ViewModels;
 using Barcodes.Core.ViewModels.Templates;
 using Barcodes.Extensions;
 using Barcodes.Services.AppSettings;
+using Barcodes.Services.Storage;
 using Prism.Ioc;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,12 @@ namespace Barcodes.Core.UI.Services
             {
                 return MainWindow;
             }
-            return Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.DataContext == dataContext);
+            var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.DataContext == dataContext);
+            if (window == null)
+            {
+                throw new Exception("Can not find window for view model of type: " + dataContext.GetType().Name);
+            }
+            return window;
         }
 
         private void CreateTemplatesMapping()
@@ -255,6 +261,27 @@ namespace Barcodes.Core.UI.Services
             var window = new QuickGeneratorWindow(dataContext);
             quickGeneratorWindowsManager.RegisterWindow(window);
             window.Show();
+        }
+
+        public StorageBarcodeViewModel SelectStorageBarcode(object parentViewModel, List<StorageBarcodeViewModel> barcodes)
+        {
+            var selectedBarcode = barcodes.First();
+            var input = new SelectionInput<StorageBarcodeViewModel>
+            {
+                Title = "Barcodes - Import",
+                ContentHeader = "Select barcode",
+                Label = "Barcode:",
+                Items = barcodes,
+                SelectedItem = selectedBarcode,
+                DisplayMemberPath = "Name"
+            };
+            var dataContext = new SelectionViewModel<StorageBarcodeViewModel>(input);
+            var window = new SelectionWindow(dataContext)
+            {
+                Owner = GetWindowWithDataContext(parentViewModel)
+            };
+            window.ShowDialog();
+            return dataContext.Result;
         }
     }
 }

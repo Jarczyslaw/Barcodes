@@ -37,8 +37,6 @@ namespace Barcodes.Core.ViewModels
             servicesContainer.AppEvents.SettingsChanged += AppEvents_SettingsChanged;
         }
 
-
-
         public bool BarcodesVisible
         {
             get => barcodesVisible;
@@ -449,12 +447,7 @@ namespace Barcodes.Core.ViewModels
             {
                 BusyMessage = "Printing barcodes...";
 
-                var barcodesToExport = barcodes.Select(b => new DocBarcodeData
-                {
-                    Title = b.Title,
-                    Data = b.GenerationData.Data,
-                    Barcode = b.Barcode
-                }).ToList();
+                var barcodesToExport = barcodes.Select(b => b.ToDocBarcodeData()).ToList();
                 await servicesContainer.DocExportService.PrintAsync(barcodesToExport)
                     .ConfigureAwait(false);
 
@@ -733,28 +726,35 @@ namespace Barcodes.Core.ViewModels
 
         public void ImportBarcodes()
         {
-            var barcodeFiles = servicesContainer.AppDialogsService.ImportBarcodesFiles();
-            if (barcodeFiles?.Count > 0)
+            try
             {
-                barcodeFiles.Reverse();
-                var barcodes = new List<BarcodeViewModel>();
-                foreach (var barcodeFile in barcodeFiles)
+                var barcodeFiles = servicesContainer.AppDialogsService.ImportBarcodesFiles();
+                if (barcodeFiles?.Count > 0)
                 {
-                    try
+                    barcodeFiles.Reverse();
+                    var barcodes = new List<BarcodeViewModel>();
+                    foreach (var barcodeFile in barcodeFiles)
                     {
-                        foreach (var storageBarcode in servicesContainer.StorageService.ImportBarcodes(barcodeFile))
+                        try
                         {
-                            barcodes.Add(storageBarcode.ToBarcode(servicesContainer.GeneratorService));
+                            foreach (var storageBarcode in servicesContainer.StorageService.ImportBarcodes(barcodeFile))
+                            {
+                                barcodes.Add(storageBarcode.ToBarcode(servicesContainer.GeneratorService));
+                            }
+                        }
+                        catch (Exception exc)
+                        {
+                            servicesContainer.LogException("Error when importing barcodes", exc);
+                            return;
                         }
                     }
-                    catch (Exception exc)
-                    {
-                        servicesContainer.LogException("Error when importing barcode", exc);
-                        return;
-                    }
-                }
 
-                ImportBarcodes(barcodes);
+                    ImportBarcodes(barcodes);
+                }
+            }
+            catch (Exception exc)
+            {
+                servicesContainer.LogException("Error when importing barcodes", exc);
             }
         }
 
