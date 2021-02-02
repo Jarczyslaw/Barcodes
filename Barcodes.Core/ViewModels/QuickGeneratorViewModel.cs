@@ -143,7 +143,7 @@ namespace Barcodes.Core.ViewModels
             }
         });
 
-        public DelegateCommand ImportCommad => new DelegateCommand(async () =>
+        public DelegateCommand ImportCommand => new DelegateCommand(async () =>
         {
             try
             {

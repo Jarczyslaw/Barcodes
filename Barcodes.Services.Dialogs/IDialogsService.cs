@@ -21,16 +21,16 @@ namespace Barcodes.Services.Dialogs
 
         void ShowProgressDialog(string caption, string text, string instruction, IntPtr? owner = null);
 
-        string OpenFile(string title, string initialDirectory, bool ensureFileExists, DialogFilterPair filter);
+        string OpenFile(string title, string initialDirectory, bool ensureFileExists, DialogFilterPair filter, IntPtr? owner = null);
 
-        string OpenFile(string title, string initialDirectory, bool ensureFileExists, List<DialogFilterPair> filters);
+        string OpenFile(string title, string initialDirectory, bool ensureFileExists, List<DialogFilterPair> filters, IntPtr? owner = null);
 
-        List<string> OpenFiles(string title, string initialDirectory, DialogFilterPair filter);
+        List<string> OpenFiles(string title, string initialDirectory, DialogFilterPair filter, IntPtr? owner = null);
 
-        List<string> OpenFiles(string title, string initialDirectory, List<DialogFilterPair> filters);
+        List<string> OpenFiles(string title, string initialDirectory, List<DialogFilterPair> filters, IntPtr? owner = null);
 
-        string OpenFolder(string title, string initialDirectory);
+        string OpenFolder(string title, string initialDirectory, IntPtr? owner = null);
 
-        string SaveFile(string title, string initialDirectory, string defaultFileName, DialogFilterPair filter);
+        string SaveFile(string title, string initialDirectory, string defaultFileName, DialogFilterPair filter, IntPtr? owner = null);
     }
 }

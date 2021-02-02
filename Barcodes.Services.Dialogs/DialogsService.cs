@@ -110,12 +110,12 @@ namespace Barcodes.Services.Dialogs
             }
         }
 
-        public string OpenFile(string title, string initialDirectory, bool ensureFileExists, DialogFilterPair filter)
+        public string OpenFile(string title, string initialDirectory, bool ensureFileExists, DialogFilterPair filter, IntPtr? owner = null)
         {
-            return OpenFile(title, initialDirectory, ensureFileExists, new List<DialogFilterPair> { filter });
+            return OpenFile(title, initialDirectory, ensureFileExists, new List<DialogFilterPair> { filter }, owner);
         }
 
-        public string OpenFile(string title, string initialDirectory, bool ensureFileExists, List<DialogFilterPair> filters)
+        public string OpenFile(string title, string initialDirectory, bool ensureFileExists, List<DialogFilterPair> filters, IntPtr? owner = null)
         {
             var builder = new CommonOpenDialogBuilder()
                 .Initialize(title, initialDirectory)
@@ -125,7 +125,7 @@ namespace Barcodes.Services.Dialogs
             string result = null;
             using (var dialog = builder.Build())
             {
-                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                if (dialog.ShowDialog(GetOwnerHandle(owner)) == CommonFileDialogResult.Ok)
                 {
                     result = dialog.FileName;
                 }
@@ -133,12 +133,12 @@ namespace Barcodes.Services.Dialogs
             return result;
         }
 
-        public List<string> OpenFiles(string title, string initialDirectory, DialogFilterPair filter)
+        public List<string> OpenFiles(string title, string initialDirectory, DialogFilterPair filter, IntPtr? owner = null)
         {
-            return OpenFiles(title, initialDirectory, new List<DialogFilterPair> { filter });
+            return OpenFiles(title, initialDirectory, new List<DialogFilterPair> { filter }, owner);
         }
 
-        public List<string> OpenFiles(string title, string initialDirectory, List<DialogFilterPair> filters)
+        public List<string> OpenFiles(string title, string initialDirectory, List<DialogFilterPair> filters, IntPtr? owner = null)
         {
             var builder = new CommonOpenDialogBuilder()
                 .Initialize(title, initialDirectory)
@@ -148,7 +148,7 @@ namespace Barcodes.Services.Dialogs
             List<string> result = null;
             using (var dialog = builder.Build())
             {
-                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                if (dialog.ShowDialog(GetOwnerHandle(owner)) == CommonFileDialogResult.Ok)
                 {
                     result = dialog.FileNames.ToList();
                 }
@@ -156,7 +156,7 @@ namespace Barcodes.Services.Dialogs
             return result;
         }
 
-        public string OpenFolder(string title, string initialDirectory)
+        public string OpenFolder(string title, string initialDirectory, IntPtr? owner = null)
         {
             var builder = new CommonOpenDialogBuilder()
                 .Initialize(title, initialDirectory)
@@ -165,7 +165,7 @@ namespace Barcodes.Services.Dialogs
             string result = null;
             using (var dialog = builder.Build())
             {
-                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                if (dialog.ShowDialog(GetOwnerHandle(owner)) == CommonFileDialogResult.Ok)
                 {
                     result = dialog.FileName;
                 }
@@ -173,7 +173,7 @@ namespace Barcodes.Services.Dialogs
             return result;
         }
 
-        public string SaveFile(string title, string initialDirectory, string defaultFileName, DialogFilterPair filter)
+        public string SaveFile(string title, string initialDirectory, string defaultFileName, DialogFilterPair filter, IntPtr? owner = null)
         {
             var builder = new CommonSaveDialogBuilder()
                 .Initialize(title, initialDirectory)
@@ -183,7 +183,7 @@ namespace Barcodes.Services.Dialogs
             string result = null;
             using (var dialog = builder.Build())
             {
-                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                if (dialog.ShowDialog(GetOwnerHandle(owner)) == CommonFileDialogResult.Ok)
                 {
                     result = dialog.FileName;
                 }
@@ -191,7 +191,7 @@ namespace Barcodes.Services.Dialogs
             return result;
         }
 
-        private void ShowExceptionDialog(string caption, string message, Exception exception, IntPtr? owner)
+        private void ShowExceptionDialog(string caption, string message, Exception exception, IntPtr? owner = null)
         {
             var text = exception.Message;
             if (!string.IsNullOrEmpty(message))
