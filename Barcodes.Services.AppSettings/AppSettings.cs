@@ -10,6 +10,7 @@ namespace Barcodes.Services.AppSettings
     public class AppSettings
     {
         public bool OpenQuickGeneratorOnStartup { get; set; }
+        public int QuickBarcodesCount { get; set; } = 10;
         public string StoragePath { get; set; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"storage.{FileExtensions.Storage}");
         public bool BarcodesVisible { get; set; } = true;
         public string AntiKeyProtection { get; set; } = "F5";
@@ -20,7 +21,7 @@ namespace Barcodes.Services.AppSettings
         [JsonConverter(typeof(StringEnumConverter))]
         public AddMode WorkspaceAddMode { get; set; }
 
-        public bool UpdateAfterEveryGeneration { get; set; }
+        public bool UpdateAfterEveryGeneration { get; set; } = true;
 
         public GenerationSettings GenerationSettings { get; set; } = new GenerationSettings();
 

@@ -17,6 +17,16 @@ namespace Barcodes.Services.AppSettings
             }
         }
 
+        public int QuickBarcodesCount
+        {
+            get => AppSettings.QuickBarcodesCount;
+            set
+            {
+                AppSettings.QuickBarcodesCount = value;
+                Save();
+            }
+        }
+
         public string StoragePath
         {
             get => AppSettings.StoragePath;

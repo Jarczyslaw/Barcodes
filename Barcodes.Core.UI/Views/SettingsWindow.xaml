@@ -18,6 +18,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <GroupBox Grid.Row="0" Header="Application settings">
@@ -28,7 +29,6 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -52,27 +52,20 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     VerticalContentAlignment="Center"
-                    Content="Open quick generator on startup"
-                    IsChecked="{Binding OpenQuickGenerator, UpdateSourceTrigger=PropertyChanged}" />
-
-                <CheckBox
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    VerticalContentAlignment="Center"
                     Content="Barcodes visible"
                     IsChecked="{Binding BarcodesVisible, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Grid.Row="3" Content="Protected keys:" />
+                <Label Grid.Row="2" Content="Protected keys:" />
                 <TextBox
-                    Grid.Row="3"
+                    Grid.Row="2"
                     Grid.Column="1"
                     Width="120"
                     HorizontalAlignment="Left"
                     Text="{Binding ProtectedKeys}" />
 
-                <Label Grid.Row="4" Content="New barcode order:" />
+                <Label Grid.Row="3" Content="New barcode order:" />
                 <ComboBox
-                    Grid.Row="4"
+                    Grid.Row="3"
                     Grid.Column="1"
                     Width="120"
                     HorizontalAlignment="Left"
@@ -80,9 +73,9 @@
                     ItemsSource="{Binding BarcodeAddModes}"
                     SelectedItem="{Binding SelectedBarcodeAddMode, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Grid.Row="5" Content="New workspace order:" />
+                <Label Grid.Row="4" Content="New workspace order:" />
                 <ComboBox
-                    Grid.Row="5"
+                    Grid.Row="4"
                     Grid.Column="1"
                     Width="120"
                     HorizontalAlignment="Left"
@@ -92,13 +85,48 @@
 
             </Grid>
         </GroupBox>
+
+        <GroupBox Grid.Row="1" Header="Quick generator settings">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+
+                <Label Grid.Row="0" Content="Barcodes count: " />
+                <toolkit:IntegerUpDown
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Width="120"
+                    Margin="{StaticResource DefaultMargin}"
+                    HorizontalAlignment="Left"
+                    Maximum="100"
+                    Minimum="1"
+                    TextAlignment="Left"
+                    Value="{Binding QuickBarcodesCount, UpdateSourceTrigger=PropertyChanged}" />
+
+                <CheckBox
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    VerticalContentAlignment="Center"
+                    Content="Open quick generator on startup"
+                    IsChecked="{Binding OpenQuickGenerator, UpdateSourceTrigger=PropertyChanged}" />
+
+            </Grid>
+        </GroupBox>
+
         <CheckBox
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="1"
             VerticalContentAlignment="Center"
             Content="Update generation settings after every barcode creation"
             IsChecked="{Binding UpdateAfterEveryGeneration, UpdateSourceTrigger=PropertyChanged}" />
-        <GroupBox Grid.Row="2" Header="Generation settings">
+        <GroupBox Grid.Row="3" Header="Generation settings">
             <Grid DataContext="{Binding GenerationData}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -160,7 +188,7 @@
                     Value="{Binding Height, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
         </GroupBox>
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*" />

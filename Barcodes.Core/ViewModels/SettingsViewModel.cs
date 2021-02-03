@@ -21,6 +21,7 @@ namespace Barcodes.Core.ViewModels
         private readonly IAppEvents appEvents;
 
         private bool openQuickGenerator;
+        private int quickBarcodesCount;
         private string storagePath = string.Empty;
         private bool barcodesVisible;
         private string protectedKeys = string.Empty;
@@ -69,6 +70,12 @@ namespace Barcodes.Core.ViewModels
         {
             get => openQuickGenerator;
             set => SetProperty(ref openQuickGenerator, value);
+        }
+
+        public int QuickBarcodesCount
+        {
+            get => quickBarcodesCount;
+            set => SetProperty(ref quickBarcodesCount, value);
         }
 
         public string StoragePath
@@ -187,6 +194,7 @@ namespace Barcodes.Core.ViewModels
         private void FromSettings(AppSettings settings)
         {
             OpenQuickGenerator = settings.OpenQuickGeneratorOnStartup;
+            QuickBarcodesCount = settings.QuickBarcodesCount;
             StoragePath = settings.StoragePath;
             BarcodesVisible = settings.BarcodesVisible;
             ProtectedKeys = settings.AntiKeyProtection;
@@ -201,6 +209,7 @@ namespace Barcodes.Core.ViewModels
             return new AppSettings
             {
                 OpenQuickGeneratorOnStartup = OpenQuickGenerator,
+                QuickBarcodesCount = QuickBarcodesCount,
                 StoragePath = StoragePath,
                 BarcodesVisible = BarcodesVisible,
                 AntiKeyProtection = ProtectedKeys,

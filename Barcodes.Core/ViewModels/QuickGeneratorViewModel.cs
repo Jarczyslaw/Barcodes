@@ -355,7 +355,8 @@ namespace Barcodes.Core.ViewModels
                         if (updateQuickBarcodes)
                         {
                             services.AppSettingsService.TryUpdateGenerationSettings(Barcode.GenerationData.ToSettings());
-                            services.StorageService.AddQuickBarcode(Barcode.GenerationData.ToStorageBarcode(), 5);
+                            services.StorageService.AddQuickBarcode(Barcode.GenerationData.ToStorageBarcode(),
+                                services.AppSettingsService.QuickBarcodesCount);
                             LoadQuickBarcodes();
                             NotifyOtherQuickGenerators();
                         }
