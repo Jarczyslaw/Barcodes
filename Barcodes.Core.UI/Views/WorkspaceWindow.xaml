@@ -30,7 +30,10 @@
             SelectionMode="Single">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <controls:BarcodeView BarcodeVisible="true" DescriptionVisible="True">
+                    <controls:BarcodeView
+                        BarcodeVisible="true"
+                        DescriptionVisible="True"
+                        IsCheckedEnabled="False">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseDoubleClick">
                                 <prism:InvokeCommandAction Command="{Binding Proxy.OpenInNewWindowCommand, Source={StaticResource Proxy}}" CommandParameter="{Binding}" />

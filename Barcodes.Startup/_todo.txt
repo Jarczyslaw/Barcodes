@@ -11,7 +11,7 @@ dorobić okienko do szybkiego tworzenia barkodów
 //kod zlecenia może mieć popjemnik 0
 //dodać możliwość zamykania poszczególnych typów okien z głównego okna
 dorobić menu na prawokliku (na barcodzie, na kontrolce z ustawieniami generowania itd)
-sprawdzić okno z workspacem + ewentualne poprawki (np widoczny checkbox)
+//sprawdzić okno z workspacem + ewentualne poprawki (np widoczny checkbox)
 dorobić apkę na androida do wyświetlania kodów:
 	- przeorganizować slna
 	- ogarnąc przesyłanie obrazów na xamarina (sockety? grpc? wcf?)
