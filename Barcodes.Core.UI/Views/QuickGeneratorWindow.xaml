@@ -25,6 +25,9 @@
                 </Menu.ItemsPanel>
                 <MenuItem Header="File">
                     <MenuItem Command="{Binding OpenAppLocationCommand}" Header="Open app location" />
+                    <MenuItem Command="{Binding AddBarcodeToAppCommand}" Header="Add barcode to main application" />
+                    <Separator />
+                    <MenuItem Command="{Binding RemoveSelectedQuickBarcodeCommand}" Header="Remove selected barcode" />
                     <MenuItem Command="{Binding ClearQuickBarcodesCommand}" Header="Clear barcodes" />
                     <Separator />
                     <MenuItem Command="{Binding CloseCommand}" Header="Close" />

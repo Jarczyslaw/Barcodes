@@ -3,7 +3,6 @@ using Barcodes.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace Barcodes.Services.Storage
 {
@@ -88,6 +87,14 @@ namespace Barcodes.Services.Storage
             if (File.Exists(QuickBarcodesPath))
             {
                 File.Delete(QuickBarcodesPath);
+            }
+        }
+
+        public void RemoveQuickBarcode(StorageBarcode barcode)
+        {
+            if (quickBarcodes.Remove(barcode))
+            {
+                Serializer.ToFile(quickBarcodes, QuickBarcodesPath);
             }
         }
     }

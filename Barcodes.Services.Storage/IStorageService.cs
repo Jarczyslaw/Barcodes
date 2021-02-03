@@ -25,5 +25,7 @@ namespace Barcodes.Services.Storage
         void AddQuickBarcode(StorageBarcode barcode, int maxCapacity);
 
         void ClearQuickBarcodes();
+
+        void RemoveQuickBarcode(StorageBarcode barcode);
     }
 }

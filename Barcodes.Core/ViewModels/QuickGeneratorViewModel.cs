@@ -1,6 +1,7 @@
 ﻿using Barcodes.Core.Abstraction;
 using Barcodes.Core.Common;
 using Barcodes.Core.Extensions;
+using Barcodes.Core.Models;
 using Barcodes.Extensions;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Storage;
@@ -18,6 +19,7 @@ namespace Barcodes.Core.ViewModels
     public class QuickGeneratorViewModel : BaseViewModel, IOnClosingAware
     {
         private readonly IServicesAggregator services;
+        private readonly AppViewModel appViewModel;
 
         private GenerationDataViewModel generationData;
         private BarcodeViewModel barcode;
@@ -32,10 +34,13 @@ namespace Barcodes.Core.ViewModels
         private DelegateCommand clearQuickBarcodesCommand;
         private DelegateCommand exportCommand;
         private DelegateCommand printCommand;
+        private DelegateCommand addBarcodeToAppCommand;
+        private DelegateCommand removeSelectedQuickBarcodeCommand;
 
-        public QuickGeneratorViewModel(IServicesAggregator services)
+        public QuickGeneratorViewModel(IServicesAggregator services, AppViewModel appViewModel)
         {
             this.services = services;
+            this.appViewModel = appViewModel;
 
             services.AppEvents.QuickBarcodeUpdate += AppEvents_QuickBarcodeUpdate;
 
@@ -77,7 +82,7 @@ namespace Barcodes.Core.ViewModels
 
         public DelegateCommand GenerateCommand => new DelegateCommand(async () => await GenerateBarcode(true));
 
-        public DelegateCommand NewWindowCommand => new DelegateCommand(services.AppWindowsService.ShowQuickGeneratorWindow);
+        public DelegateCommand NewWindowCommand => new DelegateCommand(() => services.AppWindowsService.ShowQuickGeneratorWindow(appViewModel));
 
         public DelegateCommand CloseAllCommand => new DelegateCommand(services.AppWindowsService.CloseQuickGeneratorsWindows);
 
@@ -218,6 +223,41 @@ namespace Barcodes.Core.ViewModels
             }
         }, () => BarcodeVisible));
 
+        public DelegateCommand AddBarcodeToAppCommand => addBarcodeToAppCommand ?? (addBarcodeToAppCommand = new DelegateCommand(() =>
+        {
+            var barcodeTitle = services.AppWindowsService.ShowBarcodeTitleWindow(this, title =>
+            {
+                if (string.IsNullOrEmpty(title))
+                {
+                    services.AppDialogsService.ShowError("Title can not be empty");
+                    return false;
+                }
+                return true;
+            });
+
+            if (!string.IsNullOrEmpty(barcodeTitle))
+            {
+                appViewModel.AddNewBarcode(new GenerationResult
+                {
+                    AddNew = true,
+                    Barcode = new BarcodeViewModel(Barcode)
+                    {
+                        Title = barcodeTitle
+                    }
+                });
+            }
+        }, () => BarcodeVisible));
+
+        public DelegateCommand RemoveSelectedQuickBarcodeCommand => removeSelectedQuickBarcodeCommand ?? (removeSelectedQuickBarcodeCommand = new DelegateCommand(() =>
+        {
+            if (services.AppDialogsService.ShowYesNoQuestion("Do you really want to remove selected barcode?"))
+            {
+                services.StorageService.RemoveQuickBarcode(SelectedQuickBarcode.StorageBarcode);
+                LoadQuickBarcodes();
+                NotifyOtherQuickGenerators();
+            }
+        }, () => SelectedQuickBarcode?.StorageBarcode != null));
+
         public string BarcodeHeader
         {
             get
@@ -241,6 +281,7 @@ namespace Barcodes.Core.ViewModels
                 RaisePropertyChanged(nameof(BarcodeVisible));
                 ExportCommand.RaiseCanExecuteChanged();
                 PrintCommand.RaiseCanExecuteChanged();
+                AddBarcodeToAppCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -266,6 +307,7 @@ namespace Barcodes.Core.ViewModels
                 SetProperty(ref selectedQuickBarcode, value);
                 RestoreQuickBarcodesCommand.RaiseCanExecuteChanged();
                 LoadQuickBarcodesCommand.RaiseCanExecuteChanged();
+                RemoveSelectedQuickBarcodeCommand.RaiseCanExecuteChanged();
             }
         }
 

@@ -57,7 +57,7 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand ClearCommand => new DelegateCommand(app.Clear);
         public DelegateCommand CreateNewStorageCommand => new DelegateCommand(app.CreateNewStorage);
         public DelegateCommand PrintCommand => new DelegateCommand(app.Print);
-        public DelegateCommand QuickGeneratorCommand => new DelegateCommand(services.AppWindowsService.ShowQuickGeneratorWindow);
+        public DelegateCommand QuickGeneratorCommand => new DelegateCommand(() => services.AppWindowsService.ShowQuickGeneratorWindow(app));
         public DelegateCommand CloseBarcodesWindowsCommand => new DelegateCommand(services.AppWindowsService.CloseBarcodesWindows);
 
         public DelegateCommand CloseWorkspacesWindowsCommand => new DelegateCommand(services.AppWindowsService.CloseWorkspacesWindows);

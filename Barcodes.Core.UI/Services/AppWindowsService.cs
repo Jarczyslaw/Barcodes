@@ -6,7 +6,6 @@ using Barcodes.Core.ViewModels;
 using Barcodes.Core.ViewModels.Templates;
 using Barcodes.Extensions;
 using Barcodes.Services.AppSettings;
-using Barcodes.Services.Storage;
 using Prism.Ioc;
 using System;
 using System.Collections.Generic;
@@ -255,9 +254,9 @@ namespace Barcodes.Core.UI.Services
             window.Show();
         }
 
-        public void ShowQuickGeneratorWindow()
+        public void ShowQuickGeneratorWindow(AppViewModel appViewModel)
         {
-            var dataContext = containerExtension.Resolve<QuickGeneratorViewModel>();
+            var dataContext = containerExtension.Resolve<QuickGeneratorViewModel>((typeof(AppViewModel), appViewModel));
             var window = new QuickGeneratorWindow(dataContext);
             quickGeneratorWindowsManager.RegisterWindow(window);
             window.Show();
@@ -277,6 +276,26 @@ namespace Barcodes.Core.UI.Services
             };
             var dataContext = new SelectionViewModel<StorageBarcodeViewModel>(input);
             var window = new SelectionWindow(dataContext)
+            {
+                Owner = GetWindowWithDataContext(parentViewModel)
+            };
+            window.ShowDialog();
+            return dataContext.Result;
+        }
+
+        public string ShowBarcodeTitleWindow(object parentViewModel, Func<string, bool> validationRule)
+        {
+            var input = new ValueInput
+            {
+                Title = "Barcodes - Title",
+                ContentHeader = "Enter barcodes title",
+                Label = "Title:",
+                InputValue = string.Empty,
+                ValidationRule = validationRule
+            };
+
+            var dataContext = new InputViewModel(input);
+            var window = new InputWindow(dataContext)
             {
                 Owner = GetWindowWithDataContext(parentViewModel)
             };
