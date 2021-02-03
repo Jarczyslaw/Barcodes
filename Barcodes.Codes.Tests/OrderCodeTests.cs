@@ -70,7 +70,6 @@ namespace Barcodes.Codes.Tests
                 new CodeValues(1234567890, 1, 2, 2023),
                 new CodeValues(0, 1, 2, 2023),
                 new CodeValues(12345, 9999, 2, 2023),
-                new CodeValues(12345, 0, 2, 2023),
                 new CodeValues(12345, 1, 999, 2023),
                 new CodeValues(12345, 1, 0, 2023),
                 new CodeValues(12345, 1, 2, 0),

@@ -17,7 +17,7 @@ namespace Barcodes.Codes
         protected BaseOrderCode(int orderId, int containerNumber, int divisionNumber, int year)
         {
             CheckValue(orderId, OrderIdLength, "order number");
-            CheckValue(containerNumber, ContainerNumberLength, "container number");
+            CheckValue(containerNumber, ContainerNumberLength, "container number", 0);
             CheckValue(divisionNumber, DivisionNumberLength, "division number");
             CheckMinValue(year, 1, "year");
 

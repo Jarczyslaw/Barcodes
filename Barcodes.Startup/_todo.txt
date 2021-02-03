@@ -8,7 +8,7 @@ zrobić drag and drop
 jeśli wybrany jest kod kreskowy EAN13/product code to wyłączyć z automatu valdiate data
 dorobić okienko do szybkiego tworzenia barkodów
 //dorobić loadera przy ładowaniu okna about
-kod zlecenia może mieć popjemnik 0
+//kod zlecenia może mieć popjemnik 0
 //dodać możliwość zamykania poszczególnych typów okien z głównego okna
 dorobić menu na prawokliku (na barcodzie, na kontrolce z ustawieniami generowania itd)
 sprawdzić okno z workspacem + ewentualne poprawki (np widoczny checkbox)

@@ -48,7 +48,7 @@
                     Grid.Column="1"
                     Margin="{StaticResource DefaultMargin}"
                     Maximum="999"
-                    Minimum="1"
+                    Minimum="0"
                     Value="{Binding ContainerNumber, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="2" Content="Division number (up to 2 digits):" />

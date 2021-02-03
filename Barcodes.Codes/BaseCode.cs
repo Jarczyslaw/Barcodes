@@ -106,9 +106,8 @@ namespace Barcodes.Codes
             return (int)Math.Pow(10, digits) - 1;
         }
 
-        protected void CheckValue(int value, int digits, string name)
+        protected void CheckValue(int value, int digits, string name, int minValue = 1)
         {
-            var minValue = 1;
             var maxValue = MaxValue(digits);
             if (value < minValue || value > maxValue)
             {
