@@ -273,7 +273,7 @@ namespace Barcodes.Core.UI.Services
                 Label = "Barcode:",
                 Items = barcodes,
                 SelectedItem = selectedBarcode,
-                DisplayMemberPath = "Name"
+                DisplayMemberPath = "Title"
             };
             var dataContext = new SelectionViewModel<StorageBarcodeViewModel>(input);
             var window = new SelectionWindow(dataContext)

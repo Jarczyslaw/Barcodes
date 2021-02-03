@@ -174,7 +174,7 @@ namespace Barcodes.Core.ViewModels
                     if (barcodeToImport != null)
                     {
                         GenerationData.FromData(barcodeToImport.StorageBarcode.ToGenerationData());
-                        await RestoreBarcode(barcodeToImport);
+                        await GenerateBarcode(true);
                     }
                 }
             }
@@ -302,9 +302,9 @@ namespace Barcodes.Core.ViewModels
 
         private async Task GenerateBarcode(bool updateQuickBarcodes)
         {
-            if (GenerationData.GenerateValidation())
+            try
             {
-                try
+                if (GenerationData.GenerateValidation())
                 {
                     await HeavyAction("Generating barcode...", async () =>
                     {
@@ -320,10 +320,10 @@ namespace Barcodes.Core.ViewModels
                     });
                     StatusMessage = "Barcode generated successfully";
                 }
-                catch (Exception exc)
-                {
-                    services.AppDialogsService.ShowBarcodeGenerationException(exc);
-                }
+            }
+            catch (Exception exc)
+            {
+                services.AppDialogsService.ShowBarcodeGenerationException(exc);
             }
         }
 
