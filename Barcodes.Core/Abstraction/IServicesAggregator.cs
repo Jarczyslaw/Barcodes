@@ -27,5 +27,9 @@ namespace Barcodes.Core.Abstraction
         void LogException(string message, Exception exc);
 
         void OpenAppLocation();
+
+        void OpenStorageLocation(string storagePath);
+
+        void OpenLogs();
     }
 }

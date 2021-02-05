@@ -258,6 +258,12 @@ namespace Barcodes.Core.ViewModels
             }
         }, () => SelectedQuickBarcode?.StorageBarcode != null));
 
+        public DelegateCommand OpenStorageLocationCommand => new DelegateCommand(() => services.OpenStorageLocation(services.StorageService.QuickBarcodesPath));
+
+        public DelegateCommand OpenLogsCommand => new DelegateCommand(services.OpenLogs);
+
+        public DelegateCommand ShowMainAppWindowCommand => new DelegateCommand(services.AppWindowsService.ShowMainAppWindow);
+
         public string BarcodeHeader
         {
             get

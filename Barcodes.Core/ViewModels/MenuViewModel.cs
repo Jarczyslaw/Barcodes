@@ -2,7 +2,6 @@
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.IO;
 
 namespace Barcodes.Core.ViewModels
 {
@@ -23,25 +22,7 @@ namespace Barcodes.Core.ViewModels
 
         public DelegateCommand OpenAppLocationCommand => new DelegateCommand(services.OpenAppLocation);
 
-        public DelegateCommand OpenStorageLocationCommand => new DelegateCommand(() =>
-        {
-            const string openErrorMessage = "Can not open storage file location";
-            try
-            {
-                if (!File.Exists(services.AppSettingsService.StoragePath))
-                {
-                    services.AppDialogsService.ShowError(openErrorMessage);
-                    return;
-                }
-
-                var storagePath = services.AppSettingsService.StoragePath;
-                services.SysService.OpenFileLocation(storagePath);
-            }
-            catch (Exception exc)
-            {
-                services.LogException(openErrorMessage, exc);
-            }
-        });
+        public DelegateCommand OpenStorageLocationCommand => new DelegateCommand(() => services.OpenStorageLocation(services.AppSettingsService.StoragePath));
 
         public DelegateCommand CloseCommand => new DelegateCommand(() => OnClose?.Invoke());
         public DelegateCommand ExportToPdfCommand => new DelegateCommand(app.ExportToPdf);
@@ -62,6 +43,8 @@ namespace Barcodes.Core.ViewModels
 
         public DelegateCommand CloseWorkspacesWindowsCommand => new DelegateCommand(services.AppWindowsService.CloseWorkspacesWindows);
         public DelegateCommand CloseGeneratorsWindowsCommand => new DelegateCommand(services.AppWindowsService.CloseQuickGeneratorsWindows);
+
+        public DelegateCommand OpenLogsCommand => new DelegateCommand(services.OpenLogs);
 
         public Action OnClose { get; set; }
     }

@@ -205,6 +205,7 @@
                         Command="{Binding OpenStorageLocationCommand}"
                         Header="O_pen storage location"
                         InputGestureText="Ctrl+P" />
+                    <MenuItem Command="{Binding OpenLogsCommand}" Header="Open logs file" />
                     <Separator />
                     <MenuItem Command="{Binding CloseCommand}" Header="_Close" />
                 </MenuItem>

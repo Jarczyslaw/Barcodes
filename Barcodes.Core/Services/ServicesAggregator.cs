@@ -7,6 +7,7 @@ using Barcodes.Services.Storage;
 using Barcodes.Services.Sys;
 using Prism.Ioc;
 using System;
+using System.IO;
 
 namespace Barcodes.Core.Services
 {
@@ -58,6 +59,44 @@ namespace Barcodes.Core.Services
             catch (Exception exc)
             {
                 LogException("Can not open app location", exc);
+            }
+        }
+
+        public void OpenStorageLocation(string storagePath)
+        {
+            const string openErrorMessage = "Can not open storage file location";
+            try
+            {
+                if (!File.Exists(storagePath))
+                {
+                    AppDialogsService.ShowError(openErrorMessage);
+                    return;
+                }
+
+                SysService.OpenFileLocation(storagePath);
+            }
+            catch (Exception exc)
+            {
+                LogException(openErrorMessage, exc);
+            }
+        }
+
+        public void OpenLogs()
+        {
+            const string openErrorMessage = "Can not open logs file location";
+            try
+            {
+                if (!File.Exists(LoggerService.LogFilePath))
+                {
+                    AppDialogsService.ShowError(openErrorMessage);
+                    return;
+                }
+
+                SysService.StartProcess(LoggerService.LogFilePath);
+            }
+            catch (Exception exc)
+            {
+                LogException(openErrorMessage, exc);
             }
         }
     }

@@ -25,6 +25,9 @@
                 </Menu.ItemsPanel>
                 <MenuItem Header="File">
                     <MenuItem Command="{Binding OpenAppLocationCommand}" Header="Open app location" />
+                    <MenuItem Command="{Binding OpenStorageLocationCommand}" Header="Open storage location" />
+                    <MenuItem Command="{Binding OpenLogsCommand}" Header="Open logs file" />
+                    <Separator />
                     <MenuItem Command="{Binding AddBarcodeToAppCommand}" Header="Add barcode to main application" />
                     <Separator />
                     <MenuItem Command="{Binding RemoveSelectedQuickBarcodeCommand}" Header="Remove selected barcode" />
@@ -43,6 +46,8 @@
                 </MenuItem>
                 <MenuItem HorizontalAlignment="Right" Header="Windows">
                     <MenuItem Command="{Binding NewWindowCommand}" Header="New generator window" />
+                    <MenuItem Command="{Binding ShowMainAppWindowCommand}" Header="Show main app window" />
+                    <Separator />
                     <MenuItem Command="{Binding CloseAllCommand}" Header="Close all generators" />
                 </MenuItem>
             </Menu>

@@ -49,5 +49,7 @@ namespace Barcodes.Core.Abstraction
         StorageBarcodeViewModel SelectStorageBarcode(object parentViewModel, List<StorageBarcodeViewModel> barcodes);
 
         string ShowBarcodeTitleWindow(object parentViewModel, Func<string, bool> validationRule);
+
+        void ShowMainAppWindow();
     }
 }

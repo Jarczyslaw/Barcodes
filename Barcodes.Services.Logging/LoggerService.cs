@@ -1,4 +1,5 @@
 ﻿using NLog;
+using NLog.Targets;
 using System;
 
 namespace Barcodes.Services.Logging
@@ -13,6 +14,8 @@ namespace Barcodes.Services.Logging
         {
             logger = LogManager.GetCurrentClassLogger();
         }
+
+        public string LogFilePath => ((FileTarget)LogManager.Configuration.FindTargetByName("errorsTarget")).FileName.Render(new LogEventInfo());
 
         public void Debug(string message, params object[] args)
         {

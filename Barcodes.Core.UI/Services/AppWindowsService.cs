@@ -302,5 +302,10 @@ namespace Barcodes.Core.UI.Services
             window.ShowDialog();
             return dataContext.Result;
         }
+
+        public void ShowMainAppWindow()
+        {
+            ((ShellWindow)MainWindow).BringToFront();
+        }
     }
 }
