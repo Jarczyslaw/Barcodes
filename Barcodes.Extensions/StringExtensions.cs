@@ -17,9 +17,10 @@ namespace Barcodes.Extensions
             return true;
         }
 
-        public static string Sanitize(this string input, int maxLength)
+        public static string Sanitize(this string input, int maxLength = int.MaxValue)
         {
             var result = Regex.Replace(input, @"\t|\n|\r", " ");
+            result = Regex.Replace(result, @"\p{C}+", string.Empty);
             if (result.Length > maxLength)
             {
                 result = result.Substring(0, maxLength) + "...";

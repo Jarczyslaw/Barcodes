@@ -90,7 +90,7 @@ namespace Barcodes.Core.ViewModels
         {
             try
             {
-                var filePath = services.AppDialogsService.SavePngFile(barcode.Title);
+                var filePath = services.AppDialogsService.SavePngFile("barcode");
                 if (string.IsNullOrEmpty(filePath))
                 {
                     return;

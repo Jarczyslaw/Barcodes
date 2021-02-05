@@ -12,6 +12,8 @@ dorobić okienko do szybkiego tworzenia barkodów
 //dodać możliwość zamykania poszczególnych typów okien z głównego okna
 dorobić menu na prawokliku (na barcodzie, na kontrolce z ustawieniami generowania itd)
 //sprawdzić okno z workspacem + ewentualne poprawki (np widoczny checkbox)
+otwieranie pliku z logami
+otwarcie i zaznaczenie ścieżki do quickbarcodów
 dorobić apkę na androida do wyświetlania kodów:
 	- przeorganizować slna
 	- ogarnąc przesyłanie obrazów na xamarina (sockety? grpc? wcf?)

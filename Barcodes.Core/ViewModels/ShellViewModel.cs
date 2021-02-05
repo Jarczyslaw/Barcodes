@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace Barcodes.Core.ViewModels
 {
-    public class ShellViewModel : BindableBase, IOnShowAware, ICloseSource, IOnClosingAware, IOnKeyDownAware, IMinimizeSource
+    public class ShellViewModel : BindableBase, IOnShowAware, ICloseSource, IOnClosingAware, IOnKeyDownAware, IMinimizeSource, IOnInitilizedAware
     {
         private readonly IServicesAggregator services;
 
@@ -40,14 +40,10 @@ namespace Barcodes.Core.ViewModels
             if (services.AppSettingsService.OpenQuickGeneratorOnStartup)
             {
                 services.AppWindowsService.ShowQuickGeneratorWindow(App);
-                //Minimize();
             }
-            else
+            else if (App.BarcodesCount == 0)
             {
-                if (App.BarcodesCount == 0)
-                {
-                    App.AddNewBarcode(null, false);
-                }
+                App.AddNewBarcode(null, false);
             }
         }
 
@@ -64,6 +60,14 @@ namespace Barcodes.Core.ViewModels
                 return true;
             }
             return false;
+        }
+
+        public void OnInitilized()
+        {
+            if (services.AppSettingsService.OpenQuickGeneratorOnStartup)
+            {
+                Minimize();
+            }
         }
     }
 }

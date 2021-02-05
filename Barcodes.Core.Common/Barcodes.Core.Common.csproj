@@ -81,6 +81,7 @@
     <Compile Include="IMinimizeSource.cs" />
     <Compile Include="IOnClosingAware.cs" />
     <Compile Include="IOnKeyDownAware.cs" />
+    <Compile Include="IOnInitilizedAware.cs" />
     <Compile Include="IOnShowAware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

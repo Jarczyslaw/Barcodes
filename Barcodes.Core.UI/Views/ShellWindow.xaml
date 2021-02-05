@@ -16,6 +16,7 @@
     MinHeight="{StaticResource ShellHeight}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     Icon="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
+    WindowState="Minimized"
     mc:Ignorable="d">
 
     <ui:BaseWindow.Resources>

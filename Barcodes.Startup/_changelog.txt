@@ -6,6 +6,7 @@
 	rozbudowano opcje zamykania poszczególnych typów okien
 	dodano uproszczony generator kodów
 	na nagłówku groupBoxa w kontrolce ustawień generacji dodano możliwość kopiowania i wklejania danych 
+	dużo małych poprawek
 
 1.4
 	dodano możliwość zaznaczania wielu kodów i ich manipulacji (usuwanie, zmiana kolejności, eksport itd.)
