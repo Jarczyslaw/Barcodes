@@ -12,9 +12,34 @@
     ResizeMode="CanMinimize"
     SizeToContent="WidthAndHeight"
     mc:Ignorable="d">
+
     <Window.Resources>
         <ui:BindingProxy x:Key="Proxy" Proxy="{Binding}" />
     </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding
+            Key="G"
+            Command="{Binding Proxy.GenerateCommand, Source={StaticResource Proxy}}"
+            Modifiers="Control" />
+        <KeyBinding
+            Key="R"
+            Command="{Binding Proxy.ResetCommand, Source={StaticResource Proxy}}"
+            Modifiers="Control" />
+        <KeyBinding
+            Key="O"
+            Command="{Binding Proxy.OpenAppLocationCommand, Source={StaticResource Proxy}}"
+            Modifiers="Control" />
+        <KeyBinding
+            Key="P"
+            Command="{Binding Proxy.OpenStorageLocationCommand, Source={StaticResource Proxy}}"
+            Modifiers="Control" />
+        <KeyBinding
+            Key="F"
+            Command="{Binding Proxy.OpenLogsCommand, Source={StaticResource Proxy}}"
+            Modifiers="Control" />
+    </Window.InputBindings>
+
     <toolkit:BusyIndicator BusyContent="{Binding BusyMessage}" IsBusy="{Binding IsBusy}">
         <DockPanel LastChildFill="True">
             <Menu DockPanel.Dock="Top">
@@ -23,26 +48,36 @@
                         <DockPanel HorizontalAlignment="Stretch" />
                     </ItemsPanelTemplate>
                 </Menu.ItemsPanel>
-                <MenuItem Header="File">
-                    <MenuItem Command="{Binding OpenAppLocationCommand}" Header="Open app location" />
-                    <MenuItem Command="{Binding OpenStorageLocationCommand}" Header="Open storage location" />
-                    <MenuItem Command="{Binding OpenLogsCommand}" Header="Open logs file" />
+                <MenuItem Header="_File">
+                    <MenuItem
+                        Command="{Binding OpenAppLocationCommand}"
+                        Header="_Open app location"
+                        InputGestureText="Ctrl+O" />
+                    <MenuItem
+                        Command="{Binding OpenStorageLocationCommand}"
+                        Header="O_pen storage location"
+                        InputGestureText="Ctrl+P" />
+                    <MenuItem
+                        Command="{Binding OpenLogsCommand}"
+                        Header="Open logs _file"
+                        InputGestureText="Ctrl+F" />
                     <Separator />
-                    <MenuItem Command="{Binding AddBarcodeToAppCommand}" Header="Add barcode to main application" />
+                    <MenuItem Command="{Binding AddBarcodeToAppCommand}" Header="_Add barcode to main application" />
                     <Separator />
-                    <MenuItem Command="{Binding RemoveSelectedQuickBarcodeCommand}" Header="Remove selected barcode" />
-                    <MenuItem Command="{Binding ClearQuickBarcodesCommand}" Header="Clear barcodes" />
+                    <MenuItem Command="{Binding RemoveSelectedQuickBarcodeCommand}" Header="_Remove selected barcode" />
+                    <MenuItem Command="{Binding ClearQuickBarcodesCommand}" Header="_Clear barcodes" />
                     <Separator />
                     <MenuItem Command="{Binding CloseCommand}" Header="Close" />
                     <MenuItem Command="{Binding CloseAppCommand}" Header="Close app" />
                 </MenuItem>
-                <MenuItem Command="{Binding ImportCommand}" Header="Import" />
-                <MenuItem Command="{Binding ExportCommand}" Header="Export" />
-                <MenuItem Command="{Binding PrintCommand}" Header="Print" />
-                <MenuItem Command="{Binding SettingsCommand}" Header="Settings" />
-                <MenuItem Header="Help">
-                    <MenuItem Command="{Binding ExamplesCommand}" Header="Examples" />
-                    <MenuItem Command="{Binding AboutCommand}" Header="About" />
+                <MenuItem Command="{Binding ImportCommand}" Header="_Import" />
+                <MenuItem Command="{Binding ExportCommand}" Header="_Export" />
+                <MenuItem Command="{Binding ExportToPdfCommand}" Header="E_xport to PDF" />
+                <MenuItem Command="{Binding PrintCommand}" Header="_Print" />
+                <MenuItem Command="{Binding SettingsCommand}" Header="_Settings" />
+                <MenuItem Header="_Help">
+                    <MenuItem Command="{Binding ExamplesCommand}" Header="_Examples" />
+                    <MenuItem Command="{Binding AboutCommand}" Header="_About" />
                 </MenuItem>
                 <MenuItem HorizontalAlignment="Right" Header="Windows">
                     <MenuItem Command="{Binding NewWindowCommand}" Header="New generator window" />

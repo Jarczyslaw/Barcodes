@@ -25,6 +25,7 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand OpenStorageLocationCommand => new DelegateCommand(() => services.OpenStorageLocation(services.AppSettingsService.StoragePath));
 
         public DelegateCommand CloseCommand => new DelegateCommand(() => OnClose?.Invoke());
+        public DelegateCommand ExportCommand => new DelegateCommand(app.Export);
         public DelegateCommand ExportToPdfCommand => new DelegateCommand(app.ExportToPdf);
         public DelegateCommand ShowAboutCommand => new DelegateCommand(app.ShowAbout);
         public DelegateCommand ShowExamplesCommand => new DelegateCommand(app.ShowExamples);

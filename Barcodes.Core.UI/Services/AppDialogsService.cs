@@ -88,35 +88,38 @@ namespace Barcodes.Core.UI.Services
             return SaveFile("Barcodes image file", null, $"{defaultFileName}.{imageFilter.DisplayName}", imageFilter);
         }
 
-        public PdfExportMode ShowPdfExportQuestion()
+        public ExportMode ShowExportQuestion(bool addAllOption = true)
         {
-            var buttons = new List<CustomButtonData<PdfExportMode>>
+            var buttons = new List<CustomButtonData<ExportMode>>
             {
-                new CustomButtonData<PdfExportMode>
-                {
-                    Name = "AllButton",
-                    Caption = "All",
-                    Value = PdfExportMode.All
-                },
-                new CustomButtonData<PdfExportMode>
+                new CustomButtonData<ExportMode>
                 {
                     Name = "CurrentWorkspaceButton",
                     Caption = "Current workspace",
-                    Value = PdfExportMode.CurrentWorkspace
+                    Value = ExportMode.CurrentWorkspace
                 },
-                new CustomButtonData<PdfExportMode>
+                new CustomButtonData<ExportMode>
                 {
                     Name = "CurrentWorkspaceButton",
                     Caption = "Selected barcodes",
-                    Value = PdfExportMode.Selected
+                    Value = ExportMode.Selected
                 },
-                new CustomButtonData<PdfExportMode>
+                new CustomButtonData<ExportMode>
                 {
                     Name = "CancelButton",
                     Caption = "Cancel",
-                    Value = PdfExportMode.None
+                    Value = ExportMode.None
                 }
             };
+            if (addAllOption)
+            {
+                buttons.Insert(0, new CustomButtonData<ExportMode>
+                {
+                    Name = "AllButton",
+                    Caption = "All",
+                    Value = ExportMode.All
+                });
+            }
             return ShowCustomButtonsQuestion("Select barcodes source", buttons);
         }
 

@@ -380,14 +380,14 @@ namespace Barcodes.Core.ViewModels
 
         private List<BarcodeViewModel> GetBarcodesToExport()
         {
-            var mode = services.AppDialogsService.ShowPdfExportQuestion();
-            if (mode == PdfExportMode.None)
+            var mode = services.AppDialogsService.ShowExportQuestion();
+            if (mode == ExportMode.None)
             {
                 return null;
             }
 
             var barcodesToExport = new List<BarcodeViewModel>();
-            if (mode == PdfExportMode.CurrentWorkspace)
+            if (mode == ExportMode.CurrentWorkspace)
             {
                 if (SelectedWorkspace == null || SelectedWorkspace.Barcodes.Count == 0)
                 {
@@ -396,7 +396,7 @@ namespace Barcodes.Core.ViewModels
                 }
                 barcodesToExport.AddRange(SelectedWorkspace.Barcodes);
             }
-            else if (mode == PdfExportMode.Selected)
+            else if (mode == ExportMode.Selected)
             {
                 if (!AreBarcodesSelected)
                 {
@@ -405,7 +405,7 @@ namespace Barcodes.Core.ViewModels
                 }
                 barcodesToExport.AddRange(SelectedBarcodes);
             }
-            else if (mode == PdfExportMode.All)
+            else if (mode == ExportMode.All)
             {
                 if (BarcodesCount == 0)
                 {
@@ -427,6 +427,19 @@ namespace Barcodes.Core.ViewModels
             if (barcodesToExport?.Count > 0)
             {
                 ExecuteExportToPdf(barcodesToExport);
+            }
+        }
+
+        public void Export()
+        {
+            var mode = services.AppDialogsService.ShowExportQuestion(false);
+            if (mode == ExportMode.Selected)
+            {
+                ExportBarcodes();
+            }
+            else if (mode == ExportMode.CurrentWorkspace)
+            {
+                ExportWorkspace(SelectedWorkspace);
             }
         }
 
@@ -474,22 +487,14 @@ namespace Barcodes.Core.ViewModels
 
                 BusyMessage = "Generating document...";
 
-                var barcodesToExport = barcodes.Select(b => new DocBarcodeData
-                {
-                    Title = b.Title,
-                    Data = b.GenerationData.Data,
-                    Barcode = b.Barcode
-                }).ToList();
+                var barcodesToExport = barcodes.Select(b => b.ToDocBarcodeData()).ToList();
                 await services.DocExportService.ExportAsync(barcodesToExport, filePath)
                     .ConfigureAwait(false);
 
                 StatusMessage = $"Successfully exported to {filePath}";
                 BusyMessage = null;
 
-                if (services.AppDialogsService.ShowYesNoQuestion($"Do you want to open the newly generated file?"))
-                {
-                    services.SysService.StartProcess(filePath);
-                }
+                services.OpenNewFile(filePath);
             }
             catch (Exception exc)
             {
@@ -825,20 +830,27 @@ namespace Barcodes.Core.ViewModels
 
         public void ExportWorkspace(WorkspaceViewModel workspace)
         {
-            var workspaceFile = services.AppDialogsService.ExportWorkspaceFile(workspace.Name);
-            if (string.IsNullOrEmpty(workspaceFile))
+            if (SelectedWorkspace != null)
             {
-                return;
-            }
+                var workspaceFile = services.AppDialogsService.ExportWorkspaceFile(workspace.Name);
+                if (string.IsNullOrEmpty(workspaceFile))
+                {
+                    return;
+                }
 
-            try
-            {
-                services.StorageService.ExportWorkspace(workspaceFile, workspace.ToStorage());
-                StatusMessage = $"{workspace.Name} exported successfully";
+                try
+                {
+                    services.StorageService.ExportWorkspace(workspaceFile, workspace.ToStorage());
+                    StatusMessage = $"{workspace.Name} exported successfully";
+                }
+                catch (Exception exc)
+                {
+                    services.LogException("Error when exporting barcode", exc);
+                }
             }
-            catch (Exception exc)
+            else
             {
-                services.LogException("Error when exporting barcode", exc);
+                services.AppDialogsService.ShowError("No workspace selected");
             }
         }
 
@@ -863,6 +875,10 @@ namespace Barcodes.Core.ViewModels
                 {
                     services.LogException("Error when exporting barcode", exc);
                 }
+            }
+            else
+            {
+                services.AppDialogsService.ShowError("No barcodes seleced");
             }
         }
 

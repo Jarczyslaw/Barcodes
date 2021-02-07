@@ -1,6 +1,6 @@
 ﻿namespace Barcodes.Core.Models
 {
-    public enum PdfExportMode
+    public enum ExportMode
     {
         None,
         Selected,

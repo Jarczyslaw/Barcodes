@@ -27,7 +27,7 @@ namespace Barcodes.Core.Abstraction
 
         string SavePngFile(string defaultFileName);
 
-        PdfExportMode ShowPdfExportQuestion();
+        ExportMode ShowExportQuestion(bool addAllOption = true);
 
         SavingMode ShowSavingQuestion(IntPtr mainWindowHandle);
 

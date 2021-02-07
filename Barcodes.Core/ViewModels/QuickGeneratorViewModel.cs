@@ -36,6 +36,7 @@ namespace Barcodes.Core.ViewModels
         private DelegateCommand printCommand;
         private DelegateCommand addBarcodeToAppCommand;
         private DelegateCommand removeSelectedQuickBarcodeCommand;
+        private DelegateCommand exportToPdfCommand;
 
         public QuickGeneratorViewModel(IServicesAggregator services, AppViewModel appViewModel)
         {
@@ -206,6 +207,33 @@ namespace Barcodes.Core.ViewModels
             }
         }, () => BarcodeVisible));
 
+        public DelegateCommand ExportToPdfCommand => exportToPdfCommand ?? (exportToPdfCommand = new DelegateCommand(async () =>
+        {
+            try
+            {
+                await HeavyAction("Generating document...", async () =>
+                {
+                    var filePath = services.AppDialogsService.SavePdfFile();
+                    if (!string.IsNullOrEmpty(filePath))
+                    {
+                        await services.DocExportService.ExportAsync(new List<DocBarcodeData> { Barcode.ToDocBarcodeData() }, filePath)
+                        .ConfigureAwait(false);
+
+                        StatusMessage = $"Successfully exported to {filePath}";
+
+                        if (services.AppDialogsService.ShowYesNoQuestion("Do you want to open the newly generated file?"))
+                        {
+                            services.SysService.StartProcess(filePath);
+                        }
+                    }
+                });
+            }
+            catch (Exception exc)
+            {
+                services.LogException("Error when generating a document", exc);
+            }
+        }, () => BarcodeVisible));
+
         public DelegateCommand PrintCommand => printCommand ?? (printCommand = new DelegateCommand(async () =>
         {
             try
@@ -288,6 +316,7 @@ namespace Barcodes.Core.ViewModels
                 ExportCommand.RaiseCanExecuteChanged();
                 PrintCommand.RaiseCanExecuteChanged();
                 AddBarcodeToAppCommand.RaiseCanExecuteChanged();
+                ExportToPdfCommand.RaiseCanExecuteChanged();
             }
         }
 

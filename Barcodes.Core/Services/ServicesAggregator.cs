@@ -99,5 +99,13 @@ namespace Barcodes.Core.Services
                 LogException(openErrorMessage, exc);
             }
         }
+
+        public void OpenNewFile(string filePath)
+        {
+            if (AppDialogsService.ShowYesNoQuestion("Do you want to open the newly generated file?"))
+            {
+                SysService.StartProcess(filePath);
+            }
+        }
     }
 }

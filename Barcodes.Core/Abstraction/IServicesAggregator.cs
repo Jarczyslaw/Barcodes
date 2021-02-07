@@ -31,5 +31,7 @@ namespace Barcodes.Core.Abstraction
         void OpenStorageLocation(string storagePath);
 
         void OpenLogs();
+
+        void OpenNewFile(string filePath);
     }
 }

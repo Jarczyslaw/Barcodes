@@ -170,6 +170,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
@@ -243,30 +244,34 @@
 
                 <MenuItem
                     Grid.Column="3"
-                    Command="{Binding ExportToPdfCommand}"
-                    Header="_Export to PDF" />
+                    Command="{Binding ExportCommand}"
+                    Header="_Export" />
                 <MenuItem
                     Grid.Column="4"
+                    Command="{Binding ExportToPdfCommand}"
+                    Header="E_xport to PDF" />
+                <MenuItem
+                    Grid.Column="5"
                     Command="{Binding PrintCommand}"
                     Header="_Print" />
                 <MenuItem
-                    Grid.Column="5"
+                    Grid.Column="6"
                     Command="{Binding ShowSettingsCommand}"
                     Header="_Settings" />
-                <MenuItem Grid.Column="6" Header="_Help">
+                <MenuItem Grid.Column="7" Header="_Help">
                     <MenuItem Command="{Binding ShowExamplesCommand}" Header="_Examples" />
                     <MenuItem Command="{Binding ShowAboutCommand}" Header="_About" />
                 </MenuItem>
                 <MenuItem
-                    Grid.Column="8"
+                    Grid.Column="9"
                     Command="{Binding QuickGeneratorCommand}"
                     Header="Quick generator" />
                 <MenuItem
-                    Grid.Column="9"
+                    Grid.Column="10"
                     Header="Barcodes visible"
                     IsCheckable="True"
                     IsChecked="{Binding Proxy.App.BarcodesVisible, Source={StaticResource Proxy}}" />
-                <MenuItem Grid.Column="10" Header="Windows">
+                <MenuItem Grid.Column="11" Header="Windows">
                     <MenuItem Command="{Binding CloseBarcodesWindowsCommand}" Header="Close barcodes" />
                     <MenuItem Command="{Binding CloseWorkspacesWindowsCommand}" Header="Close workspaces" />
                     <MenuItem Command="{Binding CloseGeneratorsWindowsCommand}" Header="Close quick generators" />
