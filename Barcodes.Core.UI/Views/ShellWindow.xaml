@@ -127,6 +127,10 @@
             Command="{Binding Proxy.Menu.OpenStorageLocationCommand, Source={StaticResource Proxy}}"
             Modifiers="Control" />
         <KeyBinding
+            Key="F"
+            Command="{Binding Proxy.Menu.OpenLogsCommand, Source={StaticResource Proxy}}"
+            Modifiers="Control" />
+        <KeyBinding
             Key="B"
             Command="{Binding Proxy.Menu.AddNewBarcodeCommand, Source={StaticResource Proxy}}"
             Modifiers="Control" />
@@ -205,7 +209,10 @@
                         Command="{Binding OpenStorageLocationCommand}"
                         Header="O_pen storage location"
                         InputGestureText="Ctrl+P" />
-                    <MenuItem Command="{Binding OpenLogsCommand}" Header="Open logs file" />
+                    <MenuItem
+                        Command="{Binding OpenLogsCommand}"
+                        Header="Open logs _file"
+                        InputGestureText="Ctrl+F" />
                     <Separator />
                     <MenuItem Command="{Binding CloseCommand}" Header="_Close" />
                 </MenuItem>

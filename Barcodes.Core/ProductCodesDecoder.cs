@@ -1,19 +1,49 @@
 ﻿using Barcodes.Codes;
-using System;
 
 namespace Barcodes.Core
 {
-    public class ProductCodeData
-    {
-        public string ProductCode { get; set; } = string.Empty;
-        public string BatchId { get; set; } = string.Empty;
-        public string SerialNo { get; set; } = string.Empty;
-        public DateTime? ExpireDate { get; set; }
-    }
-
     public class ProductCodesDecoder
     {
+        public ProductCodeData Decode(BarcodeTemplate template, string code)
+        {
+            if (template == BarcodeTemplate.Product)
+            {
+                return DecodeProductCode(code);
+            }
+            else if (template == BarcodeTemplate.LongProduct)
+            {
+                return DecodeLongProductCode(code);
+            }
+            else if (template == BarcodeTemplate.NmvsProduct)
+            {
+                return DecodeNmvsProductCode(code);
+            }
+            return null;
+        }
+
         public ProductCodeData Decode(string code)
+        {
+            var nmvsProduct = DecodeNmvsProductCode(code);
+            if (nmvsProduct != null)
+            {
+                return nmvsProduct;
+            }
+
+            var longProduct = DecodeLongProductCode(code);
+            if (longProduct != null)
+            {
+                return longProduct;
+            }
+
+            var product = DecodeProductCode(code);
+            if (product != null)
+            {
+                return product;
+            }
+            return null;
+        }
+
+        public ProductCodeData DecodeNmvsProductCode(string code)
         {
             if (NmvsProductCode.TryParse(code, out NmvsProductCode nmvsProductCode))
             {
@@ -25,7 +55,12 @@ namespace Barcodes.Core
                     ExpireDate = nmvsProductCode.ExpireDate.ToDateTime()
                 };
             }
-            else if (LongProductCode.TryParse(code, out LongProductCode longProductCode))
+            return null;
+        }
+
+        public ProductCodeData DecodeLongProductCode(string code)
+        {
+            if (LongProductCode.TryParse(code, out LongProductCode longProductCode))
             {
                 return new ProductCodeData
                 {
@@ -34,7 +69,12 @@ namespace Barcodes.Core
                     ExpireDate = longProductCode.ExpireDate
                 };
             }
-            else if (ProductCode.TryParse(code, out ProductCode productCode))
+            return null;
+        }
+
+        public ProductCodeData DecodeProductCode(string code)
+        {
+            if (ProductCode.TryParse(code, out ProductCode productCode))
             {
                 return new ProductCodeData
                 {

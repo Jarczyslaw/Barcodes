@@ -10,6 +10,7 @@ namespace Barcodes.Core.Abstraction
 {
     public interface IAppWindowsService
     {
+        IntPtr MainWindowHandle { get; }
         int WindowsCount { get; }
 
         void CloseShell();

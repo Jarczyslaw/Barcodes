@@ -19,17 +19,11 @@
         <ui:BindingProxy x:Key="Proxy" Proxy="{Binding}" />
 
         <ContextMenu x:Key="WorkspacesContextMenu">
-            <MenuItem
-                Command="{Binding Proxy.ImportWorkspaceCommand, Source={StaticResource Proxy}}"
-                CommandParameter="{Binding}"
-                Header="Import" />
+            <MenuItem Command="{Binding Proxy.ImportWorkspaceCommand, Source={StaticResource Proxy}}" Header="Import" />
         </ContextMenu>
 
         <ContextMenu x:Key="BarcodesContextMenu">
-            <MenuItem
-                Command="{Binding Proxy.ImportBarcodesCommand, Source={StaticResource Proxy}}"
-                CommandParameter="{Binding}"
-                Header="Import" />
+            <MenuItem Command="{Binding Proxy.ImportBarcodesCommand, Source={StaticResource Proxy}}" Header="Import" />
         </ContextMenu>
     </ui:BaseWindow.Resources>
 
@@ -89,13 +83,22 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Button
+                Grid.Column="1"
+                Command="{Binding ImportBarcodesCommand}"
+                Content="Import selected barcodes" />
+            <Button
                 Grid.Column="2"
-                Command="{Binding ImportAllCommand}"
-                Content="Import all" />
+                Command="{Binding ImportWorkspaceCommand}"
+                Content="Import selected workspace" />
             <Button
                 Grid.Column="3"
+                Command="{Binding ImportAllCommand}"
+                Content="Import all content" />
+            <Button
+                Grid.Column="4"
                 Command="{Binding CloseCommand}"
                 Content="Close" />
         </Grid>

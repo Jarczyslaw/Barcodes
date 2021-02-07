@@ -24,7 +24,6 @@ namespace Barcodes.Services.Generator
         [JsonConverter(typeof(StringEnumConverter))]
         public BarcodeType Type { get; set; }
 
-        [JsonIgnore]
         public bool DefaultSize { get; set; } = true;
 
         public int MinWidth { get; } = 100;

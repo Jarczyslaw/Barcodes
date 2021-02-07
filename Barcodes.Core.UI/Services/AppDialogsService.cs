@@ -120,7 +120,7 @@ namespace Barcodes.Core.UI.Services
             return ShowCustomButtonsQuestion("Select barcodes source", buttons);
         }
 
-        public SavingMode ShowSavingQuestion()
+        public SavingMode ShowSavingQuestion(IntPtr mainWindowHandle)
         {
             var buttons = new List<CustomButtonData<SavingMode>>
             {
@@ -143,7 +143,7 @@ namespace Barcodes.Core.UI.Services
                     Value = SavingMode.Cancel
                 }
             };
-            return ShowCustomButtonsQuestion("Do you want to save current storage's changes?", buttons);
+            return ShowCustomButtonsQuestion("Do you want to save current storage's changes?", buttons, mainWindowHandle);
         }
 
         public void ShowBarcodeGenerationException(Exception exc)

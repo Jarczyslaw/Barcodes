@@ -6,8 +6,9 @@ namespace Barcodes.Core.UI.Views
 {
     public partial class StorageWindow : BaseWindow
     {
-        public StorageWindow()
+        public StorageWindow(StorageViewModel storageViewModel)
         {
+            DataContext = storageViewModel;
             InitializeComponent();
         }
 

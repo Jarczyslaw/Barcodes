@@ -13,6 +13,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Interop;
 
 namespace Barcodes.Core.UI.Services
 {
@@ -32,6 +33,8 @@ namespace Barcodes.Core.UI.Services
         }
 
         public Window MainWindow => Application.Current.MainWindow;
+
+        public IntPtr MainWindowHandle => new WindowInteropHelper(MainWindow).Handle;
 
         public Window ActiveWindow => Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
 
@@ -247,10 +250,7 @@ namespace Barcodes.Core.UI.Services
         {
             var dataContext = containerExtension.Resolve<StorageViewModel>();
             dataContext.PrepareAndSetWorkspaces(appViewModel, workspaces);
-            var window = new StorageWindow
-            {
-                DataContext = dataContext
-            };
+            var window = new StorageWindow(dataContext);
             window.Show();
         }
 

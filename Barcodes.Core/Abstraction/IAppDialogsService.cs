@@ -29,7 +29,7 @@ namespace Barcodes.Core.Abstraction
 
         PdfExportMode ShowPdfExportQuestion();
 
-        SavingMode ShowSavingQuestion();
+        SavingMode ShowSavingQuestion(IntPtr mainWindowHandle);
 
         void ShowBarcodeGenerationException(Exception exc);
     }

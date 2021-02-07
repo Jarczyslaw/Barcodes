@@ -1,18 +1,23 @@
-﻿using Barcodes.Core.Common;
+﻿using Barcodes.Core.Abstraction;
 using Prism.Commands;
-using Prism.Mvvm;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Barcodes.Core.ViewModels
 {
-    public class StorageViewModel : BindableBase, ICloseSource
+    public class StorageViewModel : BaseViewModel
     {
+        private readonly IAppDialogsService appDialogsService;
+
         private WorkspaceViewModel selectedWorkspace;
         private ObservableCollection<WorkspaceViewModel> workspaces;
         private AppViewModel appViewModel;
+
+        public StorageViewModel(IAppDialogsService appDialogsService)
+        {
+            this.appDialogsService = appDialogsService;
+        }
 
         public ObservableCollection<WorkspaceViewModel> Workspaces
         {
@@ -28,21 +33,11 @@ namespace Barcodes.Core.ViewModels
 
         public List<BarcodeViewModel> SelectedBarcodes { get; set; }
 
-        public Action OnClose { get; set; }
-
-        public DelegateCommand<WorkspaceViewModel> ImportWorkspaceCommand => new DelegateCommand<WorkspaceViewModel>(workspace =>
-        {
-            ImportWorkspaces(new List<WorkspaceViewModel>
-            {
-                workspace
-            });
-        });
-
-        public DelegateCommand ImportAllCommand => new DelegateCommand(() => ImportWorkspaces(Workspaces));
-
         public DelegateCommand ImportBarcodesCommand => new DelegateCommand(ImportBarcodes);
 
-        public DelegateCommand CloseCommand => new DelegateCommand(() => OnClose?.Invoke());
+        public DelegateCommand ImportWorkspaceCommand => new DelegateCommand(ImportWorkspace);
+
+        public DelegateCommand ImportAllCommand => new DelegateCommand(() => ImportWorkspaces(Workspaces));
 
         public void PrepareAndSetWorkspaces(AppViewModel appViewModel, List<WorkspaceViewModel> workspaces)
         {
@@ -58,13 +53,27 @@ namespace Barcodes.Core.ViewModels
 
         private void ImportBarcodes()
         {
-            if (SelectedBarcodes != null)
+            if (SelectedBarcodes == null)
             {
-                var toImport = SelectedBarcodes.OrderBy(b => SelectedWorkspace.Barcodes.IndexOf(b))
+                appDialogsService.ShowError("No barcodes selected");
+                return;
+            }
+
+            var toImport = SelectedBarcodes.OrderBy(b => SelectedWorkspace.Barcodes.IndexOf(b))
                     .Select(b => new BarcodeViewModel(b))
                     .ToList();
-                appViewModel.ImportBarcodes(toImport);
+            appViewModel.ImportBarcodes(toImport);
+        }
+
+        private void ImportWorkspace()
+        {
+            if (SelectedWorkspace == null)
+            {
+                appDialogsService.ShowError("No workspace selected");
+                return;
             }
+
+            ImportWorkspaces(new List<WorkspaceViewModel> { SelectedWorkspace });
         }
 
         private void ImportWorkspaces(IEnumerable<WorkspaceViewModel> workspaces)

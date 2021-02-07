@@ -14,6 +14,9 @@ dorobić menu na prawokliku (na barcodzie, na kontrolce z ustawieniami generowan
 //sprawdzić okno z workspacem + ewentualne poprawki (np widoczny checkbox)
 otwieranie pliku z logami
 otwarcie i zaznaczenie ścieżki do quickbarcodów
+dodać tryb otwierania aplikacji
+dodać loader przy uruchamianiu aplikacji albo imporcie storage
+dodać skróty klawiaturowe do quick generatora
 dorobić apkę na androida do wyświetlania kodów:
 	- przeorganizować slna
 	- ogarnąc przesyłanie obrazów na xamarina (sockety? grpc? wcf?)

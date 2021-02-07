@@ -110,6 +110,7 @@
     <Compile Include="Models\SettingsSaveResult.cs" />
     <Compile Include="Models\TemplateResult.cs" />
     <Compile Include="Models\TemplatesFactory.cs" />
+    <Compile Include="ProductCodeData.cs" />
     <Compile Include="ProductCodesDecoder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\BaseInput.cs" />
