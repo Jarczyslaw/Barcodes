@@ -140,6 +140,7 @@
     <Compile Include="Services\StateSaver\States\NmvsProductViewModelState.cs" />
     <Compile Include="Services\StateSaver\StateSaverService.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\StartupModeViewModel.cs" />
     <Compile Include="ViewModels\StorageBarcodeViewModel.cs" />
     <Compile Include="ViewModels\StorageViewModel.cs" />
     <Compile Include="ViewModels\Templates\BaseProductViewModel.cs" />

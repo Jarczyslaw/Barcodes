@@ -7,6 +7,7 @@ using Barcodes.Services.Logging;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -20,7 +21,8 @@ namespace Barcodes.Core.ViewModels
         private readonly ILoggerService loggerService;
         private readonly IAppEvents appEvents;
 
-        private bool openQuickGenerator;
+        private StartupModeViewModel selectedStartupMode;
+        private ObservableCollection<StartupModeViewModel> startupModes = new ObservableCollection<StartupModeViewModel>();
         private int quickBarcodesCount;
         private string storagePath = string.Empty;
         private bool barcodesVisible;
@@ -50,6 +52,7 @@ namespace Barcodes.Core.ViewModels
 
             InitializeAddModes(BarcodeAddModes);
             InitializeAddModes(WorkspaceAddModes);
+            InitializeStartupModes();
 
             LoadSettings();
         }
@@ -66,10 +69,16 @@ namespace Barcodes.Core.ViewModels
 
         public Action OnClose { get; set; }
 
-        public bool OpenQuickGenerator
+        public StartupModeViewModel SelectedStartupMode
         {
-            get => openQuickGenerator;
-            set => SetProperty(ref openQuickGenerator, value);
+            get => selectedStartupMode;
+            set => SetProperty(ref selectedStartupMode, value);
+        }
+
+        public ObservableCollection<StartupModeViewModel> StartupModes
+        {
+            get => startupModes;
+            set => SetProperty(ref startupModes, value);
         }
 
         public int QuickBarcodesCount
@@ -150,6 +159,16 @@ namespace Barcodes.Core.ViewModels
             modes.Add(new AddModeViewModel(AddMode.AsLast));
         }
 
+        private void InitializeStartupModes()
+        {
+            startupModes.AddRange(new List<StartupModeViewModel>
+            {
+                new StartupModeViewModel(StartupMode.DoNothing),
+                new StartupModeViewModel(StartupMode.AddNew),
+                new StartupModeViewModel(StartupMode.QuickGenerator)
+            });
+        }
+
         private void Save()
         {
             var settings = ToSettings();
@@ -193,7 +212,7 @@ namespace Barcodes.Core.ViewModels
 
         private void FromSettings(AppSettings settings)
         {
-            OpenQuickGenerator = settings.OpenQuickGeneratorOnStartup;
+            SelectedStartupMode = StartupModes.First(s => s.StartupMode == settings.StartupMode);
             QuickBarcodesCount = settings.QuickBarcodesCount;
             StoragePath = settings.StoragePath;
             BarcodesVisible = settings.BarcodesVisible;
@@ -208,7 +227,7 @@ namespace Barcodes.Core.ViewModels
         {
             return new AppSettings
             {
-                OpenQuickGeneratorOnStartup = OpenQuickGenerator,
+                StartupMode = SelectedStartupMode.StartupMode,
                 QuickBarcodesCount = QuickBarcodesCount,
                 StoragePath = StoragePath,
                 BarcodesVisible = BarcodesVisible,

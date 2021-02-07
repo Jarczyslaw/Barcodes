@@ -9,7 +9,9 @@ namespace Barcodes.Services.AppSettings
 {
     public class AppSettings
     {
-        public bool OpenQuickGeneratorOnStartup { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public StartupMode StartupMode { get; set; } = StartupMode.AddNew;
+
         public int QuickBarcodesCount { get; set; } = 10;
         public string StoragePath { get; set; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"storage.{FileExtensions.Storage}");
         public bool BarcodesVisible { get; set; } = true;

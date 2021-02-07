@@ -2,7 +2,7 @@
 {
     public interface IAppSettingsService
     {
-        bool OpenQuickGeneratorOnStartup { get; set; }
+        StartupMode StartupMode { get; set; }
         int QuickBarcodesCount { get; set; }
         string StoragePath { get; set; }
         bool BarcodesVisible { get; set; }

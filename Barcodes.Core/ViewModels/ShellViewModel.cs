@@ -1,5 +1,6 @@
 ﻿using Barcodes.Core.Abstraction;
 using Barcodes.Core.Common;
+using Barcodes.Services.AppSettings;
 using Prism.Mvvm;
 using System;
 using System.Windows.Input;
@@ -37,11 +38,12 @@ namespace Barcodes.Core.ViewModels
 
         public void OnShow()
         {
-            if (services.AppSettingsService.OpenQuickGeneratorOnStartup)
+            var mode = services.AppSettingsService.StartupMode;
+            if (mode == StartupMode.QuickGenerator)
             {
                 services.AppWindowsService.ShowQuickGeneratorWindow(App);
             }
-            else if (App.BarcodesCount == 0)
+            else if (mode == StartupMode.AddNew && App.BarcodesCount == 0)
             {
                 App.AddNewBarcode(null, false);
             }
@@ -64,7 +66,7 @@ namespace Barcodes.Core.ViewModels
 
         public void OnInitilized()
         {
-            if (services.AppSettingsService.OpenQuickGeneratorOnStartup)
+            if (services.AppSettingsService.StartupMode == StartupMode.QuickGenerator)
             {
                 Minimize();
             }

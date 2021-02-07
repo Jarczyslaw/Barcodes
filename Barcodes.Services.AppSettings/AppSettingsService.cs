@@ -7,12 +7,12 @@ namespace Barcodes.Services.AppSettings
 {
     public class AppSettingsService : IAppSettingsService
     {
-        public bool OpenQuickGeneratorOnStartup
+        public StartupMode StartupMode
         {
-            get => AppSettings.OpenQuickGeneratorOnStartup;
+            get => AppSettings.StartupMode;
             set
             {
-                AppSettings.OpenQuickGeneratorOnStartup = value;
+                AppSettings.StartupMode = value;
                 Save();
             }
         }
