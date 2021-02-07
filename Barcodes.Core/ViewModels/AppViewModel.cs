@@ -4,7 +4,6 @@ using Barcodes.Core.Extensions;
 using Barcodes.Core.Models;
 using Barcodes.Extensions;
 using Barcodes.Services.AppSettings;
-using Barcodes.Services.DocExport;
 using Barcodes.Services.Storage;
 using Prism.Ioc;
 using System;

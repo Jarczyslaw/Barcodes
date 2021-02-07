@@ -7,6 +7,7 @@
 	dodano uproszczony generator kodów
 	na nagłówku groupBoxa w kontrolce ustawień generacji dodano możliwość kopiowania i wklejania danych 
 	dużo małych poprawek + dużo dodatkowych opcji jak otwieranie logów itd.
+	dodano splash screena
 
 1.4
 	dodano możliwość zaznaczania wielu kodów i ich manipulacji (usuwanie, zmiana kolejności, eksport itd.)

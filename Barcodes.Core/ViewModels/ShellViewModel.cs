@@ -3,6 +3,7 @@ using Barcodes.Core.Common;
 using Barcodes.Services.AppSettings;
 using Prism.Mvvm;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Barcodes.Core.ViewModels

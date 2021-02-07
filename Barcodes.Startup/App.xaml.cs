@@ -53,13 +53,14 @@ namespace Barcodes.Startup
 
         protected override Window CreateShell()
         {
-            return Container.Resolve<ShellWindow>();
-        }
-
-        protected override void InitializeShell(Window shell)
-        {
-            Current.MainWindow = shell;
-            Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
+            var startupWindow = Container.Resolve<StartupWindow>();
+            startupWindow.InitilizationCompleted += (shell) =>
+            {
+                Current.MainWindow = shell;
+                Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
+                shell.Show();
+            };
+            return startupWindow;
         }
 
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
