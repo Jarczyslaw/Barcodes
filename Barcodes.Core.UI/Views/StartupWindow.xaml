@@ -16,16 +16,22 @@
     mc:Ignorable="d">
     <StackPanel Margin="5">
         <TextBlock
-            Grid.Column="1"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontSize="48"
             FontWeight="Bold"
             Text="Barcodes" />
+        <TextBlock
+            x:Name="tbVersion"
+            Margin="0,0,0,4"
+            HorizontalAlignment="Right"
+            FontSize="10"
+            Text="asd" />
         <ProgressBar Height="20" IsIndeterminate="True" />
-        <Label
+        <TextBlock
+            Margin="0,5,0,0"
             HorizontalAlignment="Center"
-            Content="Loading..."
-            FontSize="10" />
+            FontSize="12"
+            Text="Loading..." />
     </StackPanel>
 </ui:BaseWindow>

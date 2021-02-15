@@ -73,9 +73,9 @@ namespace Barcodes.Core.ViewModels
 
         public Action OnClose { get; set; }
 
-        public Task CreateExamples()
+        public void CreateExamples()
         {
-            return Task.Run(() => Barcodes = BarcodeExamples.CreateExamples(generatorService, appSettingsService));
+            Barcodes = BarcodeExamples.CreateExamples(generatorService, appSettingsService);
         }
     }
 }

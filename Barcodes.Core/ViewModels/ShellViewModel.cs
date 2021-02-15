@@ -20,8 +20,6 @@ namespace Barcodes.Core.ViewModels
             Menu = new MenuViewModel(App, services);
             BarcodeMenu = new BarcodeMenuViewModel(App, services);
             WorkspaceMenu = new WorkspaceMenuViewModel(App, services);
-
-            App.InitialSequence();
         }
 
         public AppViewModel App { get; }

@@ -146,12 +146,12 @@ namespace Barcodes.Core.UI.Services
             return dataContext.ResultData;
         }
 
-        public async Task ShowAboutWindow(object parentViewModel, Action beforeShow)
+        public void ShowAboutWindow(object parentViewModel, AboutViewModel aboutViewModel)
         {
-            var window = containerExtension.Resolve<AboutWindow>();
-            await window.GenerateRandomBarcode();
-            beforeShow();
-            window.Owner = GetWindowWithDataContext(parentViewModel);
+            var window = new AboutWindow(aboutViewModel)
+            {
+                Owner = GetWindowWithDataContext(parentViewModel)
+            };
             window.ShowDialog();
         }
 

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Barcodes.Core.ViewModels
 {
@@ -184,7 +185,7 @@ namespace Barcodes.Core.ViewModels
             return true;
         }
 
-        public void LoadStorageFromFile()
+        public async Task LoadStorageFromFile()
         {
             if (CheckStorageChangesAndSave())
             {
@@ -195,11 +196,11 @@ namespace Barcodes.Core.ViewModels
                     return;
                 }
 
-                LoadFromFile(filePath, true);
+                await LoadFromFile(filePath, true);
             }
         }
 
-        private List<WorkspaceViewModel> LoadStorage(string storagePath, bool storageValidation, bool clearDefaultFlag)
+        private async Task<List<WorkspaceViewModel>> LoadStorage(string storagePath, bool storageValidation, bool clearDefaultFlag)
         {
             var storage = services.StorageService.Load(storagePath, true);
             if (storage == null)
@@ -207,11 +208,15 @@ namespace Barcodes.Core.ViewModels
                 return null;
             }
 
-            var newWorkspaces = new List<WorkspaceViewModel>();
-            foreach (var storageWorkspace in storage.Content)
+            var newWorkspaces = await HeavyAction("Loading...", () =>
             {
-                newWorkspaces.Add(storageWorkspace.ToWorkspace(services.GeneratorService));
-            }
+                var temp = new List<WorkspaceViewModel>();
+                foreach (var storageWorkspace in storage.Content)
+                {
+                    temp.Add(storageWorkspace.ToWorkspace(services.GeneratorService));
+                }
+                return temp;
+            });
 
             if (clearDefaultFlag)
             {
@@ -227,11 +232,11 @@ namespace Barcodes.Core.ViewModels
             return newWorkspaces;
         }
 
-        private void LoadFromFile(string storagePath, bool storageValidation)
+        private async Task LoadFromFile(string storagePath, bool storageValidation)
         {
             try
             {
-                var newWorkspaces = LoadStorage(storagePath, storageValidation, false);
+                var newWorkspaces = await LoadStorage(storagePath, storageValidation, false);
                 if (newWorkspaces == null)
                 {
                     return;
@@ -287,7 +292,7 @@ namespace Barcodes.Core.ViewModels
             StoragePath = filePath;
         }
 
-        public void CreateNewStorage()
+        public async Task CreateNewStorage()
         {
             if (CheckStorageChangesAndSave())
             {
@@ -300,7 +305,7 @@ namespace Barcodes.Core.ViewModels
                 try
                 {
                     SaveStorage(filePath, new Storage());
-                    LoadFromFile(filePath, false);
+                    await LoadFromFile(filePath, false);
                 }
                 catch (Exception exc)
                 {
@@ -346,19 +351,25 @@ namespace Barcodes.Core.ViewModels
             };
         }
 
-        public async void ShowAbout()
+        public async Task ShowAbout()
         {
-            await HeavyAction("Please wait...", () => services.AppWindowsService.ShowAboutWindow(null, () => BusyMessage = null));
+            AboutViewModel aboutViewModel = null;
+            await HeavyAction("Please wait...", () =>
+            {
+                aboutViewModel = new AboutViewModel(services.GeneratorService);
+                aboutViewModel.GenerateRandomBarcode();
+            });
+            services.AppWindowsService.ShowAboutWindow(null, aboutViewModel);
         }
 
-        public async void ShowExamples()
+        public async Task ShowExamples()
         {
             ExamplesViewModel examplesViewModel = null;
             await HeavyAction("Generating examples...", () =>
             {
                 examplesViewModel = services.ContainerExtension.Resolve<ExamplesViewModel>();
                 examplesViewModel.ParentViewModel = this;
-                return examplesViewModel.CreateExamples();
+                examplesViewModel.CreateExamples();
             });
 
             var barcode = services.AppWindowsService.ShowExamplesWindow(null, examplesViewModel);
@@ -803,7 +814,7 @@ namespace Barcodes.Core.ViewModels
             UpdateMessage($"Successfully imported {workspaces.Count} workspaces");
         }
 
-        public void ImportStorage()
+        public async Task ImportStorage()
         {
             try
             {
@@ -813,7 +824,7 @@ namespace Barcodes.Core.ViewModels
                     return;
                 }
 
-                var workspaces = LoadStorage(filePath, true, true);
+                var workspaces = await LoadStorage(filePath, true, true);
                 if (workspaces == null)
                 {
                     return;
@@ -881,12 +892,12 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public void InitialSequence()
+        public async Task InitialSequence()
         {
             try
             {
                 services.AppSettingsService.Load(false);
-                ApplySettings(services.AppSettingsService.AppSettings);
+                await ApplySettings(services.AppSettingsService.AppSettings);
             }
             catch (Exception exc)
             {
@@ -894,11 +905,11 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        private void ApplySettings(AppSettings appSettings)
+        private async Task ApplySettings(AppSettings appSettings)
         {
             BarcodesVisible = appSettings.BarcodesVisible;
             StoragePath = appSettings.StoragePath;
-            LoadFromFile(appSettings.StoragePath, false);
+            await LoadFromFile(appSettings.StoragePath, false);
         }
 
         public void SetWorkspaceAsFirst(WorkspaceViewModel workspace)

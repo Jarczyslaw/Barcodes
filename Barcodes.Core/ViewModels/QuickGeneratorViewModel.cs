@@ -67,7 +67,7 @@ namespace Barcodes.Core.ViewModels
             {
                 examplesViewModel = services.ContainerExtension.Resolve<ExamplesViewModel>();
                 examplesViewModel.ParentViewModel = this;
-                return examplesViewModel.CreateExamples();
+                examplesViewModel.CreateExamples();
             });
 
             services.AppWindowsService.ShowExamplesWindow(this, examplesViewModel);
@@ -78,8 +78,7 @@ namespace Barcodes.Core.ViewModels
             }
         });
 
-        public DelegateCommand AboutCommand => new DelegateCommand(async () => await HeavyAction(null,
-            () => services.AppWindowsService.ShowAboutWindow(this, () => BusyMessage = null)));
+        public DelegateCommand AboutCommand => new DelegateCommand(async () => await ShowAbout());
 
         public DelegateCommand GenerateCommand => new DelegateCommand(async () => await GenerateBarcode(true));
 
@@ -211,22 +210,22 @@ namespace Barcodes.Core.ViewModels
         {
             try
             {
-                await HeavyAction("Generating document...", async () =>
+                var filePath = services.AppDialogsService.SavePdfFile();
+                if (!string.IsNullOrEmpty(filePath))
                 {
-                    var filePath = services.AppDialogsService.SavePdfFile();
-                    if (!string.IsNullOrEmpty(filePath))
+                    await HeavyActionAsync("Generating document...", async () =>
                     {
                         await services.DocExportService.ExportAsync(new List<DocBarcodeData> { Barcode.ToDocBarcodeData() }, filePath)
-                        .ConfigureAwait(false);
+                               .ConfigureAwait(false);
 
                         StatusMessage = $"Successfully exported to {filePath}";
+                    });
 
-                        if (services.AppDialogsService.ShowYesNoQuestion("Do you want to open the newly generated file?"))
-                        {
-                            services.SysService.StartProcess(filePath);
-                        }
+                    if (services.AppDialogsService.ShowYesNoQuestion("Do you want to open the newly generated file?"))
+                    {
+                        services.SysService.StartProcess(filePath);
                     }
-                });
+                }
             }
             catch (Exception exc)
             {
@@ -238,7 +237,7 @@ namespace Barcodes.Core.ViewModels
         {
             try
             {
-                await HeavyAction("Printing barcode...", async () =>
+                await HeavyActionAsync("Printing barcode...", async () =>
                 {
                     await services.DocExportService.PrintAsync(new List<DocBarcodeData> { barcode.ToDocBarcodeData() })
                         .ConfigureAwait(false);
@@ -361,11 +360,11 @@ namespace Barcodes.Core.ViewModels
             try
             {
                 var generationData = storageBarcodeViewModel.StorageBarcode.ToGenerationData();
-                await HeavyAction("Generating barcode...", async () =>
+                await HeavyAction("Generating barcode...", () =>
                 {
                     Barcode = new BarcodeViewModel(generationData)
                     {
-                        Barcode = await Task.Run(() => services.GeneratorService.CreateBarcode(generationData))
+                        Barcode = services.GeneratorService.CreateBarcode(generationData)
                     };
                     BarcodeHeader = storageBarcodeViewModel.Title;
                 });
@@ -383,19 +382,16 @@ namespace Barcodes.Core.ViewModels
             {
                 if (GenerationData.GenerateValidation())
                 {
-                    await HeavyAction("Generating barcode...", async () =>
+                    Barcode = await HeavyActionAsync("Generating barcode...", GenerationData.RunGenerator);
+                    BarcodeHeader = Barcode.GenerationData.GetTitle();
+                    if (updateQuickBarcodes)
                     {
-                        Barcode = await GenerationData.RunGenerator();
-                        BarcodeHeader = Barcode.GenerationData.GetTitle();
-                        if (updateQuickBarcodes)
-                        {
-                            services.AppSettingsService.TryUpdateGenerationSettings(Barcode.GenerationData.ToSettings());
-                            services.StorageService.AddQuickBarcode(Barcode.GenerationData.ToStorageBarcode(),
-                                services.AppSettingsService.QuickBarcodesCount);
-                            LoadQuickBarcodes();
-                            NotifyOtherQuickGenerators();
-                        }
-                    });
+                        services.AppSettingsService.TryUpdateGenerationSettings(Barcode.GenerationData.ToSettings());
+                        services.StorageService.AddQuickBarcode(Barcode.GenerationData.ToStorageBarcode(),
+                            services.AppSettingsService.QuickBarcodesCount);
+                        LoadQuickBarcodes();
+                        NotifyOtherQuickGenerators();
+                    }
                     StatusMessage = "Barcode generated successfully";
                 }
             }
@@ -448,6 +444,17 @@ namespace Barcodes.Core.ViewModels
         {
             services.AppEvents.QuickBarcodeUpdate -= AppEvents_QuickBarcodeUpdate;
             return false;
+        }
+
+        private async Task ShowAbout()
+        {
+            AboutViewModel aboutViewModel = null;
+            await HeavyAction("Please wait...", () =>
+            {
+                aboutViewModel = new AboutViewModel(services.GeneratorService);
+                aboutViewModel.GenerateRandomBarcode();
+            });
+            services.AppWindowsService.ShowAboutWindow(this, aboutViewModel);
         }
     }
 }

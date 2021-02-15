@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:ui="clr-namespace:Barcodes.Core.UI"
     Title="Barcodes - About"
     Width="400"
@@ -13,106 +14,108 @@
     SizeToContent="Height"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
-    <StackPanel>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Image
-                x:Name="imgBarcode"
-                Width="150"
-                Height="150"
-                Margin="10"
-                MouseDown="ImgBarcode_MouseDown" />
-            <TextBlock
-                Grid.Column="1"
-                Margin="0,0,10,0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                FontSize="48"
-                FontWeight="Bold"
-                Text="Barcodes" />
-        </Grid>
-        <StackPanel Margin="10,0,10,0">
-            <TextBlock Text="Barcodes - simple app to manage all necessary barcodes" />
-            <TextBlock x:Name="tbVersion" />
-        </StackPanel>
-        <StackPanel Margin="5">
-            <GroupBox Header="Details">
-                <RichTextBox
-                    BorderThickness="0"
-                    IsDocumentEnabled="True"
-                    IsReadOnly="True">
-                    <RichTextBox.Resources>
-                        <Style TargetType="Hyperlink">
-                            <Setter Property="Cursor" Value="Hand" />
-                            <EventSetter Event="MouseLeftButtonDown" Handler="Hyperlink_MouseLeftButtonDown" />
-                        </Style>
-                    </RichTextBox.Resources>
-                    <FlowDocument>
-                        <Paragraph>
-                            <Run Text="Icons comes from" />
-                            <Hyperlink NavigateUri="https://iconmonstr.com">iconmonstr</Hyperlink>
-                            <LineBreak />
-                            <Run Text="Libraries used: " />
-                        </Paragraph>
-                        <List MarkerOffset="1" MarkerStyle="Disc">
-                            <ListItem>
-                                <Paragraph>
-                                    <Run Text=" Prism" />
-                                </Paragraph>
-                            </ListItem>
-                            <ListItem>
-                                <Paragraph>
-                                    <Run Text=" Aspose.BarCode" />
-                                </Paragraph>
-                            </ListItem>
-                            <ListItem>
-                                <Paragraph>
-                                    <Run Text=" MigraDoc &amp; PDFsharp" />
-                                </Paragraph>
-                            </ListItem>
-                            <ListItem>
-                                <Paragraph>
-                                    <Run Text=" WindowsAPICodecPack" />
-                                </Paragraph>
-                            </ListItem>
-                            <ListItem>
-                                <Paragraph>
-                                    <Run Text=" Json.NET by Newtonsoft" />
-                                </Paragraph>
-                            </ListItem>
-                            <ListItem>
-                                <Paragraph>
-                                    <Run Text=" Extended WPF Toolkit" />
-                                </Paragraph>
-                            </ListItem>
-                            <ListItem>
-                                <Paragraph>
-                                    <Run Text=" Fody" />
-                                </Paragraph>
-                            </ListItem>
-                        </List>
-                        <Paragraph>
-                            <Run Text="Sources are available on GitHub:" />
-                            <Hyperlink NavigateUri="https://github.com/Jarczyslaw">https://github.com/Jarczyslaw</Hyperlink>
-                        </Paragraph>
-                    </FlowDocument>
-                </RichTextBox>
-            </GroupBox>
+    <toolkit:BusyIndicator BusyContent="{Binding BusyMessage}" IsBusy="{Binding IsBusy}">
+        <StackPanel>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button
+
+                <Image
+                    Width="150"
+                    Height="150"
+                    Margin="10"
+                    MouseDown="ImgBarcode_MouseDown"
+                    Source="{Binding Barcode}" />
+                <TextBlock
                     Grid.Column="1"
-                    Click="Button_Click"
-                    Content="Close"
-                    IsCancel="True" />
+                    Margin="0,0,10,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="48"
+                    FontWeight="Bold"
+                    Text="Barcodes" />
             </Grid>
+            <StackPanel Margin="10,0,10,0">
+                <TextBlock Text="Barcodes - simple app to manage all necessary barcodes" />
+                <TextBlock Text="{Binding VersionText}" />
+            </StackPanel>
+            <StackPanel Margin="5">
+                <GroupBox Header="Details">
+                    <RichTextBox
+                        BorderThickness="0"
+                        IsDocumentEnabled="True"
+                        IsReadOnly="True">
+                        <RichTextBox.Resources>
+                            <Style TargetType="Hyperlink">
+                                <Setter Property="Cursor" Value="Hand" />
+                                <EventSetter Event="RequestNavigate" Handler="Hyperlink_RequestNavigate" />
+                            </Style>
+                        </RichTextBox.Resources>
+                        <FlowDocument>
+                            <Paragraph>
+                                <Run Text="Icons comes from" />
+                                <Hyperlink NavigateUri="https://iconmonstr.com">iconmonstr</Hyperlink>
+                                <LineBreak />
+                                <Run Text="Libraries used: " />
+                            </Paragraph>
+                            <List MarkerOffset="1" MarkerStyle="Disc">
+                                <ListItem>
+                                    <Paragraph>
+                                        <Run Text=" Prism" />
+                                    </Paragraph>
+                                </ListItem>
+                                <ListItem>
+                                    <Paragraph>
+                                        <Run Text=" Aspose.BarCode" />
+                                    </Paragraph>
+                                </ListItem>
+                                <ListItem>
+                                    <Paragraph>
+                                        <Run Text=" MigraDoc &amp; PDFsharp" />
+                                    </Paragraph>
+                                </ListItem>
+                                <ListItem>
+                                    <Paragraph>
+                                        <Run Text=" WindowsAPICodecPack" />
+                                    </Paragraph>
+                                </ListItem>
+                                <ListItem>
+                                    <Paragraph>
+                                        <Run Text=" Json.NET by Newtonsoft" />
+                                    </Paragraph>
+                                </ListItem>
+                                <ListItem>
+                                    <Paragraph>
+                                        <Run Text=" Extended WPF Toolkit" />
+                                    </Paragraph>
+                                </ListItem>
+                                <ListItem>
+                                    <Paragraph>
+                                        <Run Text=" Fody" />
+                                    </Paragraph>
+                                </ListItem>
+                            </List>
+                            <Paragraph>
+                                <Run Text="Sources are available on GitHub:" />
+                                <Hyperlink NavigateUri="https://github.com/Jarczyslaw">https://github.com/Jarczyslaw</Hyperlink>
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+                </GroupBox>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Grid.Column="1"
+                        Command="{Binding CloseCommand}"
+                        Content="Close"
+                        IsCancel="True" />
+                </Grid>
+            </StackPanel>
         </StackPanel>
-    </StackPanel>
+    </toolkit:BusyIndicator>
 </ui:BaseWindow>

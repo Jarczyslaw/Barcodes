@@ -2,6 +2,7 @@
 using Barcodes.Core.ViewModels;
 using Prism.Ioc;
 using System;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Barcodes.Core.UI.Views
@@ -14,6 +15,7 @@ namespace Barcodes.Core.UI.Views
         {
             this.services = services;
             InitializeComponent();
+            ShowVersion();
         }
 
         public Action<ShellWindow> InitilizationCompleted { get; set; }
@@ -23,14 +25,14 @@ namespace Barcodes.Core.UI.Views
             try
             {
                 var delayTask = Task.Delay(1000);
-                var initializeTask = Task.Run(() =>
+                var initializeTask = Task.Run(async () =>
                 {
                     // generate dummy barcode to warm up generator's dependencies
                     services.GeneratorService.CreateQRBarcode(50, "Barcodes");
 
                     // load settings and barcodes
                     var shellViewModel = services.ContainerExtension.Resolve<ShellViewModel>();
-                    shellViewModel.App.InitialSequence();
+                    await shellViewModel.App.InitialSequence();
                     return shellViewModel;
                 });
                 await Task.WhenAll(delayTask, initializeTask);
@@ -45,6 +47,12 @@ namespace Barcodes.Core.UI.Views
             {
                 Close();
             }
+        }
+
+        private void ShowVersion()
+        {
+            var appVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
+            tbVersion.Text = $"Version: {appVersion}";
         }
     }
 }
