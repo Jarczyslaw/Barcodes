@@ -17,7 +17,6 @@ namespace Barcodes.Services.Generator
                 generator.D2.DisplayText = string.Empty;
                 var image = generator.GenerateBarCodeImage().ToBitmapSource();
                 image.Freeze();
-                Thread.Sleep(1000);
                 return image;
             }
         }
@@ -35,7 +34,6 @@ namespace Barcodes.Services.Generator
                 var barcodeImage = generator.GenerateBarCodeImage();
                 var barcodeBitmapSource = barcodeImage.ToBitmapSource();
                 barcodeBitmapSource.Freeze();
-                Thread.Sleep(1000);
                 return barcodeBitmapSource;
             }
         }
