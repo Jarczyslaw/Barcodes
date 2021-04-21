@@ -1,4 +1,4 @@
-﻿using Barcodes.Extensions;
+﻿using JToolbox.Core.Extensions;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.Storage;
 using Prism.Mvvm;

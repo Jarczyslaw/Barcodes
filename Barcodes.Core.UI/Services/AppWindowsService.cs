@@ -4,14 +4,13 @@ using Barcodes.Core.Models;
 using Barcodes.Core.UI.Views;
 using Barcodes.Core.ViewModels;
 using Barcodes.Core.ViewModels.Templates;
-using Barcodes.Extensions;
 using Barcodes.Services.AppSettings;
+using JToolbox.Core.Extensions;
 using Prism.Ioc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 
@@ -74,12 +73,16 @@ namespace Barcodes.Core.UI.Services
 
         private List<Type> GetViewModels()
         {
-            return Assembly.GetAssembly(typeof(BaseTemplateViewModel)).GetDerivedTypes(typeof(BaseTemplateViewModel));
+            return Assembly.GetAssembly(typeof(BaseTemplateViewModel))
+                .GetTypesSubclassOf(typeof(BaseTemplateViewModel))
+                .ToList();
         }
 
         private List<Type> GetAllWindows()
         {
-            return Assembly.GetExecutingAssembly().GetDerivedTypes(typeof(Window));
+            return Assembly.GetExecutingAssembly()
+                .GetTypesSubclassOf(typeof(Window))
+                .ToList();
         }
 
         public void CloseBarcodesWindows()

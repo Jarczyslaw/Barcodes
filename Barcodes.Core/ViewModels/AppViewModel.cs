@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using JToolbox.Core.Extensions;
 
 namespace Barcodes.Core.ViewModels
 {

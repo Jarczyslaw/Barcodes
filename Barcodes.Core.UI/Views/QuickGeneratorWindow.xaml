@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Barcodes.Core.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:jtui="clr-namespace:JToolbox.WPF.UI;assembly=JToolbox.WPF.UI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:ui="clr-namespace:Barcodes.Core.UI"
@@ -14,7 +15,7 @@
     mc:Ignorable="d">
 
     <Window.Resources>
-        <ui:BindingProxy x:Key="Proxy" Proxy="{Binding}" />
+        <jtui:BindingProxy x:Key="Proxy" Proxy="{Binding}" />
     </Window.Resources>
 
     <Window.InputBindings>
@@ -138,7 +139,7 @@
                         Content="Close"
                         IsCancel="True" />
                 </UniformGrid>
-                <GroupBox Header="{Binding BarcodeHeader}" Visibility="{Binding BarcodeVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                <GroupBox Header="{Binding BarcodeHeader}" Visibility="{Binding BarcodeVisible, Converter={StaticResource BoolToCollapsedConverter}}">
                     <StackPanel>
                         <Image
                             x:Name="imgBarcode"

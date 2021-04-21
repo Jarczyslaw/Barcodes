@@ -2,7 +2,7 @@
     x:Class="Barcodes.Startup.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:Barcodes.Core.UI.Converters;assembly=Barcodes.Core.UI"
+    xmlns:converters="clr-namespace:JToolbox.WPF.UI.Converters;assembly=JToolbox.WPF.UI"
     xmlns:prism="http://prismlibrary.com/">
     <prism:PrismApplication.Resources>
         <ResourceDictionary>
@@ -15,7 +15,7 @@
 
             <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />
-            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" InvisibleValue="Collapsed" />
+            <converters:BoolToCollapsedConverter x:Key="BoolToCollapsedConverter" />
         </ResourceDictionary>
     </prism:PrismApplication.Resources>
 </prism:PrismApplication>

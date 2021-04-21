@@ -126,7 +126,6 @@
     </Compile>
     <Compile Include="AppConfig.cs" />
     <Compile Include="AppGlobalExceptionHandler.cs" />
-    <Compile Include="GlobalExceptionHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModelResolver.cs" />
   </ItemGroup>
@@ -192,6 +191,14 @@
     <ProjectReference Include="..\Barcodes.Utils\Barcodes.Utils.csproj">
       <Project>{355f10fd-fe43-432a-a826-23ce5280170e}</Project>
       <Name>Barcodes.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JToolbox\WPF\JToolbox.WPF.Core\JToolbox.WPF.Core.csproj">
+      <Project>{56BEE9B3-2FCB-46E7-A837-D07F0BFCBD98}</Project>
+      <Name>JToolbox.WPF.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JToolbox\WPF\JToolbox.WPF.UI\JToolbox.WPF.UI.csproj">
+      <Project>{9594d7ee-c5d6-4f07-8f3e-63b7c83e21d0}</Project>
+      <Name>JToolbox.WPF.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -100,7 +100,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BarcodeExamples.cs" />
-    <Compile Include="Events\OnBarcodeGeneratedEvent.cs" />
     <Compile Include="Extensions\GenerationDataExtensions.cs" />
     <Compile Include="Models\SavingMode.cs" />
     <Compile Include="Extensions\StorageBarcodeExtensions.cs" />
@@ -218,6 +217,10 @@
     <ProjectReference Include="..\Barcodes.Utils\Barcodes.Utils.csproj">
       <Project>{355F10FD-FE43-432A-A826-23CE5280170E}</Project>
       <Name>Barcodes.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JToolbox\JToolbox.Core\JToolbox.Core.csproj">
+      <Project>{51659717-b509-4159-a714-f22badc94f69}</Project>
+      <Name>JToolbox.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

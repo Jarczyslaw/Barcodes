@@ -1,5 +1,6 @@
 ﻿using Barcodes.Core.Abstraction;
 using Barcodes.Services.Logging;
+using JToolbox.WPF.Core;
 using System;
 
 namespace Barcodes.Startup

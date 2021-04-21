@@ -5,6 +5,7 @@
     xmlns:controls="clr-namespace:Barcodes.Core.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:jtui="clr-namespace:JToolbox.WPF.UI;assembly=JToolbox.WPF.UI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:ui="clr-namespace:Barcodes.Core.UI"
@@ -18,7 +19,7 @@
     mc:Ignorable="d">
 
     <ui:BaseWindow.Resources>
-        <ui:BindingProxy x:Key="Proxy" Proxy="{Binding}" />
+        <jtui:BindingProxy x:Key="Proxy" Proxy="{Binding}" />
     </ui:BaseWindow.Resources>
 
     <GroupBox Padding="0" Header="Barcodes">

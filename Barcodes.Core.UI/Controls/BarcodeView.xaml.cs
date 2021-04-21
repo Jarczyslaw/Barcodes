@@ -1,6 +1,6 @@
-﻿using System.Windows;
+﻿using JToolbox.WPF.UI.Converters;
+using System.Windows;
 using System.Windows.Controls;
-using Barcodes.Core.UI.Converters;
 
 namespace Barcodes.Core.UI.Controls
 {
@@ -11,6 +11,8 @@ namespace Barcodes.Core.UI.Controls
 
         public static readonly DependencyProperty IsCheckedEnabledProperty =
             DependencyProperty.Register(nameof(IsCheckedEnabled), typeof(bool), typeof(BarcodeView), new FrameworkPropertyMetadata(true, OnIsCheckedEnabledPropertyChanged));
+
+        private static BoolToCollapsedConverter boolToCollapsedConverter = new BoolToCollapsedConverter();
 
         public BarcodeView()
         {
@@ -33,7 +35,7 @@ namespace Barcodes.Core.UI.Controls
         {
             set
             {
-                var visibility = BoolToVisibilityConverter.Convert(value, Visibility.Collapsed);
+                var visibility = boolToCollapsedConverter.Convert(value);
                 lblDescription.Visibility = visibility;
                 tbDescription.Visibility = visibility;
             }
@@ -43,14 +45,14 @@ namespace Barcodes.Core.UI.Controls
         {
             var barcodeView = source as BarcodeView;
             var barcodeVisible = (bool)e.NewValue;
-            barcodeView.imgBarcode.Visibility = BoolToVisibilityConverter.Convert(barcodeVisible, Visibility.Collapsed);
+            barcodeView.imgBarcode.Visibility = boolToCollapsedConverter.Convert(barcodeVisible);
         }
 
         private static void OnIsCheckedEnabledPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
             var barcodeView = source as BarcodeView;
             var isCheckedEnabled = (bool)e.NewValue;
-            barcodeView.chbIsChecked.Visibility = BoolToVisibilityConverter.Convert(isCheckedEnabled, Visibility.Collapsed);
+            barcodeView.chbIsChecked.Visibility = boolToCollapsedConverter.Convert(isCheckedEnabled);
         }
     }
 }

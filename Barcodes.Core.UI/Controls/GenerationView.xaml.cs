@@ -1,4 +1,4 @@
-﻿using Barcodes.Core.UI.Converters;
+﻿using JToolbox.WPF.UI.Converters;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -8,6 +8,8 @@ namespace Barcodes.Core.UI.Controls
     {
         public static readonly DependencyProperty TitleVisibleProperty =
             DependencyProperty.Register(nameof(TitleVisible), typeof(bool), typeof(GenerationView), new FrameworkPropertyMetadata(true, OnTitleVisiblePropertyChanged));
+
+        private static BoolToCollapsedConverter boolToCollapsedConverter = new BoolToCollapsedConverter();
 
         public GenerationView()
         {
@@ -25,7 +27,7 @@ namespace Barcodes.Core.UI.Controls
             var barcodeView = source as GenerationView;
             var titleVisible = (bool)e.NewValue;
             barcodeView.lbTitle.Visibility =
-                barcodeView.tbTitle.Visibility = BoolToVisibilityConverter.Convert(titleVisible, Visibility.Collapsed);
+                barcodeView.tbTitle.Visibility = boolToCollapsedConverter.Convert(titleVisible);
         }
     }
 }
