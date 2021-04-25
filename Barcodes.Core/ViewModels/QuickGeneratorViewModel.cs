@@ -101,7 +101,7 @@ namespace Barcodes.Core.ViewModels
             }
             catch (Exception exc)
             {
-                services.AppDialogsService.ShowException("Error when saving barcode to png file", exc);
+                services.AppDialogsService.ShowException(exc, "Error when saving barcode to png file");
             }
         });
 
@@ -201,7 +201,7 @@ namespace Barcodes.Core.ViewModels
                 }
                 catch (Exception exc)
                 {
-                    services.AppDialogsService.ShowException("Error when exporting barcode", exc);
+                    services.AppDialogsService.ShowException(exc, "Error when exporting barcode");
                 }
             }
         }, () => BarcodeVisible));

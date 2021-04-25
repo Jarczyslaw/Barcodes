@@ -2,9 +2,9 @@
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
-using Barcodes.Services.Logging;
 using Barcodes.Services.Storage;
-using Barcodes.Services.Sys;
+using JToolbox.Core.Abstraction;
+using JToolbox.Desktop.Core.Services;
 using Prism.Ioc;
 using System;
 
@@ -16,7 +16,7 @@ namespace Barcodes.Core.Abstraction
         IGeneratorService GeneratorService { get; }
         IAppDialogsService AppDialogsService { get; }
         IAppWindowsService AppWindowsService { get; }
-        ISysService SysService { get; }
+        ISystemService SysService { get; }
         IAppSettingsService AppSettingsService { get; }
         IStorageService StorageService { get; }
         IDocExportService DocExportService { get; }

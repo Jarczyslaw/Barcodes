@@ -34,6 +34,9 @@
     <Reference Include="CommonServiceLocator, Version=2.0.6.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.6\lib\net46\CommonServiceLocator.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack-Core.1.1.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.31\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
@@ -320,17 +323,9 @@
       <Project>{EEB99D9E-5B41-4CD2-8426-C875BC8D2B08}</Project>
       <Name>Barcodes.Services.AppSettings</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Barcodes.Services.Dialogs\Barcodes.Services.Dialogs.csproj">
-      <Project>{7519097D-59FF-4717-A043-C083A7AA9A5D}</Project>
-      <Name>Barcodes.Services.Dialogs</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Barcodes.Services.Generator\Barcodes.Services.Generator.csproj">
       <Project>{D4D91166-8BF2-4E82-825A-BD1F46B05B48}</Project>
       <Name>Barcodes.Services.Generator</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Barcodes.Services.Logging\Barcodes.Services.Logging.csproj">
-      <Project>{15c387af-4aae-4f52-b9ac-42089fc11d8b}</Project>
-      <Name>Barcodes.Services.Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\Barcodes.Services.Storage\Barcodes.Services.Storage.csproj">
       <Project>{804a49a8-76bb-4ee0-83b2-6e2ec77af5d0}</Project>
@@ -343,6 +338,10 @@
     <ProjectReference Include="..\Barcodes.Utils\Barcodes.Utils.csproj">
       <Project>{355F10FD-FE43-432A-A826-23CE5280170E}</Project>
       <Name>Barcodes.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JToolbox\Desktop\JToolbox.Desktop.Dialogs\JToolbox.Desktop.Dialogs.csproj">
+      <Project>{7519097D-59FF-4717-A043-C083A7AA9A5D}</Project>
+      <Name>JToolbox.Desktop.Dialogs</Name>
     </ProjectReference>
     <ProjectReference Include="..\JToolbox\JToolbox.Core\JToolbox.Core.csproj">
       <Project>{51659717-b509-4159-a714-f22badc94f69}</Project>

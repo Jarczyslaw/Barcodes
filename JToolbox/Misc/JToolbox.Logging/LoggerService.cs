@@ -1,8 +1,9 @@
-﻿using NLog;
+﻿using JToolbox.Core.Abstraction;
+using NLog;
 using NLog.Targets;
 using System;
 
-namespace Barcodes.Services.Logging
+namespace JToolbox.Logging
 {
     public class LoggerService : ILoggerService
     {
@@ -10,12 +11,12 @@ namespace Barcodes.Services.Logging
 
         private readonly string noMessage = "No message provided";
 
+        public string LogFilePath => ((FileTarget)LogManager.Configuration.FindTargetByName("errorsTarget")).FileName.Render(new LogEventInfo());
+
         public LoggerService()
         {
             logger = LogManager.GetCurrentClassLogger();
         }
-
-        public string LogFilePath => ((FileTarget)LogManager.Configuration.FindTargetByName("errorsTarget")).FileName.Render(new LogEventInfo());
 
         public void Debug(string message, params object[] args)
         {

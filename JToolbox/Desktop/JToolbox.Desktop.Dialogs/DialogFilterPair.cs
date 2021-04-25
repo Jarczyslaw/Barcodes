@@ -1,4 +1,4 @@
-﻿namespace Barcodes.Services.Dialogs
+﻿namespace JToolbox.Desktop.Dialogs
 {
     public class DialogFilterPair
     {

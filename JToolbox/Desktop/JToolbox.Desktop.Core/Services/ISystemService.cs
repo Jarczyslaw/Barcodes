@@ -6,6 +6,10 @@ namespace JToolbox.Desktop.Core.Services
     {
         void CopyToClipboard(BitmapSource bitmapSource);
 
+        void CopyToClipboard(string data);
+
+        string GetTextFromClipboard();
+
         void OpenAppLocation();
 
         void OpenFolderLocation(string folderPath);

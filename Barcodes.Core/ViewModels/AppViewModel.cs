@@ -191,7 +191,7 @@ namespace Barcodes.Core.ViewModels
             if (CheckStorageChangesAndSave())
             {
                 var storagePath = services.AppSettingsService.StoragePath;
-                var filePath = services.AppDialogsService.OpenStorageFile(storagePath, true);
+                var filePath = services.AppDialogsService.OpenStorageFile(storagePath);
                 if (string.IsNullOrEmpty(filePath))
                 {
                     return;
@@ -819,7 +819,7 @@ namespace Barcodes.Core.ViewModels
         {
             try
             {
-                var filePath = services.AppDialogsService.OpenStorageFile(null, true);
+                var filePath = services.AppDialogsService.OpenStorageFile(null);
                 if (string.IsNullOrEmpty(filePath))
                 {
                     return;

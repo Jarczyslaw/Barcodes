@@ -12,6 +12,23 @@ namespace JToolbox.Desktop.Core.Services
             Clipboard.SetImage(bitmapSource);
         }
 
+        public void CopyToClipboard(string data)
+        {
+            Clipboard.SetText(data);
+        }
+
+        public string GetTextFromClipboard()
+        {
+            try
+            {
+                return Clipboard.GetText();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public void OpenAppLocation()
         {
             var appLocation = AppDomain.CurrentDomain.BaseDirectory;

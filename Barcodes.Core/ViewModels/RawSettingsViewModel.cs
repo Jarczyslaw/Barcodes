@@ -1,7 +1,7 @@
 ﻿using Barcodes.Core.Abstraction;
 using Barcodes.Core.Common;
 using Barcodes.Services.AppSettings;
-using Barcodes.Services.Logging;
+using JToolbox.Core.Abstraction;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
@@ -49,7 +49,7 @@ namespace Barcodes.Core.ViewModels
             {
                 var message = "Exception during saving settings file";
                 loggerService.Error(exc, message);
-                appDialogsService.ShowException(message, exc);
+                appDialogsService.ShowException(exc, message);
             }
         }
 

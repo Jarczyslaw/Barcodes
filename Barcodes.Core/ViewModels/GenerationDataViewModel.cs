@@ -3,8 +3,8 @@ using Barcodes.Core.Abstraction;
 using Barcodes.Core.Models;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.Generator;
-using Barcodes.Services.Sys;
 using Barcodes.Utils;
+using JToolbox.Desktop.Core.Services;
 using Prism.Commands;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace Barcodes.Core.ViewModels
         private readonly IAppDialogsService appDialogsService;
         private readonly IAppWindowsService appWindowsService;
         private readonly IGeneratorService generatorService;
-        private readonly ISysService sysService;
+        private readonly ISystemService sysService;
         private readonly IAppSettingsService appSettingsService;
 
         private string title = "Barcode Title";
@@ -27,7 +27,7 @@ namespace Barcodes.Core.ViewModels
         private ObservableCollection<TemplateViewModel> templates;
 
         public GenerationDataViewModel(IAppDialogsService appDialogsService, IAppWindowsService appWindowsService, IGeneratorService generatorService,
-            ISysService sysService, IAppSettingsService appSettingsService)
+            ISystemService sysService, IAppSettingsService appSettingsService)
         {
             this.appDialogsService = appDialogsService;
             this.appWindowsService = appWindowsService;

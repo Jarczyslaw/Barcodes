@@ -42,7 +42,7 @@ namespace Barcodes.Core.ViewModels.Templates
             }
             catch (Exception exc)
             {
-                dialogsService.ShowException(null, exc);
+                dialogsService.ShowException(exc);
                 return false;
             }
         }

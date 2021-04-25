@@ -2,9 +2,9 @@
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.DocExport;
 using Barcodes.Services.Generator;
-using Barcodes.Services.Logging;
 using Barcodes.Services.Storage;
-using Barcodes.Services.Sys;
+using JToolbox.Core.Abstraction;
+using JToolbox.Desktop.Core.Services;
 using Prism.Ioc;
 using System;
 using System.IO;
@@ -17,7 +17,7 @@ namespace Barcodes.Core.Services
         public IGeneratorService GeneratorService { get; }
         public IAppDialogsService AppDialogsService { get; }
         public IAppWindowsService AppWindowsService { get; }
-        public ISysService SysService { get; }
+        public ISystemService SysService { get; }
         public IAppSettingsService AppSettingsService { get; }
         public IStorageService StorageService { get; }
         public IDocExportService DocExportService { get; }
@@ -27,7 +27,7 @@ namespace Barcodes.Core.Services
         public ILoggerService LoggerService { get; }
 
         public ServicesAggregator(IAppEvents appEvents, IGeneratorService generatorService, IAppDialogsService appDialogsService,
-            IAppWindowsService appWindowsService, ISysService systemService, IAppSettingsService appSettingsService,
+            IAppWindowsService appWindowsService, ISystemService systemService, IAppSettingsService appSettingsService,
             IStorageService storageService, IDocExportService docExportService, IStateSaverService stateSaverService,
             IContainerExtension containerExtension, ILoggerService loggerService)
         {
@@ -47,7 +47,7 @@ namespace Barcodes.Core.Services
         public void LogException(string message, Exception exc)
         {
             LoggerService.Error(exc, message);
-            AppDialogsService.ShowException(message, exc);
+            AppDialogsService.ShowException(exc, message);
         }
 
         public void OpenAppLocation()

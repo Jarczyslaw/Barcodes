@@ -3,7 +3,7 @@ using Barcodes.Core.Common;
 using Barcodes.Core.Models;
 using Barcodes.Core.Services;
 using Barcodes.Services.AppSettings;
-using Barcodes.Services.Logging;
+using JToolbox.Core.Abstraction;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
@@ -191,7 +191,7 @@ namespace Barcodes.Core.ViewModels
             {
                 var message = "Error saving settings";
                 loggerService.Error(exc, message);
-                appDialogsService.ShowException(message, exc);
+                appDialogsService.ShowException(exc, message);
             }
         }
 
@@ -250,7 +250,7 @@ namespace Barcodes.Core.ViewModels
 
         private void SetStoragePath()
         {
-            var newStoragePath = appDialogsService.OpenStorageFile(StoragePath, false);
+            var newStoragePath = appDialogsService.OpenStorageFile(StoragePath);
             if (!string.IsNullOrEmpty(newStoragePath))
             {
                 StoragePath = newStoragePath;

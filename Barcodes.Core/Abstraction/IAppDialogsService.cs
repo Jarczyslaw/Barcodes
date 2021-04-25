@@ -1,5 +1,5 @@
 ﻿using Barcodes.Core.Models;
-using Barcodes.Services.Dialogs;
+using JToolbox.Desktop.Dialogs;
 using System;
 using System.Collections.Generic;
 
@@ -7,7 +7,7 @@ namespace Barcodes.Core.Abstraction
 {
     public interface IAppDialogsService : IDialogsService
     {
-        string OpenStorageFile(string currentFilePath = null, bool ensureFileExists = true);
+        string OpenStorageFile(string currentFilePath = null);
 
         string SaveStorageFile(string currentFilePath);
 

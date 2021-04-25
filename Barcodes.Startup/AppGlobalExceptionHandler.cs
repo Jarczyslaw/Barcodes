@@ -1,5 +1,5 @@
 ﻿using Barcodes.Core.Abstraction;
-using Barcodes.Services.Logging;
+using JToolbox.Core.Abstraction;
 using JToolbox.WPF.Core;
 using System;
 
@@ -20,7 +20,7 @@ namespace Barcodes.Startup
         {
             var message = $"Unexpected critical exception - {source}";
             loggerService.Fatal(exception, message);
-            appDialogsService.ShowCriticalException(message, exception);
+            appDialogsService.ShowCriticalException(exception, message);
             return true;
         }
     }

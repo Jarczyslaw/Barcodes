@@ -2,8 +2,8 @@
 using Barcodes.Core.Common;
 using Barcodes.Core.UI.Views;
 using Barcodes.Services.AppSettings;
-using Barcodes.Services.Logging;
 using Barcodes.Utils;
+using JToolbox.Core.Abstraction;
 using Prism.Ioc;
 using System;
 using System.ComponentModel;
@@ -115,7 +115,7 @@ namespace Barcodes.Core.UI
                     catch (Exception exc)
                     {
                         var message = "Error checking keys";
-                        appDialogsService.ShowException(message, exc);
+                        appDialogsService.ShowException(exc, message);
                         loggerService.Error(exc, message);
                     }
                 }

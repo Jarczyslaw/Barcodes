@@ -4,6 +4,8 @@ namespace JToolbox.Core.Abstraction
 {
     public interface ILoggerService
     {
+        string LogFilePath { get; }
+
         void Debug(string message, params object[] args);
 
         void Error(Exception exception);

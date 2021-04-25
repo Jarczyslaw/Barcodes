@@ -3,7 +3,7 @@ using Barcodes.Core.Abstraction;
 using Barcodes.Core.Models;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.Generator;
-using Barcodes.Services.Sys;
+using JToolbox.Desktop.Core.Services;
 using Prism.Commands;
 using System;
 
@@ -18,7 +18,7 @@ namespace Barcodes.Core.ViewModels
         private GenerationDataViewModel generationData;
         private BarcodeTemplate? initialTemplate;
 
-        public GenerationViewModel(IAppDialogsService appDialogsService, IAppWindowsService appWindowsService, ISysService sysService,
+        public GenerationViewModel(IAppDialogsService appDialogsService, IAppWindowsService appWindowsService, ISystemService sysService,
             IAppSettingsService appSettingsService, IGeneratorService generatorService)
         {
             this.appDialogsService = appDialogsService;

@@ -160,10 +160,6 @@
       <Project>{eeb99d9e-5b41-4cd2-8426-c875bc8d2b08}</Project>
       <Name>Barcodes.Services.AppSettings</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Barcodes.Services.Dialogs\Barcodes.Services.Dialogs.csproj">
-      <Project>{7519097d-59ff-4717-a043-c083a7aa9a5d}</Project>
-      <Name>Barcodes.Services.Dialogs</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Barcodes.Services.DocExport\Barcodes.Services.DocExport.csproj">
       <Project>{0d0218cb-1fdb-4845-8c24-05d3f4036f7f}</Project>
       <Name>Barcodes.Services.DocExport</Name>
@@ -172,17 +168,9 @@
       <Project>{d4d91166-8bf2-4e82-825a-bd1f46b05b48}</Project>
       <Name>Barcodes.Services.Generator</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Barcodes.Services.Logging\Barcodes.Services.Logging.csproj">
-      <Project>{15c387af-4aae-4f52-b9ac-42089fc11d8b}</Project>
-      <Name>Barcodes.Services.Logging</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Barcodes.Services.Storage\Barcodes.Services.Storage.csproj">
       <Project>{804a49a8-76bb-4ee0-83b2-6e2ec77af5d0}</Project>
       <Name>Barcodes.Services.Storage</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Barcodes.Services.Sys\Barcodes.Services.Sys.csproj">
-      <Project>{dd4da36d-8f15-433c-814d-c3df0efbb6a4}</Project>
-      <Name>Barcodes.Services.Sys</Name>
     </ProjectReference>
     <ProjectReference Include="..\Barcodes.SingleInstance\Barcodes.SingleInstance.csproj">
       <Project>{3e40a410-eee1-43ac-b383-caa9fb3c9213}</Project>
@@ -191,6 +179,22 @@
     <ProjectReference Include="..\Barcodes.Utils\Barcodes.Utils.csproj">
       <Project>{355f10fd-fe43-432a-a826-23ce5280170e}</Project>
       <Name>Barcodes.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JToolbox\Desktop\JToolbox.Desktop.Core\JToolbox.Desktop.Core.csproj">
+      <Project>{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9}</Project>
+      <Name>JToolbox.Desktop.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JToolbox\Desktop\JToolbox.Desktop.Dialogs\JToolbox.Desktop.Dialogs.csproj">
+      <Project>{7519097d-59ff-4717-a043-c083a7aa9a5d}</Project>
+      <Name>JToolbox.Desktop.Dialogs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JToolbox\JToolbox.Core\JToolbox.Core.csproj">
+      <Project>{51659717-B509-4159-A714-F22BADC94F69}</Project>
+      <Name>JToolbox.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JToolbox\Misc\JToolbox.Logging\JToolbox.Logging.csproj">
+      <Project>{FDD1F1EF-E3E0-490F-942F-038CCCD14194}</Project>
+      <Name>JToolbox.Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\JToolbox\WPF\JToolbox.WPF.Core\JToolbox.WPF.Core.csproj">
       <Project>{56BEE9B3-2FCB-46E7-A837-D07F0BFCBD98}</Project>

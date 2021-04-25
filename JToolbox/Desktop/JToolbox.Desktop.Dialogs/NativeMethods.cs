@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Barcodes.Services.Dialogs
+namespace JToolbox.Desktop.Dialogs
 {
     internal static class NativeMethods
     {

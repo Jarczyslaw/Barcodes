@@ -2,13 +2,12 @@
 using Barcodes.Core.Common;
 using Barcodes.Core.Models;
 using Barcodes.Services.AppSettings;
-using Barcodes.Services.Dialogs;
 using Barcodes.Services.Generator;
+using JToolbox.Desktop.Dialogs;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 
 namespace Barcodes.Core.ViewModels
 {

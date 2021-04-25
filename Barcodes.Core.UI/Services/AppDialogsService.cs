@@ -1,7 +1,7 @@
 ﻿using Barcodes.Core.Abstraction;
 using Barcodes.Core.Common;
 using Barcodes.Core.Models;
-using Barcodes.Services.Dialogs;
+using JToolbox.Desktop.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,14 +20,14 @@ namespace Barcodes.Core.UI.Services
 
         private readonly DialogFilterPair docFilter = new DialogFilterPair("pdf");
 
-        public string OpenStorageFile(string currentFilePath = null, bool ensureFileExists = true)
+        public string OpenStorageFile(string currentFilePath = null)
         {
             string directoryPath = null;
             if (!string.IsNullOrEmpty(currentFilePath))
             {
                 directoryPath = Path.GetDirectoryName(currentFilePath);
             }
-            return OpenFile("Barcodes storage file", directoryPath, ensureFileExists, storageFilter);
+            return OpenFile("Barcodes storage file", directoryPath, new List<DialogFilterPair> { storageFilter });
         }
 
         public string SaveStorageFile(string currentFilePath)
@@ -48,12 +48,12 @@ namespace Barcodes.Core.UI.Services
 
         public string ImportWorkspaceFile()
         {
-            return OpenFile("Workspace file", null, true, workspaceFilter);
+            return OpenFile("Workspace file", null, new List<DialogFilterPair> { workspaceFilter });
         }
 
         public List<string> ImportWorkspaceFiles()
         {
-            return OpenFiles("Workspace file", null, workspaceFilter);
+            return OpenFiles("Workspace file", null, new List<DialogFilterPair> { workspaceFilter });
         }
 
         public string ExportWorkspaceFile(string workspaceName)
@@ -64,12 +64,12 @@ namespace Barcodes.Core.UI.Services
 
         public string ImportBarcodesFile()
         {
-            return OpenFile("Barcodes file", null, true, barcodeFilter);
+            return OpenFile("Barcodes file", null, new List<DialogFilterPair> { barcodeFilter });
         }
 
         public List<string> ImportBarcodesFiles()
         {
-            return OpenFiles("Barcodes files", null, barcodeFilter);
+            return OpenFiles("Barcodes files", null, new List<DialogFilterPair> { barcodeFilter });
         }
 
         public string ExportBarcodesFile()
@@ -151,7 +151,7 @@ namespace Barcodes.Core.UI.Services
 
         public void ShowBarcodeGenerationException(Exception exc)
         {
-            ShowException("Exception during barcode generation. Try disabling validation and adjust the barcode sizes", exc);
+            ShowException(exc, "Exception during barcode generation. Try disabling validation and adjust the barcode sizes");
         }
     }
 }
