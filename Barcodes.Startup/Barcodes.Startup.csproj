@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Barcodes.Startup</RootNamespace>
     <AssemblyName>Barcodes</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -17,6 +17,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -45,7 +46,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=2.0.6.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommonServiceLocator.2.0.6\lib\net46\CommonServiceLocator.dll</HintPath>
+      <HintPath>..\packages\CommonServiceLocator.2.0.6\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
     <Reference Include="Costura, Version=4.1.0.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
       <HintPath>..\packages\Costura.Fody.4.1.0\lib\net40\Costura.dll</HintPath>
@@ -54,16 +55,16 @@
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.31\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.7.7\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.7.9\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="Prism, Version=8.0.0.1909, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.Core.8.0.0.1909\lib\net45\Prism.dll</HintPath>
+      <HintPath>..\packages\Prism.Core.8.0.0.1909\lib\net47\Prism.dll</HintPath>
     </Reference>
     <Reference Include="Prism.Unity.Wpf, Version=8.0.0.1909, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.Unity.8.0.0.1909\lib\net461\Prism.Unity.Wpf.dll</HintPath>
+      <HintPath>..\packages\Prism.Unity.8.0.0.1909\lib\net47\Prism.Unity.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Prism.Wpf, Version=8.0.0.1909, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.Wpf.8.0.0.1909\lib\net461\Prism.Wpf.dll</HintPath>
+      <HintPath>..\packages\Prism.Wpf.8.0.0.1909\lib\net47\Prism.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -79,7 +80,7 @@
     </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -91,10 +92,10 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="Unity.Abstractions, Version=5.11.7.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unity.Abstractions.5.11.7\lib\net46\Unity.Abstractions.dll</HintPath>
+      <HintPath>..\packages\Unity.Abstractions.5.11.7\lib\net47\Unity.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Container, Version=5.11.11.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unity.Container.5.11.11\lib\net46\Unity.Container.dll</HintPath>
+      <HintPath>..\packages\Unity.Container.5.11.11\lib\net47\Unity.Container.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -180,27 +181,27 @@
       <Project>{355f10fd-fe43-432a-a826-23ce5280170e}</Project>
       <Name>Barcodes.Utils</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JToolbox\Desktop\JToolbox.Desktop.Core\JToolbox.Desktop.Core.csproj">
-      <Project>{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9}</Project>
-      <Name>JToolbox.Desktop.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\JToolbox\Desktop\JToolbox.Desktop.Dialogs\JToolbox.Desktop.Dialogs.csproj">
-      <Project>{7519097d-59ff-4717-a043-c083a7aa9a5d}</Project>
-      <Name>JToolbox.Desktop.Dialogs</Name>
-    </ProjectReference>
     <ProjectReference Include="..\JToolbox\JToolbox.Core\JToolbox.Core.csproj">
       <Project>{51659717-B509-4159-A714-F22BADC94F69}</Project>
       <Name>JToolbox.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JToolbox\Misc\JToolbox.Logging\JToolbox.Logging.csproj">
-      <Project>{FDD1F1EF-E3E0-490F-942F-038CCCD14194}</Project>
-      <Name>JToolbox.Logging</Name>
+    <ProjectReference Include="..\JToolbox\JToolbox.Desktop\JToolbox.Desktop.Core\JToolbox.Desktop.Core.csproj">
+      <Project>{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9}</Project>
+      <Name>JToolbox.Desktop.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JToolbox\WPF\JToolbox.WPF.Core\JToolbox.WPF.Core.csproj">
+    <ProjectReference Include="..\JToolbox\JToolbox.Desktop\JToolbox.Desktop.Dialogs\JToolbox.Desktop.Dialogs.csproj">
+      <Project>{7519097D-59FF-4717-A043-C083A7AA9A5D}</Project>
+      <Name>JToolbox.Desktop.Dialogs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JToolbox\JToolbox.Misc\JToolbox.Misc.Logging\JToolbox.Misc.Logging.csproj">
+      <Project>{5CD6A2C1-6072-45B5-9407-78101B7118FC}</Project>
+      <Name>JToolbox.Misc.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JToolbox\JToolbox.WPF\JToolbox.WPF.Core\JToolbox.WPF.Core.csproj">
       <Project>{56BEE9B3-2FCB-46E7-A837-D07F0BFCBD98}</Project>
       <Name>JToolbox.WPF.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JToolbox\WPF\JToolbox.WPF.UI\JToolbox.WPF.UI.csproj">
+    <ProjectReference Include="..\JToolbox\JToolbox.WPF\JToolbox.WPF.UI\JToolbox.WPF.UI.csproj">
       <Project>{9594d7ee-c5d6-4f07-8f3e-63b7c83e21d0}</Project>
       <Name>JToolbox.WPF.UI</Name>
     </ProjectReference>
@@ -218,12 +219,12 @@
   <PropertyGroup>
     <PreBuildEvent>powershell -ExecutionPolicy ByPass -File  $(ProjectDir)BuildScripts\InjectGitVersion.ps1 $(ProjectDir)</PreBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\Fody.6.3.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.3.0\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Costura.Fody.4.1.0\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.4.1.0\build\Costura.Fody.props'))" />
     <Error Condition="!Exists('..\packages\Fody.6.3.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.3.0\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Costura.Fody.4.1.0\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.4.1.0\build\Costura.Fody.props'))" />
   </Target>
-  <Import Project="..\packages\Fody.6.3.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.3.0\build\Fody.targets')" />
 </Project>

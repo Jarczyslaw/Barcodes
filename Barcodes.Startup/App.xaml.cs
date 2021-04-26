@@ -11,7 +11,7 @@ using Barcodes.SingleInstance;
 using JToolbox.Core.Abstraction;
 using JToolbox.Desktop.Core.Services;
 using JToolbox.Desktop.Dialogs;
-using JToolbox.Logging;
+using JToolbox.Misc.Logging;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Unity;

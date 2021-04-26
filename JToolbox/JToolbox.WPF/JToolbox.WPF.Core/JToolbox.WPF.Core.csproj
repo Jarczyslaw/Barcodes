@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>JToolbox.WPF.Core</RootNamespace>
     <AssemblyName>JToolbox.WPF.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -68,7 +69,7 @@
     <Compile Include="Threading.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Desktop\JToolbox.Desktop.Core\JToolbox.Desktop.Core.csproj">
+    <ProjectReference Include="..\..\JToolbox.Desktop\JToolbox.Desktop.Core\JToolbox.Desktop.Core.csproj">
       <Project>{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9}</Project>
       <Name>JToolbox.Desktop.Core</Name>
     </ProjectReference>

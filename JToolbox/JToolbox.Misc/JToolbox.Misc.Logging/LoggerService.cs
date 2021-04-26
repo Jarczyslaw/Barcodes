@@ -3,7 +3,7 @@ using NLog;
 using NLog.Targets;
 using System;
 
-namespace JToolbox.Logging
+namespace JToolbox.Misc.Logging
 {
     public class LoggerService : ILoggerService
     {
