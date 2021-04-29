@@ -5,6 +5,9 @@ using Barcodes.Core.Models;
 using Barcodes.Extensions;
 using Barcodes.Services.AppSettings;
 using Barcodes.Services.Storage;
+using JToolbox.Core.Extensions;
+using JToolbox.WPF.Core.Awareness;
+using JToolbox.WPF.Core.Awareness.Args;
 using Prism.Ioc;
 using System;
 using System.Collections.Generic;
@@ -12,15 +15,15 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using JToolbox.Core.Extensions;
 
 namespace Barcodes.Core.ViewModels
 {
-    public class AppViewModel : BaseViewModel
+    public class AppViewModel : BaseViewModel, IDragDropAware
     {
         private string statusMessage = string.Empty;
         private WorkspaceViewModel selectedWorkspace;
         private ObservableCollection<WorkspaceViewModel> workspaces;
+        private AppDragDropViewModel appDragDrop;
 
         private bool barcodesVisible;
         private string title = string.Empty;
@@ -32,6 +35,7 @@ namespace Barcodes.Core.ViewModels
         {
             this.services = servicesContainer;
 
+            appDragDrop = new AppDragDropViewModel(this);
             workspaces = new ObservableCollection<WorkspaceViewModel>();
             StoragePath = string.Empty;
 
@@ -708,7 +712,7 @@ namespace Barcodes.Core.ViewModels
             return Workspaces.Where(w => w != workspace);
         }
 
-        private void MoveBarcodesToWorkspace(List<BarcodeViewModel> barcodes, WorkspaceViewModel sourceWorkspace, WorkspaceViewModel targetWorkspace)
+        public void MoveBarcodesToWorkspace(List<BarcodeViewModel> barcodes, WorkspaceViewModel sourceWorkspace, WorkspaceViewModel targetWorkspace)
         {
             targetWorkspace.InsertNewBarcodes(barcodes, services.AppSettingsService.BarcodeAddMode, false);
             sourceWorkspace.RemoveBarcodes(barcodes);
@@ -938,6 +942,16 @@ namespace Barcodes.Core.ViewModels
         public void OpenWorkspaceInNewWindowCommand(WorkspaceViewModel workspaceViewModel)
         {
             services.AppWindowsService.OpenWorkspaceWindow(workspaceViewModel);
+        }
+
+        public void OnDrag(DragDropArgs args)
+        {
+            appDragDrop.OnDrag(args);
+        }
+
+        public void OnDrop(DragDropArgs args)
+        {
+            appDragDrop.OnDrop(args);
         }
     }
 }

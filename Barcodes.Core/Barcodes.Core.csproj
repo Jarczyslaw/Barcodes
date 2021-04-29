@@ -120,6 +120,7 @@
     <Compile Include="Services\IAppEvents.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\AddModeViewModel.cs" />
+    <Compile Include="ViewModels\AppDragDropViewModel.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
     <Compile Include="ViewModels\BarcodeMenuViewModel.cs" />
     <Compile Include="Abstraction\IAppDialogsService.cs" />
@@ -218,6 +219,10 @@
     <ProjectReference Include="..\JToolbox\JToolbox.Desktop\JToolbox.Desktop.Dialogs\JToolbox.Desktop.Dialogs.csproj">
       <Project>{7519097d-59ff-4717-a043-c083a7aa9a5d}</Project>
       <Name>JToolbox.Desktop.Dialogs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JToolbox\JToolbox.WPF\JToolbox.WPF.Core\JToolbox.WPF.Core.csproj">
+      <Project>{56BEE9B3-2FCB-46E7-A837-D07F0BFCBD98}</Project>
+      <Name>JToolbox.WPF.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

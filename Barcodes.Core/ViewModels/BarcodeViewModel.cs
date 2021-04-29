@@ -1,9 +1,9 @@
-﻿using Barcodes.Services.Generator;
+﻿using Barcodes.Core.Extensions;
+using Barcodes.Services.DocExport;
+using Barcodes.Services.Generator;
 using Barcodes.Services.Storage;
 using Prism.Mvvm;
 using System.Windows.Media.Imaging;
-using Barcodes.Core.Extensions;
-using Barcodes.Services.DocExport;
 
 namespace Barcodes.Core.ViewModels
 {

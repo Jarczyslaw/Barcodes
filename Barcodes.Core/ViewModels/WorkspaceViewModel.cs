@@ -1,6 +1,6 @@
-﻿using JToolbox.Core.Extensions;
-using Barcodes.Services.AppSettings;
+﻿using Barcodes.Services.AppSettings;
 using Barcodes.Services.Storage;
+using JToolbox.Core.Extensions;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
