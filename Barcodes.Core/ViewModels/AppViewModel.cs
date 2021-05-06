@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Barcodes.Core.ViewModels
 {
-    public class AppViewModel : BaseViewModel, IDragDropAware
+    public class AppViewModel : BaseViewModel, IDragDropAware, IFileDragDropAware
     {
         private string statusMessage = string.Empty;
         private WorkspaceViewModel selectedWorkspace;
@@ -952,6 +952,16 @@ namespace Barcodes.Core.ViewModels
         public void OnDrop(DragDropArgs args)
         {
             appDragDrop.OnDrop(args);
+        }
+
+        public void OnFileDrag(FileDragArgs args)
+        {
+            appDragDrop.OnFileDrag(args);
+        }
+
+        public void OnFilesDrop(FileDropArgs args)
+        {
+            appDragDrop.OnFilesDrop(args);
         }
     }
 }

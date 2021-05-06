@@ -48,6 +48,7 @@
     <Compile Include="AddMode.cs" />
     <Compile Include="AppSettings.cs" />
     <Compile Include="AppSettingsService.cs" />
+    <Compile Include="DragDropMode.cs" />
     <Compile Include="GenerationSettings.cs" />
     <Compile Include="IAppSettingsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -174,6 +174,8 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                         </Grid>
                     </ItemsPanelTemplate>
@@ -261,16 +263,42 @@
                     <MenuItem Command="{Binding ShowExamplesCommand}" Header="_Examples" />
                     <MenuItem Command="{Binding ShowAboutCommand}" Header="_About" />
                 </MenuItem>
+
                 <MenuItem
                     Grid.Column="9"
-                    Command="{Binding QuickGeneratorCommand}"
-                    Header="Quick generator" />
-                <MenuItem
-                    Grid.Column="10"
                     Header="Barcodes visible"
                     IsCheckable="True"
                     IsChecked="{Binding Proxy.App.BarcodesVisible, Source={StaticResource Proxy}}" />
-                <MenuItem Grid.Column="11" Header="Windows">
+                <MenuItem Grid.Column="10">
+                    <MenuItem.Resources>
+                        <Style TargetType="{x:Type MenuItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type MenuItem}">
+                                        <StackPanel Background="{TemplateBinding Background}" Orientation="Horizontal">
+                                            <Label VerticalAlignment="Center" Content="Drag and drop mode:" />
+                                            <ContentPresenter Content="{TemplateBinding Header}" />
+                                        </StackPanel>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsHighlighted" Value="True">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </MenuItem.Resources>
+                    <MenuItem.Header>
+                        <ComboBox Width="100" Margin="0" />
+                    </MenuItem.Header>
+                </MenuItem>
+                <Separator Grid.Column="11" />
+                <MenuItem
+                    Grid.Column="12"
+                    Command="{Binding QuickGeneratorCommand}"
+                    Header="Quick generator" />
+                <MenuItem Grid.Column="13" Header="Windows">
                     <MenuItem Command="{Binding CloseBarcodesWindowsCommand}" Header="Close barcodes" />
                     <MenuItem Command="{Binding CloseWorkspacesWindowsCommand}" Header="Close workspaces" />
                     <MenuItem Command="{Binding CloseGeneratorsWindowsCommand}" Header="Close quick generators" />

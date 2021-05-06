@@ -71,5 +71,15 @@ namespace Barcodes.Core.ViewModels
         {
             return app.Workspaces.FirstOrDefault(w => w.Barcodes.Contains(barcode));
         }
+
+        public void OnFileDrag(FileDragArgs args)
+        {
+
+        }
+
+        public void OnFilesDrop(FileDropArgs args)
+        {
+
+        }
     }
 }

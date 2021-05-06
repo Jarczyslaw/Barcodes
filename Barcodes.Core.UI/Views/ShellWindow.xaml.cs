@@ -1,6 +1,7 @@
 ﻿using Barcodes.Core.ViewModels;
 using Barcodes.SingleInstance;
 using JToolbox.WPF.UI.DragAndDrop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -19,10 +20,18 @@ namespace Barcodes.Core.UI.Views
             var dragDropHelper = new DragDropHelper(tabControl, new List<DragDropPair>
             {
                 new DragDropPair(typeof(ListViewItem)),
-                new DragDropPair(typeof(ListViewItem),typeof(TabItem)),
+                new DragDropPair(typeof(ListViewItem), typeof(TabItem)),
                 new DragDropPair(typeof(ListViewItem), typeof(ListView)),
                 new DragDropPair(typeof(TabItem)),
                 new DragDropPair(typeof(TabItem), typeof(TabPanel))
+            });
+            var fileDragDropHelper = new FileDragDropHelper(tabControl, new List<Type>
+            {
+                typeof(ListViewItem),
+                typeof(TabItem)
+            }, new List<Type>
+            {
+                typeof(TabControl)
             });
             KeyDownHandlerEnabled = true;
             singleInstanceManager.OnNewInstance += SingleInstanceManager_OnNewInstance;
