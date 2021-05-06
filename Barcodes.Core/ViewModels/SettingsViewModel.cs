@@ -201,7 +201,8 @@ namespace Barcodes.Core.ViewModels
             {
                 CurrentStoragePath = newSettings.StoragePath,
                 PreviusStoragePath = appSettingsService.StoragePath,
-                BarcodesVisible = newSettings.BarcodesVisible
+                BarcodesVisible = newSettings.BarcodesVisible,
+                DragDropMode = newSettings.DragDropMode
             };
         }
 

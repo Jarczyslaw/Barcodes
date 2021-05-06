@@ -70,5 +70,19 @@ namespace Barcodes.Core.ViewModels
                 Minimize();
             }
         }
+
+        public async Task InitialSequence()
+        {
+            try
+            {
+                services.AppSettingsService.Load(false);
+                await Menu.ApplySettings(services.AppSettingsService.AppSettings);
+                await App.ApplySettings(services.AppSettingsService.AppSettings);
+            }
+            catch (Exception exc)
+            {
+                services.LogException("Error while loading storage from file", exc);
+            }
+        }
     }
 }

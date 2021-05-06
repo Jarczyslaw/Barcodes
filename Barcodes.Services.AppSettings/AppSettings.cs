@@ -27,6 +27,9 @@ namespace Barcodes.Services.AppSettings
 
         public GenerationSettings GenerationSettings { get; set; } = new GenerationSettings();
 
+        [JsonConverter(typeof(StringEnumConverter))]
+        public DragDropMode DragDropMode { get; set; } = DragDropMode.Arrangement;
+
         public string Serialize()
         {
             return Serializer.ToString(this);

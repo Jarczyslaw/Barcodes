@@ -32,7 +32,7 @@ namespace Barcodes.Core.UI.Views
 
                     // load settings and barcodes
                     var shellViewModel = services.ContainerExtension.Resolve<ShellViewModel>();
-                    await shellViewModel.App.InitialSequence();
+                    await shellViewModel.InitialSequence();
                     return shellViewModel;
                 });
                 await Task.WhenAll(delayTask, initializeTask);

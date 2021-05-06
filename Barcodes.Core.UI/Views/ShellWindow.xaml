@@ -268,7 +268,7 @@
                     Grid.Column="9"
                     Header="Barcodes visible"
                     IsCheckable="True"
-                    IsChecked="{Binding Proxy.App.BarcodesVisible, Source={StaticResource Proxy}}" />
+                    IsChecked="{Binding BarcodesVisible}" />
                 <MenuItem Grid.Column="10">
                     <MenuItem.Resources>
                         <Style TargetType="{x:Type MenuItem}">
@@ -290,7 +290,12 @@
                         </Style>
                     </MenuItem.Resources>
                     <MenuItem.Header>
-                        <ComboBox Width="100" Margin="0" />
+                        <ComboBox
+                            Width="120"
+                            Margin="0"
+                            DisplayMemberPath="Display"
+                            ItemsSource="{Binding DragDropModes.Items}"
+                            SelectedItem="{Binding DragDropModes.SelectedItem}" />
                     </MenuItem.Header>
                 </MenuItem>
                 <Separator Grid.Column="11" />
@@ -351,7 +356,7 @@
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <controls:BarcodeView
-                                            BarcodeVisible="{Binding Proxy.App.BarcodesVisible, Source={StaticResource Proxy}, Mode=OneWay}"
+                                            BarcodeVisible="{Binding Proxy.Menu.BarcodesVisible, Source={StaticResource Proxy}, Mode=OneWay}"
                                             ContextMenu="{StaticResource BarcodesContextMenu}"
                                             DescriptionVisible="False"
                                             IsCheckedEnabled="False">

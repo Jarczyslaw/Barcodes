@@ -12,6 +12,8 @@
         GenerationSettings GenerationSettings { get; set; }
         bool UpdateAfterEveryGeneration { get; set; }
 
+        DragDropMode DragDropMode { get; set; }
+
         AppSettings AppSettings { get; }
         string AppSettingsPath { get; }
 

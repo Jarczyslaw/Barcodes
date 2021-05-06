@@ -97,6 +97,16 @@ namespace Barcodes.Services.AppSettings
             }
         }
 
+        public DragDropMode DragDropMode
+        {
+            get => AppSettings.DragDropMode;
+            set
+            {
+                AppSettings.DragDropMode = value;
+                Save();
+            }
+        }
+
         public string AppSettingsPath { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"appSettings.{FileExtensions.Settings}");
 
         public AppSettings AppSettings { get; private set; } = new AppSettings();

@@ -1,7 +1,10 @@
 ﻿using Barcodes.Core.Abstraction;
+using Barcodes.Core.Models;
+using Barcodes.Services.AppSettings;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.Threading.Tasks;
 
 namespace Barcodes.Core.ViewModels
 {
@@ -9,11 +12,15 @@ namespace Barcodes.Core.ViewModels
     {
         private readonly IServicesAggregator services;
         private readonly AppViewModel app;
+        private bool barcodesVisible;
 
         public MenuViewModel(AppViewModel app, IServicesAggregator services)
         {
             this.services = services;
             this.app = app;
+
+            DragDropModes = new DragDropModesViewModel(services.AppSettingsService);
+            services.AppEvents.SettingsChanged += AppEvents_SettingsChanged;
         }
 
         public DelegateCommand SaveCommand => new DelegateCommand(() => app.Save(false, false));
@@ -47,6 +54,31 @@ namespace Barcodes.Core.ViewModels
 
         public DelegateCommand OpenLogsCommand => new DelegateCommand(services.OpenLogs);
 
+        public DragDropModesViewModel DragDropModes { get; }
+
+        public bool BarcodesVisible
+        {
+            get => barcodesVisible;
+            set
+            {
+                SetProperty(ref barcodesVisible, value);
+                services.AppSettingsService.BarcodesVisible = value;
+            }
+        }
+
         public Action OnClose { get; set; }
+
+        private void AppEvents_SettingsChanged(SettingsSaveResult settingsSaveResult)
+        {
+            BarcodesVisible = settingsSaveResult.BarcodesVisible;
+            DragDropModes.Select(settingsSaveResult.DragDropMode);
+        }
+
+        public Task ApplySettings(AppSettings appSettings)
+        {
+            BarcodesVisible = appSettings.BarcodesVisible;
+            DragDropModes.Select(appSettings.DragDropMode);
+            return Task.CompletedTask;
+        }
     }
 }

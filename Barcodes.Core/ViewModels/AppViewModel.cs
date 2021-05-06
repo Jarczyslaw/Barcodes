@@ -25,31 +25,20 @@ namespace Barcodes.Core.ViewModels
         private ObservableCollection<WorkspaceViewModel> workspaces;
         private AppDragDropViewModel appDragDrop;
 
-        private bool barcodesVisible;
         private string title = string.Empty;
         private string storagePath = string.Empty;
 
         private readonly IServicesAggregator services;
 
-        public AppViewModel(IServicesAggregator servicesContainer)
+        public AppViewModel(IServicesAggregator services)
         {
-            this.services = servicesContainer;
+            this.services = services;
 
             appDragDrop = new AppDragDropViewModel(this);
             workspaces = new ObservableCollection<WorkspaceViewModel>();
             StoragePath = string.Empty;
 
-            servicesContainer.AppEvents.SettingsChanged += AppEvents_SettingsChanged;
-        }
-
-        public bool BarcodesVisible
-        {
-            get => barcodesVisible;
-            set
-            {
-                SetProperty(ref barcodesVisible, value);
-                services.AppSettingsService.BarcodesVisible = value;
-            }
+            services.AppEvents.SettingsChanged += AppEvents_SettingsChanged;
         }
 
         public string Title
@@ -386,7 +375,6 @@ namespace Barcodes.Core.ViewModels
 
         private void AppEvents_SettingsChanged(SettingsSaveResult settingsSaveResult)
         {
-            BarcodesVisible = settingsSaveResult.BarcodesVisible;
             if (settingsSaveResult.StoragePathChanged && !Save(false, false))
             {
                 SetStoragePath(settingsSaveResult.PreviusStoragePath);
@@ -897,22 +885,8 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public async Task InitialSequence()
+        public async Task ApplySettings(AppSettings appSettings)
         {
-            try
-            {
-                services.AppSettingsService.Load(false);
-                await ApplySettings(services.AppSettingsService.AppSettings);
-            }
-            catch (Exception exc)
-            {
-                services.LogException("Error while loading storage from file", exc);
-            }
-        }
-
-        private async Task ApplySettings(AppSettings appSettings)
-        {
-            BarcodesVisible = appSettings.BarcodesVisible;
             StoragePath = appSettings.StoragePath;
             await LoadFromFile(appSettings.StoragePath, false);
         }
