@@ -5,22 +5,22 @@ using System.Linq;
 
 namespace Barcodes.Core.ViewModels
 {
+    public delegate void DragDropModeChanged(DragDropMode mode);
+
     public class DragDropModesViewModel : BindableBase
     {
         private DragDropModeViewModel selectedItem;
         private ObservableCollection<DragDropModeViewModel> items;
-        private readonly IAppSettingsService appSettingsService;
 
+        public event DragDropModeChanged DragDropModeChanged = delegate { };
 
-        public DragDropModesViewModel(IAppSettingsService appSettingsService)
+        public DragDropModesViewModel()
         {
-            this.appSettingsService = appSettingsService;
             Items = new ObservableCollection<DragDropModeViewModel>
             {
                 new DragDropModeViewModel(DragDropMode.Arrangement),
                 new DragDropModeViewModel(DragDropMode.ImportExport)
             };
-            SelectedItem = Items[0];
         }
 
         public ObservableCollection<DragDropModeViewModel> Items
@@ -35,13 +35,18 @@ namespace Barcodes.Core.ViewModels
             set
             {
                 SetProperty(ref selectedItem, value);
-                appSettingsService.DragDropMode = value.DragDropMode;
+                DragDropModeChanged(value.DragDropMode);
             }
         }
 
-        public void Select(DragDropMode mode)
+        public void Select(DragDropMode mode, bool riseEvent = false)
         {
-            SelectedItem = Items.First(d => d.DragDropMode == mode);
+            selectedItem = Items.First(d => d.DragDropMode == mode);
+            RaisePropertyChanged(nameof(SelectedItem));
+            if (riseEvent)
+            {
+                DragDropModeChanged(mode);
+            }
         }
     }
 }

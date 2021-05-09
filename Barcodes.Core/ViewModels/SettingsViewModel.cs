@@ -44,6 +44,7 @@ namespace Barcodes.Core.ViewModels
             this.appEvents = appEvents;
 
             generationData = new GenerationBaseDataViewModel();
+            DragDropModes = new DragDropModesViewModel();
 
             SaveCommand = new DelegateCommand(Save);
             CloseCommand = new DelegateCommand(() => OnClose?.Invoke());
@@ -68,6 +69,8 @@ namespace Barcodes.Core.ViewModels
         public SettingsSaveResult SettingsSaveResult { get; set; }
 
         public Action OnClose { get; set; }
+
+        public DragDropModesViewModel DragDropModes { get; }
 
         public StartupModeViewModel SelectedStartupMode
         {
@@ -181,11 +184,13 @@ namespace Barcodes.Core.ViewModels
 
             try
             {
-                SettingsSaveResult = CreateSaveResult(settings);
+                var result = CreateSaveResult(settings);
                 appSettingsService.Save(settings);
+                SettingsSaveResult = result;
 
                 OnClose?.Invoke();
-                appEvents.RiseSettingsChanged(SettingsSaveResult);
+                appEvents.RiseOnSettingsChanged(result);
+                appEvents.RiseOnDragDropModeChanged(settings.DragDropMode);
             }
             catch (Exception exc)
             {
@@ -199,10 +204,8 @@ namespace Barcodes.Core.ViewModels
         {
             return new SettingsSaveResult()
             {
-                CurrentStoragePath = newSettings.StoragePath,
-                PreviusStoragePath = appSettingsService.StoragePath,
-                BarcodesVisible = newSettings.BarcodesVisible,
-                DragDropMode = newSettings.DragDropMode
+                Previous = appSettingsService.AppSettings,
+                Current = newSettings
             };
         }
 
@@ -222,6 +225,7 @@ namespace Barcodes.Core.ViewModels
             SelectedWorkspaceAddModeRaw = settings.WorkspaceAddMode;
             UpdateAfterEveryGeneration = settings.UpdateAfterEveryGeneration;
             GenerationData.FromSettings(settings.GenerationSettings);
+            DragDropModes.Select(settings.DragDropMode);
         }
 
         private AppSettings ToSettings()
@@ -236,7 +240,8 @@ namespace Barcodes.Core.ViewModels
                 BarcodeAddMode = SelectedBarcodeAddModeRaw.Value,
                 WorkspaceAddMode = SelectedWorkspaceAddModeRaw.Value,
                 UpdateAfterEveryGeneration = UpdateAfterEveryGeneration,
-                GenerationSettings = GenerationData.ToSettings()
+                GenerationSettings = GenerationData.ToSettings(),
+                DragDropMode = DragDropModes.SelectedItem.DragDropMode
             };
         }
 

@@ -19,8 +19,9 @@ namespace Barcodes.Core.ViewModels
             this.services = services;
             this.app = app;
 
-            DragDropModes = new DragDropModesViewModel(services.AppSettingsService);
-            services.AppEvents.SettingsChanged += AppEvents_SettingsChanged;
+            DragDropModes = new DragDropModesViewModel();
+            DragDropModes.DragDropModeChanged += DragDropModes_DragDropModeChanged;
+            services.AppEvents.OnSettingsChanged += AppEvents_SettingsChanged;
         }
 
         public DelegateCommand SaveCommand => new DelegateCommand(() => app.Save(false, false));
@@ -68,17 +69,27 @@ namespace Barcodes.Core.ViewModels
 
         public Action OnClose { get; set; }
 
-        private void AppEvents_SettingsChanged(SettingsSaveResult settingsSaveResult)
-        {
-            BarcodesVisible = settingsSaveResult.BarcodesVisible;
-            DragDropModes.Select(settingsSaveResult.DragDropMode);
-        }
-
-        public Task ApplySettings(AppSettings appSettings)
+        private void ApplySettings(AppSettings appSettings)
         {
             BarcodesVisible = appSettings.BarcodesVisible;
             DragDropModes.Select(appSettings.DragDropMode);
+        }
+
+        public Task ApplyInitialSettings(AppSettings appSettings)
+        {
+            ApplySettings(appSettings);
             return Task.CompletedTask;
+        }
+
+        private void AppEvents_SettingsChanged(SettingsSaveResult settingsSaveResult)
+        {
+            ApplySettings(settingsSaveResult.Current);
+        }
+
+        private void DragDropModes_DragDropModeChanged(DragDropMode mode)
+        {
+            services.AppSettingsService.DragDropMode = mode;
+            services.AppEvents.RiseOnDragDropModeChanged(mode);
         }
     }
 }

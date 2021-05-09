@@ -4,10 +4,11 @@ namespace Barcodes.Core.Models
 {
     public class SettingsSaveResult
     {
-        public string PreviusStoragePath { get; set; }
-        public string CurrentStoragePath { get; set; }
-        public bool BarcodesVisible { get; set; }
-        public DragDropMode DragDropMode { get; set; }
-        public bool StoragePathChanged => PreviusStoragePath != CurrentStoragePath;
+        public AppSettings Previous { get; set; }
+        public AppSettings Current { get; set; }
+        public bool InitialLoad { get; set; }
+        public bool StoragePathChanged => Current.StoragePath != Previous.StoragePath;
+        public bool BarcodesVisibleChanged => Current.BarcodesVisible != Previous.BarcodesVisible;
+        public bool DragDropModeChanged => Current.DragDropMode != Previous.DragDropMode;
     }
 }

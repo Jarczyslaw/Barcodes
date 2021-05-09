@@ -1,4 +1,6 @@
-﻿using Barcodes.Core.ViewModels;
+﻿using Barcodes.Core.Services;
+using Barcodes.Core.ViewModels;
+using Barcodes.Services.AppSettings;
 using Barcodes.SingleInstance;
 using JToolbox.WPF.UI.DragAndDrop;
 using System;
@@ -13,11 +15,18 @@ namespace Barcodes.Core.UI.Views
 {
     public partial class ShellWindow : BaseWindow
     {
-        public ShellWindow(SingleInstanceManager singleInstanceManager, ShellViewModel shellViewModel)
+        private DragDropHelper dragDropHelper;
+        private FileDragDropHelper fileDragDropHelper;
+
+        public ShellWindow(SingleInstanceManager singleInstanceManager, ShellViewModel shellViewModel, IAppEvents appEvents, IAppSettingsService appSettingsService)
         {
             DataContext = shellViewModel;
             InitializeComponent();
-            var dragDropHelper = new DragDropHelper(tabControl, new List<DragDropPair>
+
+            singleInstanceManager.OnNewInstance += SingleInstanceManager_OnNewInstance;
+            appEvents.OnDragDropModeChanged += AppEvents_OnDragDropModeChanged;
+
+            dragDropHelper = new DragDropHelper(tabControl, new List<DragDropPair>
             {
                 new DragDropPair(typeof(ListViewItem)),
                 new DragDropPair(typeof(ListViewItem), typeof(TabItem)),
@@ -25,7 +34,9 @@ namespace Barcodes.Core.UI.Views
                 new DragDropPair(typeof(TabItem)),
                 new DragDropPair(typeof(TabItem), typeof(TabPanel))
             });
-            var fileDragDropHelper = new FileDragDropHelper(tabControl, new List<Type>
+            dragDropHelper.UnpinEvents();
+
+            fileDragDropHelper = new FileDragDropHelper(tabControl, new List<Type>
             {
                 typeof(ListViewItem),
                 typeof(TabItem)
@@ -33,8 +44,24 @@ namespace Barcodes.Core.UI.Views
             {
                 typeof(TabControl)
             });
+            fileDragDropHelper.UnpinEvents();
+            AppEvents_OnDragDropModeChanged(appSettingsService.DragDropMode);
+
             KeyDownHandlerEnabled = true;
-            singleInstanceManager.OnNewInstance += SingleInstanceManager_OnNewInstance;
+        }
+
+        private void AppEvents_OnDragDropModeChanged(DragDropMode mode)
+        {
+            dragDropHelper.UnpinEvents();
+            fileDragDropHelper.UnpinEvents();
+            if (mode == DragDropMode.Arrangement)
+            {
+                dragDropHelper.PinEvents();
+            }
+            else if (mode == DragDropMode.ImportExport)
+            {
+                fileDragDropHelper.PinEvents();
+            }
         }
 
         private void SingleInstanceManager_OnNewInstance()

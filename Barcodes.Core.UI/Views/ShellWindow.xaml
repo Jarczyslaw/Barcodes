@@ -291,11 +291,12 @@
                     </MenuItem.Resources>
                     <MenuItem.Header>
                         <ComboBox
-                            Width="120"
+                            Width="110"
                             Margin="0"
                             DisplayMemberPath="Display"
+                            IsSynchronizedWithCurrentItem="True"
                             ItemsSource="{Binding DragDropModes.Items}"
-                            SelectedItem="{Binding DragDropModes.SelectedItem}" />
+                            SelectedItem="{Binding DragDropModes.SelectedItem, UpdateSourceTrigger=PropertyChanged}" />
                     </MenuItem.Header>
                 </MenuItem>
                 <Separator Grid.Column="11" />

@@ -1,5 +1,6 @@
 ﻿using Barcodes.Core.Abstraction;
 using Barcodes.Core.Common;
+using Barcodes.Core.Models;
 using Barcodes.Services.AppSettings;
 using Prism.Mvvm;
 using System;
@@ -50,7 +51,7 @@ namespace Barcodes.Core.ViewModels
 
         public bool OnClosing()
         {
-            return !App.CheckStorageChangesAndSave();
+            return App.CheckStorageChangesAndSave();
         }
 
         public bool OnKeyDown(KeyEventArgs keyEventArgs)
@@ -76,8 +77,15 @@ namespace Barcodes.Core.ViewModels
             try
             {
                 services.AppSettingsService.Load(false);
-                await Menu.ApplySettings(services.AppSettingsService.AppSettings);
-                await App.ApplySettings(services.AppSettingsService.AppSettings);
+                var settings = services.AppSettingsService.AppSettings;
+                await App.ApplyInitialSettings(settings);
+                await Menu.ApplyInitialSettings(settings);
+                services.AppEvents.RiseOnSettingsChanged(new SettingsSaveResult
+                {
+                    InitialLoad = true,
+                    Current = settings,
+                    Previous = settings
+                });
             }
             catch (Exception exc)
             {

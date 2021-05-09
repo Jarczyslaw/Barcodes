@@ -43,7 +43,7 @@ namespace Barcodes.Core.ViewModels
             this.services = services;
             this.appViewModel = appViewModel;
 
-            services.AppEvents.QuickBarcodeUpdate += AppEvents_QuickBarcodeUpdate;
+            services.AppEvents.OnQuickBarcodeUpdate += AppEvents_QuickBarcodeUpdate;
 
             generationData = new GenerationDataViewModel(services.AppDialogsService, services.AppWindowsService, services.GeneratorService,
                 services.SysService, services.AppSettingsService)
@@ -437,12 +437,12 @@ namespace Barcodes.Core.ViewModels
 
         private void NotifyOtherQuickGenerators()
         {
-            services.AppEvents.RiseQuickBarcodeUpdate(this);
+            services.AppEvents.RiseOnQuickBarcodeUpdate(this);
         }
 
         public bool OnClosing()
         {
-            services.AppEvents.QuickBarcodeUpdate -= AppEvents_QuickBarcodeUpdate;
+            services.AppEvents.OnQuickBarcodeUpdate -= AppEvents_QuickBarcodeUpdate;
             return false;
         }
 

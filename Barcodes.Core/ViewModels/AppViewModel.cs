@@ -38,7 +38,7 @@ namespace Barcodes.Core.ViewModels
             workspaces = new ObservableCollection<WorkspaceViewModel>();
             StoragePath = string.Empty;
 
-            services.AppEvents.SettingsChanged += AppEvents_SettingsChanged;
+            services.AppEvents.OnSettingsChanged += AppEvents_SettingsChanged;
         }
 
         public string Title
@@ -169,14 +169,14 @@ namespace Barcodes.Core.ViewModels
                 var closingMode = services.AppDialogsService.ShowSavingQuestion(services.AppWindowsService.MainWindowHandle);
                 if (closingMode == SavingMode.SaveChanges)
                 {
-                    return Save(false, true);
+                    return !Save(false, true);
                 }
                 else if (closingMode == SavingMode.Cancel)
                 {
-                    return false;
+                    return true;
                 }
             }
-            return true;
+            return false;
         }
 
         public async Task LoadStorageFromFile()
@@ -375,9 +375,10 @@ namespace Barcodes.Core.ViewModels
 
         private void AppEvents_SettingsChanged(SettingsSaveResult settingsSaveResult)
         {
-            if (settingsSaveResult.StoragePathChanged && !Save(false, false))
+            if (!settingsSaveResult.InitialLoad
+                && settingsSaveResult.StoragePathChanged && !Save(false, false))
             {
-                SetStoragePath(settingsSaveResult.PreviusStoragePath);
+                SetStoragePath(settingsSaveResult.Previous.StoragePath);
             }
         }
 
@@ -885,7 +886,7 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        public async Task ApplySettings(AppSettings appSettings)
+        public async Task ApplyInitialSettings(AppSettings appSettings)
         {
             StoragePath = appSettings.StoragePath;
             await LoadFromFile(appSettings.StoragePath, false);
