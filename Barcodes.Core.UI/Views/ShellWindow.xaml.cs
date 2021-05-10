@@ -34,7 +34,6 @@ namespace Barcodes.Core.UI.Views
                 new DragDropPair(typeof(TabItem)),
                 new DragDropPair(typeof(TabItem), typeof(TabPanel))
             });
-            dragDropHelper.UnpinEvents();
 
             fileDragDropHelper = new FileDragDropHelper(tabControl, new List<Type>
             {
@@ -44,7 +43,6 @@ namespace Barcodes.Core.UI.Views
             {
                 typeof(TabControl)
             });
-            fileDragDropHelper.UnpinEvents();
             AppEvents_OnDragDropModeChanged(appSettingsService.DragDropMode);
 
             KeyDownHandlerEnabled = true;

@@ -1,6 +1,7 @@
 ﻿using Barcodes.Core.Common;
 using Barcodes.Utils;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Barcodes.Services.AppSettings
@@ -10,101 +11,71 @@ namespace Barcodes.Services.AppSettings
         public StartupMode StartupMode
         {
             get => AppSettings.StartupMode;
-            set
-            {
-                AppSettings.StartupMode = value;
-                Save();
-            }
+            set => SetAndSave(value, AppSettings.StartupMode,
+                () => AppSettings.StartupMode = value);
         }
 
         public int QuickBarcodesCount
         {
             get => AppSettings.QuickBarcodesCount;
-            set
-            {
-                AppSettings.QuickBarcodesCount = value;
-                Save();
-            }
+            set => SetAndSave(value, AppSettings.QuickBarcodesCount,
+                () => AppSettings.QuickBarcodesCount = value);
         }
 
         public string StoragePath
         {
             get => AppSettings.StoragePath;
-            set
-            {
-                AppSettings.StoragePath = value;
-                Save();
-            }
+            set => SetAndSave(value, AppSettings.StoragePath,
+                () => AppSettings.StoragePath = value);
         }
 
         public bool BarcodesVisible
         {
             get => AppSettings.BarcodesVisible;
-            set
-            {
-                AppSettings.BarcodesVisible = value;
-                Save();
-            }
+            set => SetAndSave(value, AppSettings.BarcodesVisible,
+                () => AppSettings.BarcodesVisible = value);
         }
 
         public AddMode BarcodeAddMode
         {
             get => AppSettings.BarcodeAddMode;
-            set
-            {
-                AppSettings.BarcodeAddMode = value;
-                Save();
-            }
+            set => SetAndSave(value, AppSettings.BarcodeAddMode,
+                () => AppSettings.BarcodeAddMode = value);
         }
 
         public AddMode WorkspaceAddMode
         {
             get => AppSettings.WorkspaceAddMode;
-            set
-            {
-                AppSettings.WorkspaceAddMode = value;
-                Save();
-            }
+            set => SetAndSave(value, AppSettings.WorkspaceAddMode,
+                () => AppSettings.WorkspaceAddMode = value);
         }
 
         public string AntiKeyProtection
         {
             get => AppSettings.AntiKeyProtection;
-            set
-            {
-                AppSettings.AntiKeyProtection = value;
-                Save();
-            }
+            set => SetAndSave(value, AppSettings.AntiKeyProtection,
+                () => AppSettings.AntiKeyProtection = value);
         }
 
         public GenerationSettings GenerationSettings
         {
             get => AppSettings.GenerationSettings;
-            set
-            {
-                AppSettings.GenerationSettings = value;
-                Save();
-            }
+            set => SetAndSave(value, AppSettings.GenerationSettings,
+                () => AppSettings.GenerationSettings = value);
         }
 
         public bool UpdateAfterEveryGeneration
         {
             get => AppSettings.UpdateAfterEveryGeneration;
-            set
-            {
-                AppSettings.UpdateAfterEveryGeneration = value;
-                Save();
-            }
+            set => SetAndSave(value, AppSettings.UpdateAfterEveryGeneration,
+                () => AppSettings.UpdateAfterEveryGeneration = value);
         }
 
         public DragDropMode DragDropMode
         {
             get => AppSettings.DragDropMode;
-            set
-            {
-                AppSettings.DragDropMode = value;
-                Save();
-            }
+            set => SetAndSave(value, AppSettings.DragDropMode,
+                () => AppSettings.DragDropMode = value);
         }
 
         public string AppSettingsPath { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"appSettings.{FileExtensions.Settings}");
@@ -144,6 +115,15 @@ namespace Barcodes.Services.AppSettings
             if (UpdateAfterEveryGeneration)
             {
                 GenerationSettings = generationSettings;
+            }
+        }
+
+        private void SetAndSave<T>(T newValue, T oldValue, Action setter)
+        {
+            if (!EqualityComparer<T>.Default.Equals(newValue, oldValue))
+            {
+                setter();
+                Save();
             }
         }
     }

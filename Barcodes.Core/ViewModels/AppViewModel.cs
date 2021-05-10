@@ -181,7 +181,7 @@ namespace Barcodes.Core.ViewModels
 
         public async Task LoadStorageFromFile()
         {
-            if (CheckStorageChangesAndSave())
+            if (!CheckStorageChangesAndSave())
             {
                 var storagePath = services.AppSettingsService.StoragePath;
                 var filePath = services.AppDialogsService.OpenStorageFile(storagePath);
@@ -288,7 +288,7 @@ namespace Barcodes.Core.ViewModels
 
         public async Task CreateNewStorage()
         {
-            if (CheckStorageChangesAndSave())
+            if (!CheckStorageChangesAndSave())
             {
                 var filePath = services.AppDialogsService.SaveStorageFile(services.AppSettingsService.StoragePath);
                 if (string.IsNullOrEmpty(filePath))
