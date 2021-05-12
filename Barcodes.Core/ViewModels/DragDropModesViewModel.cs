@@ -48,5 +48,18 @@ namespace Barcodes.Core.ViewModels
                 DragDropModeChanged(mode);
             }
         }
+
+        public void Toggle(bool riseEvent = false)
+        {
+            var mode = SelectedItem.DragDropMode;
+            if (mode == DragDropMode.Arrangement)
+            {
+                Select(DragDropMode.ImportExport, riseEvent);
+            }
+            else if (mode == DragDropMode.ImportExport)
+            {
+                Select(DragDropMode.Arrangement, riseEvent);
+            }
+        }
     }
 }

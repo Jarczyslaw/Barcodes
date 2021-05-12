@@ -101,6 +101,7 @@
     <Compile Include="Controls\GenerationView.xaml.cs">
       <DependentUpon>GenerationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DragDropModeConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AppDialogsService.cs" />
     <Compile Include="Services\AppWindowsService.cs" />

@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Barcodes.Core.UI.Controls"
+    xmlns:converters="clr-namespace:Barcodes.Core.UI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:jtui="clr-namespace:JToolbox.WPF.UI;assembly=JToolbox.WPF.UI"
@@ -20,6 +21,8 @@
 
     <ui:BaseWindow.Resources>
         <jtui:BindingProxy x:Key="Proxy" Proxy="{Binding}" />
+
+        <converters:DragDropModeConverter x:Key="DragDropModeConverter" />
 
         <ContextMenu x:Key="WorkspacesContextMenu">
             <MenuItem
@@ -269,36 +272,10 @@
                     Header="Barcodes visible"
                     IsCheckable="True"
                     IsChecked="{Binding BarcodesVisible}" />
-                <MenuItem Grid.Column="10">
-                    <MenuItem.Resources>
-                        <Style TargetType="{x:Type MenuItem}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type MenuItem}">
-                                        <StackPanel Background="{TemplateBinding Background}" Orientation="Horizontal">
-                                            <Label VerticalAlignment="Center" Content="Drag and drop mode:" />
-                                            <ContentPresenter Content="{TemplateBinding Header}" />
-                                        </StackPanel>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsHighlighted" Value="True">
-                                                <Setter Property="Background" Value="Transparent" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </MenuItem.Resources>
-                    <MenuItem.Header>
-                        <ComboBox
-                            Width="110"
-                            Margin="0"
-                            DisplayMemberPath="Display"
-                            IsSynchronizedWithCurrentItem="True"
-                            ItemsSource="{Binding DragDropModes.Items}"
-                            SelectedItem="{Binding DragDropModes.SelectedItem, UpdateSourceTrigger=PropertyChanged}" />
-                    </MenuItem.Header>
-                </MenuItem>
+                <MenuItem
+                    Grid.Column="10"
+                    Command="{Binding ToggleDragDropModeCommand}"
+                    Header="{Binding DragDropModes.SelectedItem, Converter={StaticResource DragDropModeConverter}}" />
                 <Separator Grid.Column="11" />
                 <MenuItem
                     Grid.Column="12"
