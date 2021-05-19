@@ -57,6 +57,8 @@ namespace Barcodes.Core.ViewModels
 
         public DelegateCommand ToggleDragDropModeCommand => new DelegateCommand(() => DragDropModes.Toggle(true));
 
+        public DelegateCommand ToggleBarcodesVisible => new DelegateCommand(() => BarcodesVisible = !BarcodesVisible);
+
         public DragDropModesViewModel DragDropModes { get; }
 
         public bool BarcodesVisible

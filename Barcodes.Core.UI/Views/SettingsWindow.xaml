@@ -71,7 +71,7 @@
                     Content="Barcodes visible"
                     IsChecked="{Binding BarcodesVisible, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Grid.Row="3" Content="Drag and drop mode:" />
+                <Label Grid.Row="3" Content="Drag &amp; drop mode:" />
                 <ComboBox
                     Grid.Row="3"
                     Grid.Column="1"

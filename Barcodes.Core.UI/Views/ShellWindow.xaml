@@ -23,6 +23,7 @@
         <jtui:BindingProxy x:Key="Proxy" Proxy="{Binding}" />
 
         <converters:DragDropModeConverter x:Key="DragDropModeConverter" />
+        <converters:BarcodesVisibleConverter x:Key="BarcodesVisibleConverter" />
 
         <ContextMenu x:Key="WorkspacesContextMenu">
             <MenuItem
@@ -269,9 +270,8 @@
 
                 <MenuItem
                     Grid.Column="9"
-                    Header="Barcodes visible"
-                    IsCheckable="True"
-                    IsChecked="{Binding BarcodesVisible}" />
+                    Command="{Binding ToggleBarcodesVisible}"
+                    Header="{Binding BarcodesVisible, Converter={StaticResource BarcodesVisibleConverter}}" />
                 <MenuItem
                     Grid.Column="10"
                     Command="{Binding ToggleDragDropModeCommand}"
