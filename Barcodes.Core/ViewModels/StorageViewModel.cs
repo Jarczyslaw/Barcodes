@@ -47,7 +47,6 @@ namespace Barcodes.Core.ViewModels
             foreach (var workspace in Workspaces)
             {
                 workspace.IsChecked = false;
-                workspace.DefaultWorkspace = false;
             }
         }
 

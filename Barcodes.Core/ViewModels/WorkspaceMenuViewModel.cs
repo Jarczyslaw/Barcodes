@@ -17,7 +17,6 @@ namespace Barcodes.Core.ViewModels
 
         public DelegateCommand<WorkspaceViewModel> RenameCommand => new DelegateCommand<WorkspaceViewModel>(w => app.RenameWorkspace(w));
         public DelegateCommand<WorkspaceViewModel> DeleteCommand => new DelegateCommand<WorkspaceViewModel>(app.DeleteWorkspace);
-        public DelegateCommand<WorkspaceViewModel> SetAsDefaultCommand => new DelegateCommand<WorkspaceViewModel>(app.SetWorkspaceAsDefault);
         public DelegateCommand<WorkspaceViewModel> MoveLeftCommand => new DelegateCommand<WorkspaceViewModel>(app.MoveWorkspaceLeft);
         public DelegateCommand<WorkspaceViewModel> MoveRightCommand => new DelegateCommand<WorkspaceViewModel>(app.MoveWorkspaceRight);
         public DelegateCommand<WorkspaceViewModel> ClearCommand => new DelegateCommand<WorkspaceViewModel>(app.ClearWorkspace);

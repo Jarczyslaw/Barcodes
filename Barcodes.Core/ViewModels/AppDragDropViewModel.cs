@@ -1,13 +1,15 @@
-﻿using JToolbox.WPF.Core.Awareness.Args;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Barcodes.Core.Common;
 using JToolbox.Core.Extensions;
+using JToolbox.WPF.Core.Awareness.Args;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace Barcodes.Core.ViewModels
 {
     public class AppDragDropViewModel
     {
-        private AppViewModel app;
+        private readonly AppViewModel app;
 
         public AppDragDropViewModel(AppViewModel app)
         {
@@ -74,12 +76,55 @@ namespace Barcodes.Core.ViewModels
 
         public void OnFileDrag(FileDragArgs args)
         {
-
+            if (args.Source is BarcodeViewModel barcode)
+            {
+                var path = Path.Combine(Path.GetTempPath(), $"{barcode.Title}.{FileExtensions.Barcode}");
+                args.Files = new List<string> { path };
+                app.ExportBarcodes(path, new List<BarcodeViewModel> { barcode });
+            }
+            else if (args.Source is WorkspaceViewModel workspace)
+            {
+                var path = Path.Combine(Path.GetTempPath(), $"{workspace.Name}.{FileExtensions.Workspace}");
+                args.Files = new List<string> { path };
+                app.ExportWorkspace(path, workspace);
+            }
         }
 
         public void OnFilesDrop(FileDropArgs args)
         {
+            if (args.Files?.Count > 0)
+            {
+                var barcodeFiles = args.Files
+                    .Where(f => CheckExtension(f, FileExtensions.Barcode))
+                    .ToList();
+                var workspaceFiles = args.Files
+                    .Where(f => CheckExtension(f, FileExtensions.Workspace))
+                    .ToList();
 
+                if (barcodeFiles.Count > 0)
+                {
+                    app.ImportBarcodes(barcodeFiles);
+                }
+
+                if (workspaceFiles.Count > 0)
+                {
+                    app.ImportWorkspaces(workspaceFiles);
+                }
+            }
+        }
+
+        private bool CheckExtension(string file, string targetExtension)
+        {
+            var extension = Path.GetExtension(file);
+            if (string.IsNullOrEmpty(extension))
+            {
+                return false;
+            }
+            if (extension.StartsWith(".") && extension.Length > 1)
+            {
+                extension = extension.Substring(1, extension.Length - 1);
+            }
+            return extension.IgnoreCaseEquals(targetExtension);
         }
     }
 }

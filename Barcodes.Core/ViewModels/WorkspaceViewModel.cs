@@ -11,7 +11,6 @@ namespace Barcodes.Core.ViewModels
 {
     public class WorkspaceViewModel : BindableBase
     {
-        private bool defaultWorkspace;
         private string name;
         private BarcodeViewModel selectedBarcode;
         private List<BarcodeViewModel> selectedBarcodes;
@@ -25,7 +24,6 @@ namespace Barcodes.Core.ViewModels
         public WorkspaceViewModel(WorkspaceViewModel workspaceViewModel)
             : this()
         {
-            DefaultWorkspace = workspaceViewModel.DefaultWorkspace;
             Name = workspaceViewModel.Name;
             foreach (var barcode in workspaceViewModel.Barcodes)
             {
@@ -35,29 +33,11 @@ namespace Barcodes.Core.ViewModels
 
         public Action<string> OnMessageUpdate { get; set; }
 
-        public string DisplayName
-        {
-            get => DefaultWorkspace ? $"(D) {Name}" : Name;
-        }
-
         public string Name
         {
             get => name;
-            set
-            {
-                SetProperty(ref name, value);
-                RaisePropertyChanged(nameof(DisplayName));
-            }
-        }
-
-        public bool DefaultWorkspace
-        {
-            get => defaultWorkspace;
-            set
-            {
-                SetProperty(ref defaultWorkspace, value);
-                RaisePropertyChanged(nameof(DisplayName));
-            }
+            set => SetProperty(ref name, value);
+            
         }
 
         public ObservableCollection<BarcodeViewModel> Barcodes
@@ -212,7 +192,6 @@ namespace Barcodes.Core.ViewModels
             return new StorageWorkspace
             {
                 Title = Name,
-                Default = DefaultWorkspace,
                 Barcodes = Barcodes.Select(b => b.ToStorage()).ToList()
             };
         }

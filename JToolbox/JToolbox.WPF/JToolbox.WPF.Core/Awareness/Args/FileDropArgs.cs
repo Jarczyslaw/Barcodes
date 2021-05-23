@@ -6,5 +6,6 @@ namespace JToolbox.WPF.Core.Awareness.Args
     {
         public bool Handled { get; set; }
         public List<string> Files { get; set; }
+        public object Target { get; set; }
     }
 }

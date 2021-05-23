@@ -12,7 +12,6 @@ namespace Barcodes.Core.Extensions
             var newWorkspace = new WorkspaceViewModel
             {
                 Name = storageWorkspace.Title,
-                DefaultWorkspace = storageWorkspace.Default
             };
 
             foreach (var storageBarcode in storageWorkspace.Barcodes)

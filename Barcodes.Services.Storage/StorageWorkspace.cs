@@ -7,7 +7,6 @@ namespace Barcodes.Services.Storage
     public class StorageWorkspace : IEquatable<StorageWorkspace>
     {
         public string Title { get; set; }
-        public bool Default { get; set; }
         public List<StorageBarcode> Barcodes { get; set; } = new List<StorageBarcode>();
 
         public override bool Equals(object obj)
@@ -23,7 +22,6 @@ namespace Barcodes.Services.Storage
         public bool Equals(StorageWorkspace other)
         {
             return Title == other.Title
-                && Default == other.Default
                 && Barcodes.SequenceEqual(other.Barcodes);
         }
 
@@ -31,7 +29,7 @@ namespace Barcodes.Services.Storage
         {
             unchecked
             {
-                int hash = (17 * Title.GetHashCode()) + Default.GetHashCode();
+                int hash = (17 * Title.GetHashCode());
                 foreach (var barcode in Barcodes)
                 {
                     hash += barcode.GetHashCode();

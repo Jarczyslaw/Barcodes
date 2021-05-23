@@ -39,8 +39,8 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand ShowExamplesCommand => new DelegateCommand(async () => await app.ShowExamples());
         public DelegateCommand AddNewWorkspaceCommand => new DelegateCommand(app.AddNewWorkspace);
         public DelegateCommand AddNewBarcodeCommand => new DelegateCommand(() => app.AddNewBarcode(null, false));
-        public DelegateCommand ImportBarcodesCommand => new DelegateCommand(app.ImportBarcodes);
-        public DelegateCommand ImportWorkspacesCommand => new DelegateCommand(app.ImportWorkspaces);
+        public DelegateCommand ImportBarcodesCommand => new DelegateCommand(() => app.ImportBarcodes());
+        public DelegateCommand ImportWorkspacesCommand => new DelegateCommand(() => app.ImportWorkspaces());
         public DelegateCommand ImportStorageCommand => new DelegateCommand(async () => await app.ImportStorage());
         public DelegateCommand ShowSettingsCommand => new DelegateCommand(() => services.AppWindowsService.ShowSettingsWindow(null));
         public DelegateCommand CloseAllWindowsCommand => new DelegateCommand(services.AppWindowsService.CloseAllWindows);

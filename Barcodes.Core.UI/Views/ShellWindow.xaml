@@ -30,10 +30,6 @@
                 Command="{Binding Proxy.WorkspaceMenu.RenameCommand, Source={StaticResource Proxy}}"
                 CommandParameter="{Binding}"
                 Header="Rename" />
-            <MenuItem
-                Command="{Binding Proxy.WorkspaceMenu.SetAsDefaultCommand, Source={StaticResource Proxy}}"
-                CommandParameter="{Binding}"
-                Header="Set as default" />
             <MenuItem Header="Change order">
                 <MenuItem
                     Command="{Binding Proxy.WorkspaceMenu.SetAsFirstCommand, Source={StaticResource Proxy}}"
@@ -87,20 +83,23 @@
                 Command="{Binding Proxy.BarcodeMenu.SaveToImageFileCommand, Source={StaticResource Proxy}}"
                 CommandParameter="{Binding}"
                 Header="Save to image file" />
-            <MenuItem Header="Copy to clipboard">
-                <MenuItem
-                    Command="{Binding Proxy.BarcodeMenu.CopyImageToClipboardCommand, Source={StaticResource Proxy}}"
-                    CommandParameter="{Binding}"
-                    Header="Image" />
-                <MenuItem
-                    Command="{Binding Proxy.BarcodeMenu.CopyDataToClipboardCommand, Source={StaticResource Proxy}}"
-                    CommandParameter="{Binding}"
-                    Header="Data" />
-            </MenuItem>
+            <MenuItem
+                Command="{Binding Proxy.BarcodeMenu.CopyImageToClipboardCommand, Source={StaticResource Proxy}}"
+                CommandParameter="{Binding}"
+                Header="Copy image to clipboard" />
+            <MenuItem
+                Command="{Binding Proxy.BarcodeMenu.CopyDataToClipboardCommand, Source={StaticResource Proxy}}"
+                CommandParameter="{Binding}"
+                Header="Copy data to clipboard" />
             <MenuItem Command="{Binding Proxy.BarcodeMenu.ExportCommand, Source={StaticResource Proxy}}" Header="Export" />
             <MenuItem Command="{Binding Proxy.BarcodeMenu.ChangeWorkspaceCommand, Source={StaticResource Proxy}}" Header="Change workspace" />
             <Separator />
             <MenuItem Command="{Binding Proxy.BarcodeMenu.DeleteCommand, Source={StaticResource Proxy}}" Header="Delete" />
+        </ContextMenu>
+
+        <ContextMenu x:Key="MainContextMenu">
+            <MenuItem Command="{Binding Proxy.Menu.AddNewBarcodeCommand, Source={StaticResource Proxy}}" Header="Add barcode" />
+            <MenuItem Command="{Binding Proxy.Menu.AddNewWorkspaceCommand, Source={StaticResource Proxy}}" Header="Add workspace" />
         </ContextMenu>
     </ui:BaseWindow.Resources>
 
@@ -300,6 +299,7 @@
 
             <TabControl
                 x:Name="tabControl"
+                ContextMenu="{StaticResource MainContextMenu}"
                 DataContext="{Binding App}"
                 ItemTemplate="{StaticResource WorkspaceHeader}"
                 ItemsSource="{Binding Workspaces}"

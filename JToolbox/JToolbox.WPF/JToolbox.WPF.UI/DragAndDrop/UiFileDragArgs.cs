@@ -6,6 +6,5 @@ namespace JToolbox.WPF.UI.DragAndDrop
     public class UiFileDragArgs : FileDragArgs
     {
         public FrameworkElement Element { get; set; }
-        public object Source { get; set; } 
     }
 }

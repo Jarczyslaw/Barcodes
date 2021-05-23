@@ -194,7 +194,7 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        private async Task<List<WorkspaceViewModel>> LoadStorage(string storagePath, bool storageValidation, bool clearDefaultFlag)
+        private async Task<List<WorkspaceViewModel>> LoadStorage(string storagePath, bool storageValidation)
         {
             var storage = services.StorageService.Load(storagePath, true);
             if (storage == null)
@@ -212,11 +212,6 @@ namespace Barcodes.Core.ViewModels
                 return temp;
             });
 
-            if (clearDefaultFlag)
-            {
-                newWorkspaces.ForEach(w => w.DefaultWorkspace = false);
-            }
-
             if (storageValidation && newWorkspaces.Count == 0)
             {
                 services.AppDialogsService.ShowError("Selected file has no workspaces");
@@ -230,7 +225,7 @@ namespace Barcodes.Core.ViewModels
         {
             try
             {
-                var newWorkspaces = await LoadStorage(storagePath, storageValidation, false);
+                var newWorkspaces = await LoadStorage(storagePath, storageValidation);
                 if (newWorkspaces == null)
                 {
                     return;
@@ -242,7 +237,6 @@ namespace Barcodes.Core.ViewModels
                     AddWorkspace(newWorkspace);
                 }
 
-                SetDefaultWorkspace();
                 if (WorkspacesCount != 0 || BarcodesCount != 0)
                 {
                     UpdateMessage($"Successfully loaded {WorkspacesCount} workspaces and {BarcodesCount} barcodes from {Path.GetFileName(storagePath)}");
@@ -257,20 +251,6 @@ namespace Barcodes.Core.ViewModels
             catch (Exception exc)
             {
                 services.LogException("Error when loading storage from file", exc);
-            }
-        }
-
-        private void SetDefaultWorkspace()
-        {
-            if (Workspaces?.Count > 1)
-            {
-                var defaultWorkspace = Workspaces.FirstOrDefault(w => w.DefaultWorkspace);
-                if (defaultWorkspace != null)
-                {
-                    SelectedWorkspace = defaultWorkspace;
-                }
-
-                SelectedWorkspace = Workspaces.First();
             }
         }
 
@@ -642,20 +622,12 @@ namespace Barcodes.Core.ViewModels
 
         public void DeleteWorkspace(WorkspaceViewModel workspace)
         {
-            if (!services.AppDialogsService.ShowYesNoQuestion($"Do you really want to delete workspace {workspace.Name}? This will delete all the codes of this workspace"))
+            if (workspace.Barcodes.Count > 0 &&
+                !services.AppDialogsService.ShowYesNoQuestion($"Do you really want to delete workspace {workspace.Name}? This will delete all the codes of this workspace"))
             {
                 return;
             }
             RemoveWorkspace(workspace);
-        }
-
-        public void SetWorkspaceAsDefault(WorkspaceViewModel workspace)
-        {
-            foreach (var w in Workspaces)
-            {
-                w.DefaultWorkspace = false;
-            }
-            workspace.DefaultWorkspace = true;
         }
 
         public void MoveWorkspaceLeft(WorkspaceViewModel workspace)
@@ -731,15 +703,20 @@ namespace Barcodes.Core.ViewModels
             return services.StorageService.StorageChanged(currentStorage);
         }
 
-        public void ImportBarcodes()
+        public void ImportBarcodes(List<string> barcodeFiles = null)
         {
             try
             {
-                var barcodeFiles = services.AppDialogsService.ImportBarcodesFiles();
+                if (barcodeFiles == null || barcodeFiles.Count == 0)
+                {
+                    barcodeFiles = services.AppDialogsService.ImportBarcodesFiles();
+                }
+
                 if (barcodeFiles?.Count > 0)
                 {
                     barcodeFiles.Reverse();
                     var barcodes = new List<BarcodeViewModel>();
+                    Exception exception = null;
                     foreach (var barcodeFile in barcodeFiles)
                     {
                         try
@@ -751,9 +728,16 @@ namespace Barcodes.Core.ViewModels
                         }
                         catch (Exception exc)
                         {
-                            services.LogException("Error when importing barcodes", exc);
-                            return;
+                            if (exception == null)
+                            {
+                                exception = exc;
+                            }
                         }
+                    }
+
+                    if (exception != null)
+                    {
+                        services.AppDialogsService.ShowException(exception, "One or more files can not be imported due to import error. First exception occured:");
                     }
 
                     ImportBarcodes(barcodes);
@@ -767,35 +751,49 @@ namespace Barcodes.Core.ViewModels
 
         public void ImportBarcodes(List<BarcodeViewModel> barcodes)
         {
-            if (!TryAddInitialWorkspace())
+            if (barcodes?.Count > 0)
             {
-                return;
-            }
+                if (!TryAddInitialWorkspace())
+                {
+                    return;
+                }
 
-            SelectedWorkspace.InsertNewBarcodes(barcodes, services.AppSettingsService.BarcodeAddMode);
-            UpdateMessage($"Successfully imported {barcodes.Count} barcodes");
+                SelectedWorkspace.InsertNewBarcodes(barcodes, services.AppSettingsService.BarcodeAddMode);
+                UpdateMessage($"Successfully imported {barcodes.Count} barcodes");
+            }
         }
 
-        public void ImportWorkspaces()
+        public void ImportWorkspaces(List<string> workspaceFiles = null)
         {
-            var workspaceFiles = services.AppDialogsService.ImportWorkspaceFiles();
+            if (workspaceFiles == null || workspaceFiles.Count == 0)
+            {
+                workspaceFiles = services.AppDialogsService.ImportWorkspaceFiles();
+            }
+
             if (workspaceFiles?.Count > 0)
             {
                 var workspaces = new List<WorkspaceViewModel>();
+                Exception exception = null;
                 foreach (var workspaceFile in workspaceFiles)
                 {
                     try
                     {
                         var storageWorkspace = services.StorageService.ImportWorkspace(workspaceFile);
                         var workspace = storageWorkspace.ToWorkspace(services.GeneratorService);
-                        workspace.DefaultWorkspace = false;
                         workspaces.Add(workspace);
                     }
                     catch (Exception exc)
                     {
-                        services.LogException("Error when importing workspace", exc);
-                        return;
+                        if (exception == null)
+                        {
+                            exception = exc;
+                        }
                     }
+                }
+
+                if (exception != null)
+                {
+                    services.AppDialogsService.ShowException(exception, "One or more files can not be imported due to import error. First exception occured:");
                 }
 
                 ImportWorkspaces(workspaces);
@@ -804,8 +802,11 @@ namespace Barcodes.Core.ViewModels
 
         public void ImportWorkspaces(List<WorkspaceViewModel> workspaces)
         {
-            AddWorkspaces(workspaces, services.AppSettingsService.WorkspaceAddMode);
-            UpdateMessage($"Successfully imported {workspaces.Count} workspaces");
+            if (workspaces?.Count > 0)
+            {
+                AddWorkspaces(workspaces, services.AppSettingsService.WorkspaceAddMode);
+                UpdateMessage($"Successfully imported {workspaces.Count} workspaces");
+            }
         }
 
         public async Task ImportStorage()
@@ -818,7 +819,7 @@ namespace Barcodes.Core.ViewModels
                     return;
                 }
 
-                var workspaces = await LoadStorage(filePath, true, true);
+                var workspaces = await LoadStorage(filePath, true);
                 if (workspaces == null)
                 {
                     return;
@@ -842,19 +843,24 @@ namespace Barcodes.Core.ViewModels
                     return;
                 }
 
-                try
-                {
-                    services.StorageService.ExportWorkspace(workspaceFile, workspace.ToStorage());
-                    StatusMessage = $"{workspace.Name} exported successfully";
-                }
-                catch (Exception exc)
-                {
-                    services.LogException("Error when exporting barcode", exc);
-                }
+                ExportWorkspace(workspaceFile, workspace);
             }
             else
             {
                 services.AppDialogsService.ShowError("No workspace selected");
+            }
+        }
+
+        public void ExportWorkspace(string filePath, WorkspaceViewModel workspace)
+        {
+            try
+            {
+                services.StorageService.ExportWorkspace(filePath, workspace.ToStorage());
+                StatusMessage = $"{workspace.Name} exported successfully";
+            }
+            catch (Exception exc)
+            {
+                services.LogException("Error when exporting barcode", exc);
             }
         }
 
@@ -868,21 +874,26 @@ namespace Barcodes.Core.ViewModels
                     return;
                 }
 
-                try
-                {
-                    var barcodesToExport = SelectedBarcodes.Select(s => s.ToStorage())
-                        .ToList();
-                    services.StorageService.ExportBarcodes(barcodeFile, barcodesToExport);
-                    StatusMessage = "Barcodes exported successfully";
-                }
-                catch (Exception exc)
-                {
-                    services.LogException("Error when exporting barcode", exc);
-                }
+                ExportBarcodes(barcodeFile, SelectedBarcodes);
             }
             else
             {
-                services.AppDialogsService.ShowError("No barcodes seleced");
+                services.AppDialogsService.ShowError("No barcodes selected");
+            }
+        }
+
+        public void ExportBarcodes(string filePath, List<BarcodeViewModel> barcodes)
+        {
+            try
+            {
+                var barcodesToExport = barcodes.Select(s => s.ToStorage())
+                    .ToList();
+                services.StorageService.ExportBarcodes(filePath, barcodesToExport);
+                StatusMessage = "Barcodes exported successfully";
+            }
+            catch (Exception exc)
+            {
+                services.LogException("Error when exporting barcode", exc);
             }
         }
 
