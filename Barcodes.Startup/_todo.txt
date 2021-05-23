@@ -1,22 +1,4 @@
-﻿//generowanie z exampli - poszerzyć okno i jeśli ktoś anuluje generowanie to nie pokazywać okna do generacji
-//generowanie exampli - używają się jakieś dziwne ustawienia generowania
-//generowanie exampli + templaty - lokalizacja ma 10 znaków a nie cyfr - poprawić opisy w examplach
-//logowanie błędów do pliku
-//loader przed wygenerowaniem exampli bo czasem to długo trwa
-zrobić drag and drop
-//zrobić drukowanie automatyczne kodów (może z użyciem pdfa po drodze) - dla pojedynczego, dla zaznaczonych i dla wszystkich w workspace
-jeśli wybrany jest kod kreskowy EAN13/product code to wyłączyć z automatu valdiate data
-dorobić okienko do szybkiego tworzenia barkodów
-//dorobić loadera przy ładowaniu okna about
-//kod zlecenia może mieć popjemnik 0
-//dodać możliwość zamykania poszczególnych typów okien z głównego okna
-dorobić menu na prawokliku (na barcodzie, na kontrolce z ustawieniami generowania itd)
-//sprawdzić okno z workspacem + ewentualne poprawki (np widoczny checkbox)
-otwieranie pliku z logami
-otwarcie i zaznaczenie ścieżki do quickbarcodów
-dodać tryb otwierania aplikacji
-dodać loader przy uruchamianiu aplikacji albo imporcie storage
-dodać skróty klawiaturowe do quick generatora
+﻿jeśli wybrany jest kod kreskowy EAN13/product code to wyłączyć z automatu valdiate data
 dorobić apkę na androida do wyświetlania kodów:
 	- przeorganizować slna
 	- ogarnąc przesyłanie obrazów na xamarina (sockety? grpc? wcf?)

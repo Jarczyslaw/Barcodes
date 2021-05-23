@@ -1,4 +1,9 @@
-﻿1.5
+﻿1.6
+	trochę poprawek po drodze
+	dodano drag&drop
+	usunięto opcję oznaczania workspace jako domyślne
+
+1.5
 	dużo poprawek na oknie z examplami 
 	dodano logowanie do pliku
 	dodano możliwość automatycznego drukowania plików pdf z barcodami
