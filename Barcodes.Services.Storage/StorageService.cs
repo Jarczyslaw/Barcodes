@@ -14,15 +14,19 @@ namespace Barcodes.Services.Storage
 
         private List<StorageBarcode> quickBarcodes;
 
-        public Storage Load(string filePath, bool throwException = false)
+        public Storage Load(string filePath, bool setCurrentStorage)
         {
             if (!File.Exists(filePath))
             {
                 return null;
             }
 
-            currentStorage = Serializer.FromFile<Storage>(filePath);
-            return currentStorage;
+            var loadedStorage = Serializer.FromFile<Storage>(filePath);
+            if (setCurrentStorage)
+            {
+                currentStorage = loadedStorage;
+            }
+            return loadedStorage;
         }
 
         public void Save(string filePath, Storage storage)

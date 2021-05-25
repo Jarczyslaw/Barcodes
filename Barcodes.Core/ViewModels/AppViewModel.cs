@@ -194,9 +194,9 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        private async Task<List<WorkspaceViewModel>> LoadStorage(string storagePath, bool storageValidation)
+        private async Task<List<WorkspaceViewModel>> LoadStorage(string storagePath, bool setCurrentStorage, bool storageValidation)
         {
-            var storage = services.StorageService.Load(storagePath, true);
+            var storage = services.StorageService.Load(storagePath, setCurrentStorage);
             if (storage == null)
             {
                 return null;
@@ -225,7 +225,7 @@ namespace Barcodes.Core.ViewModels
         {
             try
             {
-                var newWorkspaces = await LoadStorage(storagePath, storageValidation);
+                var newWorkspaces = await LoadStorage(storagePath, true, storageValidation);
                 if (newWorkspaces == null)
                 {
                     return;
@@ -819,7 +819,7 @@ namespace Barcodes.Core.ViewModels
                     return;
                 }
 
-                var workspaces = await LoadStorage(filePath, true);
+                var workspaces = await LoadStorage(filePath, false, true);
                 if (workspaces == null)
                 {
                     return;
