@@ -1,4 +1,8 @@
-﻿1.6
+﻿1.6.1
+	trochę poprawek
+	dodano wyświetlanie opisu dla kodu
+
+1.6
 	trochę poprawek po drodze
 	dodano drag&drop
 	usunięto opcję oznaczania workspace jako domyślne

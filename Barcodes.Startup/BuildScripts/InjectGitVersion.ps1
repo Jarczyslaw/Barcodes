@@ -1,6 +1,6 @@
 $appName = "Barcodes";
 $company = "JTJT";
-$version = "1.6.0";
+$version = "1.6.1";
 
 $gitVersion = git rev-list --all --count;
 $gitVersionText= "{0}" -f [convert]::ToInt32($gitVersion, 10);
