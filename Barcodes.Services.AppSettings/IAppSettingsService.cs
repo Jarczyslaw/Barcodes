@@ -6,6 +6,7 @@
         int QuickBarcodesCount { get; set; }
         string StoragePath { get; set; }
         bool BarcodesVisible { get; set; }
+        bool DescriptionVisible { get; set; }
         AddMode BarcodeAddMode { get; set; }
         AddMode WorkspaceAddMode { get; set; }
         string AntiKeyProtection { get; set; }

@@ -13,6 +13,7 @@ namespace Barcodes.Core.Extensions
             return new BarcodeViewModel(barcodeData)
             {
                 Title = storageBarcode.Title,
+                Description = storageBarcode.Description,
                 Barcode = generator.CreateBarcode(barcodeData)
             };
         }

@@ -9,6 +9,7 @@ namespace Barcodes.Services.Storage
     {
         public string Title { get; set; }
         public string Data { get; set; }
+        public string Description { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public bool DefaultSize { get; set; }
@@ -39,6 +40,7 @@ namespace Barcodes.Services.Storage
                 && Width == other.Width
                 && Height == other.Height
                 && DefaultSize == other.DefaultSize
+                && Description == other.Description
                 && Type == other.Type;
         }
 
@@ -46,7 +48,7 @@ namespace Barcodes.Services.Storage
         {
             unchecked
             {
-                return (17 * Title.GetHashCode()) + Data.GetHashCode() + Width.GetHashCode() + Height.GetHashCode() + DefaultSize.GetHashCode();
+                return (17 * Title.GetHashCode()) + Data.GetHashCode() + Width.GetHashCode() + Height.GetHashCode() + DefaultSize.GetHashCode() + Description.GetHashCode();
             }
         }
     }

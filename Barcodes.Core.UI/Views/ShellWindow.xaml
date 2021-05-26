@@ -14,8 +14,8 @@
     Title="{Binding App.Title}"
     Width="{StaticResource ShellWidth}"
     Height="{StaticResource ShellHeight}"
-    MinWidth="{StaticResource ShellWidth}"
-    MinHeight="{StaticResource ShellHeight}"
+    MinWidth="{StaticResource ShellMinWidth}"
+    MinHeight="{StaticResource ShellMinHeight}"
     Icon="pack://application:,,,/Barcodes.Core.UI;component/Resources/icon.ico"
     mc:Ignorable="d">
 
@@ -24,6 +24,7 @@
 
         <converters:DragDropModeConverter x:Key="DragDropModeConverter" />
         <converters:BarcodesVisibleConverter x:Key="BarcodesVisibleConverter" />
+        <converters:DescriptionVisibleConverter x:Key="DescriptionVisibleConverter" />
 
         <ContextMenu x:Key="WorkspacesContextMenu">
             <MenuItem
@@ -179,6 +180,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                         </Grid>
                     </ItemsPanelTemplate>
@@ -269,18 +271,28 @@
 
                 <MenuItem
                     Grid.Column="9"
+                    Width="130"
+                    HorizontalContentAlignment="Center"
                     Command="{Binding ToggleBarcodesVisible}"
                     Header="{Binding BarcodesVisible, Converter={StaticResource BarcodesVisibleConverter}}" />
                 <MenuItem
                     Grid.Column="10"
+                    Width="140"
+                    HorizontalContentAlignment="Center"
+                    Command="{Binding ToggleDescriptionVisible}"
+                    Header="{Binding DescriptionVisible, Converter={StaticResource DescriptionVisibleConverter}}" />
+                <MenuItem
+                    Grid.Column="11"
+                    Width="200"
+                    HorizontalContentAlignment="Center"
                     Command="{Binding ToggleDragDropModeCommand}"
                     Header="{Binding DragDropModes.SelectedItem, Converter={StaticResource DragDropModeConverter}}" />
-                <Separator Grid.Column="11" />
+                <Separator Grid.Column="12" />
                 <MenuItem
-                    Grid.Column="12"
+                    Grid.Column="13"
                     Command="{Binding QuickGeneratorCommand}"
                     Header="Quick generator" />
-                <MenuItem Grid.Column="13" Header="Windows">
+                <MenuItem Grid.Column="14" Header="Windows">
                     <MenuItem Command="{Binding CloseBarcodesWindowsCommand}" Header="Close barcodes" />
                     <MenuItem Command="{Binding CloseWorkspacesWindowsCommand}" Header="Close workspaces" />
                     <MenuItem Command="{Binding CloseGeneratorsWindowsCommand}" Header="Close quick generators" />
@@ -336,8 +348,7 @@
                                         <controls:BarcodeView
                                             BarcodeVisible="{Binding Proxy.Menu.BarcodesVisible, Source={StaticResource Proxy}, Mode=OneWay}"
                                             ContextMenu="{StaticResource BarcodesContextMenu}"
-                                            DescriptionVisible="False"
-                                            IsCheckedEnabled="False">
+                                            DescriptionVisible="{Binding Proxy.Menu.DescriptionVisible, Source={StaticResource Proxy}, Mode=OneWay}">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseDoubleClick">
                                                     <prism:InvokeCommandAction Command="{Binding Proxy.BarcodeMenu.OpenInNewWindowCommand, Source={StaticResource Proxy}}" CommandParameter="{Binding}" />

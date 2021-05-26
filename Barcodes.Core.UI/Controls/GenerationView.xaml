@@ -38,6 +38,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Label x:Name="lbTitle" Content="Title:" />
@@ -71,8 +72,23 @@
                     TextWrapping="Wrap"
                     VerticalScrollBarVisibility="Auto" />
 
-                <StackPanel
+                <Label Grid.Row="3" Content="Description:" />
+                <controls:CustomTextBox
+                    x:Name="tbDescription"
                     Grid.Row="3"
+                    Grid.Column="1"
+                    Width="412"
+                    Height="35"
+                    HorizontalAlignment="Left"
+                    VerticalContentAlignment="Top"
+                    AcceptsReturn="True"
+                    HorizontalScrollBarVisibility="Disabled"
+                    Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
+                    TextWrapping="Wrap"
+                    VerticalScrollBarVisibility="Auto" />
+
+                <StackPanel
+                    Grid.Row="4"
                     Grid.Column="1"
                     Orientation="Horizontal">
                     <ComboBox
@@ -92,22 +108,22 @@
                 </StackPanel>
 
                 <CheckBox
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Grid.Column="1"
                     VerticalContentAlignment="Center"
                     Content="Validate data"
                     IsChecked="{Binding ValidateCodeText, UpdateSourceTrigger=PropertyChanged}" />
 
                 <CheckBox
-                    Grid.Row="5"
+                    Grid.Row="6"
                     Grid.Column="1"
                     VerticalContentAlignment="Center"
                     Content="Use default sizes"
                     IsChecked="{Binding DefaultSize}" />
 
-                <Label Grid.Row="6" Content="Width: " />
+                <Label Grid.Row="7" Content="Width: " />
                 <toolkit:IntegerUpDown
-                    Grid.Row="6"
+                    Grid.Row="7"
                     Grid.Column="1"
                     Width="120"
                     Margin="{StaticResource DefaultMargin}"
@@ -117,9 +133,9 @@
                     TextAlignment="Left"
                     Value="{Binding Width, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Grid.Row="7" Content="Height: " />
+                <Label Grid.Row="8" Content="Height: " />
                 <toolkit:IntegerUpDown
-                    Grid.Row="7"
+                    Grid.Row="8"
                     Grid.Column="1"
                     Width="120"
                     Margin="{StaticResource DefaultMargin}"

@@ -44,10 +44,6 @@ namespace Barcodes.Core.ViewModels
             this.appViewModel = appViewModel;
             Workspaces = new ObservableCollection<WorkspaceViewModel>();
             Workspaces.AddRange(workspaces);
-            foreach (var workspace in Workspaces)
-            {
-                workspace.IsChecked = false;
-            }
         }
 
         private void ImportBarcodes()

@@ -9,8 +9,9 @@ namespace Barcodes.Core.UI.Controls
         public static readonly DependencyProperty BarcodeVisibleProperty =
             DependencyProperty.Register(nameof(BarcodeVisible), typeof(bool), typeof(BarcodeView), new FrameworkPropertyMetadata(true, OnBarcodeVisiblePropertyChanged));
 
-        public static readonly DependencyProperty IsCheckedEnabledProperty =
-            DependencyProperty.Register(nameof(IsCheckedEnabled), typeof(bool), typeof(BarcodeView), new FrameworkPropertyMetadata(true, OnIsCheckedEnabledPropertyChanged));
+        public static readonly DependencyProperty DescriptionVisibleProperty =
+           DependencyProperty.Register(nameof(DescriptionVisible), typeof(bool), typeof(BarcodeView), new FrameworkPropertyMetadata(true, OnDescriptionVisiblePropertyChanged));
+
 
         private static BoolToCollapsedConverter boolToCollapsedConverter = new BoolToCollapsedConverter();
 
@@ -25,20 +26,10 @@ namespace Barcodes.Core.UI.Controls
             set => SetValue(BarcodeVisibleProperty, value);
         }
 
-        public bool IsCheckedEnabled
-        {
-            get => (bool)GetValue(IsCheckedEnabledProperty);
-            set => SetValue(IsCheckedEnabledProperty, value);
-        }
-
         public bool DescriptionVisible
         {
-            set
-            {
-                var visibility = boolToCollapsedConverter.Convert(value);
-                lblDescription.Visibility = visibility;
-                tbDescription.Visibility = visibility;
-            }
+            get => (bool)GetValue(DescriptionVisibleProperty);
+            set => SetValue(DescriptionVisibleProperty, value);
         }
 
         private static void OnBarcodeVisiblePropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
@@ -48,11 +39,12 @@ namespace Barcodes.Core.UI.Controls
             barcodeView.imgBarcode.Visibility = boolToCollapsedConverter.Convert(barcodeVisible);
         }
 
-        private static void OnIsCheckedEnabledPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        private static void OnDescriptionVisiblePropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
             var barcodeView = source as BarcodeView;
-            var isCheckedEnabled = (bool)e.NewValue;
-            barcodeView.chbIsChecked.Visibility = boolToCollapsedConverter.Convert(isCheckedEnabled);
+            var descriptionVisible = (bool)e.NewValue;
+            barcodeView.lblDescription.Visibility =
+                barcodeView.tbDescription.Visibility = boolToCollapsedConverter.Convert(descriptionVisible);
         }
     }
 }

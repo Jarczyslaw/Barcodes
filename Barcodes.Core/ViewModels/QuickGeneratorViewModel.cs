@@ -129,11 +129,10 @@ namespace Barcodes.Core.ViewModels
 
         public DelegateCommand RestoreQuickBarcodesCommand => restoreQuickBarcodesCommand ?? (restoreQuickBarcodesCommand = new DelegateCommand(async () =>
         {
-            GenerationData.FromData(SelectedQuickBarcode.StorageBarcode.ToGenerationData());
-            await RestoreBarcode(SelectedQuickBarcode);
+            await RestoreBarcode(SelectedQuickBarcode, true);
         }, () => SelectedQuickBarcode?.StorageBarcode != null));
 
-        public DelegateCommand LoadQuickBarcodesCommand => loadQuickBarcodesCommand ?? (loadQuickBarcodesCommand = new DelegateCommand(async () => await RestoreBarcode(SelectedQuickBarcode),
+        public DelegateCommand LoadQuickBarcodesCommand => loadQuickBarcodesCommand ?? (loadQuickBarcodesCommand = new DelegateCommand(async () => await RestoreBarcode(SelectedQuickBarcode, false),
             () => SelectedQuickBarcode?.StorageBarcode != null));
 
         public DelegateCommand ResetCommand => new DelegateCommand(() =>
@@ -141,7 +140,9 @@ namespace Barcodes.Core.ViewModels
             if (services.AppDialogsService.ShowYesNoQuestion("Do you really want to reset all data?"))
             {
                 GenerationData.RestoreSettingsCommand.Execute();
-                GenerationData.Data = string.Empty;
+                GenerationData.Data =
+                    GenerationData.Title =
+                    GenerationData.Description = string.Empty;
                 SelectedQuickBarcode = QuickBarcodes.First();
                 Barcode = null;
                 StatusMessage = null;
@@ -355,11 +356,18 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
-        private async Task RestoreBarcode(StorageBarcodeViewModel storageBarcodeViewModel)
+        private async Task RestoreBarcode(StorageBarcodeViewModel storageBarcodeViewModel, bool setGenerationData)
         {
             try
             {
                 var generationData = storageBarcodeViewModel.StorageBarcode.ToGenerationData();
+                if (setGenerationData)
+                {
+                    GenerationData.FromData(generationData);
+                    GenerationData.Title = storageBarcodeViewModel.StorageBarcode.Title;
+                    GenerationData.Description = storageBarcodeViewModel.StorageBarcode.Description;
+                }
+
                 await HeavyAction("Generating barcode...", () =>
                 {
                     Barcode = new BarcodeViewModel(generationData)
@@ -387,7 +395,7 @@ namespace Barcodes.Core.ViewModels
                     if (updateQuickBarcodes)
                     {
                         services.AppSettingsService.TryUpdateGenerationSettings(Barcode.GenerationData.ToSettings());
-                        services.StorageService.AddQuickBarcode(Barcode.GenerationData.ToStorageBarcode(),
+                        services.StorageService.AddQuickBarcode(Barcode.ToStorage(),
                             services.AppSettingsService.QuickBarcodesCount);
                         LoadQuickBarcodes();
                         NotifyOtherQuickGenerators();

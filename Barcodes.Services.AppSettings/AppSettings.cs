@@ -15,6 +15,7 @@ namespace Barcodes.Services.AppSettings
         public int QuickBarcodesCount { get; set; } = 10;
         public string StoragePath { get; set; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"storage.{FileExtensions.Storage}");
         public bool BarcodesVisible { get; set; } = true;
+        public bool DescriptionVisible { get; set; }
         public string AntiKeyProtection { get; set; } = "F5";
 
         [JsonConverter(typeof(StringEnumConverter))]

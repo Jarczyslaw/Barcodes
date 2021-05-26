@@ -22,6 +22,7 @@ namespace Barcodes.Core.ViewModels
 
         private string title = "Barcode Title";
         private string data = "Barcode Data";
+        private string description = string.Empty;
 
         private TemplateViewModel selectedTemplate;
         private ObservableCollection<TemplateViewModel> templates;
@@ -88,6 +89,12 @@ namespace Barcodes.Core.ViewModels
         {
             get => data;
             set => SetProperty(ref data, value);
+        }
+
+        public string Description
+        {
+            get => description;
+            set => SetProperty(ref description, value);
         }
 
         public override GenerationData ToData()
@@ -161,7 +168,8 @@ namespace Barcodes.Core.ViewModels
                 return new BarcodeViewModel(data)
                 {
                     Barcode = barcodeBitmap,
-                    Title = Title
+                    Title = Title,
+                    Description = Description
                 };
             });
         }

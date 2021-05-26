@@ -36,6 +36,13 @@ namespace Barcodes.Services.AppSettings
                 () => AppSettings.BarcodesVisible = value);
         }
 
+        public bool DescriptionVisible
+        {
+            get => AppSettings.DescriptionVisible;
+            set => SetAndSave(value, AppSettings.DescriptionVisible,
+                () => AppSettings.DescriptionVisible = value);
+        }
+
         public AddMode BarcodeAddMode
         {
             get => AppSettings.BarcodeAddMode;

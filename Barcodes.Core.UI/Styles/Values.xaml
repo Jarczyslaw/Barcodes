@@ -2,8 +2,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:Double x:Key="ShellWidth">1200</sys:Double>
+    <sys:Double x:Key="ShellWidth">1300</sys:Double>
     <sys:Double x:Key="ShellHeight">800</sys:Double>
+    <sys:Double x:Key="ShellMinWidth">1100</sys:Double>
+    <sys:Double x:Key="ShellMinHeight">500</sys:Double>
     <Thickness
         x:Key="DefaultMargin"
         Bottom="3"

@@ -39,7 +39,6 @@
                     HorizontalContentAlignment="Center"
                     Content="{Binding Title, Mode=OneWay, FallbackValue=Title}"
                     FontWeight="Bold" />
-                <CheckBox x:Name="chbIsChecked" IsChecked="{Binding IsChecked}" />
             </Grid>
 
             <Label Grid.Row="1" Content="Type:" />
@@ -56,7 +55,10 @@
                 x:Name="tbDescription"
                 Grid.Row="2"
                 Grid.Column="1"
-                Text="{Binding Description, Mode=OneWay}" />
+                Height="35"
+                VerticalContentAlignment="Top"
+                Text="{Binding Description, Mode=OneWay}"
+                TextWrapping="Wrap" />
 
             <Label Grid.Row="3" Content="Data:" />
             <TextBox

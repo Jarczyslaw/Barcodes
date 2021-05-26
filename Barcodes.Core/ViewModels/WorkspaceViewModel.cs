@@ -37,7 +37,6 @@ namespace Barcodes.Core.ViewModels
         {
             get => name;
             set => SetProperty(ref name, value);
-            
         }
 
         public ObservableCollection<BarcodeViewModel> Barcodes
@@ -63,21 +62,6 @@ namespace Barcodes.Core.ViewModels
         }
 
         public bool AreBarcodesSelected => SelectedBarcodes?.Count > 0;
-
-        public bool IsChecked
-        {
-            set
-            {
-                foreach (var barcode in Barcodes)
-                {
-                    barcode.IsChecked = value;
-                }
-            }
-        }
-
-        public bool ContainsCheckedBarcodes => Barcodes.Any(b => b.IsChecked);
-
-        public List<BarcodeViewModel> CheckedBarcodes => Barcodes.Where(b => b.IsChecked).ToList();
 
         private void SetSelectedBarcode(BarcodeViewModel barcode)
         {

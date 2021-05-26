@@ -68,8 +68,7 @@
                                     <controls:BarcodeView
                                         BarcodeVisible="True"
                                         ContextMenu="{StaticResource BarcodesContextMenu}"
-                                        DescriptionVisible="False"
-                                        IsCheckedEnabled="False" />
+                                        DescriptionVisible="False" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>

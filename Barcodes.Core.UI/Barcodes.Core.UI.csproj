@@ -101,6 +101,7 @@
     <Compile Include="Controls\GenerationView.xaml.cs">
       <DependentUpon>GenerationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DescriptionVisibleConverter.cs" />
     <Compile Include="Converters\BarcodesVisibleConverter.cs" />
     <Compile Include="Converters\DragDropModeConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

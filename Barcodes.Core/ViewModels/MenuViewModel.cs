@@ -13,6 +13,7 @@ namespace Barcodes.Core.ViewModels
         private readonly IServicesAggregator services;
         private readonly AppViewModel app;
         private bool barcodesVisible;
+        private bool descriptionVisible;
 
         public MenuViewModel(AppViewModel app, IServicesAggregator services)
         {
@@ -58,6 +59,7 @@ namespace Barcodes.Core.ViewModels
         public DelegateCommand ToggleDragDropModeCommand => new DelegateCommand(() => DragDropModes.Toggle(true));
 
         public DelegateCommand ToggleBarcodesVisible => new DelegateCommand(() => BarcodesVisible = !BarcodesVisible);
+        public DelegateCommand ToggleDescriptionVisible => new DelegateCommand(() => DescriptionVisible = !DescriptionVisible);
 
         public DragDropModesViewModel DragDropModes { get; }
 
@@ -71,11 +73,22 @@ namespace Barcodes.Core.ViewModels
             }
         }
 
+        public bool DescriptionVisible
+        {
+            get => descriptionVisible;
+            set
+            {
+                SetProperty(ref descriptionVisible, value);
+                services.AppSettingsService.DescriptionVisible = value;
+            }
+        }
+
         public Action OnClose { get; set; }
 
         private void ApplySettings(AppSettings appSettings)
         {
             BarcodesVisible = appSettings.BarcodesVisible;
+            DescriptionVisible = appSettings.DescriptionVisible;
             DragDropModes.Select(appSettings.DragDropMode);
         }
 

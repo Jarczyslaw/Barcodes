@@ -12,6 +12,6 @@
     SizeToContent="WidthAndHeight"
     mc:Ignorable="d">
     <Grid>
-        <controls:BarcodeView DescriptionVisible="False" IsCheckedEnabled="False" />
+        <controls:BarcodeView BarcodeVisible="True" DescriptionVisible="True" />
     </Grid>
 </ui:BaseWindow>

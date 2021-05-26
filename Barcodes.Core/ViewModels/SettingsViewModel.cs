@@ -26,6 +26,7 @@ namespace Barcodes.Core.ViewModels
         private int quickBarcodesCount;
         private string storagePath = string.Empty;
         private bool barcodesVisible;
+        private bool descriptionVisible;
         private string protectedKeys = string.Empty;
         private AddModeViewModel selectedBarcodeAddMode;
         private ObservableCollection<AddModeViewModel> barcodeAddModes = new ObservableCollection<AddModeViewModel>();
@@ -100,6 +101,12 @@ namespace Barcodes.Core.ViewModels
         {
             get => barcodesVisible;
             set => SetProperty(ref barcodesVisible, value);
+        }
+
+        public bool DescriptionVisible
+        {
+            get => descriptionVisible;
+            set => SetProperty(ref descriptionVisible, value);
         }
 
         public bool UpdateAfterEveryGeneration
@@ -220,6 +227,7 @@ namespace Barcodes.Core.ViewModels
             QuickBarcodesCount = settings.QuickBarcodesCount;
             StoragePath = settings.StoragePath;
             BarcodesVisible = settings.BarcodesVisible;
+            DescriptionVisible = settings.DescriptionVisible;
             ProtectedKeys = settings.AntiKeyProtection;
             SelectedBarcodeAddModeRaw = settings.BarcodeAddMode;
             SelectedWorkspaceAddModeRaw = settings.WorkspaceAddMode;
@@ -236,6 +244,7 @@ namespace Barcodes.Core.ViewModels
                 QuickBarcodesCount = QuickBarcodesCount,
                 StoragePath = StoragePath,
                 BarcodesVisible = BarcodesVisible,
+                DescriptionVisible = DescriptionVisible,
                 AntiKeyProtection = ProtectedKeys,
                 BarcodeAddMode = SelectedBarcodeAddModeRaw.Value,
                 WorkspaceAddMode = SelectedWorkspaceAddModeRaw.Value,

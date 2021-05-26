@@ -11,7 +11,6 @@ namespace Barcodes.Core.ViewModels
     {
         private string title;
         private string description;
-        private bool isChecked;
         private BitmapSource barcode;
 
         public BarcodeViewModel(GenerationData generationData)
@@ -57,16 +56,11 @@ namespace Barcodes.Core.ViewModels
             set => SetProperty(ref barcode, value);
         }
 
-        public bool IsChecked
-        {
-            get => isChecked;
-            set => SetProperty(ref isChecked, value);
-        }
-
         public StorageBarcode ToStorage()
         {
             var result = GenerationData.ToStorageBarcode();
             result.Title = Title;
+            result.Description = Description;
             return result;
         }
 
