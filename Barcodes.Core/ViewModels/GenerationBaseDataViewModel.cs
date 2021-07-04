@@ -62,8 +62,9 @@ namespace Barcodes.Core.ViewModels
         {
             Types = new ObservableCollection<BarcodeTypeViewModel>()
             {
-                new BarcodeTypeViewModel(BarcodeType.Ean13),
-                new BarcodeTypeViewModel(BarcodeType.Ean128),
+                new BarcodeTypeViewModel(BarcodeType.EAN13),
+                new BarcodeTypeViewModel(BarcodeType.ITF14),
+                new BarcodeTypeViewModel(BarcodeType.EAN128),
                 new BarcodeTypeViewModel(BarcodeType.Code128),
                 new BarcodeTypeViewModel(BarcodeType.DataMatrix),
                 new BarcodeTypeViewModel(BarcodeType.QRCode),

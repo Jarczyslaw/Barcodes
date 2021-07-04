@@ -39,7 +39,7 @@ namespace Barcodes.Codes
 
         public override string Code => $"(02){ProductCode}(17){ExpireDate.ToExpireDate(false)}(10){BatchId}";
 
-        public override BarcodeType Type => BarcodeType.Ean128;
+        public override BarcodeType Type => BarcodeType.EAN128;
 
         public override void Parse(string codeString)
         {

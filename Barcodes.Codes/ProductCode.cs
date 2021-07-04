@@ -23,7 +23,7 @@ namespace Barcodes.Codes
 
         public override string Code => Product;
 
-        public override BarcodeType Type => BarcodeType.Ean13;
+        public override BarcodeType Type => BarcodeType.EAN13;
 
         public override int Length => 13;
 

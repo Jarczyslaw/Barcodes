@@ -62,7 +62,7 @@ namespace Barcodes.Core
 
         private static ExampleBarcodeViewModel CreateProductBarcode(IGeneratorService generatorService, IAppSettingsService appSettingsService)
         {
-            var (exampleData, settingsData) = GetGenerationData(BarcodeType.Ean13, "5909991107123", appSettingsService);
+            var (exampleData, settingsData) = GetGenerationData(BarcodeType.EAN13, "5909991107123", appSettingsService);
             return new ExampleBarcodeViewModel(settingsData)
             {
                 Template = BarcodeTemplate.Product,
@@ -134,7 +134,7 @@ namespace Barcodes.Core
 
         private static ExampleBarcodeViewModel CreateLongProductBarcode(IGeneratorService generatorService, IAppSettingsService appSettingsService)
         {
-            var (exampleData, settingsData) = GetGenerationData(BarcodeType.Ean128, "(02)05909991107123(17)200229(10)U1702011", appSettingsService);
+            var (exampleData, settingsData) = GetGenerationData(BarcodeType.EAN128, "(02)05909991107123(17)200229(10)U1702011", appSettingsService);
             return new ExampleBarcodeViewModel(settingsData)
             {
                 Template = BarcodeTemplate.LongProduct,

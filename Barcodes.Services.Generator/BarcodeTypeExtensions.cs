@@ -11,8 +11,9 @@ namespace Barcodes.Services.Generator
         {
             { BarcodeType.Code128, EncodeTypes.Code128 },
             { BarcodeType.DataMatrix, EncodeTypes.DataMatrix },
-            { BarcodeType.Ean128, EncodeTypes.GS1Code128 },
-            { BarcodeType.Ean13, EncodeTypes.EAN13 },
+            { BarcodeType.EAN128, EncodeTypes.GS1Code128 },
+            { BarcodeType.EAN13, EncodeTypes.EAN13 },
+            { BarcodeType.ITF14, EncodeTypes.ITF14 },
             { BarcodeType.QRCode, EncodeTypes.QR },
         };
 

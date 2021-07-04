@@ -3,3 +3,4 @@ dorobić apkę na androida do wyświetlania kodów:
 	- przeorganizować slna
 	- ogarnąc przesyłanie obrazów na xamarina (sockety? grpc? wcf?)
 	- parowanie telefonu z kompem - skanowanie sieci? skan kodu i dwustronna synchronizacja?
+zmienić aspose na zxinga

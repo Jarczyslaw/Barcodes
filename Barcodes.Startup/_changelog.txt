@@ -1,4 +1,8 @@
-﻿1.6.1
+﻿1.6.2
+	wsparcie dla ITF14
+	zmiany w enumie BarcodeType
+
+1.6.1
 	trochę poprawek
 	dodano wyświetlanie opisu dla kodu
 

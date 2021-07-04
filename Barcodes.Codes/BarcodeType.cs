@@ -2,8 +2,9 @@
 {
     public enum BarcodeType
     {
-        Ean13,
-        Ean128,
+        EAN13,
+        ITF14,
+        EAN128,
         Code128,
         DataMatrix,
         QRCode

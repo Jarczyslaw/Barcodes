@@ -10,10 +10,7 @@ namespace Barcodes.Core.ViewModels
             Type = type;
         }
 
-        public string TypeTitle
-        {
-            get => Type.ToString();
-        }
+        public string TypeTitle => Type.ToString();
 
         public BarcodeType Type { get; set; }
     }

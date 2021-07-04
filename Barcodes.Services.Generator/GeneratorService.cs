@@ -1,6 +1,6 @@
-﻿using Aspose.BarCode.Generation;
+﻿using Aspose.BarCode;
+using Aspose.BarCode.Generation;
 using Barcodes.Extensions;
-using System.Threading;
 using System.Windows.Media.Imaging;
 
 namespace Barcodes.Services.Generator
@@ -29,6 +29,7 @@ namespace Barcodes.Services.Generator
                 generator.ThrowExceptionWhenCodeTextIncorrect = barcodeData.ValidateCodeText;
                 generator.AutoSizeMode = AutoSizeMode.Nearest;
                 generator.EnableEscape = true;
+                generator.ITF.BorderType = ITF14BorderType.None;
                 HideTexts(generator);
                 FitSizes(generator, barcodeData);
                 var barcodeImage = generator.GenerateBarCodeImage();
