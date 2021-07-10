@@ -46,7 +46,7 @@ namespace Barcodes.Codes
             var match = Regex.Match(codeString, @"^\(02\)(\d{14})\(17\)(\d{6})\(10\)(.+)$");
             if (!match.Success)
             {
-                throw new ArgumentException("Invalid code string format");
+                throw new ArgumentException("Invalid code string format. Look at examples to get valid code");
             }
 
             var productCode = match.Groups[1].Value;

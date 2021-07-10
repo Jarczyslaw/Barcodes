@@ -61,7 +61,7 @@ namespace Barcodes.Codes
             var match = Regex.Match(code, $@"^{CurrentPrefix}(\d{{{OrderIdLength}}})(\d{{{ContainerNumberLength}}})(\d{{{DivisionNumberLength}}})(\d{{{YearLength}}})$");
             if (!match.Success)
             {
-                throw new ArgumentException("Invalid order code format");
+                throw new ArgumentException("Invalid order code format. Look at examples to get valid code");
             }
 
             OrderId = int.Parse(match.Groups[1].Value);

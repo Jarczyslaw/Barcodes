@@ -54,7 +54,7 @@ namespace Barcodes.Core.ViewModels.Templates
             }
             catch (Exception exc)
             {
-                dialogsService.ShowException(exc);
+                dialogsService.ShowError(exc.Message);
                 return false;
             }
         }

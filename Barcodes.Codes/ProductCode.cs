@@ -32,7 +32,7 @@ namespace Barcodes.Codes
             var match = Regex.Match(code, "^[0-9]{13}$");
             if (!match.Success)
             {
-                throw new ArgumentException("Invalid product code");
+                throw new ArgumentException("Invalid product code. Look at examples to get valid code");
             }
 
             Product = code;

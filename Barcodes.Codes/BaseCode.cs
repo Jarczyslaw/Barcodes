@@ -12,6 +12,8 @@ namespace Barcodes.Codes
         public abstract BarcodeType Type { get; }
         public virtual List<string> Prefixes => new List<string>();
         public int PrefixLength => CurrentPrefix.Length;
+
+        public string PrefixesString => string.Join(", ", Prefixes.ToArray());
         public virtual int Length => 0;
 
         public string CurrentPrefix
@@ -36,7 +38,7 @@ namespace Barcodes.Codes
             {
                 if (!Prefixes.Contains(value))
                 {
-                    throw new ArgumentException("Invalid prefix value");
+                    throw new ArgumentException($"Invalid prefix value (valid prefixes: {PrefixesString})");
                 }
                 currentPrefix = value;
             }
@@ -77,17 +79,17 @@ namespace Barcodes.Codes
 
             if (!CheckPrefix(code))
             {
-                throw new ArgumentException("Invalid prefix");
+                throw new ArgumentException($"Invalid prefix (valid prefixes: {PrefixesString})");
             }
 
             if (HasPrefix && code.Length < PrefixLength)
             {
-                throw new ArgumentException("Invalid code length");
+                throw new ArgumentException($"Invalid code length (valid length: {Length})");
             }
 
             if (Length != 0 && code.Length != Length)
             {
-                throw new ArgumentException("Invalid code length");
+                throw new ArgumentException($"Invalid code length (valid length: {Length})");
             }
         }
 

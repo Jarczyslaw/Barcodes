@@ -39,7 +39,7 @@ namespace Barcodes.Codes
         {
             if (container < 1 || container > MaxValue(BodyLength))
             {
-                throw new ArgumentException("Invalid container number");
+                throw new ArgumentException($"Invalid container number (valid number: 1-{MaxValue(BodyLength)}");
             }
         }
 

@@ -1,4 +1,7 @@
-﻿1.6.2
+﻿1.6.3
+	zmiany w komunikatach błędów przy parsowaniu kodów
+
+1.6.2
 	wsparcie dla ITF14
 	zmiany w enumie BarcodeType
 

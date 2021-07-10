@@ -39,7 +39,7 @@ namespace Barcodes.Codes
         {
             if (number < 1 || number > MaxValue(BodyLength))
             {
-                throw new ArgumentException("Invalid user number");
+                throw new ArgumentException("Invalid user number. Look at examples to get valid code");
             }
         }
 

@@ -46,9 +46,10 @@ namespace Barcodes.Codes
         {
             CheckCode(code);
             var body = GetCodeBody(code);
-            if (body.Length < 12)
+            var length = 12;
+            if (body.Length < length)
             {
-                throw new ArgumentException("Invalid code length");
+                throw new ArgumentException($"Invalid code length (minimum {length} characters)");
             }
             LocationAddress = body.Substring(0, 10);
             AlleyAddress = body.Substring(10);
